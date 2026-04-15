@@ -1,4 +1,3 @@
-
 /* 🎉 BODY BACKGROUND */
 body {
     margin: 0;
@@ -11,13 +10,12 @@ body {
     animation: bgMove 8s infinite alternate;
 }
 
-/* 🌈 Smooth gradient animation */
 @keyframes bgMove {
     0% { background-position: left; }
     100% { background-position: right; }
 }
 
-/* 😂 FUNNY TEXT (FIXED + ALWAYS ON TOP) */
+/* 😂 FUNNY TEXT */
 #funText {
     position: fixed;
     top: 40px;
@@ -34,8 +32,7 @@ body {
 
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 
-    z-index: 99999; /* 🔥 ensures visibility */
-
+    z-index: 99999;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -46,8 +43,7 @@ body {
     height: 180px;
     position: absolute;
     cursor: pointer;
-
-    transition: all 0.25s ease; /* smooth escape */
+    transition: all 0.25s ease;
 }
 
 .box {
@@ -77,18 +73,30 @@ body {
 
     box-shadow: 0 10px 30px rgba(0,0,0,0.25);
 
-    display: flex;
-    overflow: hidden;
-
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    perspective: 1500px;
+    overflow: hidden;
 }
 
+/* 📄 PAGES */
 .page {
-    display: flex;
+    position: absolute;
     width: 100%;
+    height: 100%;
+    display: flex;
+
+    backface-visibility: hidden;
+    transform-origin: left;
+    transition: transform 0.8s;
+}
+
+/* 📖 Flip effect */
+.page.flipped {
+    transform: rotateY(-180deg);
 }
 
 /* 📸 IMAGE SIDE */
@@ -109,12 +117,9 @@ body {
 .text-page {
     width: 50%;
     padding: 20px;
-
     background: #fff0f5;
-
     display: flex;
     align-items: center;
-
     font-size: 18px;
 }
 
@@ -134,26 +139,70 @@ body {
     cursor: pointer;
 }
 
+/* ❌ CLOSE BUTTON */
+.close-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+
+    padding: 10px 15px;
+    border: none;
+
+    background: #333;
+    color: white;
+
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* 📕 CLOSE ANIMATION */
+.scrapbook.closing {
+    animation: closeBookAnim 0.5s forwards;
+}
+
+@keyframes closeBookAnim {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+    }
+}
+
 /* 🎈 FLOATING EMOJIS */
 .floating {
     position: absolute;
     font-size: 30px;
     opacity: 0.7;
-
     animation: floatUp 6s linear infinite;
 }
 
-/* distribute emojis */
 .floating:nth-of-type(1) { left: 10%; animation-delay: 0s; }
 .floating:nth-of-type(2) { left: 30%; animation-delay: 2s; }
 .floating:nth-of-type(3) { left: 60%; animation-delay: 4s; }
 .floating:nth-of-type(4) { left: 80%; animation-delay: 1s; }
 
 @keyframes floatUp {
+    0% { bottom: -50px; }
+    100% { bottom: 110%; }
+}
+
+/* 🦋 BUTTERFLIES */
+.butterfly {
+    position: absolute;
+    font-size: 24px;
+    animation: fly 3s linear forwards;
+}
+
+@keyframes fly {
     0% {
-        bottom: -50px;
+        transform: translate(0, 0);
+        opacity: 1;
     }
     100% {
-        bottom: 110%;
+        transform: translate(200px, -300px);
+        opacity: 0;
     }
 }
