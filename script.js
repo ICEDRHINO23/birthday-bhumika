@@ -1,77 +1,77 @@
-const present = document.getElementById("presentBox");
-const scrapbook = document.getElementById("scrapbook");
+const gift = document.getElementById("gift");
+const book = document.getElementById("book");
+const fun = document.getElementById("funText");
 
-let currentPage = 1;
+let canOpen = false;
+let current = 1;
 
-/* intro → show gift */
+const msgs = ["😂 Catch me!", "Try again!", "Not yet!"];
+
 setTimeout(() => {
-    present.style.display = "block";
+    moveGift();
 }, 4000);
 
-/* open gift */
-present.addEventListener("click", () => {
-    present.classList.add("open");
+/* 🎁 move */
+function moveGift() {
 
-    setTimeout(() => {
-        present.style.display = "none";
-        scrapbook.style.display = "block";
+    let count = 0;
 
-        typeText(
-            "Dear Bhumika 💖\n\nHappy Birthday!\nThis small surprise is just for you 😊",
-            "typingText"
-        );
+    let interval = setInterval(() => {
+        gift.style.left = Math.random()*80 + "%";
+        gift.style.top = Math.random()*80 + "%";
 
-    }, 500);
+        fun.innerText = msgs[Math.floor(Math.random()*msgs.length)];
+
+        count++;
+
+        if(count > 10){
+            clearInterval(interval);
+            gift.style.left = "50%";
+            gift.style.top = "50%";
+            canOpen = true;
+        }
+
+    }, 800);
+}
+
+/* open */
+gift.addEventListener("click", () => {
+    if(!canOpen) return;
+
+    gift.classList.add("open");
+
+    setTimeout(()=>{
+        gift.style.display = "none";
+        book.style.display = "block";
+
+        typeText("Dear Bhumika 💖 Happy Birthday!", "typing");
+    },500);
 });
 
 /* typing */
-function typeText(text, id) {
-    let i = 0;
-    const el = document.getElementById(id);
-    el.innerHTML = "";
+function typeText(text, id){
+    let i=0;
+    let el = document.getElementById(id);
 
-    function t() {
-        if (i < text.length) {
-            if (text[i] === "\n") {
-                el.innerHTML += "<br>";
-            } else {
-                el.innerHTML += text[i];
-            }
-            i++;
-            setTimeout(t, 40);
+    function t(){
+        if(i<text.length){
+            el.innerHTML += text[i++];
+            setTimeout(t,40);
         }
     }
-
     t();
 }
 
-/* page flip */
-function nextPage() {
-    const page = document.getElementById("page" + currentPage);
+/* flip */
+function next(){
+    let page = document.getElementById("p"+current);
 
-    if (page) {
+    if(page){
         page.classList.add("flipped");
-        currentPage++;
+        current++;
     }
 
-    // 🎉 final message popup
-    if (currentPage === 6) {
-        showEnding();
+    if(current===4){
+        document.getElementById("final").style.display="block";
     }
-}
-
-/* ending */
-function showEnding() {
-    const msg = document.createElement("div");
-
-    msg.innerHTML = "💖 More to come... 💖";
-    msg.style.position = "fixed";
-    msg.style.top = "50%";
-    msg.style.left = "50%";
-    msg.style.transform = "translate(-50%, -50%)";
-    msg.style.fontSize = "40px";
-    msg.style.color = "#ff4d6d";
-    msg.style.zIndex = "9999";
-
-    document.body.appendChild(msg);
 }
