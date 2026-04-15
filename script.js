@@ -4,10 +4,15 @@ const funText = document.getElementById("funText");
 
 let canOpen = false;
 
-/* ⏱ Allow opening after 15 sec */
+/* 🧪 TEST TEXT (should show immediately) */
+funText.innerText = "Ready 😄";
+funText.style.opacity = 1;
+
+/* ⏱ Unlock after 15 sec */
 setTimeout(() => {
     canOpen = true;
-    funText.innerText = "🎁 Okay… you can open it now!";
+
+    funText.innerText = "🎁 Now you can catch me!";
     funText.style.opacity = 1;
 
     setTimeout(() => {
@@ -29,7 +34,7 @@ const messages = [
     "Keep trying 😂"
 ];
 
-/* 🎯 Move gift when user tries */
+/* 🎯 Move gift when hovered/touched */
 function moveGift() {
     if (canOpen) return;
 
@@ -39,13 +44,11 @@ function moveGift() {
     present.style.left = x + "px";
     present.style.top = y + "px";
 
-    // 🎉 Show random funny text
     let randomText = messages[Math.floor(Math.random() * messages.length)];
 
     funText.innerText = randomText;
     funText.style.opacity = 1;
 
-    // Hide after 1.5 sec
     setTimeout(() => {
         funText.style.opacity = 0;
     }, 1500);
@@ -65,7 +68,7 @@ present.addEventListener("click", () => {
     scrapbook.style.display = "flex";
 });
 
-/* 📖 Page system */
+/* 📖 Pages */
 let currentPage = 1;
 
 function nextPage() {
