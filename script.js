@@ -1,182 +1,106 @@
-// 🎉 CREATE FLOATING BACKGROUND ELEMENTS
+// 🎉 background elements
 const bg = document.getElementById("bg");
-
 const emojis = ["🎈","🎂","🎉","🎁","🎀"];
 
-for (let i = 0; i < 40; i++) {
-
+for (let i = 0; i < 35; i++) {
     let el = document.createElement("span");
     el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
 
     el.style.left = Math.random() * 100 + "%";
-    el.style.top = Math.random() * 100 + "%";
-
     el.style.animationDuration = (6 + Math.random() * 10) + "s";
     el.style.fontSize = (25 + Math.random() * 25) + "px";
 
     bg.appendChild(el);
 }
-/* 🌌 BASE */
-body {
-    margin: 0;
-    overflow: hidden;
-    font-family: Arial;
-    background: #0f0f1a;
+
+// 🎁 elements
+const gift = document.getElementById("gift");
+const book = document.getElementById("book");
+const fun = document.getElementById("funText");
+
+let canOpen = false;
+let current = 1;
+
+const msgs = ["😂 Catch me!", "Try again!", "Not yet!"];
+
+/* start */
+setTimeout(() => {
+    moveGift();
+}, 4000);
+
+/* move */
+function moveGift() {
+
+    let count = 0;
+
+    let interval = setInterval(() => {
+
+        let x = Math.random() * (window.innerWidth - 150);
+        let y = Math.random() * (window.innerHeight - 150);
+
+        gift.style.left = x + "px";
+        gift.style.top = y + "px";
+        gift.style.transform = "none";
+
+        fun.innerText = msgs[Math.floor(Math.random() * msgs.length)];
+
+        count++;
+
+        if (count > 15) {
+            clearInterval(interval);
+
+            gift.style.left = "50%";
+            gift.style.top = "50%";
+            gift.style.transform = "translate(-50%, -50%)";
+
+            fun.innerText = "🎁 Open me!";
+            canOpen = true;
+        }
+
+    }, 700);
 }
 
-/* 🎬 INTRO */
-#intro {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: #0f0f1a;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 32px;
-    z-index: 10;
-    animation: fadeOut 3s forwards 2s;
-}
+/* open */
+gift.addEventListener("click", () => {
 
-@keyframes fadeOut {
-    to {
-        opacity: 0;
-        visibility: hidden;
+    if (!canOpen) return;
+
+    gift.classList.add("open");
+
+    setTimeout(() => {
+        gift.style.display = "none";
+        book.style.display = "block";
+
+        typeText("Dear Bhumika 💖 Happy Birthday!", "typing");
+
+    }, 500);
+});
+
+/* typing */
+function typeText(text, id) {
+    let i = 0;
+    let el = document.getElementById(id);
+
+    function t() {
+        if (i < text.length) {
+            el.innerHTML += text[i++];
+            setTimeout(t, 40);
+        }
     }
-}
-
-/* 🎉 FLOATING ITEMS */
-.bg span {
-    position: absolute;
-    font-size: 30px;
-    animation: floatUp linear infinite;
-    opacity: 0.7;
-}
-
-@keyframes floatUp {
-    from { transform: translateY(100vh); }
-    to { transform: translateY(-120vh); }
-}
-
-/* 🎁 GIFT */
-#gift {
-    width: 140px;
-    height: 140px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    z-index: 5;
-}
-
-/* box */
-.box {
-    width: 100%;
-    height: 100%;
-    background: #ff4d6d;
-    border-radius: 8px;
-}
-
-/* ribbon vertical */
-.box::before {
-    content: "";
-    width: 20px;
-    height: 100%;
-    background: gold;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-/* ribbon horizontal */
-.box::after {
-    content: "";
-    height: 20px;
-    width: 100%;
-    background: gold;
-    position: absolute;
-    top: 50%;
-}
-
-/* lid */
-.lid {
-    width: 100%;
-    height: 35px;
-    background: #c9184a;
-    position: absolute;
-    top: -35px;
-    transition: 0.5s;
-}
-
-/* open animation */
-.open .lid {
-    transform: rotateX(120deg);
-}
-
-/* 😂 TEXT */
-#funText {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #ff4d6d;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 16px;
-}
-
-/* 📖 BOOK */
-#book {
-    display: none;
-    width: 800px;
-    height: 500px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    perspective: 2000px;
-}
-
-.page {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    background: white;
-    border-radius: 10px;
-    transform-origin: left;
-    transition: transform 0.8s ease;
-    backface-visibility: hidden;
-}
-
-/* layout */
-.left, .right {
-    width: 50%;
-    padding: 10px;
-}
-
-/* media */
-img, video {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    t();
 }
 
 /* flip */
-.page.flipped {
-    transform: rotateY(-150deg);
-}
+function next() {
+    let page = document.getElementById("p" + current);
 
-/* 💌 FINAL */
-#final {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 26px;
-    color: white;
+    if (page) {
+        page.classList.add("flipped");
+        current++;
+    }
+
+    if (current === 4) {
+        document.getElementById("book").style.display = "none";
+        document.getElementById("final").style.display = "block";
+    }
 }
