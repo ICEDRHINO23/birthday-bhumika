@@ -1,80 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Bhumika</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Bhumika</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- 🎉 BACKGROUND ELEMENTS -->
-    <div class="bg-balloon">🎈</div>
-    <div class="bg-balloon">🎈</div>
-    <div class="bg-balloon">🎈</div>
+<!-- 🎉 BACKGROUND -->
+<div class="bg-balloon">🎈</div>
+<div class="bg-balloon">🎈</div>
+<div class="bg-balloon">🎈</div>
 
-    <div class="sparkle">✨</div>
-    <div class="sparkle">✨</div>
-    <div class="sparkle">✨</div>
+<div class="sparkle">✨</div>
+<div class="sparkle">✨</div>
+<div class="sparkle">✨</div>
 
-    <!-- 😂 FUN TEXT -->
-    <div id="funText"></div>
+<!-- 😂 FUN TEXT -->
+<div id="funText"></div>
 
-    <!-- 🦋 BUTTERFLIES -->
-    <div id="butterflies"></div>
+<!-- 🦋 BUTTERFLIES -->
+<div id="butterflies"></div>
 
-    <!-- 🎁 GIFT -->
-    <div class="present" id="presentBox">
-        <div class="lid"></div>
-        <div class="box"></div>
+<!-- 🎁 GIFT -->
+<div class="present" id="presentBox">
+    <div class="lid"></div>
+    <div class="box"></div>
+</div>
+
+<!-- 📖 SCRAPBOOK -->
+<div class="scrapbook" id="scrapbook" style="display:none;">
+
+    <div class="page" id="page1">
+        <div class="image-page">
+            <img src="photo1.jpg">
+        </div>
+        <div class="text-page">
+            <p id="typingText"></p>
+        </div>
     </div>
 
-    <!-- 📖 SCRAPBOOK -->
-    <div class="scrapbook" id="scrapbook" style="display:none;">
-
-        <!-- PAGE 1 -->
-        <div class="page" id="page1">
-            <div class="image-page">
-                <img src="photo1.jpg">
-            </div>
-            <div class="text-page">
-                <p>Dear Bhumika 💖<br><br>
-                Happy Birthday! This is just a small surprise for you.</p>
-            </div>
+    <div class="page" id="page2">
+        <div class="image-page">
+            <img src="photo2.jpg">
         </div>
-
-        <!-- PAGE 2 -->
-        <div class="page" id="page2">
-            <div class="image-page">
-                <img src="photo2.jpg">
-            </div>
-            <div class="text-page">
-                <p>Every moment with you is special ✨</p>
-            </div>
+        <div class="text-page">
+            <p>Every moment with you is special ✨</p>
         </div>
-
-        <!-- PAGE 3 -->
-        <div class="page" id="page3">
-            <div class="image-page">
-                <img src="photo3.jpg">
-            </div>
-            <div class="text-page">
-                <p>You deserve all happiness 🎉</p>
-            </div>
-        </div>
-
-        <!-- BUTTONS -->
-        <button class="next-btn" onclick="nextPage()">Next ➡</button>
-        <button class="close-btn" onclick="closeBook()">Close ❌</button>
-
     </div>
 
-    <!-- AUDIO -->
-    <audio id="flipSound" src="flip.mp3"></audio>
-    <audio id="bgMusic" src="music.mp3" loop></audio>
+    <div class="page" id="page3">
+        <div class="image-page">
+            <img src="photo3.jpg">
+        </div>
+        <div class="text-page">
+            <p>You deserve all happiness 🎉</p>
+        </div>
+    </div>
 
-    <script src="script.js"></script>
+    <button class="next-btn" onclick="nextPage()">Next ➡</button>
+</div>
+
+<!-- AUDIO -->
+<audio id="flipSound" src="flip.mp3"></audio>
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<script src="script.js"></script>
 
 </body>
 </html>
