@@ -1,12 +1,22 @@
+/* 🎉 ANIMATED BACKGROUND */
 body {
     margin: 0;
     font-family: 'Comic Sans MS', cursive;
     height: 100vh;
     overflow: hidden;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+
+    background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb);
+    background-size: 600% 600%;
+    animation: gradientMove 10s ease infinite;
 }
 
-/* 😂 TEXT */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 😂 FUN TEXT */
 #funText {
     position: fixed;
     top: 40px;
@@ -29,11 +39,9 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
-
     animation: glowPulse 2s infinite;
 }
 
-/* glow */
 @keyframes glowPulse {
     0% { box-shadow: 0 0 10px pink; }
     50% { box-shadow: 0 0 30px red; }
@@ -47,7 +55,7 @@ body {
     position: relative;
 }
 
-/* ribbon */
+/* 🎀 ribbon on gift */
 .box::before {
     content: "";
     width: 20px;
@@ -78,7 +86,6 @@ body {
     transition: 0.6s;
 }
 
-/* open */
 .present.open .lid {
     transform: rotateX(120deg);
 }
@@ -111,29 +118,60 @@ body {
     padding: 20px;
 }
 
-/* 🎈 BG */
+/* 🎀 FALLING RIBBONS */
+.ribbon {
+    position: absolute;
+    width: 8px;
+    height: 120px;
+    background: linear-gradient(180deg, gold, orange);
+    border-radius: 5px;
+    animation: ribbonFall 6s linear infinite;
+    opacity: 0.7;
+}
+
+.ribbon:nth-child(1) { left: 10%; animation-delay: 0s; }
+.ribbon:nth-child(2) { left: 30%; animation-delay: 2s; }
+.ribbon:nth-child(3) { left: 60%; animation-delay: 1s; }
+.ribbon:nth-child(4) { left: 80%; animation-delay: 3s; }
+
+@keyframes ribbonFall {
+    0% { top: -150px; transform: rotate(0deg); }
+    100% { top: 110%; transform: rotate(360deg); }
+}
+
+/* 🎈 BALLOONS */
 .bg-balloon {
     position: absolute;
     font-size: 30px;
-    animation: float 8s infinite;
+    animation: float 8s linear infinite;
 }
+
+.bg-balloon:nth-child(5) { left: 20%; }
+.bg-balloon:nth-child(6) { left: 50%; }
+.bg-balloon:nth-child(7) { left: 80%; }
 
 @keyframes float {
     0% { bottom: -50px; }
-    100% { bottom: 100%; }
+    100% { bottom: 110%; }
 }
 
-/* ✨ */
+/* ✨ SPARKLES */
 .sparkle {
     position: absolute;
-    animation: blink 2s infinite;
+    font-size: 20px;
+    animation: sparkle 2s infinite;
 }
 
-@keyframes blink {
-    50% { opacity: 0.2; }
+.sparkle:nth-child(8) { top: 20%; left: 20%; }
+.sparkle:nth-child(9) { top: 50%; left: 70%; }
+.sparkle:nth-child(10) { top: 80%; left: 40%; }
+
+@keyframes sparkle {
+    0%,100% { opacity: 0.2; }
+    50% { opacity: 1; }
 }
 
-/* 🦋 */
+/* 🦋 BUTTERFLY */
 .butterfly {
     position: absolute;
     animation: fly 3s forwards;
