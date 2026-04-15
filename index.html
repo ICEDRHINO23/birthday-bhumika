@@ -9,13 +9,10 @@
 
 <body>
 
-<!-- 🎬 INTRO -->
 <div id="intro">🎁 This is a Surprise...</div>
 
-<!-- 🎉 BACKGROUND -->
 <div class="bg" id="bg"></div>
 
-<!-- 😂 FUN TEXT -->
 <div id="funText"></div>
 
 <!-- 🎁 GIFT -->
@@ -27,49 +24,29 @@
 <!-- 📖 BOOK -->
 <div id="book">
 
-    <!-- PAGE 1 -->
     <div class="page" id="p1">
         <div class="left">
-            <video autoplay muted loop playsinline>
-                <source src="bhumika.mp4" type="video/mp4">
+            <video autoplay muted loop>
+                <source src="bhumika.mp4">
             </video>
         </div>
-        <div class="right">
-            <p id="typing"></p>
-        </div>
+        <div class="right"><p id="text1"></p></div>
     </div>
 
-    <!-- PAGE 2 -->
     <div class="page" id="p2">
-        <div class="left">
-            <img src="20240429_230322.jpg" alt="memory1">
-        </div>
-        <div class="right">
-            <p>Every moment with you is special ✨</p>
-        </div>
+        <div class="left"><img src="20240429_230322.jpg"></div>
+        <div class="right"><p id="text2"></p></div>
     </div>
 
-    <!-- PAGE 3 -->
     <div class="page" id="p3">
-        <div class="left">
-            <img src="20240906_204953.jpg" alt="memory2">
-        </div>
-        <div class="right">
-            <p>You deserve all happiness 🎉</p>
-        </div>
+        <div class="left"><img src="20240906_204953.jpg"></div>
+        <div class="right"><p id="text3"></p></div>
     </div>
-
-    <!-- BUTTON -->
-    <button id="nextBtn" onclick="next()">Next ➡</button>
 
 </div>
 
-<!-- 💌 FINAL MESSAGE -->
 <div id="final">
-    <div class="letter">
-        💌 More surprises are going to be unveiled...<br><br>
-        Wait for it ✨
-    </div>
+    💌 More to go but need to wait...
 </div>
 
 <script src="script.js"></script>
