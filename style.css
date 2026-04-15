@@ -245,3 +245,64 @@ img, video {
     transition: opacity 0.3s;
     font-size: 18px;
 }
+/* 📱 MOBILE OPTIMIZATION */
+@media (max-width: 768px) {
+
+    body {
+        overflow: hidden;
+    }
+
+    /* 🎁 Gift */
+    #gift {
+        width: 110px;
+        height: 110px;
+    }
+
+    /* 😂 message */
+    #funText {
+        font-size: 14px;
+        padding: 6px 10px;
+        top: 15px;
+    }
+
+    /* 📖 BOOK */
+    #book {
+        width: 95%;
+        height: 80vh;
+    }
+
+    .page {
+        flex-direction: column;
+    }
+
+    /* stack vertically */
+    .left, .right {
+        width: 100%;
+        height: 50%;
+        padding: 8px;
+    }
+
+    /* media */
+    img, video {
+        height: 100%;
+        object-fit: contain;
+    }
+
+    /* text */
+    .right {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    /* final message */
+    #final {
+        width: 90%;
+        font-size: 18px;
+    }
+
+    /* restart button */
+    #final button {
+        font-size: 14px;
+        padding: 8px 14px;
+    }
+}
