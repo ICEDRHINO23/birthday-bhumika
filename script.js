@@ -1,83 +1,73 @@
+
+// 🎁 Elements
 const present = document.getElementById("presentBox");
 const scrapbook = document.getElementById("scrapbook");
-const bgMusic = document.getElementById("bgMusic");
 
-/* intro */
+// 📖 Page control
+let currentPage = 1;
+
+/* 🎬 Show gift after intro */
 setTimeout(() => {
     present.style.display = "block";
 }, 4000);
 
-/* open gift */
+/* 🎁 Open gift */
 present.addEventListener("click", () => {
+
+    // open lid animation
     present.classList.add("open");
 
     setTimeout(() => {
         present.style.display = "none";
         scrapbook.style.display = "block";
 
-        bgMusic.play();
-        typeText("Dear Bhumika 💖 Happy Birthday!", "typingText");
-        releaseButterflies();
-    }, 600);
+        // start typing message
+        typeText(
+            "Dear Bhumika 💖\n\nHappy Birthday! This small surprise is just for you 😊",
+            "typingText"
+        );
+
+    }, 500);
 });
 
-/* typing */
-function typeText(text, id) {
+
+/* ✍️ Typing Effect */
+function typeText(text, elementId) {
     let i = 0;
-    const el = document.getElementById(id);
+    const el = document.getElementById(elementId);
     el.innerHTML = "";
 
-    function t() {
+    function typing() {
         if (i < text.length) {
-            el.innerHTML += text[i++];
-            setTimeout(t, 35);
+            el.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, 40);
         }
     }
-    t();
+
+    typing();
 }
 
-/* page flip */
-let currentPage = 1;
 
+/* 📖 Page Flip */
 function nextPage() {
     const page = document.getElementById("page" + currentPage);
 
     if (page) {
-        page.classList.add("flipping");
-
-        setTimeout(() => {
-            page.classList.add("flipped");
-            page.classList.remove("flipping");
-        }, 200);
-
+        page.classList.add("flipped");
         currentPage++;
     }
-
-    if (currentPage === 4) heartBurst();
 }
 
-/* butterflies */
-function releaseButterflies() {
-    for (let i = 0; i < 10; i++) {
-        let b = document.createElement("div");
-        b.className = "butterfly";
-        b.innerText = "🦋";
-        b.style.left = "50%";
-        b.style.top = "50%";
-        document.body.appendChild(b);
-        setTimeout(() => b.remove(), 3000);
-    }
-}
 
-/* hearts */
-function heartBurst() {
-    for (let i = 0; i < 20; i++) {
-        let h = document.createElement("div");
-        h.className = "heart";
-        h.innerText = "💖";
-        h.style.left = "50%";
-        h.style.top = "50%";
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 2000);
-    }
+/* 🔄 OPTIONAL RESET (if needed later) */
+function resetBook() {
+    currentPage = 1;
+
+    document.querySelectorAll(".page").forEach((page, index) => {
+        page.classList.remove("flipped");
+    });
+
+    scrapbook.style.display = "none";
+    present.style.display = "block";
 }
