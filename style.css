@@ -1,170 +1,228 @@
+/* 🎉 BACKGROUND */
 body {
-    margin:0;
-    font-family:'Comic Sans MS',cursive;
-    overflow:hidden;
-    height:100vh;
+    margin: 0;
+    font-family: 'Comic Sans MS', cursive;
+    overflow: hidden;
+    height: 100vh;
 
-    background:linear-gradient(270deg,#ff9a9e,#fad0c4,#fbc2eb);
-    background-size:600% 600%;
-    animation:bgMove 10s infinite;
+    background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb);
+    background-size: 600% 600%;
+    animation: bgMove 10s infinite;
 }
 
 @keyframes bgMove {
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* 🌌 PARTICLES */
-#particles{
-    position:fixed;
-    top:0;left:0;
-    z-index:0;
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
 }
 
 /* 🎊 CONFETTI */
-#confettiCanvas{
-    position:fixed;
-    top:0;left:0;
-    pointer-events:none;
-    z-index:2;
+#confettiCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 2;
 }
 
 /* 😂 TEXT */
-#funText{
-    position:fixed;
-    top:40px;
-    left:50%;
-    transform:translateX(-50%);
-    background:#ff4d6d;
-    color:white;
-    padding:10px 20px;
-    border-radius:20px;
-    opacity:0;
-    z-index:9999;
+#funText {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ff4d6d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    opacity: 0;
+    z-index: 9999;
 }
 
 /* 🎁 GIFT */
-.present{
-    width:180px;height:180px;
-    position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,-50%);
-    cursor:pointer;
-    animation:glow 2s infinite;
-    z-index:5;
+.present {
+    width: 180px;
+    height: 180px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    animation: glow 2s infinite;
+    z-index: 5;
 }
 
-@keyframes glow{
-    0%{box-shadow:0 0 10px pink;}
-    50%{box-shadow:0 0 30px red;}
-    100%{box-shadow:0 0 10px pink;}
+@keyframes glow {
+    0% { box-shadow: 0 0 10px pink; }
+    50% { box-shadow: 0 0 30px red; }
+    100% { box-shadow: 0 0 10px pink; }
 }
 
-.box{
-    width:100%;height:100%;
-    background:#ff4d6d;
-    position:relative;
+.box {
+    width: 100%;
+    height: 100%;
+    background: #ff4d6d;
+    position: relative;
 }
 
 /* ribbon */
-.box::before{
-    content:"";
-    width:20px;height:100%;
-    background:gold;
-    position:absolute;
-    left:50%;
-    transform:translateX(-50%);
+.box::before {
+    content: "";
+    width: 20px;
+    height: 100%;
+    background: gold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
-.box::after{
-    content:"";
-    height:20px;width:100%;
-    background:gold;
-    position:absolute;
-    top:50%;
+
+.box::after {
+    content: "";
+    height: 20px;
+    width: 100%;
+    background: gold;
+    position: absolute;
+    top: 50%;
 }
 
 /* lid */
-.lid{
-    width:100%;height:40px;
-    background:#c9184a;
-    position:absolute;
-    top:-40px;
-    transform-origin:bottom;
-    transition:0.6s;
+.lid {
+    width: 100%;
+    height: 40px;
+    background: #c9184a;
+    position: absolute;
+    top: -40px;
+    transform-origin: bottom;
+    transition: 0.6s;
 }
 
-.present.open .lid{
-    transform:rotateX(120deg);
+.present.open .lid {
+    transform: rotateX(120deg);
 }
 
 /* 📖 SCRAPBOOK */
-.scrapbook{
-    width:80%;
-    height:500px;
-    background:white;
-    position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,-50%);
-    z-index:10;
+.scrapbook {
+    width: 80%;
+    height: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    perspective: 1500px;
+    z-index: 10;
 }
 
-.page{display:flex;}
-.image-page{width:50%;}
-.image-page img{width:100%;}
-.text-page{width:50%;padding:20px;}
+/* 📄 PAGES */
+.page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    background: white;
 
-.next-btn{
-    position:absolute;
-    bottom:20px;right:20px;
-}
-
-/* 🎀 RIBBONS */
-.ribbon{
-    position:absolute;
-    width:8px;height:120px;
-    background:linear-gradient(gold,orange);
-    animation:fall 6s infinite linear;
-}
-@keyframes fall{
-    0%{top:-100px;}
-    100%{top:110%;}
+    transform-origin: left;
+    transition: transform 0.8s ease;
+    backface-visibility: hidden;
 }
 
-/* 🎈 */
-.bg-balloon{
-    position:absolute;
-    font-size:30px;
-    animation:float 8s infinite linear;
-}
-@keyframes float{
-    0%{bottom:-50px;}
-    100%{bottom:110%;}
+/* flip */
+.page.flipped {
+    transform: rotateY(-180deg);
 }
 
-/* ✨ */
-.sparkle{
-    position:absolute;
-    animation:blink 2s infinite;
+/* image */
+.image-page {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-@keyframes blink{
-    50%{opacity:0.2;}
+
+.image-page img,
+.image-page video {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* text */
+.text-page {
+    width: 50%;
+    padding: 20px;
+}
+
+/* typing style */
+#typingText {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 22px;
+}
+
+/* button */
+.next-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+/* 🎀 ribbons */
+.ribbon {
+    position: absolute;
+    width: 8px;
+    height: 120px;
+    background: linear-gradient(gold, orange);
+    animation: fall 6s linear infinite;
+}
+
+@keyframes fall {
+    0% { top: -100px; }
+    100% { top: 110%; }
+}
+
+/* 🎈 balloons */
+.bg-balloon {
+    position: absolute;
+    font-size: 30px;
+    animation: float 8s linear infinite;
+}
+
+@keyframes float {
+    0% { bottom: -50px; }
+    100% { bottom: 110%; }
+}
+
+/* ✨ sparkle */
+.sparkle {
+    position: absolute;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.2; }
 }
 
 /* 🦋 */
-.butterfly{
-    position:absolute;
-    animation:fly 3s forwards;
+.butterfly {
+    position: absolute;
+    animation: fly 3s forwards;
 }
-@keyframes fly{
-    to{transform:translate(200px,-300px);opacity:0;}
+
+@keyframes fly {
+    to { transform: translate(200px, -300px); opacity: 0; }
 }
 
 /* 💖 */
-.heart{
-    position:absolute;
-    animation:heartFly 2s forwards;
+.heart {
+    position: absolute;
+    animation: heartFly 2s forwards;
 }
-@keyframes heartFly{
-    to{transform:translate(200px,-300px);opacity:0;}
+
+@keyframes heartFly {
+    to { transform: translate(200px, -300px); opacity: 0; }
 }
