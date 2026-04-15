@@ -74,9 +74,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 20000);
 
     /* 🎯 MOVEMENT TRIGGERS */
-    gift.addEventListener("mouseenter", () => {
-        if (canOpen) moveGift();
-    });
+   /* 📱 TOUCH FRIENDLY MOVEMENT */
+document.addEventListener("touchstart", (e) => {
+
+    if (!canOpen || !allowMove) return;
+
+    moveGift();
+
+});
 
     gift.addEventListener("touchstart", () => {
         if (canOpen) moveGift();
