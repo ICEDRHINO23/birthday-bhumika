@@ -1,22 +1,37 @@
 body {
     margin: 0;
     overflow: hidden;
-    height: 100vh;
     font-family: 'Comic Sans MS';
-
-    background: radial-gradient(circle at 20% 30%, #ff9a9e, transparent),
-                radial-gradient(circle at 80% 70%, #fbc2eb, transparent),
-                #0f0f1a;
+    background: #0f0f1a;
 }
 
-/* particles */
+/* 🎬 INTRO */
+#intro {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #0f0f1a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    z-index: 9999;
+    animation: fadeOut 3s forwards 2s;
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+}
+
+/* 🌌 PARTICLES */
 #particles {
     position: fixed;
     top: 0;
     left: 0;
 }
 
-/* gift */
+/* 🎁 GIFT */
 .present {
     width: 180px;
     height: 180px;
@@ -72,7 +87,7 @@ body {
     transform: rotateX(120deg);
 }
 
-/* scrapbook */
+/* 📖 BOOK */
 .scrapbook {
     width: 80%;
     height: 500px;
@@ -80,10 +95,10 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    perspective: 2000px;
+    perspective: 2500px;
 }
 
-/* pages */
+/* 📄 PAGE */
 .page {
     position: absolute;
     width: 100%;
@@ -92,7 +107,10 @@ body {
     background: white;
 
     transform-origin: left;
-    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    transition: transform 1s cubic-bezier(0.77,0,0.18,1);
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
 /* stacking */
@@ -106,10 +124,13 @@ body {
     z-index: 0;
 }
 
-/* media */
-.image-page {
-    width: 50%;
+/* shadow */
+.page.flipped::before {
+    box-shadow: inset -50px 0 80px rgba(0,0,0,0.2);
 }
+
+/* media */
+.image-page { width: 50%; }
 
 .image-page img,
 .image-page video {
@@ -119,10 +140,7 @@ body {
 }
 
 /* text */
-.text-page {
-    width: 50%;
-    padding: 20px;
-}
+.text-page { width: 50%; padding: 20px; }
 
 #typingText {
     font-family: cursive;
