@@ -1,35 +1,14 @@
 const present = document.getElementById("presentBox");
 const scrapbook = document.getElementById("scrapbook");
-const funText = document.getElementById("funText");
 const bgMusic = document.getElementById("bgMusic");
 
-/* 🎬 intro */
+/* intro */
 setTimeout(() => {
     present.style.display = "block";
 }, 4000);
 
-/* 🎯 funny */
-let canOpen = false;
-setTimeout(() => canOpen = true, 8000);
-
-const msgs = ["😂 Not so easy!", "Catch me!", "Try again!"];
-
-present.addEventListener("mouseenter", () => {
-    if (canOpen) return;
-
-    present.style.left = Math.random() * 80 + "%";
-    present.style.top = Math.random() * 80 + "%";
-
-    funText.innerText = msgs[Math.floor(Math.random() * msgs.length)];
-    funText.style.opacity = 1;
-
-    setTimeout(() => funText.style.opacity = 0, 1500);
-});
-
-/* 🎁 open */
+/* open gift */
 present.addEventListener("click", () => {
-    if (!canOpen) return;
-
     present.classList.add("open");
 
     setTimeout(() => {
@@ -42,7 +21,7 @@ present.addEventListener("click", () => {
     }, 600);
 });
 
-/* ✍️ typing */
+/* typing */
 function typeText(text, id) {
     let i = 0;
     const el = document.getElementById(id);
@@ -57,21 +36,27 @@ function typeText(text, id) {
     t();
 }
 
-/* 📖 flip */
+/* page flip */
 let currentPage = 1;
 
 function nextPage() {
-    let page = document.getElementById("page" + currentPage);
+    const page = document.getElementById("page" + currentPage);
 
     if (page) {
-        page.classList.add("flipped");
+        page.classList.add("flipping");
+
+        setTimeout(() => {
+            page.classList.add("flipped");
+            page.classList.remove("flipping");
+        }, 200);
+
         currentPage++;
     }
 
     if (currentPage === 4) heartBurst();
 }
 
-/* 🦋 */
+/* butterflies */
 function releaseButterflies() {
     for (let i = 0; i < 10; i++) {
         let b = document.createElement("div");
@@ -84,7 +69,7 @@ function releaseButterflies() {
     }
 }
 
-/* 💖 */
+/* hearts */
 function heartBurst() {
     for (let i = 0; i < 20; i++) {
         let h = document.createElement("div");
