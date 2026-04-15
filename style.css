@@ -1,103 +1,160 @@
+/* 🌌 BACKGROUND */
 body {
     margin: 0;
     overflow: hidden;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #ff9a9e, #fad0c4);
 }
 
-/* intro */
+/* 🎬 INTRO SCREEN */
 #intro {
     position: fixed;
     width: 100%;
     height: 100%;
     background: #0f0f1a;
     color: white;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 30px;
+
+    font-size: 32px;
     z-index: 9999;
+
     animation: fadeOut 3s forwards 2s;
 }
 
 @keyframes fadeOut {
-    to { opacity: 0; visibility: hidden; }
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
 }
 
-/* gift */
+/* 🎁 GIFT BOX */
 .present {
-    width: 150px;
-    height: 150px;
+    width: 160px;
+    height: 160px;
+
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
     cursor: pointer;
 }
 
+/* box */
 .box {
     width: 100%;
     height: 100%;
     background: #ff4d6d;
+    position: relative;
+    border-radius: 6px;
 }
 
+/* ribbon vertical */
+.box::before {
+    content: "";
+    width: 18px;
+    height: 100%;
+    background: gold;
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* ribbon horizontal */
+.box::after {
+    content: "";
+    height: 18px;
+    width: 100%;
+    background: gold;
+
+    position: absolute;
+    top: 50%;
+}
+
+/* lid */
 .lid {
     width: 100%;
-    height: 30px;
+    height: 35px;
     background: #c9184a;
+
     position: absolute;
-    top: -30px;
-    transition: 0.5s;
+    top: -35px;
+
+    transform-origin: bottom;
+    transition: 0.6s ease;
+    border-radius: 6px;
 }
 
+/* lid open animation */
 .present.open .lid {
     transform: rotateX(120deg);
 }
 
-/* scrapbook */
+/* 📖 SCRAPBOOK */
 .scrapbook {
     width: 800px;
     height: 500px;
+
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
     perspective: 2000px;
 }
 
-/* pages */
+/* 📄 PAGE */
 .page {
     position: absolute;
     width: 100%;
     height: 100%;
+
     display: flex;
     background: white;
+    border-radius: 10px;
+    overflow: hidden;
 
     transform-origin: left;
     transition: transform 0.8s ease;
 
-    backface-visibility: hidden;
+    backface-visibility: hidden; /* 🔥 IMPORTANT FIX */
 }
 
-/* stacking */
+/* stacking order */
 #page1 { z-index: 4; }
 #page2 { z-index: 3; }
 #page3 { z-index: 2; }
 #page4 { z-index: 1; }
 
-/* FIXED flip */
+/* 📖 FIXED FLIP (no disappearing page) */
 .page.flipped {
     transform: rotateY(-160deg);
 }
 
-/* layout */
-.image-page { width: 50%; }
-.text-page {
+/* 📸 LEFT SIDE */
+.image-page {
     width: 50%;
-    padding: 20px;
+    height: 100%;
 }
 
-/* media */
+/* 📝 RIGHT SIDE */
+.text-page {
+    width: 50%;
+    padding: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #fff8f8;
+}
+
+/* media fit */
 .image-page img,
 .image-page video {
     width: 100%;
@@ -105,9 +162,27 @@ body {
     object-fit: cover;
 }
 
+/* typing text */
+#typingText {
+    font-size: 22px;
+    font-family: cursive;
+    text-align: center;
+}
+
 /* button */
 .next-btn {
     position: absolute;
     bottom: 20px;
     right: 20px;
+
+    padding: 8px 14px;
+    border: none;
+    background: #ff4d6d;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.next-btn:hover {
+    background: #e63950;
 }
