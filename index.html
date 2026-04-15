@@ -9,14 +9,25 @@
 
 <body>
 
+<!-- 🎬 INTRO -->
+<div id="intro">
+    <h1>🎁 A Surprise for You...</h1>
+</div>
+
+<!-- 🌌 PARTICLES -->
 <canvas id="particles"></canvas>
+
+<!-- 🎊 CONFETTI -->
 <canvas id="confettiCanvas"></canvas>
 
+<!-- 😂 TEXT -->
 <div id="funText"></div>
+
+<!-- 🦋 -->
 <div id="butterflies"></div>
 
 <!-- 🎁 GIFT -->
-<div class="present" id="presentBox">
+<div class="present" id="presentBox" style="display:none;">
     <div class="lid"></div>
     <div class="box"></div>
 </div>
@@ -24,7 +35,7 @@
 <!-- 📖 SCRAPBOOK -->
 <div class="scrapbook" id="scrapbook" style="display:none;">
 
-    <!-- PAGE 1 VIDEO -->
+    <!-- PAGE 1 (VIDEO) -->
     <div class="page" id="page1">
         <div class="image-page">
             <video autoplay muted loop playsinline>
@@ -67,6 +78,7 @@
     </div>
 
     <button class="next-btn" onclick="nextPage()">Next ➡</button>
+
 </div>
 
 <audio id="flipSound" src="flip.mp3"></audio>
