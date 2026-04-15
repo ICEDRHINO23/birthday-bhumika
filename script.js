@@ -1,106 +1,110 @@
-// 🎉 background elements
-const bg = document.getElementById("bg");
-const emojis = ["🎈","🎂","🎉","🎁","🎀"];
+document.addEventListener("DOMContentLoaded", () => {
 
-for (let i = 0; i < 35; i++) {
-    let el = document.createElement("span");
-    el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    const gift = document.getElementById("gift");
+    const book = document.getElementById("book");
+    const fun = document.getElementById("funText");
 
-    el.style.left = Math.random() * 100 + "%";
-    el.style.animationDuration = (6 + Math.random() * 10) + "s";
-    el.style.fontSize = (25 + Math.random() * 25) + "px";
+    let canOpen = false;
+    let current = 1;
+    let typingDone = false;
 
-    bg.appendChild(el);
-}
+    const msgs = ["😂 Catch me!", "Not so easy!", "Try again!"];
 
-// 🎁 elements
-const gift = document.getElementById("gift");
-const book = document.getElementById("book");
-const fun = document.getElementById("funText");
+    // 🎬 enable gift mode after intro
+    setTimeout(() => {
+        document.body.classList.add("gift-mode");
+        canOpen = true;
+    }, 4000);
 
-let canOpen = false;
-let current = 1;
-
-const msgs = ["😂 Catch me!", "Try again!", "Not yet!"];
-
-/* start */
-setTimeout(() => {
-    moveGift();
-}, 4000);
-
-/* move */
-function moveGift() {
-
-    let count = 0;
-
-    let interval = setInterval(() => {
+    /* 🎁 MOVE ONLY ON HOVER */
+    gift.addEventListener("mouseenter", () => {
+        if (!canOpen) return;
 
         let x = Math.random() * (window.innerWidth - 150);
         let y = Math.random() * (window.innerHeight - 150);
 
+        gift.style.transition = "0.4s";
         gift.style.left = x + "px";
         gift.style.top = y + "px";
         gift.style.transform = "none";
 
         fun.innerText = msgs[Math.floor(Math.random() * msgs.length)];
+    });
 
-        count++;
+    /* 🎁 OPEN */
+    gift.addEventListener("click", () => {
 
-        if (count > 15) {
-            clearInterval(interval);
+        gift.classList.add("open");
 
-            gift.style.left = "50%";
-            gift.style.top = "50%";
-            gift.style.transform = "translate(-50%, -50%)";
+        setTimeout(() => {
+            gift.style.display = "none";
+            book.style.display = "block";
 
-            fun.innerText = "🎁 Open me!";
-            canOpen = true;
+            startTyping(current);
+
+        }, 500);
+    });
+
+    /* ✍️ TYPEWRITER */
+    function startTyping(page) {
+
+        typingDone = false;
+
+        const texts = {
+            1: "Dear Bhumika 💖\n\nYou are truly special.\nThis is just the beginning 😊",
+            2: "Every memory with you feels warm and unforgettable ✨",
+            3: "You deserve happiness, smiles and beautiful moments always 🎉"
+        };
+
+        const el = document.getElementById("text" + page);
+        el.innerHTML = "";
+
+        let i = 0;
+
+        function type() {
+            if (i < texts[page].length) {
+
+                if (texts[page][i] === "\n") {
+                    el.innerHTML += "<br>";
+                } else {
+                    el.innerHTML += texts[page][i];
+                }
+
+                i++;
+                setTimeout(type, 40);
+            } else {
+                typingDone = true;
+            }
         }
 
-    }, 700);
-}
+        type();
+    }
 
-/* open */
-gift.addEventListener("click", () => {
+    /* 📖 CLICK RIGHT SIDE TO FLIP */
+    document.querySelectorAll(".right").forEach((el) => {
 
-    if (!canOpen) return;
+        el.addEventListener("click", () => {
 
-    gift.classList.add("open");
+            if (!typingDone) return;
 
-    setTimeout(() => {
-        gift.style.display = "none";
-        book.style.display = "block";
+            let page = document.getElementById("p" + current);
 
-        typeText("Dear Bhumika 💖 Happy Birthday!", "typing");
+            if (page) {
+                page.classList.add("flipped");
+                current++;
+            }
 
-    }, 500);
+            if (current <= 3) {
+                startTyping(current);
+            } else {
+                setTimeout(() => {
+                    book.style.display = "none";
+                    document.getElementById("final").style.display = "block";
+                }, 800);
+            }
+
+        });
+
+    });
+
 });
-
-/* typing */
-function typeText(text, id) {
-    let i = 0;
-    let el = document.getElementById(id);
-
-    function t() {
-        if (i < text.length) {
-            el.innerHTML += text[i++];
-            setTimeout(t, 40);
-        }
-    }
-    t();
-}
-
-/* flip */
-function next() {
-    let page = document.getElementById("p" + current);
-
-    if (page) {
-        page.classList.add("flipped");
-        current++;
-    }
-
-    if (current === 4) {
-        document.getElementById("book").style.display = "none";
-        document.getElementById("final").style.display = "block";
-    }
-}
