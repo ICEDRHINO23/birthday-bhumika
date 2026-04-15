@@ -163,6 +163,9 @@ body {
     transition: transform 0.8s ease;
 
     box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    #p1 { z-index: 3; }
+#p2 { z-index: 2; }
+#p3 { z-index: 1; }
 }
 
 /* layout */
