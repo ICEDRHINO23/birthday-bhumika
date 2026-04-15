@@ -31,6 +31,7 @@
             </video>
         </div>
         <div class="text-page">
+            <!-- ✅ important: empty initially -->
             <p id="typingText"></p>
         </div>
     </div>
@@ -38,7 +39,7 @@
     <!-- PAGE 2 -->
     <div class="page" id="page2">
         <div class="image-page">
-            <img src="20240429_230322.jpg">
+            <img src="20240429_230322.jpg" alt="Memory 1">
         </div>
         <div class="text-page">
             <p>Every moment with you is special ✨</p>
@@ -48,7 +49,7 @@
     <!-- PAGE 3 -->
     <div class="page" id="page3">
         <div class="image-page">
-            <img src="20240906_204953.jpg">
+            <img src="20240906_204953.jpg" alt="Memory 2">
         </div>
         <div class="text-page">
             <p>You deserve all happiness 🎉</p>
@@ -58,17 +59,19 @@
     <!-- PAGE 4 -->
     <div class="page" id="page4">
         <div class="image-page">
-            <img src="VideoCapture_20240427-034201.jpg">
+            <img src="VideoCapture_20240427-034201.jpg" alt="Memory 3">
         </div>
         <div class="text-page">
             <p>Happy Birthday Bhumika 💖</p>
         </div>
     </div>
 
+    <!-- BUTTON -->
     <button onclick="nextPage()" class="next-btn">Next ➡</button>
 
 </div>
 
+<!-- ✅ load script at end (correct) -->
 <script src="script.js"></script>
 
 </body>
