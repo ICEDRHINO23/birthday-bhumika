@@ -1,93 +1,139 @@
-const present = document.getElementById("presentBox");
-const scrapbook = document.getElementById("scrapbook");
-const funText = document.getElementById("funText");
-const flipSound = document.getElementById("flipSound");
-const bgMusic = document.getElementById("bgMusic");
+const present=document.getElementById("presentBox");
+const scrapbook=document.getElementById("scrapbook");
+const funText=document.getElementById("funText");
+const flipSound=document.getElementById("flipSound");
+const bgMusic=document.getElementById("bgMusic");
 
-let canOpen = false;
+/* 🎯 FUN */
+const msgs=["😂 Not so easy!","Catch me!","Hehe 😜","Try again!"];
+let canOpen=false;
 
-/* enable after 10 sec */
-setTimeout(() => {
-    canOpen = true;
-}, 10000);
+setTimeout(()=>canOpen=true,10000);
 
-/* funny messages */
-const messages = ["😂 Not so easy!", "Try again!", "Catch me!", "Hehe 😜"];
+function moveGift(){
+    if(canOpen) return;
 
-function moveGift() {
-    if (canOpen) return;
+    present.style.left=Math.random()*80+"%";
+    present.style.top=Math.random()*80+"%";
 
-    let x = Math.random() * (window.innerWidth - 200);
-    let y = Math.random() * (window.innerHeight - 200);
+    funText.innerText=msgs[Math.floor(Math.random()*msgs.length)];
+    funText.style.opacity=1;
 
-    present.style.left = x + "px";
-    present.style.top = y + "px";
-
-    funText.innerText = messages[Math.floor(Math.random() * messages.length)];
-    funText.style.opacity = 1;
-
-    setTimeout(() => funText.style.opacity = 0, 1500);
+    setTimeout(()=>funText.style.opacity=0,1500);
 }
 
-present.addEventListener("mouseenter", moveGift);
-present.addEventListener("touchstart", moveGift);
+present.addEventListener("mouseenter",moveGift);
+present.addEventListener("touchstart",moveGift);
 
-/* open gift */
-present.addEventListener("click", () => {
-    if (!canOpen) return;
+/* 🎁 OPEN */
+present.addEventListener("click",()=>{
+    if(!canOpen) return;
 
     present.classList.add("open");
 
-    setTimeout(() => {
-        present.style.display = "none";
-        scrapbook.style.display = "block";
+    setTimeout(()=>{
+        present.style.display="none";
+        scrapbook.style.display="block";
 
         bgMusic.play();
         releaseButterflies();
+        createConfetti(); drawConfetti();
+        typeText("Dear Bhumika 💖 Happy Birthday!", "typingText");
 
-        typeText("Dear Bhumika 💖 Happy Birthday! This is for you 😊", "typingText");
-
-    }, 600);
+    },600);
 });
 
-/* butterflies */
-function releaseButterflies() {
-    const container = document.getElementById("butterflies");
-
-    for (let i = 0; i < 10; i++) {
-        let b = document.createElement("div");
-        b.className = "butterfly";
-        b.innerText = "🦋";
-
-        b.style.left = "50%";
-        b.style.top = "50%";
-
-        container.appendChild(b);
-
-        setTimeout(() => b.remove(), 3000);
+/* 🦋 */
+function releaseButterflies(){
+    for(let i=0;i<10;i++){
+        let b=document.createElement("div");
+        b.className="butterfly";
+        b.innerText="🦋";
+        b.style.left="50%";
+        b.style.top="50%";
+        document.body.appendChild(b);
+        setTimeout(()=>b.remove(),3000);
     }
 }
 
-/* typing */
-function typeText(text, id) {
-    let i = 0;
-    const el = document.getElementById(id);
+/* 🎊 CONFETTI */
+const canvas=document.getElementById("confettiCanvas");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
 
-    function typing() {
-        if (i < text.length) {
-            el.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(typing, 40);
+let confetti=[];
+function createConfetti(){
+    for(let i=0;i<100;i++){
+        confetti.push({
+            x:Math.random()*canvas.width,
+            y:Math.random()*canvas.height,
+            size:5,
+            speed:3
+        });
+    }
+}
+function drawConfetti(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    confetti.forEach(c=>{
+        ctx.fillRect(c.x,c.y,c.size,c.size);
+        c.y+=c.speed;
+    });
+    requestAnimationFrame(drawConfetti);
+}
+
+/* 💌 */
+function typeText(text,id){
+    let i=0,el=document.getElementById(id);
+    function t(){
+        if(i<text.length){
+            el.innerHTML+=text[i++];
+            setTimeout(t,40);
         }
     }
-
-    typing();
+    t();
 }
 
-/* pages */
-let currentPage = 1;
-
-function nextPage() {
+/* 📖 */
+let currentPage=1;
+function nextPage(){
     currentPage++;
     flipSound.play();
+    if(currentPage===4) heartBurst();
 }
+
+/* 💖 */
+function heartBurst(){
+    for(let i=0;i<20;i++){
+        let h=document.createElement("div");
+        h.className="heart";
+        h.innerText="💖";
+        h.style.left="50%";
+        h.style.top="50%";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),2000);
+    }
+}
+
+/* 🌌 PARTICLES */
+const pCanvas=document.getElementById("particles");
+const pCtx=pCanvas.getContext("2d");
+pCanvas.width=innerWidth;
+pCanvas.height=innerHeight;
+
+let particles=[];
+for(let i=0;i<60;i++){
+    particles.push({x:Math.random()*pCanvas.width,y:Math.random()*pCanvas.height});
+}
+
+function drawParticles(){
+    pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
+    particles.forEach(p=>{
+        pCtx.fillStyle="white";
+        pCtx.fillRect(p.x,p.y,2,2);
+        p.y-=1;
+        if(p.y<0) p.y=pCanvas.height;
+    });
+    requestAnimationFrame(drawParticles);
+}
+drawParticles();
