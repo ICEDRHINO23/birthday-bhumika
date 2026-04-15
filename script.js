@@ -34,6 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
     /* 🎁 OPEN */
     gift.addEventListener("click", () => {
 
+        if (!canOpen) return;
+
         gift.classList.add("open");
 
         setTimeout(() => {
@@ -70,7 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 i++;
-
                 setTimeout(type, 40);
             } else {
                 typingDone = true;
@@ -80,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type();
     }
 
-    /* 📖 ONLY CURRENT PAGE CLICK WORKS */
+    /* 📖 PAGE FLIP (ONLY ACTIVE PAGE) */
     function handleFlip() {
 
         if (!typingDone) return;
@@ -105,107 +106,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    /* 🎯 ATTACH CLICK ONLY TO RIGHT SIDE OF ACTIVE PAGE */
-    document.getElementById("book").addEventListener("click", (e) => {
+    /* 🎯 CLICK ONLY RIGHT SIDE */
+    book.addEventListener("click", (e) => {
 
         const right = e.target.closest(".right");
 
         if (!right) return;
 
         handleFlip();
-    });
-
-});
-
-    /* 🎁 MOVE ONLY ON HOVER */
-    gift.addEventListener("mouseenter", () => {
-        if (!canOpen) return;
-
-        let x = Math.random() * (window.innerWidth - 150);
-        let y = Math.random() * (window.innerHeight - 150);
-
-        gift.style.transition = "0.4s";
-        gift.style.left = x + "px";
-        gift.style.top = y + "px";
-        gift.style.transform = "none";
-
-        fun.innerText = msgs[Math.floor(Math.random() * msgs.length)];
-    });
-
-    /* 🎁 OPEN */
-    gift.addEventListener("click", () => {
-
-        gift.classList.add("open");
-
-        setTimeout(() => {
-            gift.style.display = "none";
-            book.style.display = "block";
-
-            startTyping(current);
-
-        }, 500);
-    });
-
-    /* ✍️ TYPEWRITER */
-    function startTyping(page) {
-
-        typingDone = false;
-
-        const texts = {
-            1: "Dear Bhumika 💖\n\nYou are truly special.\nThis is just the beginning 😊",
-            2: "Every memory with you feels warm and unforgettable ✨",
-            3: "You deserve happiness, smiles and beautiful moments always 🎉"
-        };
-
-        const el = document.getElementById("text" + page);
-        el.innerHTML = "";
-
-        let i = 0;
-
-        function type() {
-            if (i < texts[page].length) {
-
-                if (texts[page][i] === "\n") {
-                    el.innerHTML += "<br>";
-                } else {
-                    el.innerHTML += texts[page][i];
-                }
-
-                i++;
-                setTimeout(type, 40);
-            } else {
-                typingDone = true;
-            }
-        }
-
-        type();
-    }
-
-    /* 📖 CLICK RIGHT SIDE TO FLIP */
-    document.querySelectorAll(".right").forEach((el) => {
-
-        el.addEventListener("click", () => {
-
-            if (!typingDone) return;
-
-            let page = document.getElementById("p" + current);
-
-            if (page) {
-                page.classList.add("flipped");
-                current++;
-            }
-
-            if (current <= 3) {
-                startTyping(current);
-            } else {
-                setTimeout(() => {
-                    book.style.display = "none";
-                    document.getElementById("final").style.display = "block";
-                }, 800);
-            }
-
-        });
-
     });
 
 });
