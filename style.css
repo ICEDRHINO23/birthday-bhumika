@@ -1,185 +1,170 @@
-/* 🎉 ANIMATED BACKGROUND */
 body {
-    margin: 0;
-    font-family: 'Comic Sans MS', cursive;
-    height: 100vh;
-    overflow: hidden;
+    margin:0;
+    font-family:'Comic Sans MS',cursive;
+    overflow:hidden;
+    height:100vh;
 
-    background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb);
-    background-size: 600% 600%;
-    animation: gradientMove 10s ease infinite;
+    background:linear-gradient(270deg,#ff9a9e,#fad0c4,#fbc2eb);
+    background-size:600% 600%;
+    animation:bgMove 10s infinite;
 }
 
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+@keyframes bgMove {
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
 }
 
-/* 😂 FUN TEXT */
-#funText {
-    position: fixed;
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #ff4d6d;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 20px;
-    opacity: 0;
-    z-index: 9999;
+/* 🌌 PARTICLES */
+#particles{
+    position:fixed;
+    top:0;left:0;
+    z-index:0;
+}
+
+/* 🎊 CONFETTI */
+#confettiCanvas{
+    position:fixed;
+    top:0;left:0;
+    pointer-events:none;
+    z-index:2;
+}
+
+/* 😂 TEXT */
+#funText{
+    position:fixed;
+    top:40px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#ff4d6d;
+    color:white;
+    padding:10px 20px;
+    border-radius:20px;
+    opacity:0;
+    z-index:9999;
 }
 
 /* 🎁 GIFT */
-.present {
-    width: 180px;
-    height: 180px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    animation: glowPulse 2s infinite;
+.present{
+    width:180px;height:180px;
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    cursor:pointer;
+    animation:glow 2s infinite;
+    z-index:5;
 }
 
-@keyframes glowPulse {
-    0% { box-shadow: 0 0 10px pink; }
-    50% { box-shadow: 0 0 30px red; }
-    100% { box-shadow: 0 0 10px pink; }
+@keyframes glow{
+    0%{box-shadow:0 0 10px pink;}
+    50%{box-shadow:0 0 30px red;}
+    100%{box-shadow:0 0 10px pink;}
 }
 
-.box {
-    width: 100%;
-    height: 100%;
-    background: #ff4d6d;
-    position: relative;
+.box{
+    width:100%;height:100%;
+    background:#ff4d6d;
+    position:relative;
 }
 
-/* 🎀 ribbon on gift */
-.box::before {
-    content: "";
-    width: 20px;
-    height: 100%;
-    background: gold;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+/* ribbon */
+.box::before{
+    content:"";
+    width:20px;height:100%;
+    background:gold;
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
 }
-
-.box::after {
-    content: "";
-    height: 20px;
-    width: 100%;
-    background: gold;
-    position: absolute;
-    top: 50%;
+.box::after{
+    content:"";
+    height:20px;width:100%;
+    background:gold;
+    position:absolute;
+    top:50%;
 }
 
 /* lid */
-.lid {
-    width: 100%;
-    height: 40px;
-    background: #c9184a;
-    position: absolute;
-    top: -40px;
-    transform-origin: bottom;
-    transition: 0.6s;
+.lid{
+    width:100%;height:40px;
+    background:#c9184a;
+    position:absolute;
+    top:-40px;
+    transform-origin:bottom;
+    transition:0.6s;
 }
 
-.present.open .lid {
-    transform: rotateX(120deg);
+.present.open .lid{
+    transform:rotateX(120deg);
 }
 
 /* 📖 SCRAPBOOK */
-.scrapbook {
-    width: 80%;
-    height: 500px;
-    background: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.scrapbook{
+    width:80%;
+    height:500px;
+    background:white;
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    z-index:10;
 }
 
-.page {
-    display: flex;
+.page{display:flex;}
+.image-page{width:50%;}
+.image-page img{width:100%;}
+.text-page{width:50%;padding:20px;}
+
+.next-btn{
+    position:absolute;
+    bottom:20px;right:20px;
 }
 
-.image-page {
-    width: 50%;
+/* 🎀 RIBBONS */
+.ribbon{
+    position:absolute;
+    width:8px;height:120px;
+    background:linear-gradient(gold,orange);
+    animation:fall 6s infinite linear;
+}
+@keyframes fall{
+    0%{top:-100px;}
+    100%{top:110%;}
 }
 
-.image-page img {
-    width: 100%;
+/* 🎈 */
+.bg-balloon{
+    position:absolute;
+    font-size:30px;
+    animation:float 8s infinite linear;
+}
+@keyframes float{
+    0%{bottom:-50px;}
+    100%{bottom:110%;}
 }
 
-.text-page {
-    width: 50%;
-    padding: 20px;
+/* ✨ */
+.sparkle{
+    position:absolute;
+    animation:blink 2s infinite;
+}
+@keyframes blink{
+    50%{opacity:0.2;}
 }
 
-/* 🎀 FALLING RIBBONS */
-.ribbon {
-    position: absolute;
-    width: 8px;
-    height: 120px;
-    background: linear-gradient(180deg, gold, orange);
-    border-radius: 5px;
-    animation: ribbonFall 6s linear infinite;
-    opacity: 0.7;
+/* 🦋 */
+.butterfly{
+    position:absolute;
+    animation:fly 3s forwards;
+}
+@keyframes fly{
+    to{transform:translate(200px,-300px);opacity:0;}
 }
 
-.ribbon:nth-child(1) { left: 10%; animation-delay: 0s; }
-.ribbon:nth-child(2) { left: 30%; animation-delay: 2s; }
-.ribbon:nth-child(3) { left: 60%; animation-delay: 1s; }
-.ribbon:nth-child(4) { left: 80%; animation-delay: 3s; }
-
-@keyframes ribbonFall {
-    0% { top: -150px; transform: rotate(0deg); }
-    100% { top: 110%; transform: rotate(360deg); }
+/* 💖 */
+.heart{
+    position:absolute;
+    animation:heartFly 2s forwards;
 }
-
-/* 🎈 BALLOONS */
-.bg-balloon {
-    position: absolute;
-    font-size: 30px;
-    animation: float 8s linear infinite;
-}
-
-.bg-balloon:nth-child(5) { left: 20%; }
-.bg-balloon:nth-child(6) { left: 50%; }
-.bg-balloon:nth-child(7) { left: 80%; }
-
-@keyframes float {
-    0% { bottom: -50px; }
-    100% { bottom: 110%; }
-}
-
-/* ✨ SPARKLES */
-.sparkle {
-    position: absolute;
-    font-size: 20px;
-    animation: sparkle 2s infinite;
-}
-
-.sparkle:nth-child(8) { top: 20%; left: 20%; }
-.sparkle:nth-child(9) { top: 50%; left: 70%; }
-.sparkle:nth-child(10) { top: 80%; left: 40%; }
-
-@keyframes sparkle {
-    0%,100% { opacity: 0.2; }
-    50% { opacity: 1; }
-}
-
-/* 🦋 BUTTERFLY */
-.butterfly {
-    position: absolute;
-    animation: fly 3s forwards;
-}
-
-@keyframes fly {
-    to {
-        transform: translate(200px, -300px);
-        opacity: 0;
-    }
+@keyframes heartFly{
+    to{transform:translate(200px,-300px);opacity:0;}
 }
