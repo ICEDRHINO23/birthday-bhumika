@@ -1,3 +1,4 @@
+
 /* 🎉 BODY BACKGROUND */
 body {
     margin: 0;
@@ -5,38 +6,38 @@ body {
     height: 100vh;
     overflow: hidden;
 
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4);
-    background-size: 400% 400%;
-    animation: bgMove 10s infinite alternate;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    background-size: 300% 300%;
+    animation: bgMove 8s infinite alternate;
 }
 
-/* 🌈 Animated gradient */
+/* 🌈 Smooth gradient animation */
 @keyframes bgMove {
     0% { background-position: left; }
     100% { background-position: right; }
 }
 
-/* 😂 FUNNY TEXT (FIXED) */
+/* 😂 FUNNY TEXT (FIXED + ALWAYS ON TOP) */
 #funText {
     position: fixed;
-    top: 30px;
+    top: 40px;
     left: 50%;
     transform: translateX(-50%);
 
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
-    color: #ff2e63;
+    color: white;
 
-    background: white;
+    background: #ff4d6d;
     padding: 10px 20px;
-    border-radius: 20px;
+    border-radius: 25px;
 
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 
+    z-index: 99999; /* 🔥 ensures visibility */
+
     opacity: 0;
     transition: opacity 0.3s ease;
-
-    z-index: 9999;
 }
 
 /* 🎁 GIFT BOX */
@@ -45,7 +46,8 @@ body {
     height: 180px;
     position: absolute;
     cursor: pointer;
-    transition: all 0.25s ease;
+
+    transition: all 0.25s ease; /* smooth escape */
 }
 
 .box {
@@ -69,9 +71,12 @@ body {
     width: 90%;
     max-width: 800px;
     height: 500px;
+
     background: #fffaf0;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+
     display: flex;
     overflow: hidden;
 
@@ -104,9 +109,12 @@ body {
 .text-page {
     width: 50%;
     padding: 20px;
+
     background: #fff0f5;
+
     display: flex;
     align-items: center;
+
     font-size: 18px;
 }
 
@@ -115,10 +123,13 @@ body {
     position: absolute;
     bottom: 20px;
     right: 20px;
+
     padding: 10px 15px;
     border: none;
+
     background: #ff4d6d;
     color: white;
+
     border-radius: 8px;
     cursor: pointer;
 }
@@ -127,16 +138,22 @@ body {
 .floating {
     position: absolute;
     font-size: 30px;
-    animation: float 6s infinite;
     opacity: 0.7;
+
+    animation: floatUp 6s linear infinite;
 }
 
-.floating:nth-child(1) { left: 10%; animation-delay: 0s; }
-.floating:nth-child(2) { left: 30%; animation-delay: 2s; }
-.floating:nth-child(3) { left: 60%; animation-delay: 4s; }
-.floating:nth-child(4) { left: 80%; animation-delay: 1s; }
+/* distribute emojis */
+.floating:nth-of-type(1) { left: 10%; animation-delay: 0s; }
+.floating:nth-of-type(2) { left: 30%; animation-delay: 2s; }
+.floating:nth-of-type(3) { left: 60%; animation-delay: 4s; }
+.floating:nth-of-type(4) { left: 80%; animation-delay: 1s; }
 
-@keyframes float {
-    0% { bottom: -50px; }
-    100% { bottom: 100%; }
+@keyframes floatUp {
+    0% {
+        bottom: -50px;
+    }
+    100% {
+        bottom: 110%;
+    }
 }
