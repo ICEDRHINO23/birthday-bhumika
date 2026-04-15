@@ -3,44 +3,72 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Bhumika</title>
+<title>Surprise</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- 🌌 Background glow -->
-<div class="bg-glow"></div>
+<!-- 🎬 INTRO -->
+<div id="intro">🎁 This is a Surprise...</div>
 
-<div class="main">
+<!-- 🎉 BACKGROUND -->
+<div class="bg"></div>
 
-    <!-- 🎥 VIDEO -->
-    <div class="left">
-        <video autoplay muted loop playsinline>
-            <source src="bhumika.mp4" type="video/mp4">
-        </video>
-        <div class="overlay"></div>
-    </div>
+<!-- 😂 TEXT -->
+<div id="funText"></div>
 
-    <!-- 💌 CONTENT -->
-    <div class="right">
-        <div class="card">
+<!-- 🎁 GIFT -->
+<div id="gift">
+    <div class="lid"></div>
+    <div class="box"></div>
+</div>
 
-            <h1>Happy Birthday Bhumika 💖</h1>
+<!-- 📖 BOOK -->
+<div id="book">
 
-            <p>
-                Dear Bhumika,<br><br>
-                You bring so much warmth and happiness into the lives around you.<br><br>
-                This small space is just a reflection of how special you are.<br><br>
-                May your days be filled with smiles, love, and beautiful surprises ✨
-            </p>
-
-            <div class="footer">Made with 💖</div>
-
+    <!-- PAGE 1 (VIDEO LEFT, TEXT RIGHT) -->
+    <div class="page" id="p1">
+        <div class="left">
+            <video autoplay muted loop>
+                <source src="bhumika.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="right">
+            <p id="typing"></p>
         </div>
     </div>
 
+    <!-- PAGE 2 -->
+    <div class="page" id="p2">
+        <div class="left">
+            <img src="20240429_230322.jpg">
+        </div>
+        <div class="right">
+            <p>Every moment is special ✨</p>
+        </div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div class="page" id="p3">
+        <div class="left">
+            <img src="20240906_204953.jpg">
+        </div>
+        <div class="right">
+            <p>You deserve happiness 🎉</p>
+        </div>
+    </div>
+
+    <button onclick="next()">Next ➡</button>
+
 </div>
+
+<!-- 💌 FINAL MESSAGE -->
+<div id="final">
+    💌 More surprises are going to be unveiled... wait for it.
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
