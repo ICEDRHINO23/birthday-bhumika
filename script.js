@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    const bg = document.getElementById("bg");
     const gift = document.getElementById("gift");
     const book = document.getElementById("book");
     const fun = document.getElementById("funText");
@@ -8,30 +9,55 @@ document.addEventListener("DOMContentLoaded", () => {
     let current = 1;
     let typingDone = false;
 
-    const msgs = ["😂 Catch me!", "Not so easy!", "Try again!"];
+    const msgs = ["😂 Catch me!", "Too slow!", "Try again!"];
 
-    // 🎬 after intro
+    /* 🎬 AFTER INTRO */
     setTimeout(() => {
         document.body.classList.add("gift-mode");
         canOpen = true;
     }, 4000);
 
-    /* 🎁 MOVE ONLY ON HOVER */
-    gift.addEventListener("mouseenter", () => {
+    /* 🎉 BACKGROUND ELEMENTS */
+    const emojis = ["🎈","🎂","🎉","🎁","🎀"];
+
+    for (let i = 0; i < 40; i++) {
+        let el = document.createElement("span");
+        el.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+
+        el.style.left = Math.random()*100 + "%";
+        el.style.fontSize = (25 + Math.random()*40) + "px";
+        el.style.animationDuration = (6 + Math.random()*10) + "s";
+
+        bg.appendChild(el);
+    }
+
+    /* 🧠 SMART GIFT MOVEMENT (CURSOR NEAR) */
+    document.addEventListener("mousemove", (e) => {
+
         if (!canOpen) return;
 
-        let x = Math.random() * (window.innerWidth - 150);
-        let y = Math.random() * (window.innerHeight - 150);
+        const rect = gift.getBoundingClientRect();
 
-        gift.style.transition = "0.4s";
-        gift.style.left = x + "px";
-        gift.style.top = y + "px";
-        gift.style.transform = "none";
+        const dx = e.clientX - (rect.left + rect.width/2);
+        const dy = e.clientY - (rect.top + rect.height/2);
 
-        fun.innerText = msgs[Math.floor(Math.random() * msgs.length)];
+        const distance = Math.sqrt(dx*dx + dy*dy);
+
+        if (distance < 150) {
+
+            let x = Math.random() * (window.innerWidth - 160);
+            let y = Math.random() * (window.innerHeight - 160);
+
+            gift.style.transition = "0.4s";
+            gift.style.left = x + "px";
+            gift.style.top = y + "px";
+            gift.style.transform = "none";
+
+            fun.innerText = msgs[Math.floor(Math.random()*msgs.length)];
+        }
     });
 
-    /* 🎁 OPEN */
+    /* 🎁 OPEN GIFT */
     gift.addEventListener("click", () => {
 
         if (!canOpen) return;
@@ -46,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 500);
     });
 
-    /* ✍️ TYPEWRITER */
+    /* ✍️ TYPEWRITER FUNCTION */
     function startTyping(page) {
 
         typingDone = false;
@@ -58,6 +84,9 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const el = document.getElementById("text" + page);
+
+        if (!el) return;
+
         el.innerHTML = "";
 
         let i = 0;
@@ -73,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 i++;
                 setTimeout(type, 40);
+
             } else {
                 typingDone = true;
             }
@@ -81,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type();
     }
 
-    /* 📖 PAGE FLIP (ONLY ACTIVE PAGE) */
+    /* 📖 PAGE FLIP */
     function handleFlip() {
 
         if (!typingDone) return;
@@ -95,10 +125,13 @@ document.addEventListener("DOMContentLoaded", () => {
         current++;
 
         if (current <= 3) {
+
             setTimeout(() => {
                 startTyping(current);
             }, 400);
+
         } else {
+
             setTimeout(() => {
                 book.style.display = "none";
                 document.getElementById("final").style.display = "block";
