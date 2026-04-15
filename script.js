@@ -1,3 +1,4 @@
+
 const present = document.getElementById("presentBox");
 const scrapbook = document.getElementById("scrapbook");
 const funText = document.getElementById("funText");
@@ -8,7 +9,7 @@ const bgMusic = document.getElementById("bgMusic");
 const msgs = ["😂 Not so easy!", "Catch me!", "Hehe 😜", "Try again!"];
 let canOpen = false;
 
-setTimeout(() => canOpen = true, 10000);
+setTimeout(() => canOpen = true, 8000);
 
 function moveGift() {
     if (canOpen) return;
@@ -36,6 +37,7 @@ present.addEventListener("click", () => {
         scrapbook.style.display = "block";
 
         bgMusic.play();
+
         releaseButterflies();
         createConfetti();
         drawConfetti();
@@ -54,8 +56,10 @@ function releaseButterflies() {
         let b = document.createElement("div");
         b.className = "butterfly";
         b.innerText = "🦋";
+
         b.style.left = "50%";
         b.style.top = "50%";
+
         document.body.appendChild(b);
         setTimeout(() => b.remove(), 3000);
     }
@@ -71,12 +75,14 @@ canvas.height = innerHeight;
 let confetti = [];
 
 function createConfetti() {
-    for (let i = 0; i < 100; i++) {
+    confetti = [];
+    for (let i = 0; i < 120; i++) {
         confetti.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
             size: 5,
-            speed: 3
+            speed: 3,
+            color: `hsl(${Math.random()*360},100%,50%)`
         });
     }
 }
@@ -85,8 +91,11 @@ function drawConfetti() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     confetti.forEach(c => {
+        ctx.fillStyle = c.color;
         ctx.fillRect(c.x, c.y, c.size, c.size);
         c.y += c.speed;
+
+        if (c.y > canvas.height) c.y = 0;
     });
 
     requestAnimationFrame(drawConfetti);
@@ -113,7 +122,7 @@ function typeText(text, id) {
 let currentPage = 1;
 
 function nextPage() {
-    let page = document.getElementById("page" + currentPage);
+    const page = document.getElementById("page" + currentPage);
 
     if (page) {
         page.classList.add("flipped");
@@ -132,8 +141,10 @@ function heartBurst() {
         let h = document.createElement("div");
         h.className = "heart";
         h.innerText = "💖";
+
         h.style.left = "50%";
         h.style.top = "50%";
+
         document.body.appendChild(h);
         setTimeout(() => h.remove(), 2000);
     }
@@ -148,10 +159,11 @@ pCanvas.height = innerHeight;
 
 let particles = [];
 
-for (let i = 0; i < 60; i++) {
+for (let i = 0; i < 80; i++) {
     particles.push({
         x: Math.random() * pCanvas.width,
-        y: Math.random() * pCanvas.height
+        y: Math.random() * pCanvas.height,
+        size: Math.random() * 2 + 1
     });
 }
 
@@ -159,10 +171,15 @@ function drawParticles() {
     pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
 
     particles.forEach(p => {
-        pCtx.fillStyle = "white";
-        pCtx.fillRect(p.x, p.y, 2, 2);
+        pCtx.fillStyle = "rgba(255,255,255,0.8)";
+        pCtx.shadowBlur = 10;
+        pCtx.shadowColor = "white";
 
-        p.y -= 1;
+        pCtx.beginPath();
+        pCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        pCtx.fill();
+
+        p.y -= 0.5;
         if (p.y < 0) p.y = pCanvas.height;
     });
 
