@@ -1,15 +1,13 @@
-
 const present = document.getElementById("presentBox");
 const scrapbook = document.getElementById("scrapbook");
 const funText = document.getElementById("funText");
 const flipSound = document.getElementById("flipSound");
 const bgMusic = document.getElementById("bgMusic");
 
-/* 🎯 FUN */
-const msgs = ["😂 Not so easy!", "Catch me!", "Hehe 😜", "Try again!"];
 let canOpen = false;
-
 setTimeout(() => canOpen = true, 8000);
+
+const msgs = ["😂 Not so easy!", "Catch me!", "Try again!"];
 
 function moveGift() {
     if (canOpen) return;
@@ -24,9 +22,8 @@ function moveGift() {
 }
 
 present.addEventListener("mouseenter", moveGift);
-present.addEventListener("touchstart", moveGift);
 
-/* 🎁 OPEN */
+/* open */
 present.addEventListener("click", () => {
     if (!canOpen) return;
 
@@ -37,92 +34,31 @@ present.addEventListener("click", () => {
         scrapbook.style.display = "block";
 
         bgMusic.play();
-
+        typeText("Dear Bhumika 💖 Happy Birthday!", "typingText");
         releaseButterflies();
-        createConfetti();
-        drawConfetti();
-
-        typeText(
-            "Dear Bhumika 💖\n\nHappy Birthday! This surprise is just for you 😊",
-            "typingText"
-        );
-
     }, 600);
 });
 
-/* 🦋 */
-function releaseButterflies() {
-    for (let i = 0; i < 10; i++) {
-        let b = document.createElement("div");
-        b.className = "butterfly";
-        b.innerText = "🦋";
-
-        b.style.left = "50%";
-        b.style.top = "50%";
-
-        document.body.appendChild(b);
-        setTimeout(() => b.remove(), 3000);
-    }
-}
-
-/* 🎊 CONFETTI */
-const canvas = document.getElementById("confettiCanvas");
-const ctx = canvas.getContext("2d");
-
-canvas.width = innerWidth;
-canvas.height = innerHeight;
-
-let confetti = [];
-
-function createConfetti() {
-    confetti = [];
-    for (let i = 0; i < 120; i++) {
-        confetti.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            size: 5,
-            speed: 3,
-            color: `hsl(${Math.random()*360},100%,50%)`
-        });
-    }
-}
-
-function drawConfetti() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    confetti.forEach(c => {
-        ctx.fillStyle = c.color;
-        ctx.fillRect(c.x, c.y, c.size, c.size);
-        c.y += c.speed;
-
-        if (c.y > canvas.height) c.y = 0;
-    });
-
-    requestAnimationFrame(drawConfetti);
-}
-
-/* 💌 typing */
+/* typing */
 function typeText(text, id) {
     let i = 0;
     const el = document.getElementById(id);
     el.innerHTML = "";
 
-    function typing() {
+    function t() {
         if (i < text.length) {
-            el.innerHTML += text[i];
-            i++;
-            setTimeout(typing, 35);
+            el.innerHTML += text[i++];
+            setTimeout(t, 35);
         }
     }
-
-    typing();
+    t();
 }
 
-/* 📖 flip */
+/* pages */
 let currentPage = 1;
 
 function nextPage() {
-    const page = document.getElementById("page" + currentPage);
+    let page = document.getElementById("page" + currentPage);
 
     if (page) {
         page.classList.add("flipped");
@@ -130,60 +66,31 @@ function nextPage() {
         currentPage++;
     }
 
-    if (currentPage === 4) {
-        heartBurst();
+    if (currentPage === 4) heartBurst();
+}
+
+/* butterflies */
+function releaseButterflies() {
+    for (let i = 0; i < 10; i++) {
+        let b = document.createElement("div");
+        b.className = "butterfly";
+        b.innerText = "🦋";
+        b.style.left = "50%";
+        b.style.top = "50%";
+        document.body.appendChild(b);
+        setTimeout(() => b.remove(), 3000);
     }
 }
 
-/* 💖 */
+/* hearts */
 function heartBurst() {
     for (let i = 0; i < 20; i++) {
         let h = document.createElement("div");
         h.className = "heart";
         h.innerText = "💖";
-
         h.style.left = "50%";
         h.style.top = "50%";
-
         document.body.appendChild(h);
         setTimeout(() => h.remove(), 2000);
     }
 }
-
-/* 🌌 particles */
-const pCanvas = document.getElementById("particles");
-const pCtx = pCanvas.getContext("2d");
-
-pCanvas.width = innerWidth;
-pCanvas.height = innerHeight;
-
-let particles = [];
-
-for (let i = 0; i < 80; i++) {
-    particles.push({
-        x: Math.random() * pCanvas.width,
-        y: Math.random() * pCanvas.height,
-        size: Math.random() * 2 + 1
-    });
-}
-
-function drawParticles() {
-    pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-
-    particles.forEach(p => {
-        pCtx.fillStyle = "rgba(255,255,255,0.8)";
-        pCtx.shadowBlur = 10;
-        pCtx.shadowColor = "white";
-
-        pCtx.beginPath();
-        pCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        pCtx.fill();
-
-        p.y -= 0.5;
-        if (p.y < 0) p.y = pCanvas.height;
-    });
-
-    requestAnimationFrame(drawParticles);
-}
-
-drawParticles();
