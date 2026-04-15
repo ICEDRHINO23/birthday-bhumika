@@ -6,12 +6,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const fun = document.getElementById("funText");
 
     let canOpen = false;
+    let allowMove = true;
     let current = 1;
     let typingDone = false;
 
-    const msgs = ["😂 Catch me!", "Too slow!", "Try again!"];
+    const msgs = [
+        "😂 Catch me!",
+        "Too slow 😜",
+        "Not yet!",
+        "Hehe try again!"
+    ];
 
-    /* 🎬 AFTER INTRO */
+    /* 🎬 START */
     setTimeout(() => {
         document.body.classList.add("gift-mode");
         canOpen = true;
@@ -31,8 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
         bg.appendChild(el);
     }
 
-    /* 🧠 FORCE MOVE FUNCTION */
+    /* 🧠 MOVE FUNCTION */
     function moveGift() {
+        if (!allowMove) return;
+
         let x = Math.random() * (window.innerWidth - 160);
         let y = Math.random() * (window.innerHeight - 160);
 
@@ -40,36 +48,52 @@ document.addEventListener("DOMContentLoaded", () => {
         gift.style.top = y + "px";
         gift.style.transform = "none";
 
-        fun.innerText = msgs[Math.floor(Math.random()*msgs.length)];
+        showMessage(msgs[Math.floor(Math.random()*msgs.length)]);
     }
 
-    /* ✅ DESKTOP HOVER */
+    /* 😂 MESSAGE */
+    function showMessage(text) {
+        fun.innerText = text;
+        fun.style.opacity = "1";
+
+        setTimeout(() => {
+            fun.style.opacity = "0";
+        }, 1500);
+    }
+
+    /* 🎁 STOP AFTER 20 SEC */
+    setTimeout(() => {
+        allowMove = false;
+
+        gift.style.left = "50%";
+        gift.style.top = "50%";
+        gift.style.transform = "translate(-50%, -50%)";
+
+        showMessage("🎁 Now you can open me ❤️");
+
+    }, 20000);
+
+    /* 🎯 MOVEMENT TRIGGERS */
     gift.addEventListener("mouseenter", () => {
-        if (!canOpen) return;
-        moveGift();
+        if (canOpen) moveGift();
     });
 
-    /* ✅ MOBILE TOUCH */
     gift.addEventListener("touchstart", () => {
-        if (!canOpen) return;
-        moveGift();
+        if (canOpen) moveGift();
     });
 
-    /* ✅ EXTRA SAFETY (NEAR CURSOR) */
     document.addEventListener("mousemove", (e) => {
 
-        if (!canOpen) return;
+        if (!canOpen || !allowMove) return;
 
         const rect = gift.getBoundingClientRect();
 
         const dx = e.clientX - (rect.left + rect.width/2);
         const dy = e.clientY - (rect.top + rect.height/2);
 
-        const distance = Math.sqrt(dx*dx + dy*dy);
+        const dist = Math.sqrt(dx*dx + dy*dy);
 
-        if (distance < 120) {
-            moveGift();
-        }
+        if (dist < 120) moveGift();
     });
 
     /* 🎁 OPEN */
@@ -99,7 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const el = document.getElementById("text" + page);
-
         el.innerHTML = "";
 
         let i = 0;
@@ -117,6 +140,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 setTimeout(type, 40);
             } else {
                 typingDone = true;
+
+                showMessage("👉 Click right side to flip");
             }
         }
 
@@ -141,7 +166,8 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             setTimeout(() => {
                 book.style.display = "none";
-                document.getElementById("final").style.display = "block";
+
+                showFinal();
             }, 800);
         }
     }
@@ -151,5 +177,26 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!e.target.closest(".right")) return;
         handleFlip();
     });
+
+    /* 💌 FINAL WITH REFRESH */
+    function showFinal() {
+
+        const final = document.getElementById("final");
+
+        final.innerHTML = `
+            💌 More to go but need to wait...<br><br>
+            <button onclick="location.reload()" style="
+                padding:10px 20px;
+                background:#ff4d6d;
+                color:white;
+                border:none;
+                border-radius:8px;
+                cursor:pointer;
+                font-size:16px;
+            ">Restart Surprise 🔄</button>
+        `;
+
+        final.style.display = "block";
+    }
 
 });
