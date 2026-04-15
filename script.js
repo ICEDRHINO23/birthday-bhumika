@@ -1,130 +1,309 @@
-// 🎁 Elements
-const gift = document.getElementById("gift");
-const book = document.getElementById("book");
-const fun = document.getElementById("funText");
-
-let canOpen = false;
-let current = 1;
-
-const msgs = [
-    "😂 Catch me!",
-    "Not so easy!",
-    "Try again!",
-    "Almost there!"
-];
-
-/* 🎬 Start after intro */
-setTimeout(() => {
-    startMoving();
-}, 4000);
-
-
-/* 🎁 Smooth movement */
-function startMoving() {
-
-    let count = 0;
-
-    let interval = setInterval(() => {
-
-        // smooth random positions
-        let x = Math.random() * (window.innerWidth - 150);
-        let y = Math.random() * (window.innerHeight - 150);
-
-        gift.style.transition = "all 0.6s ease";
-        gift.style.left = x + "px";
-        gift.style.top = y + "px";
-
-        // funny text
-        fun.innerText = msgs[Math.floor(Math.random() * msgs.length)];
-
-        count++;
-
-        // ⏳ demo timing (~12 sec)
-        if (count > 15) {
-            clearInterval(interval);
-            returnToCenter();
-        }
-
-    }, 800);
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial;
+    background: #0f0f1a;
 }
 
-
-/* 🎯 Return to center smoothly */
-function returnToCenter() {
-
-    gift.style.transition = "all 1s ease";
-    gift.style.left = "50%";
-    gift.style.top = "50%";
-    gift.style.transform = "translate(-50%, -50%)";
-
-    fun.innerText = "🎁 Okay... you can open now";
-
-    canOpen = true;
+/* 🎬 INTRO */
+#intro {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #0f0f1a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    z-index: 10;
+    animation: fadeOut 3s forwards 2s;
 }
 
-
-/* 🎁 Open gift */
-gift.addEventListener("click", () => {
-
-    if (!canOpen) return;
-
-    gift.classList.add("open");
-
-    setTimeout(() => {
-        gift.style.display = "none";
-        book.style.display = "block";
-
-        typeText(
-            "Dear Bhumika 💖\n\nHappy Birthday!\nThis is just the beginning 😊",
-            "typing"
-        );
-
-    }, 500);
-});
-
-
-/* ✍️ Typing effect */
-function typeText(text, id) {
-
-    let i = 0;
-    const el = document.getElementById(id);
-    el.innerHTML = "";
-
-    function type() {
-        if (i < text.length) {
-
-            if (text[i] === "\n") {
-                el.innerHTML += "<br>";
-            } else {
-                el.innerHTML += text[i];
-            }
-
-            i++;
-            setTimeout(type, 40);
-        }
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
     }
-
-    type();
 }
 
+/* 🎉 FLOATING ITEMS */
+.bg span {
+    position: absolute;
+    font-size: 30px;
+    animation: floatUp linear infinite;
+    opacity: 0.7;
+}
 
-/* 📖 Page flip */
-function next() {
+@keyframes floatUp {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-120vh); }
+}
 
-    const page = document.getElementById("p" + current);
+/* 🎁 GIFT */
+#gift {
+    width: 140px;
+    height: 140px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 5;
+}
 
-    if (page) {
-        page.classList.add("flipped");
-        current++;
+/* box */
+.box {
+    width: 100%;
+    height: 100%;
+    background: #ff4d6d;
+    border-radius: 8px;
+}
+
+/* ribbon */
+.box::before {
+    content: "";
+    width: 20px;
+    height: 100%;
+    background: gold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.box::after {
+    content: "";
+    height: 20px;
+    width: 100%;
+    background: gold;
+    position: absolute;
+    top: 50%;
+}
+
+/* lid */
+.lid {
+    width: 100%;
+    height: 35px;
+    background: #c9184a;
+    position: absolute;
+    top: -35px;
+    transition: 0.5s;
+}
+
+/* open */
+.open .lid {
+    transform: rotateX(120deg);
+}
+
+/* 😂 TEXT */
+#funText {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ff4d6d;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* 📖 BOOK */
+#book {
+    display: none;
+    width: 800px;
+    height: 500px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: white;
+    border-radius: 10px;
+}
+
+.left, .right {
+    width: 50%;
+    padding: 10px;
+}
+
+img, video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.page.flipped {
+    transform: rotateY(-150deg);body {
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial;
+    background: #0f0f1a;
+}
+
+/* 🎬 INTRO */
+#intro {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #0f0f1a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    z-index: 10;
+    animation: fadeOut 3s forwards 2s;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
     }
+}
 
-    // 📕 close book + show message
-    if (current === 4) {
+/* 🎉 FLOATING ITEMS */
+.bg span {
+    position: absolute;
+    font-size: 30px;
+    animation: floatUp linear infinite;
+    opacity: 0.7;
+}
 
-        setTimeout(() => {
-            book.style.display = "none";
+@keyframes floatUp {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-120vh); }
+}
 
-            document.getElementById("final").style.display = "block";
-        }, 800);
-    }
+/* 🎁 GIFT */
+#gift {
+    width: 140px;
+    height: 140px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 5;
+}
+
+/* box */
+.box {
+    width: 100%;
+    height: 100%;
+    background: #ff4d6d;
+    border-radius: 8px;
+}
+
+/* ribbon */
+.box::before {
+    content: "";
+    width: 20px;
+    height: 100%;
+    background: gold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.box::after {
+    content: "";
+    height: 20px;
+    width: 100%;
+    background: gold;
+    position: absolute;
+    top: 50%;
+}
+
+/* lid */
+.lid {
+    width: 100%;
+    height: 35px;
+    background: #c9184a;
+    position: absolute;
+    top: -35px;
+    transition: 0.5s;
+}
+
+/* open */
+.open .lid {
+    transform: rotateX(120deg);
+}
+
+/* 😂 TEXT */
+#funText {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ff4d6d;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* 📖 BOOK */
+#book {
+    display: none;
+    width: 800px;
+    height: 500px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: white;
+    border-radius: 10px;
+}
+
+.left, .right {
+    width: 50%;
+    padding: 10px;
+}
+
+img, video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.page.flipped {
+    transform: rotateY(-150deg);
+}
+
+/* 💌 FINAL */
+#final {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 26px;
+    color: white;
+}
+}
+
+/* 💌 FINAL */
+#final {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 26px;
+    color: white;
 }
