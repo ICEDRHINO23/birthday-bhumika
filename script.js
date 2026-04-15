@@ -1,15 +1,20 @@
 const present = document.getElementById("presentBox");
 const scrapbook = document.getElementById("scrapbook");
 const funText = document.getElementById("funText");
-const flipSound = document.getElementById("flipSound");
 const bgMusic = document.getElementById("bgMusic");
 
+/* 🎬 intro */
+setTimeout(() => {
+    present.style.display = "block";
+}, 4000);
+
+/* 🎯 funny */
 let canOpen = false;
 setTimeout(() => canOpen = true, 8000);
 
 const msgs = ["😂 Not so easy!", "Catch me!", "Try again!"];
 
-function moveGift() {
+present.addEventListener("mouseenter", () => {
     if (canOpen) return;
 
     present.style.left = Math.random() * 80 + "%";
@@ -19,11 +24,9 @@ function moveGift() {
     funText.style.opacity = 1;
 
     setTimeout(() => funText.style.opacity = 0, 1500);
-}
+});
 
-present.addEventListener("mouseenter", moveGift);
-
-/* open */
+/* 🎁 open */
 present.addEventListener("click", () => {
     if (!canOpen) return;
 
@@ -39,7 +42,7 @@ present.addEventListener("click", () => {
     }, 600);
 });
 
-/* typing */
+/* ✍️ typing */
 function typeText(text, id) {
     let i = 0;
     const el = document.getElementById(id);
@@ -54,7 +57,7 @@ function typeText(text, id) {
     t();
 }
 
-/* pages */
+/* 📖 flip */
 let currentPage = 1;
 
 function nextPage() {
@@ -62,14 +65,13 @@ function nextPage() {
 
     if (page) {
         page.classList.add("flipped");
-        flipSound.play();
         currentPage++;
     }
 
     if (currentPage === 4) heartBurst();
 }
 
-/* butterflies */
+/* 🦋 */
 function releaseButterflies() {
     for (let i = 0; i < 10; i++) {
         let b = document.createElement("div");
@@ -82,7 +84,7 @@ function releaseButterflies() {
     }
 }
 
-/* hearts */
+/* 💖 */
 function heartBurst() {
     for (let i = 0; i < 20; i++) {
         let h = document.createElement("div");
