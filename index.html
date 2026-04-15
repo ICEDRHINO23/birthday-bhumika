@@ -9,78 +9,36 @@
 
 <body>
 
-<!-- 🎬 INTRO -->
-<div id="intro">🎁 A Surprise for You...</div>
+<div class="main">
 
-<!-- 🎁 GIFT -->
-<div class="present" id="presentBox" style="display:none;">
-    <div class="lid"></div>
-    <div class="box"></div>
-</div>
-
-<!-- 📖 BOOK -->
-<div class="scrapbook" id="scrapbook" style="display:none;">
-
-    <!-- PAGE 1 -->
-    <div class="page" id="page1">
-        <div class="image-page">
-            <video autoplay muted loop playsinline>
-                <source src="bhumika.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="text-page">
-            <p id="typingText"></p>
-        </div>
+    <!-- 🎥 LEFT VIDEO -->
+    <div class="left">
+        <video autoplay muted loop playsinline>
+            <source src="bhumika.mp4" type="video/mp4">
+        </video>
     </div>
 
-    <!-- PAGE 2 -->
-    <div class="page" id="page2">
-        <div class="image-page">
-            <img src="20240429_230322.jpg">
-        </div>
-        <div class="text-page">
-            <p>Every moment with you is special ✨</p>
-        </div>
-    </div>
+    <!-- 💌 RIGHT CONTENT -->
+    <div class="right">
+        <div class="card">
 
-    <!-- PAGE 3 -->
-    <div class="page" id="page3">
-        <div class="image-page">
-            <img src="20240906_204953.jpg">
-        </div>
-        <div class="text-page">
-            <p>You deserve all happiness 🎉</p>
-        </div>
-    </div>
+            <h1>Happy Birthday, Bhumika 💖</h1>
 
-    <!-- PAGE 4 -->
-    <div class="page" id="page4">
-        <div class="image-page">
-            <img src="VideoCapture_20240427-034201.jpg">
-        </div>
-        <div class="text-page">
-            <p>Happy Birthday Bhumika 💖</p>
-        </div>
-    </div>
-
-    <!-- FINAL PAGE -->
-    <div class="page" id="page5">
-        <div class="image-page center">
-            <h1>💖 The End 💖</h1>
-        </div>
-        <div class="text-page">
-            <p class="final-text">
-                More memories to come... ✨<br><br>
-                This is just the beginning 💌
+            <p>
+                Dear Bhumika,<br><br>
+                Wishing you a day filled with happiness, laughter, and everything you love.<br><br>
+                This little space is just to remind you how special you are.<br><br>
+                More memories, more smiles, and more beautiful moments are yet to come ✨
             </p>
+
+            <div class="footer">
+                Made with 💖
+            </div>
+
         </div>
     </div>
 
-    <button onclick="nextPage()" class="next-btn">Next ➡</button>
-
 </div>
-
-<script src="script.js"></script>
 
 </body>
 </html>
