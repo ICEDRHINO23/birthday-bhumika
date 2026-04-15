@@ -3,11 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Bhumika</title><!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday Bhumika</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -19,79 +14,6 @@
 
 <!-- 🎊 CONFETTI -->
 <canvas id="confettiCanvas"></canvas>
-
-<!-- 🎀 RIBBONS -->
-<div class="ribbon"></div>
-<div class="ribbon"></div>
-<div class="ribbon"></div>
-<div class="ribbon"></div>
-
-<!-- 🎈 BALLOONS -->
-<div class="bg-balloon">🎈</div>
-<div class="bg-balloon">🎈</div>
-<div class="bg-balloon">🎈</div>
-
-<!-- ✨ SPARKLES -->
-<div class="sparkle">✨</div>
-<div class="sparkle">✨</div>
-<div class="sparkle">✨</div>
-
-<!-- 😂 TEXT -->
-<div id="funText"></div>
-
-<!-- 🦋 -->
-<div id="butterflies"></div>
-
-<!-- 🎁 GIFT -->
-<div class="present" id="presentBox">
-    <div class="lid"></div>
-    <div class="box"></div>
-</div>
-
-<!-- 📖 SCRAPBOOK -->
-<div class="scrapbook" id="scrapbook" style="display:none;">
-    
-    <div class="page" id="page1">
-        <div class="image-page">
-            <img src="photo1.jpg">
-        </div>
-        <div class="text-page">
-            <p id="typingText"></p>
-        </div>
-    </div>
-
-    <div class="page" id="page2">
-        <div class="image-page">
-            <img src="photo2.jpg">
-        </div>
-        <div class="text-page">
-            <p>Every moment with you is special ✨</p>
-        </div>
-    </div>
-
-    <div class="page" id="page3">
-        <div class="image-page">
-            <img src="photo3.jpg">
-        </div>
-        <div class="text-page">
-            <p>You deserve all happiness 🎉</p>
-        </div>
-    </div>
-
-    <button class="next-btn" onclick="nextPage()">Next ➡</button>
-</div>
-
-<audio id="flipSound" src="flip.mp3"></audio>
-<audio id="bgMusic" src="music.mp3" loop></audio>
-
-<script src="script.js"></script>
-
-</body>
-</html>
-<link rel="stylesheet" href="style.css">
-</head>
-
-<body>
 
 <!-- 🎀 RIBBONS -->
 <div class="ribbon"></div>
@@ -124,41 +46,56 @@
 <!-- 📖 SCRAPBOOK -->
 <div class="scrapbook" id="scrapbook" style="display:none;">
 
+    <!-- PAGE 1 (VIDEO) -->
     <div class="page" id="page1">
         <div class="image-page">
-            <img src="photo1.jpg">
+            <video src="bhumika.mp4" autoplay muted loop playsinline></video>
         </div>
         <div class="text-page">
             <p id="typingText"></p>
         </div>
     </div>
 
+    <!-- PAGE 2 -->
     <div class="page" id="page2">
         <div class="image-page">
-            <img src="photo2.jpg">
+            <img src="photo1.jpg">
         </div>
         <div class="text-page">
             <p>Every moment with you is special ✨</p>
         </div>
     </div>
 
+    <!-- PAGE 3 -->
     <div class="page" id="page3">
         <div class="image-page">
-            <img src="photo3.jpg">
+            <img src="photo2.jpg">
         </div>
         <div class="text-page">
             <p>You deserve all happiness 🎉</p>
         </div>
     </div>
 
+    <!-- PAGE 4 -->
+    <div class="page" id="page4">
+        <div class="image-page">
+            <img src="photo3.jpg">
+        </div>
+        <div class="text-page">
+            <p>Once again… Happy Birthday Bhumika 💖</p>
+        </div>
+    </div>
+
+    <!-- BUTTON -->
     <button class="next-btn" onclick="nextPage()">Next ➡</button>
 
 </div>
 
-<!-- AUDIO -->
+<!-- 🔊 AUDIO -->
 <audio id="flipSound" src="flip.mp3"></audio>
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
+<!-- SCRIPT -->
 <script src="script.js"></script>
 
 </body>
