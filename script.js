@@ -1,40 +1,19 @@
 const present = document.getElementById("presentBox");
 const scrapbook = document.getElementById("scrapbook");
 const funText = document.getElementById("funText");
+const flipSound = document.getElementById("flipSound");
+const bgMusic = document.getElementById("bgMusic");
 
 let canOpen = false;
 
-/* 🧪 TEST TEXT (should show immediately) */
-funText.innerText = "Ready 😄";
-funText.style.opacity = 1;
-
-/* ⏱ Unlock after 15 sec */
+/* enable after 10 sec */
 setTimeout(() => {
     canOpen = true;
+}, 10000);
 
-    funText.innerText = "🎁 Now you can catch me!";
-    funText.style.opacity = 1;
+/* funny messages */
+const messages = ["😂 Not so easy!", "Try again!", "Catch me!", "Hehe 😜"];
 
-    setTimeout(() => {
-        funText.style.opacity = 0;
-    }, 2000);
-
-}, 15000);
-
-/* 😄 Funny messages */
-const messages = [
-    "😂 Not so easy!",
-    "Catch me if you can!",
-    "Hehe… too slow!",
-    "Almost there 😜",
-    "Try again!",
-    "Nope 😆",
-    "You can't catch me!",
-    "Oops! Missed it!",
-    "Keep trying 😂"
-];
-
-/* 🎯 Move gift when hovered/touched */
 function moveGift() {
     if (canOpen) return;
 
@@ -44,63 +23,71 @@ function moveGift() {
     present.style.left = x + "px";
     present.style.top = y + "px";
 
-    let randomText = messages[Math.floor(Math.random() * messages.length)];
-
-    funText.innerText = randomText;
+    funText.innerText = messages[Math.floor(Math.random() * messages.length)];
     funText.style.opacity = 1;
 
-    setTimeout(() => {
-        funText.style.opacity = 0;
-    }, 1500);
+    setTimeout(() => funText.style.opacity = 0, 1500);
 }
 
-/* 💻 Desktop */
 present.addEventListener("mouseenter", moveGift);
-
-/* 📱 Mobile */
 present.addEventListener("touchstart", moveGift);
 
-/* 🎁 Click to open */
+/* open gift */
 present.addEventListener("click", () => {
     if (!canOpen) return;
 
-    present.style.display = "none";
-    scrapbook.style.display = "flex";
+    present.classList.add("open");
+
+    setTimeout(() => {
+        present.style.display = "none";
+        scrapbook.style.display = "block";
+
+        bgMusic.play();
+        releaseButterflies();
+
+        typeText("Dear Bhumika 💖 Happy Birthday! This is for you 😊", "typingText");
+
+    }, 600);
 });
 
-/* 📖 Pages */
+/* butterflies */
+function releaseButterflies() {
+    const container = document.getElementById("butterflies");
+
+    for (let i = 0; i < 10; i++) {
+        let b = document.createElement("div");
+        b.className = "butterfly";
+        b.innerText = "🦋";
+
+        b.style.left = "50%";
+        b.style.top = "50%";
+
+        container.appendChild(b);
+
+        setTimeout(() => b.remove(), 3000);
+    }
+}
+
+/* typing */
+function typeText(text, id) {
+    let i = 0;
+    const el = document.getElementById(id);
+
+    function typing() {
+        if (i < text.length) {
+            el.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, 40);
+        }
+    }
+
+    typing();
+}
+
+/* pages */
 let currentPage = 1;
 
 function nextPage() {
-    document.getElementById("page" + currentPage).style.display = "none";
     currentPage++;
-
-    if (document.getElementById("page" + currentPage)) {
-        document.getElementById("page" + currentPage).style.display = "flex";
-    }
-}
-function closeBook() {
-    const scrapbook = document.getElementById("scrapbook");
-
-    scrapbook.classList.add("closing");
-
-    setTimeout(() => {
-        scrapbook.style.display = "none";
-        scrapbook.classList.remove("closing");
-
-        // Reset pages
-        document.querySelectorAll(".page").forEach((p, i) => {
-            p.style.display = i === 0 ? "flex" : "none";
-        });
-
-        // Show gift again
-        present.style.display = "block";
-
-        // Reset timer (optional)
-        canOpen = false;
-        setTimeout(() => {
-            canOpen = true;
-        }, 5000);
-
-    }, 500);
+    flipSound.play();
 }
