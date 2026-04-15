@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         canOpen = true;
     }, 4000);
 
-    /* 🎉 BACKGROUND ELEMENTS */
+    /* 🎉 BACKGROUND */
     const emojis = ["🎈","🎂","🎉","🎁","🎀"];
 
     for (let i = 0; i < 40; i++) {
@@ -31,7 +31,31 @@ document.addEventListener("DOMContentLoaded", () => {
         bg.appendChild(el);
     }
 
-    /* 🧠 SMART GIFT MOVEMENT (CURSOR NEAR) */
+    /* 🧠 FORCE MOVE FUNCTION */
+    function moveGift() {
+        let x = Math.random() * (window.innerWidth - 160);
+        let y = Math.random() * (window.innerHeight - 160);
+
+        gift.style.left = x + "px";
+        gift.style.top = y + "px";
+        gift.style.transform = "none";
+
+        fun.innerText = msgs[Math.floor(Math.random()*msgs.length)];
+    }
+
+    /* ✅ DESKTOP HOVER */
+    gift.addEventListener("mouseenter", () => {
+        if (!canOpen) return;
+        moveGift();
+    });
+
+    /* ✅ MOBILE TOUCH */
+    gift.addEventListener("touchstart", () => {
+        if (!canOpen) return;
+        moveGift();
+    });
+
+    /* ✅ EXTRA SAFETY (NEAR CURSOR) */
     document.addEventListener("mousemove", (e) => {
 
         if (!canOpen) return;
@@ -43,21 +67,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const distance = Math.sqrt(dx*dx + dy*dy);
 
-        if (distance < 150) {
-
-            let x = Math.random() * (window.innerWidth - 160);
-            let y = Math.random() * (window.innerHeight - 160);
-
-            gift.style.transition = "0.4s";
-            gift.style.left = x + "px";
-            gift.style.top = y + "px";
-            gift.style.transform = "none";
-
-            fun.innerText = msgs[Math.floor(Math.random()*msgs.length)];
+        if (distance < 120) {
+            moveGift();
         }
     });
 
-    /* 🎁 OPEN GIFT */
+    /* 🎁 OPEN */
     gift.addEventListener("click", () => {
 
         if (!canOpen) return;
@@ -72,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 500);
     });
 
-    /* ✍️ TYPEWRITER FUNCTION */
+    /* ✍️ TYPEWRITER */
     function startTyping(page) {
 
         typingDone = false;
@@ -84,8 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const el = document.getElementById("text" + page);
-
-        if (!el) return;
 
         el.innerHTML = "";
 
@@ -102,7 +115,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 i++;
                 setTimeout(type, 40);
-
             } else {
                 typingDone = true;
             }
@@ -111,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type();
     }
 
-    /* 📖 PAGE FLIP */
+    /* 📖 FLIP */
     function handleFlip() {
 
         if (!typingDone) return;
@@ -125,13 +137,8 @@ document.addEventListener("DOMContentLoaded", () => {
         current++;
 
         if (current <= 3) {
-
-            setTimeout(() => {
-                startTyping(current);
-            }, 400);
-
+            setTimeout(() => startTyping(current), 400);
         } else {
-
             setTimeout(() => {
                 book.style.display = "none";
                 document.getElementById("final").style.display = "block";
@@ -139,13 +146,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    /* 🎯 CLICK ONLY RIGHT SIDE */
+    /* CLICK RIGHT SIDE */
     book.addEventListener("click", (e) => {
-
-        const right = e.target.closest(".right");
-
-        if (!right) return;
-
+        if (!e.target.closest(".right")) return;
         handleFlip();
     });
 
