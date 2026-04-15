@@ -9,16 +9,22 @@
 
 <body>
 
-    <!-- 🎈 FLOATING EMOJIS -->
-    <div class="floating">🎈</div>
-    <div class="floating">🎉</div>
-    <div class="floating">🎂</div>
-    <div class="floating">✨</div>
+    <!-- 🎉 BACKGROUND ELEMENTS -->
+    <div class="bg-balloon">🎈</div>
+    <div class="bg-balloon">🎈</div>
+    <div class="bg-balloon">🎈</div>
 
-    <!-- 😂 FUNNY TEXT (TEST VISIBLE) -->
-    <div id="funText">Loading...</div>
+    <div class="sparkle">✨</div>
+    <div class="sparkle">✨</div>
+    <div class="sparkle">✨</div>
 
-    <!-- 🎁 GIFT BOX -->
+    <!-- 😂 FUN TEXT -->
+    <div id="funText"></div>
+
+    <!-- 🦋 BUTTERFLIES -->
+    <div id="butterflies"></div>
+
+    <!-- 🎁 GIFT -->
     <div class="present" id="presentBox">
         <div class="lid"></div>
         <div class="box"></div>
@@ -30,65 +36,45 @@
         <!-- PAGE 1 -->
         <div class="page" id="page1">
             <div class="image-page">
-                <img src="photo1.jpg" alt="Memory 1">
+                <img src="photo1.jpg">
             </div>
             <div class="text-page">
-                <p>
-                    Dear Bhumika 💖<br><br>
-                    Happy Birthday! This small surprise is just a little
-                    way to show how special you are and how much I value
-                    our memories together.
-                </p>
+                <p>Dear Bhumika 💖<br><br>
+                Happy Birthday! This is just a small surprise for you.</p>
             </div>
         </div>
 
         <!-- PAGE 2 -->
-        <div class="page" id="page2" style="display:none;">
+        <div class="page" id="page2">
             <div class="image-page">
-                <img src="photo2.jpg" alt="Memory 2">
+                <img src="photo2.jpg">
             </div>
             <div class="text-page">
-                <p>
-                    Every moment with you feels special ✨<br><br>
-                    From silly talks to meaningful conversations,
-                    everything becomes better with you.
-                </p>
+                <p>Every moment with you is special ✨</p>
             </div>
         </div>
 
         <!-- PAGE 3 -->
-        <div class="page" id="page3" style="display:none;">
+        <div class="page" id="page3">
             <div class="image-page">
-                <img src="photo3.jpg" alt="Memory 3">
+                <img src="photo3.jpg">
             </div>
             <div class="text-page">
-                <p>
-                    I wish you endless happiness, success, and smiles 🎉<br><br>
-                    You truly deserve all the good things in life.
-                </p>
+                <p>You deserve all happiness 🎉</p>
             </div>
         </div>
 
-        <!-- PAGE 4 -->
-        <div class="page" id="page4" style="display:none;">
-            <div class="image-page">
-                <img src="photo4.jpg" alt="Final Memory">
-            </div>
-            <div class="text-page">
-                <p>
-                    Once again… Happy Birthday Bhumika 💕<br><br>
-                    This is just the beginning of many more
-                    beautiful memories ahead!
-                </p>
-            </div>
-        </div>
-
-        <!-- ➡️ NEXT BUTTON -->
+        <!-- BUTTONS -->
         <button class="next-btn" onclick="nextPage()">Next ➡</button>
-<button class="close-btn" onclick="closeBook()">Close ❌</button>
+        <button class="close-btn" onclick="closeBook()">Close ❌</button>
+
     </div>
 
-    <!-- ⚙️ SCRIPT -->
-   <script src="script.js"></script>
+    <!-- AUDIO -->
+    <audio id="flipSound" src="flip.mp3"></audio>
+    <audio id="bgMusic" src="music.mp3" loop></audio>
+
+    <script src="script.js"></script>
+
 </body>
 </html>
