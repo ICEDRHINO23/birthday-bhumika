@@ -1,26 +1,21 @@
-// 🎁 Elements
 const present = document.getElementById("presentBox");
 const scrapbook = document.getElementById("scrapbook");
 
-// 📖 Page control
 let currentPage = 1;
 
-/* 🎬 Show gift after intro */
+/* intro → show gift */
 setTimeout(() => {
     present.style.display = "block";
 }, 4000);
 
-/* 🎁 Open gift */
+/* open gift */
 present.addEventListener("click", () => {
-
-    // open lid animation
     present.classList.add("open");
 
     setTimeout(() => {
         present.style.display = "none";
         scrapbook.style.display = "block";
 
-        // ✅ FIXED TEXT (with proper line breaks)
         typeText(
             "Dear Bhumika 💖\n\nHappy Birthday!\nThis small surprise is just for you 😊",
             "typingText"
@@ -29,33 +24,28 @@ present.addEventListener("click", () => {
     }, 500);
 });
 
-
-/* ✍️ Typing Effect (FIXED) */
-function typeText(text, elementId) {
+/* typing */
+function typeText(text, id) {
     let i = 0;
-    const el = document.getElementById(elementId);
+    const el = document.getElementById(id);
     el.innerHTML = "";
 
-    function typing() {
+    function t() {
         if (i < text.length) {
-
-            // ✅ FIX: handle new line properly
-            if (text.charAt(i) === "\n") {
+            if (text[i] === "\n") {
                 el.innerHTML += "<br>";
             } else {
-                el.innerHTML += text.charAt(i);
+                el.innerHTML += text[i];
             }
-
             i++;
-            setTimeout(typing, 40);
+            setTimeout(t, 40);
         }
     }
 
-    typing();
+    t();
 }
 
-
-/* 📖 Page Flip */
+/* page flip */
 function nextPage() {
     const page = document.getElementById("page" + currentPage);
 
@@ -63,17 +53,25 @@ function nextPage() {
         page.classList.add("flipped");
         currentPage++;
     }
+
+    // 🎉 final message popup
+    if (currentPage === 6) {
+        showEnding();
+    }
 }
 
+/* ending */
+function showEnding() {
+    const msg = document.createElement("div");
 
-/* 🔄 OPTIONAL RESET */
-function resetBook() {
-    currentPage = 1;
+    msg.innerHTML = "💖 More to come... 💖";
+    msg.style.position = "fixed";
+    msg.style.top = "50%";
+    msg.style.left = "50%";
+    msg.style.transform = "translate(-50%, -50%)";
+    msg.style.fontSize = "40px";
+    msg.style.color = "#ff4d6d";
+    msg.style.zIndex = "9999";
 
-    document.querySelectorAll(".page").forEach((page) => {
-        page.classList.remove("flipped");
-    });
-
-    scrapbook.style.display = "none";
-    present.style.display = "block";
+    document.body.appendChild(msg);
 }
