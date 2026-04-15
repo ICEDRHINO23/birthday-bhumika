@@ -1,19 +1,21 @@
-/* 🎉 BACKGROUND */
+
+/* 🌌 PREMIUM BACKGROUND */
 body {
     margin: 0;
-    font-family: 'Comic Sans MS', cursive;
-    overflow: hidden;
     height: 100vh;
+    overflow: hidden;
+    font-family: 'Comic Sans MS', cursive;
 
-    background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb);
-    background-size: 600% 600%;
-    animation: bgMove 10s infinite;
+    background: radial-gradient(circle at 20% 30%, #ff9a9e, transparent),
+                radial-gradient(circle at 80% 70%, #fbc2eb, transparent),
+                #0f0f1a;
+
+    animation: bgShift 10s infinite alternate;
 }
 
-@keyframes bgMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+@keyframes bgShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(20deg); }
 }
 
 /* 🌌 PARTICLES */
@@ -30,7 +32,7 @@ body {
     top: 0;
     left: 0;
     pointer-events: none;
-    z-index: 2;
+    z-index: 3;
 }
 
 /* 😂 TEXT */
@@ -73,7 +75,7 @@ body {
     position: relative;
 }
 
-/* ribbon */
+/* 🎀 ribbon */
 .box::before {
     content: "";
     width: 20px;
@@ -83,7 +85,6 @@ body {
     left: 50%;
     transform: translateX(-50%);
 }
-
 .box::after {
     content: "";
     height: 20px;
@@ -116,21 +117,22 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    perspective: 1500px;
+    perspective: 2000px;
     z-index: 10;
 }
 
-/* 📄 PAGES */
+/* 📄 PAGE */
 .page {
+    position: absolute;
     width: 100%;
     height: 100%;
-    position: absolute;
     display: flex;
-    background: white;
 
     transform-origin: left;
+    transform-style: preserve-3d;
     transition: transform 0.8s ease;
-    backface-visibility: hidden;
+
+    background: white;
 }
 
 /* flip */
@@ -138,7 +140,7 @@ body {
     transform: rotateY(-180deg);
 }
 
-/* image */
+/* image/video */
 .image-page {
     width: 50%;
     display: flex;
@@ -149,6 +151,8 @@ body {
 .image-page img,
 .image-page video {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 10px;
 }
 
@@ -158,10 +162,11 @@ body {
     padding: 20px;
 }
 
-/* typing style */
+/* ✍️ handwriting */
 #typingText {
     font-family: 'Brush Script MT', cursive;
     font-size: 22px;
+    line-height: 1.5;
 }
 
 /* button */
@@ -171,42 +176,6 @@ body {
     right: 20px;
 }
 
-/* 🎀 ribbons */
-.ribbon {
-    position: absolute;
-    width: 8px;
-    height: 120px;
-    background: linear-gradient(gold, orange);
-    animation: fall 6s linear infinite;
-}
-
-@keyframes fall {
-    0% { top: -100px; }
-    100% { top: 110%; }
-}
-
-/* 🎈 balloons */
-.bg-balloon {
-    position: absolute;
-    font-size: 30px;
-    animation: float 8s linear infinite;
-}
-
-@keyframes float {
-    0% { bottom: -50px; }
-    100% { bottom: 110%; }
-}
-
-/* ✨ sparkle */
-.sparkle {
-    position: absolute;
-    animation: blink 2s infinite;
-}
-
-@keyframes blink {
-    50% { opacity: 0.2; }
-}
-
 /* 🦋 */
 .butterfly {
     position: absolute;
@@ -214,7 +183,10 @@ body {
 }
 
 @keyframes fly {
-    to { transform: translate(200px, -300px); opacity: 0; }
+    to {
+        transform: translate(200px, -300px);
+        opacity: 0;
+    }
 }
 
 /* 💖 */
@@ -224,5 +196,8 @@ body {
 }
 
 @keyframes heartFly {
-    to { transform: translate(200px, -300px); opacity: 0; }
+    to {
+        transform: translate(200px, -300px);
+        opacity: 0;
+    }
 }
