@@ -79,3 +79,28 @@ function nextPage() {
         document.getElementById("page" + currentPage).style.display = "flex";
     }
 }
+function closeBook() {
+    const scrapbook = document.getElementById("scrapbook");
+
+    scrapbook.classList.add("closing");
+
+    setTimeout(() => {
+        scrapbook.style.display = "none";
+        scrapbook.classList.remove("closing");
+
+        // Reset pages
+        document.querySelectorAll(".page").forEach((p, i) => {
+            p.style.display = i === 0 ? "flex" : "none";
+        });
+
+        // Show gift again
+        present.style.display = "block";
+
+        // Reset timer (optional)
+        canOpen = false;
+        setTimeout(() => {
+            canOpen = true;
+        }, 5000);
+
+    }, 500);
+}
