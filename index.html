@@ -15,7 +15,7 @@
 <!-- 🎉 BACKGROUND -->
 <div class="bg" id="bg"></div>
 
-<!-- 😂 TEXT -->
+<!-- 😂 FUN TEXT -->
 <div id="funText"></div>
 
 <!-- 🎁 GIFT -->
@@ -30,7 +30,7 @@
     <!-- PAGE 1 -->
     <div class="page" id="p1">
         <div class="left">
-            <video autoplay muted loop>
+            <video autoplay muted loop playsinline>
                 <source src="bhumika.mp4" type="video/mp4">
             </video>
         </div>
@@ -42,7 +42,7 @@
     <!-- PAGE 2 -->
     <div class="page" id="p2">
         <div class="left">
-            <img src="20240429_230322.jpg">
+            <img src="20240429_230322.jpg" alt="memory1">
         </div>
         <div class="right">
             <p>Every moment with you is special ✨</p>
@@ -52,20 +52,24 @@
     <!-- PAGE 3 -->
     <div class="page" id="p3">
         <div class="left">
-            <img src="20240906_204953.jpg">
+            <img src="20240906_204953.jpg" alt="memory2">
         </div>
         <div class="right">
             <p>You deserve all happiness 🎉</p>
         </div>
     </div>
 
-    <button onclick="next()">Next ➡</button>
+    <!-- BUTTON -->
+    <button id="nextBtn" onclick="next()">Next ➡</button>
 
 </div>
 
-<!-- 💌 FINAL -->
+<!-- 💌 FINAL MESSAGE -->
 <div id="final">
-    💌 More surprises are going to be unveiled... wait for it.
+    <div class="letter">
+        💌 More surprises are going to be unveiled...<br><br>
+        Wait for it ✨
+    </div>
 </div>
 
 <script src="script.js"></script>
