@@ -1,3 +1,21 @@
+// 🎉 CREATE FLOATING BACKGROUND ELEMENTS
+const bg = document.getElementById("bg");
+
+const emojis = ["🎈","🎂","🎉","🎁","🎀"];
+
+for (let i = 0; i < 40; i++) {
+
+    let el = document.createElement("span");
+    el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+
+    el.style.left = Math.random() * 100 + "%";
+    el.style.top = Math.random() * 100 + "%";
+
+    el.style.animationDuration = (6 + Math.random() * 10) + "s";
+    el.style.fontSize = (25 + Math.random() * 25) + "px";
+
+    bg.appendChild(el);
+}
 /* 🌌 BASE */
 body {
     margin: 0;
