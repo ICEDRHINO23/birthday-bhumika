@@ -241,3 +241,7 @@ img, video {
     color: #333;
     text-align: center;
 }
+#funText {
+    transition: opacity 0.3s;
+    font-size: 18px;
+}
