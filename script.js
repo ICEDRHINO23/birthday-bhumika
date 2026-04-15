@@ -102,20 +102,24 @@ document.addEventListener("touchstart", (e) => {
     });
 
     /* 🎁 OPEN */
-    gift.addEventListener("click", () => {
+   gift.addEventListener("click", () => {
 
-        if (!canOpen) return;
+    // 📱 if still moving → tease again
+    if (!canOpen || allowMove) {
+        moveGift();
+        return;
+    }
 
-        gift.classList.add("open");
+    // 🎁 open only after movement stops
+    gift.classList.add("open");
 
-        setTimeout(() => {
-            gift.style.display = "none";
-            book.style.display = "block";
+    setTimeout(() => {
+        gift.style.display = "none";
+        book.style.display = "block";
 
-            startTyping(current);
-        }, 500);
-    });
-
+        startTyping(current);
+    }, 500);
+});
     /* ✍️ TYPEWRITER */
     function startTyping(page) {
 
