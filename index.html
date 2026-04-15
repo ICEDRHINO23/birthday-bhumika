@@ -6,45 +6,84 @@
     <title>Happy Birthday Bhumika</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+    <!-- 😂 FUNNY TEXT -->
+    <div id="funText"></div>
+
+    <!-- 🎁 GIFT BOX -->
     <div class="present" id="presentBox">
         <div class="lid"></div>
         <div class="box"></div>
     </div>
-    <div class="scrapbook" id="scrapbook" style="display: none;">
-        <div class="page">
+
+    <!-- 📖 SCRAPBOOK -->
+    <div class="scrapbook" id="scrapbook" style="display:none;">
+
+        <!-- PAGE 1 -->
+        <div class="page" id="page1">
             <div class="image-page">
-                <img src="your-image1.jpg" alt="Memory Photo 1">
+                <img src="photo1.jpg" alt="Memory 1">
             </div>
             <div class="text-page">
-                <p>Your heartfelt message goes here.</p>
+                <p>
+                    Dear Bhumika 💖<br><br>
+                    Happy Birthday! This little scrapbook is just a small
+                    attempt to show how special you are and how beautiful
+                    our memories have been.
+                </p>
             </div>
         </div>
-        <!-- Add more pages as needed -->
-    </div>
-<div class="scrapbook" id="scrapbook" style="display:none;">
-    
-    <div class="page" id="page1">
-        <div class="image-page">
-            <img src="photo1.jpg">
+
+        <!-- PAGE 2 -->
+        <div class="page" id="page2" style="display:none;">
+            <div class="image-page">
+                <img src="photo2.jpg" alt="Memory 2">
+            </div>
+            <div class="text-page">
+                <p>
+                    Every moment with you is something I truly cherish ✨<br><br>
+                    From laughs to random talks, everything feels better
+                    when you're around.
+                </p>
+            </div>
         </div>
-        <div class="text-page">
-            <p>First memory message 💖</p>
+
+        <!-- PAGE 3 -->
+        <div class="page" id="page3" style="display:none;">
+            <div class="image-page">
+                <img src="photo3.jpg" alt="Memory 3">
+            </div>
+            <div class="text-page">
+                <p>
+                    I wish you endless happiness, success, and smiles 🎉<br><br>
+                    Stay the same amazing person you are always!
+                </p>
+            </div>
         </div>
+
+        <!-- LAST PAGE -->
+        <div class="page" id="page4" style="display:none;">
+            <div class="image-page">
+                <img src="photo4.jpg" alt="Final Memory">
+            </div>
+            <div class="text-page">
+                <p>
+                    Once again… Happy Birthday Bhumika 💕<br><br>
+                    This is just the beginning of many more memories
+                    we are going to create!
+                </p>
+            </div>
+        </div>
+
+        <!-- NEXT BUTTON -->
+        <button class="next-btn" onclick="nextPage()">Next ➡</button>
+
     </div>
 
-    <div class="page" id="page2" style="display:none;">
-        <div class="image-page">
-            <img src="photo2.jpg">
-        </div>
-        <div class="text-page">
-            <p>Second memory message ✨</p>
-        </div>
-    </div>
-
-    <button class="next-btn" onclick="nextPage()">Next ➡</button>
-    <div id="funText"></div>
-</div>
+    <!-- JS -->
     <script src="script.js"></script>
+
 </body>
 </html>
