@@ -1,4 +1,3 @@
-
 // 🎁 Elements
 const present = document.getElementById("presentBox");
 const scrapbook = document.getElementById("scrapbook");
@@ -21,9 +20,9 @@ present.addEventListener("click", () => {
         present.style.display = "none";
         scrapbook.style.display = "block";
 
-        // start typing message
+        // ✅ FIXED TEXT (with proper line breaks)
         typeText(
-            "Dear Bhumika 💖\n\nHappy Birthday! This small surprise is just for you 😊",
+            "Dear Bhumika 💖\n\nHappy Birthday!\nThis small surprise is just for you 😊",
             "typingText"
         );
 
@@ -31,7 +30,7 @@ present.addEventListener("click", () => {
 });
 
 
-/* ✍️ Typing Effect */
+/* ✍️ Typing Effect (FIXED) */
 function typeText(text, elementId) {
     let i = 0;
     const el = document.getElementById(elementId);
@@ -39,7 +38,14 @@ function typeText(text, elementId) {
 
     function typing() {
         if (i < text.length) {
-            el.innerHTML += text.charAt(i);
+
+            // ✅ FIX: handle new line properly
+            if (text.charAt(i) === "\n") {
+                el.innerHTML += "<br>";
+            } else {
+                el.innerHTML += text.charAt(i);
+            }
+
             i++;
             setTimeout(typing, 40);
         }
@@ -60,11 +66,11 @@ function nextPage() {
 }
 
 
-/* 🔄 OPTIONAL RESET (if needed later) */
+/* 🔄 OPTIONAL RESET */
 function resetBook() {
     currentPage = 1;
 
-    document.querySelectorAll(".page").forEach((page, index) => {
+    document.querySelectorAll(".page").forEach((page) => {
         page.classList.remove("flipped");
     });
 
