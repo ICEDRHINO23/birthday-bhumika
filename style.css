@@ -1,8 +1,11 @@
+/* 🌌 BACKGROUND */
 body {
     margin: 0;
     overflow: hidden;
     font-family: 'Comic Sans MS';
-    background: #0f0f1a;
+    background: radial-gradient(circle at 20% 30%, #ff9a9e, transparent),
+                radial-gradient(circle at 80% 70%, #fbc2eb, transparent),
+                #0f0f1a;
 }
 
 /* 🎬 INTRO */
@@ -22,13 +25,6 @@ body {
 
 @keyframes fadeOut {
     to { opacity: 0; visibility: hidden; }
-}
-
-/* 🌌 PARTICLES */
-#particles {
-    position: fixed;
-    top: 0;
-    left: 0;
 }
 
 /* 🎁 GIFT */
@@ -89,12 +85,14 @@ body {
 
 /* 📖 BOOK */
 .scrapbook {
-    width: 80%;
+    width: 800px;
     height: 500px;
+
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
     perspective: 2500px;
 }
 
@@ -103,12 +101,15 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
+
     display: flex;
     background: white;
+    border-radius: 10px;
+    overflow: hidden;
 
     transform-origin: left;
     transform-style: preserve-3d;
-    transition: transform 1s cubic-bezier(0.77,0,0.18,1);
+    transition: transform 1s ease;
 
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
@@ -119,19 +120,28 @@ body {
 #page3 { z-index: 2; }
 #page4 { z-index: 1; }
 
+/* flip */
 .page.flipped {
     transform: rotateY(-180deg);
-    z-index: 0;
 }
 
-/* shadow */
-.page.flipped::before {
-    box-shadow: inset -50px 0 80px rgba(0,0,0,0.2);
+/* LEFT SIDE */
+.image-page {
+    width: 50%;
+    height: 100%;
+}
+
+/* RIGHT SIDE */
+.text-page {
+    width: 50%;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff8f8;
 }
 
 /* media */
-.image-page { width: 50%; }
-
 .image-page img,
 .image-page video {
     width: 100%;
@@ -140,8 +150,6 @@ body {
 }
 
 /* text */
-.text-page { width: 50%; padding: 20px; }
-
 #typingText {
     font-family: cursive;
     font-size: 22px;
