@@ -1,8 +1,8 @@
-/* =========================
-   DOM READY
-========================= */
 document.addEventListener("DOMContentLoaded", () => {
 
+  /* =========================
+     ELEMENTS
+  ========================= */
   const intro = document.getElementById("intro");
   const gift = document.getElementById("giftImage");
 
@@ -12,25 +12,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const book = document.getElementById("book");
 
   const bigTimer = document.getElementById("bigTimer");
+  const pagesContainer = document.getElementById("pagesContainer");
 
   /* =========================
-     INTRO LOADER
+     INTRO
   ========================= */
   if (intro) {
-    setTimeout(() => {
-      intro.style.display = "none";
-    }, 2000);
+    setTimeout(() => intro.style.display = "none", 2000);
   }
 
   /* =========================
-     GIFT UNLOCK DELAY
+     GIFT UNLOCK
   ========================= */
   let unlocked = false;
   setTimeout(() => unlocked = true, 3000);
 
-  /* =========================
-     GIFT CLICK
-  ========================= */
   if (gift) {
     gift.addEventListener("click", () => {
 
@@ -80,8 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (type === "book") {
       book.classList.remove("hidden");
-      currentPage = 0;          // ✅ reset book
-      showPage(currentPage);    // ✅ ensure first page loads
+      currentPage = 0;
+      showPage(currentPage);
     }
   };
 
@@ -117,6 +113,57 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
+     LOAD DATA (ADMIN PANEL)
+  ========================= */
+  const scrapbookData = JSON.parse(localStorage.getItem("scrapbook")) || [];
+  const videoData = localStorage.getItem("video");
+
+  /* =========================
+     LOAD VIDEO
+  ========================= */
+  if (videoData && videoPage) {
+    videoPage.innerHTML = `
+      <h2>Effort Video 🎥</h2>
+      <video src="${videoData}" controls autoplay></video>
+      <br><button onclick="goBack()">⬅ Back</button>
+    `;
+  }
+
+  /* =========================
+     LOAD SCRAPBOOK
+  ========================= */
+  function loadScrapbook() {
+
+    if (!pagesContainer) return;
+
+    pagesContainer.innerHTML = "";
+
+    scrapbookData.forEach((item) => {
+
+      const spread = document.createElement("div");
+      spread.className = "spread";
+
+      spread.innerHTML = `
+        <div class="left">
+          ${
+            item.type === "image"
+              ? `<img src="${item.src}">`
+              : `<video src="${item.src}" controls></video>`
+          }
+        </div>
+        <div class="right">
+          <h2>${item.title}</h2>
+          <p>${item.text}</p>
+        </div>
+      `;
+
+      pagesContainer.appendChild(spread);
+    });
+
+    showPage(0);
+  }
+
+  /* =========================
      SCRAPBOOK FLIP SYSTEM
   ========================= */
   let currentPage = 0;
@@ -143,25 +190,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* INITIAL LOAD */
-  showPage(currentPage);
-
-  /* NEXT PAGE */
   window.nextPage = function () {
     const pages = getPages();
-
     if (currentPage < pages.length - 1) {
       currentPage++;
       showPage(currentPage);
     }
   };
 
-  /* PREVIOUS PAGE */
   window.prevPage = function () {
     if (currentPage > 0) {
       currentPage--;
       showPage(currentPage);
     }
   };
+
+  /* INIT */
+  loadScrapbook();
 
 });
