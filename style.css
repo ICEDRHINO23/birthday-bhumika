@@ -1,12 +1,9 @@
 body {
   margin: 0;
   font-family: Arial;
-  background: linear-gradient(135deg,#ffd1dc,#ffe6cc);
+  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
   text-align: center;
-  overflow: hidden;
 }
-
-.hidden { display:none; }
 
 /* INTRO */
 #intro {
@@ -26,120 +23,60 @@ body {
   margin-top:20px;
   background:#ff4d6d;
   color:white;
-  padding:10px;
-  border-radius:10px;
+  padding:10px 20px;
+  border-radius:20px;
   display:inline-block;
 }
 
-/* 🎁 GIFT */
-#gift {
-  margin-top:100px;
-  perspective:800px;
+/* GIFT IMAGE */
+#giftContainer {
+  margin-top:80px;
 }
 
-.gift-box {
-  width:120px;
-  height:120px;
-  margin:auto;
-  position:relative;
-  transform-style:preserve-3d;
-  transition:0.6s;
+#giftImage {
+  width:200px;
+  cursor:pointer;
+  transition:0.4s;
 }
 
-.gift-box:hover {
-  transform: rotateX(15deg) rotateY(-15deg);
+/* hover glow */
+#giftImage:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 20px gold);
 }
 
-.base {
-  width:120px;
-  height:90px;
-  background:#ff1744;
-  position:absolute;
-  bottom:0;
-  border-radius:10px;
-}
-
-.lid {
-  width:130px;
-  height:40px;
-  background:#ff4d6d;
-  position:absolute;
-  top:-30px;
-  left:-5px;
-  border-radius:8px;
-  transition:0.6s;
-}
-
-.ribbon-v {
-  width:15px;
-  height:100%;
-  background:gold;
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-.ribbon-h {
-  height:15px;
-  width:100%;
-  background:gold;
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-}
-
-.open .lid {
-  transform: rotateX(-120deg);
+/* hidden */
+.hidden {
+  display:none;
 }
 
 /* MENU */
-#menu button {
+button {
   margin:10px;
-  padding:10px 20px;
+  padding:12px 20px;
+  border:none;
   background:#ff4d6d;
   color:white;
-  border:none;
-  border-radius:8px;
+  border-radius:10px;
+  cursor:pointer;
 }
 
 /* TIMER */
 #bigTimer {
   font-size:30px;
+  color:#b30000;
 }
 
 /* SCRAPBOOK */
-.flip-container {
-  width:500px;
-  height:300px;
-  margin:auto;
-  position:relative;
-  perspective:1000px;
-}
-
 .page {
-  position:absolute;
-  width:100%;
-  height:100%;
   display:none;
-  animation: flip 0.6s;
 }
 
 .page.active {
   display:block;
 }
 
-@keyframes flip {
-  from { transform: rotateY(90deg); opacity:0; }
-  to { transform: rotateY(0deg); opacity:1; }
-}
-
 img, video {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:10px;
-}
-
-.controls {
-  margin-top:10px;
+  width:60%;
+  border-radius:12px;
 }
