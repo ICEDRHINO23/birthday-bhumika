@@ -6,67 +6,47 @@
 <title>Birthday Surprise 🎉</title>
 
 <link rel="stylesheet" href="style.css">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 
 <body>
 
-<!-- 🌌 BACKGROUND EFFECTS -->
+<!-- ⭐ IMPORTANT ELEMENTS -->
 <canvas id="stars"></canvas>
 <div id="cursorGlow"></div>
 
-<!-- 🎬 INTRO -->
+<!-- INTRO -->
 <div id="intro">This is a Surprise 🎁</div>
 
-<!-- 😂 TEXT -->
+<!-- TEXT -->
 <div id="funText">Catch the Gift 😜</div>
 
-<!-- 🎁 GIFT -->
+<!-- GIFT -->
 <div id="gift">
   <div class="lid"></div>
   <div class="box"></div>
 </div>
 
-<!-- 🎛 MENU -->
+<!-- MENU -->
 <div id="menu" style="display:none;">
   <h2>Select Your Surprise 🎁</h2>
-
   <button onclick="openPage('timer')">⏳ Timer</button>
   <button onclick="openPage('video')">🎥 Video</button>
-  <button onclick="openPage('book')">💖 Scrapbook</button>
 </div>
 
-<!-- ⏳ TIMER -->
+<!-- TIMER -->
 <div id="timerPage" style="display:none;">
   <h1>Countdown 🎂</h1>
   <div id="bigTimer"></div>
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- 🎥 VIDEO -->
+<!-- VIDEO -->
 <div id="videoPage" style="display:none;">
-  <h1>Special Video 🎥</h1>
-  <video src="./images/birthday-video.mp4" controls></video>
+  <h1>Video 🎥</h1>
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- 📖 BOOK -->
-<div id="book" style="display:none;">
-  <div class="page">
-    <div class="left">💖</div>
-    <div class="right">You know what… some people make life brighter ✨</div>
-  </div>
-</div>
-
-<!-- ⏳ SMALL TIMER -->
-<div id="countdown"></div>
-
-<!-- 🎵 AUDIO -->
-<audio id="bgMusic" src="./audio/bg.mp3" loop></audio>
-<audio id="openSound" src="./audio/open.mp3"></audio>
-
-<!-- 🔥 IMPORTANT: SCRIPT AT BOTTOM -->
+<!-- SCRIPT AT BOTTOM -->
 <script src="script.js"></script>
 
 </body>
