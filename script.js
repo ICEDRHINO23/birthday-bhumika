@@ -40,14 +40,25 @@ adminBtn.addEventListener("click", () => {
 });
 
 /* =========================
-   LOGIN
+   LOGIN (FIXED)
 ========================= */
 window.login = function () {
-  const user = document.getElementById("user").value;
-  const pass = document.getElementById("pass").value;
+
+  const user = document.getElementById("user")?.value.trim();
+  const pass = document.getElementById("pass")?.value.trim();
+
+  if (!user || !pass) {
+    alert("Enter username & password");
+    return;
+  }
 
   if (user === "abin" && pass === "1234") {
-    window.location.href = "admin.html";
+
+    alert("Login Success ✅");
+
+    // redirect (ensure file exists)
+    window.location.href = "./admin.html";
+
   } else {
     alert("Wrong credentials ❌");
   }
@@ -78,13 +89,55 @@ setInterval(() => {
 }, 900);
 
 /* =========================
-   GIFT FLOW (PERFECT TIMING)
+   CONFETTI
+========================= */
+function launchConfetti() {
+
+  const colors = ["#ff4d6d", "#ffd166", "#06d6a0", "#118ab2"];
+
+  for (let i = 0; i < 70; i++) {
+
+    const c = document.createElement("div");
+    c.className = "confetti";
+
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration = (Math.random()*2+2)+"s";
+
+    document.body.appendChild(c);
+
+    setTimeout(()=>c.remove(),4000);
+  }
+}
+
+/* =========================
+   ZOOM EFFECT
+========================= */
+function triggerZoom() {
+  const main = document.getElementById("main");
+  main.classList.add("zoom");
+
+  setTimeout(()=> main.classList.remove("zoom"),2000);
+}
+
+/* =========================
+   CURSOR GLOW
+========================= */
+const glow = document.createElement("div");
+glow.className = "cursor-glow";
+document.body.appendChild(glow);
+
+document.addEventListener("mousemove", (e)=>{
+  glow.style.left = e.clientX+"px";
+  glow.style.top = e.clientY+"px";
+});
+
+/* =========================
+   GIFT FLOW (FINAL PERFECT)
 ========================= */
 let unlocked = false;
 
-setTimeout(() => {
-  unlocked = true;
-}, 3000);
+setTimeout(()=> unlocked = true,3000);
 
 gift.addEventListener("click", () => {
 
@@ -93,24 +146,27 @@ gift.addEventListener("click", () => {
   gift.src = "./image/gift-open.PNG";
   gift.classList.add("opened");
 
-  setTimeout(() => {
+  setTimeout(()=>{
 
-    document.getElementById("giftContainer").style.display = "none";
+    document.getElementById("giftContainer").style.display="none";
     menu.classList.remove("hidden");
 
-    /* SHOW BIG MESSAGE */
-    setTimeout(() => {
+    launchConfetti();
+    triggerZoom();
+
+    /* BIG MESSAGE */
+    setTimeout(()=>{
       bigMessage.classList.add("show");
-    }, 300);
+    },300);
 
     /* HIDE BIG MESSAGE */
-    setTimeout(() => {
+    setTimeout(()=>{
       bigMessage.classList.remove("show");
       bigMessage.classList.add("hide");
-    }, 2800);
+    },2800);
 
-    /* TYPING START */
-    setTimeout(() => {
+    /* TYPING */
+    setTimeout(()=>{
 
       surprise.classList.remove("hidden");
 
@@ -119,13 +175,14 @@ gift.addEventListener("click", () => {
         typed
       );
 
-    }, 3800);
+    },3800);
 
-  }, 1000);
+  },1000);
+
 });
 
 /* =========================
-   TYPING EFFECT
+   TYPING
 ========================= */
 function typeText(text, element, speed = 40) {
   let i = 0;
@@ -143,13 +200,27 @@ function typeText(text, element, speed = 40) {
 }
 
 /* =========================
-   DATE LOCK
+   TIMER
 ========================= */
 const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
 
-function isUnlocked() {
-  return Date.now() >= unlockDate;
-}
+setInterval(()=>{
+
+  let gap = unlockDate - Date.now();
+
+  if(gap <= 0){
+    bigTimer.innerHTML = "🎉 It's Time!";
+    return;
+  }
+
+  let d=Math.floor(gap/(1000*60*60*24));
+  let h=Math.floor((gap/(1000*60*60))%24);
+  let m=Math.floor((gap/(1000*60))%60);
+  let s=Math.floor((gap/1000)%60);
+
+  bigTimer.innerHTML=`${d}d ${h}h ${m}m ${s}s`;
+
+},1000);
 
 /* =========================
    NAVIGATION
@@ -161,29 +232,18 @@ window.openPage = function(type){
   videoPage.classList.add("hidden");
   book.classList.add("hidden");
 
-  if(type === "timer"){
-    timerPage.classList.remove("hidden");
-  }
+  if(type==="timer") timerPage.classList.remove("hidden");
 
-  if(type === "video"){
-    if(!isUnlocked()){
-      alert("🔒 Unlocks on May 12 🎂");
-      menu.classList.remove("hidden");
-      return;
-    }
-    videoPage.classList.remove("hidden");
-  }
+  if(type==="video") videoPage.classList.remove("hidden");
 
-  if(type === "book"){
+  if(type==="book"){
     book.classList.remove("hidden");
     currentPage = 0;
     loadScrapbook();
   }
 };
 
-/* =========================
-   BACK
-========================= */
+/* BACK */
 window.goBack = function(){
   timerPage.classList.add("hidden");
   videoPage.classList.add("hidden");
@@ -192,28 +252,7 @@ window.goBack = function(){
 };
 
 /* =========================
-   TIMER
-========================= */
-setInterval(() => {
-
-  let gap = unlockDate - Date.now();
-
-  if(gap <= 0){
-    bigTimer.innerHTML = "🎉 It's Time! 🎂";
-    return;
-  }
-
-  let d = Math.floor(gap/(1000*60*60*24));
-  let h = Math.floor((gap/(1000*60*60))%24);
-  let m = Math.floor((gap/(1000*60))%60);
-  let s = Math.floor((gap/1000)%60);
-
-  bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
-
-},1000);
-
-/* =========================
-   SCRAPBOOK SYSTEM
+   SCRAPBOOK
 ========================= */
 let currentPage = 0;
 
@@ -231,27 +270,26 @@ function loadScrapbook(){
     return;
   }
 
-  data.forEach((item) => {
+  data.forEach(item => {
 
-    const spread = document.createElement("div");
-    spread.className = "spread";
+    const div = document.createElement("div");
+    div.className = "spread";
 
-    spread.innerHTML = `
+    div.innerHTML = `
       <div class="left">
         ${
-          item.type === "image"
+          item.type==="image"
           ? `<img src="${item.src}">`
           : `<video src="${item.src}" controls></video>`
         }
       </div>
-
       <div class="right">
         <h2>${item.title}</h2>
         <p>${item.text}</p>
       </div>
     `;
 
-    pagesContainer.appendChild(spread);
+    pagesContainer.appendChild(div);
   });
 
   showPage(0);
@@ -262,85 +300,23 @@ function showPage(index){
 
   pages.forEach((p,i)=>{
     p.classList.remove("active");
-    if(i === index) p.classList.add("active");
+    if(i===index) p.classList.add("active");
   });
 }
 
 window.nextPage = function(){
   const pages = document.querySelectorAll(".spread");
-
-  if(currentPage < pages.length - 1){
+  if(currentPage < pages.length-1){
     currentPage++;
     showPage(currentPage);
   }
 };
 
 window.prevPage = function(){
-  if(currentPage > 0){
+  if(currentPage>0){
     currentPage--;
     showPage(currentPage);
   }
 };
-/* =========================
-   CONFETTI BURST
-========================= */
-function launchConfetti() {
 
-  const colors = ["#ff4d6d", "#ffd166", "#06d6a0", "#118ab2", "#ef476f"];
-
-  for (let i = 0; i < 80; i++) {
-
-    const confetti = document.createElement("div");
-    confetti.className = "confetti";
-
-    confetti.style.left = Math.random() * 100 + "vw";
-    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-
-    confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
-
-    document.body.appendChild(confetti);
-
-    setTimeout(() => confetti.remove(), 4000);
-  }
-}
-
-/* =========================
-   CINEMATIC ZOOM
-========================= */
-function triggerZoom() {
-  const main = document.getElementById("main");
-
-  main.classList.add("zoom");
-
-  setTimeout(() => {
-    main.classList.remove("zoom");
-  }, 2000);
-}
-
-/* =========================
-   CURSOR GLOW
-========================= */
-const glow = document.createElement("div");
-glow.className = "cursor-glow";
-document.body.appendChild(glow);
-
-document.addEventListener("mousemove", (e) => {
-  glow.style.left = e.clientX + "px";
-  glow.style.top = e.clientY + "px";
-});
-
-/* =========================
-   HOOK INTO GIFT CLICK
-========================= */
-gift.addEventListener("click", () => {
-
-  if (!unlocked) return;
-
-  /* EFFECTS */
-  setTimeout(() => {
-    launchConfetti();
-    triggerZoom();
-  }, 800);
-
-});
 });
