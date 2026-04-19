@@ -185,3 +185,45 @@ button {
 .hidden {
   display: none;
 }
+
+/* =========================
+   HEARTS
+========================= */
+#hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.heart {
+  position: absolute;
+  color: pink;
+  font-size: 20px;
+  animation: floatUp 5s linear infinite;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(100vh) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-10vh) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* =========================
+   SURPRISE TEXT
+========================= */
+#surpriseText {
+  position: fixed;
+  top: 40%;
+  width: 100%;
+  text-align: center;
+  font-size: 28px;
+  color: #ff3366;
+}
