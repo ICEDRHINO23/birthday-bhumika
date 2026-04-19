@@ -281,5 +281,66 @@ window.prevPage = function(){
     showPage(currentPage);
   }
 };
+/* =========================
+   CONFETTI BURST
+========================= */
+function launchConfetti() {
 
+  const colors = ["#ff4d6d", "#ffd166", "#06d6a0", "#118ab2", "#ef476f"];
+
+  for (let i = 0; i < 80; i++) {
+
+    const confetti = document.createElement("div");
+    confetti.className = "confetti";
+
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+    confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+
+    document.body.appendChild(confetti);
+
+    setTimeout(() => confetti.remove(), 4000);
+  }
+}
+
+/* =========================
+   CINEMATIC ZOOM
+========================= */
+function triggerZoom() {
+  const main = document.getElementById("main");
+
+  main.classList.add("zoom");
+
+  setTimeout(() => {
+    main.classList.remove("zoom");
+  }, 2000);
+}
+
+/* =========================
+   CURSOR GLOW
+========================= */
+const glow = document.createElement("div");
+glow.className = "cursor-glow";
+document.body.appendChild(glow);
+
+document.addEventListener("mousemove", (e) => {
+  glow.style.left = e.clientX + "px";
+  glow.style.top = e.clientY + "px";
+});
+
+/* =========================
+   HOOK INTO GIFT CLICK
+========================= */
+gift.addEventListener("click", () => {
+
+  if (!unlocked) return;
+
+  /* EFFECTS */
+  setTimeout(() => {
+    launchConfetti();
+    triggerZoom();
+  }, 800);
+
+});
 });
