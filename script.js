@@ -2,62 +2,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const intro = document.getElementById("intro");
 const gift = document.getElementById("gift");
+
 const menu = document.getElementById("menu");
 const timerPage = document.getElementById("timerPage");
 const videoPage = document.getElementById("videoPage");
 const book = document.getElementById("book");
+
 const bigTimer = document.getElementById("bigTimer");
-const bgMusic = document.getElementById("bgMusic");
 
 // INTRO
-setTimeout(() => intro.style.display = "none", 3000);
-
-// UNLOCK
-let unlocked = false;
-setTimeout(() => unlocked = true, 4000);
+setTimeout(() => {
+  intro.style.display = "none";
+}, 2000);
 
 // OPEN GIFT
 gift.addEventListener("click", () => {
-  if (!unlocked) return;
-
-  document.querySelector(".gift-box").classList.add("gift-open");
-
-  setTimeout(() => {
-    gift.style.display = "none";
-    menu.style.display = "block";
-    bgMusic.play().catch(()=>{});
-  }, 800);
+  gift.style.display = "none";
+  menu.classList.remove("hidden");
 });
 
 // NAVIGATION
 window.openPage = function(type){
-  menu.style.display = "none";
-  timerPage.style.display = "none";
-  videoPage.style.display = "none";
-  book.style.display = "none";
 
-  if(type === "timer") timerPage.style.display = "block";
-  if(type === "video") videoPage.style.display = "block";
+  menu.classList.add("hidden");
+  timerPage.classList.add("hidden");
+  videoPage.classList.add("hidden");
+  book.classList.add("hidden");
 
-  if(type === "book"){
-    book.style.display = "block";
-    currentPage = 0;
+  if(type === "timer") timerPage.classList.remove("hidden");
+  if(type === "video") videoPage.classList.remove("hidden");
+  if(type === "book") {
+    book.classList.remove("hidden");
     showPage(currentPage);
   }
 }
 
 // BACK
 window.goBack = function(){
-  timerPage.style.display = "none";
-  videoPage.style.display = "none";
-  book.style.display = "none";
-  menu.style.display = "block";
+  timerPage.classList.add("hidden");
+  videoPage.classList.add("hidden");
+  book.classList.add("hidden");
+  menu.classList.remove("hidden");
 }
 
 // TIMER
 const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
 
 setInterval(() => {
+
   let gap = unlockDate - Date.now();
 
   let d = Math.floor(gap/(1000*60*60*24));
@@ -65,9 +57,7 @@ setInterval(() => {
   let m = Math.floor((gap/(1000*60))%60);
   let s = Math.floor((gap/1000)%60);
 
-  if(bigTimer){
-    bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
-  }
+  bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
 
 },1000);
 
@@ -75,13 +65,13 @@ setInterval(() => {
 let currentPage = 0;
 
 function getPages(){
-  return document.querySelectorAll("#pagesContainer .page");
+  return document.querySelectorAll(".page");
 }
 
 function showPage(index){
   const pages = getPages();
   pages.forEach(p => p.classList.remove("active"));
-  if(pages[index]) pages[index].classList.add("active");
+  pages[index].classList.add("active");
 }
 
 window.nextPage = function(){
