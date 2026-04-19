@@ -17,79 +17,62 @@
 <!-- ADMIN PANEL -->
 <div id="adminPanel">
   <h3>Login 🔐</h3>
-  <input id="user" placeholder="username"><br><br>
-  <input id="pass" type="password" placeholder="password"><br><br>
-  <button onclick="login()">Enter</button>
+  <input id="user" placeholder="Username"><br><br>
+  <input id="pass" type="password" placeholder="Password"><br><br>
+  <button id="loginBtn">Enter</button>
 </div>
 
-<!-- BACKGROUND MUSIC -->
+<!-- MUSIC -->
 <audio id="bgMusic" src="./music.mp3" loop></audio>
 
-<!-- FLOATING HEARTS -->
+<!-- HEARTS -->
 <div id="hearts"></div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div id="main">
 
-  <!-- PROFILE IMAGE -->
-  <img id="profilePic" src="./image/bhoomika.jpg" alt="Bhoomika">
+  <img id="profilePic" src="./image/bhoomika.jpg">
 
   <h1>Happy Birthday Bhoomika 🎂</h1>
 
-  <p>
-    Some people don’t just come into life... they stay, they change everything ❤️
-  </p>
+  <p>Some people don’t just come into life... they stay, they change everything ❤️</p>
 
-  <!-- GIFT -->
   <div id="giftContainer">
     <img id="giftImage" src="./image/gift.png">
   </div>
 
-  <!-- BIG MESSAGE -->
   <div id="bigMessage">
     You are one of the best things that ever happened in my life 💖
   </div>
 
-  <!-- TYPING MESSAGE -->
   <div id="surpriseText" class="hidden">
     <span id="typedText"></span>
   </div>
 
-  <!-- MENU -->
   <div id="menu" class="hidden">
-    <h2>Choose Something 💝</h2>
-
-    <button onclick="openPage('timer')">⏳ Countdown</button>
-    <button onclick="openPage('video')">🎬 Video</button>
+    <button onclick="openPage('timer')">⏳ Timer</button>
+    <button onclick="openPage('video')">🎥 Video</button>
     <button onclick="openPage('book')">📖 Scrapbook</button>
   </div>
 
 </div>
 
-<!-- TIMER PAGE -->
 <div id="timerPage" class="hidden">
-  <h2>Countdown 🎂</h2>
   <div id="bigTimer"></div>
   <button onclick="goBack()">Back</button>
 </div>
 
-<!-- VIDEO PAGE -->
 <div id="videoPage" class="hidden">
   <video controls src="./video.mp4"></video>
   <button onclick="goBack()">Back</button>
 </div>
 
-<!-- SCRAPBOOK -->
 <div id="book" class="hidden">
-
   <div id="pagesContainer"></div>
 
-  <div>
-    <button onclick="prevPage()">⬅</button>
-    <button onclick="nextPage()">➡</button>
-    <button onclick="goBack()">Back</button>
-  </div>
-
+  <button onclick="prevPage()">⬅</button>
+  <button onclick="nextPage()">➡</button>
+  <button onclick="goBack()">Back</button>
 </div>
 
 <script src="script.js"></script>
