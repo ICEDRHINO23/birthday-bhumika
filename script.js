@@ -33,13 +33,15 @@ setTimeout(() => {
 }, 2000);
 
 /* =========================
-   ADMIN PANEL
+   ADMIN PANEL TOGGLE
 ========================= */
 adminBtn.addEventListener("click", () => {
   adminPanel.classList.toggle("open");
 });
 
-/* LOGIN */
+/* =========================
+   LOGIN
+========================= */
 window.login = function () {
   const user = document.getElementById("user").value;
   const pass = document.getElementById("pass").value;
@@ -59,7 +61,7 @@ document.body.addEventListener("click", () => {
 }, { once: true });
 
 /* =========================
-   HEARTS (CONTROLLED)
+   FLOATING HEARTS
 ========================= */
 setInterval(() => {
 
@@ -76,7 +78,7 @@ setInterval(() => {
 }, 900);
 
 /* =========================
-   GIFT FLOW (CLEAN TIMING)
+   GIFT FLOW (PERFECT TIMING)
 ========================= */
 let unlocked = false;
 
@@ -94,30 +96,20 @@ gift.addEventListener("click", () => {
   setTimeout(() => {
 
     document.getElementById("giftContainer").style.display = "none";
-
-    /* SHOW MENU */
     menu.classList.remove("hidden");
 
-    /* STEP 1: BIG MESSAGE */
+    /* SHOW BIG MESSAGE */
     setTimeout(() => {
-
-      bigMessage.classList.remove("hidden");
       bigMessage.classList.add("show");
+    }, 300);
 
-      /* STEP 2: HIDE BIG MESSAGE */
-      setTimeout(() => {
+    /* HIDE BIG MESSAGE */
+    setTimeout(() => {
+      bigMessage.classList.remove("show");
+      bigMessage.classList.add("hide");
+    }, 2800);
 
-        bigMessage.classList.add("hide");
-
-        setTimeout(() => {
-          bigMessage.classList.add("hidden");
-        }, 800);
-
-      }, 3000);
-
-    }, 500);
-
-    /* STEP 3: TYPING MESSAGE (AFTER BIG MESSAGE) */
+    /* TYPING START */
     setTimeout(() => {
 
       surprise.classList.remove("hidden");
@@ -127,14 +119,13 @@ gift.addEventListener("click", () => {
         typed
       );
 
-    }, 4000);
+    }, 3800);
 
   }, 1000);
-
 });
 
 /* =========================
-   TYPING EFFECT (SAFE)
+   TYPING EFFECT
 ========================= */
 function typeText(text, element, speed = 40) {
   let i = 0;
@@ -186,12 +177,12 @@ window.openPage = function(type){
   if(type === "book"){
     book.classList.remove("hidden");
     currentPage = 0;
-    showPage(currentPage);
+    loadScrapbook();
   }
 };
 
 /* =========================
-   BACK BUTTON
+   BACK
 ========================= */
 window.goBack = function(){
   timerPage.classList.add("hidden");
@@ -222,15 +213,25 @@ setInterval(() => {
 },1000);
 
 /* =========================
-   SCRAPBOOK
+   SCRAPBOOK SYSTEM
 ========================= */
-const scrapbookData = JSON.parse(localStorage.getItem("scrapbook")) || [];
+let currentPage = 0;
+
+function getData(){
+  return JSON.parse(localStorage.getItem("scrapbook")) || [];
+}
 
 function loadScrapbook(){
 
+  const data = getData();
   pagesContainer.innerHTML = "";
 
-  scrapbookData.forEach((item) => {
+  if(data.length === 0){
+    pagesContainer.innerHTML = "<p>No memories added yet 💔</p>";
+    return;
+  }
+
+  data.forEach((item) => {
 
     const spread = document.createElement("div");
     spread.className = "spread";
@@ -256,27 +257,17 @@ function loadScrapbook(){
   showPage(0);
 }
 
-/* NAVIGATION */
-let currentPage = 0;
-
-function getPages(){
-  return document.querySelectorAll(".spread");
-}
-
 function showPage(index){
-  const pages = getPages();
+  const pages = document.querySelectorAll(".spread");
 
-  pages.forEach((page, i) => {
-    page.classList.remove("active");
-
-    if(i === index){
-      page.classList.add("active");
-    }
+  pages.forEach((p,i)=>{
+    p.classList.remove("active");
+    if(i === index) p.classList.add("active");
   });
 }
 
 window.nextPage = function(){
-  const pages = getPages();
+  const pages = document.querySelectorAll(".spread");
 
   if(currentPage < pages.length - 1){
     currentPage++;
@@ -290,8 +281,5 @@ window.prevPage = function(){
     showPage(currentPage);
   }
 };
-
-/* INIT */
-loadScrapbook();
 
 });
