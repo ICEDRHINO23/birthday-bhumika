@@ -46,7 +46,6 @@ body {
   height: 160px;
   border-radius: 50%;
   object-fit: cover;
-
   border: 5px solid white;
 
   box-shadow: 
@@ -80,11 +79,13 @@ h1 {
    GIFT
 ========================= */
 #giftContainer {
-  margin-top: 40px;
+  margin-top: 50px;
 }
 
 #giftImage {
-  width: 240px;
+  width: 220px;
+  display: block;
+  margin: auto;
   cursor: pointer;
   transition: 0.5s;
 }
@@ -108,14 +109,11 @@ h1 {
   background: linear-gradient(135deg,#ff4d6d,#ff758f);
   color: white;
   border: none;
-
   border-radius: 25px;
   padding: 10px 18px;
-
   cursor: pointer;
 
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-
   transition: 0.3s;
 }
 
@@ -129,19 +127,25 @@ h1 {
 #adminPanel {
   position: fixed;
   top: 0;
-  left: -250px;
-  width: 250px;
+  left: -260px;
+  width: 260px;
   height: 100%;
   background: white;
   padding: 20px;
 
   box-shadow: 2px 0 20px rgba(0,0,0,0.3);
-
   transition: 0.4s;
+  z-index: 1000;
 }
 
 #adminPanel.open {
   left: 0;
+}
+
+#adminPanel input {
+  width: 90%;
+  margin: 10px 0;
+  padding: 8px;
 }
 
 /* =========================
@@ -156,12 +160,9 @@ button {
   padding: 12px 22px;
   border: none;
   border-radius: 12px;
-
   background: linear-gradient(135deg,#ff4d6d,#ff758f);
   color: white;
-
   cursor: pointer;
-
   transition: 0.3s;
 }
 
@@ -178,12 +179,66 @@ button:hover {
   margin: 50px auto;
   width: 90%;
   max-width: 900px;
-
   background: rgba(255,255,255,0.95);
   padding: 30px;
   border-radius: 25px;
-
   box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+
+/* =========================
+   BIG MESSAGE (DELAY SHOW)
+========================= */
+#bigMessage {
+  font-size: 40px;
+  color: #ff3366;
+  margin-top: 40px;
+
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+#bigMessage.show {
+  opacity: 1;
+}
+
+#bigMessage.hide {
+  opacity: 0;
+}
+
+/* =========================
+   HEARTS
+========================= */
+#hearts {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.heart {
+  position: absolute;
+  animation: floatUp 5s linear;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(100vh);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-10vh);
+    opacity: 0;
+  }
+}
+
+/* =========================
+   SURPRISE TEXT
+========================= */
+#surpriseText {
+  position: fixed;
+  top: 40%;
+  width: 100%;
+  color: #ff3366;
 }
 
 /* =========================
@@ -234,41 +289,8 @@ button:hover {
 }
 
 /* =========================
-   HEARTS
+   HIDDEN
 ========================= */
-#hearts {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.heart {
-  position: absolute;
-  animation: floatUp 5s linear;
-}
-
-@keyframes floatUp {
-  from {
-    transform: translateY(100vh);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-10vh);
-    opacity: 0;
-  }
-}
-
-/* =========================
-   SURPRISE
-========================= */
-#surpriseText {
-  position: fixed;
-  top: 40%;
-  width: 100%;
-  color: #ff3366;
-}
-
 .hidden {
   display: none;
 }
