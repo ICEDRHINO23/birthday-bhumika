@@ -1,111 +1,153 @@
-// ELEMENTS
-const gift = document.getElementById("gift");
-const menu = document.getElementById("menu");
-const timerPage = document.getElementById("timerPage");
-const videoPage = document.getElementById("videoPage");
-const book = document.getElementById("book");
-const funText = document.getElementById("funText");
-
-const countdown = document.getElementById("countdown");
-const bigTimer = document.getElementById("bigTimer");
-
-const bgMusic = document.getElementById("bgMusic");
-const openSound = document.getElementById("openSound");
-
-// INTRO
-setTimeout(()=>{
-  document.getElementById("intro").style.display="none";
-},3000);
-
-// GIFT MOVE
-let unlocked=false;
-
-function moveGift(){
-  if(unlocked) return;
-
-  let x=Math.random()*(window.innerWidth-150);
-  let y=Math.random()*(window.innerHeight-150);
-
-  gift.style.left=x+"px";
-  gift.style.top=y+"px";
+/* 🌌 BASE */
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: radial-gradient(circle at top, #1a1a2e, #0f0f1a 70%);
 }
 
-gift.addEventListener("mouseover",moveGift);
-gift.addEventListener("touchstart",moveGift);
-
-setTimeout(()=>{
-  unlocked=true;
-  funText.innerText="Click me 🎁";
-},10000);
-
-// AUDIO
-document.body.addEventListener("click",()=>{
-  bgMusic.play().catch(()=>{});
-},{once:true});
-
-// OPEN GIFT
-gift.addEventListener("click",()=>{
-  if(!unlocked) return;
-
-  openSound.play();
-
-  gift.style.left="50%";
-  gift.style.top="50%";
-
-  setTimeout(()=>{
-    gift.style.display="none";
-    menu.style.display="block";
-  },800);
-});
-
-// LOCK
-const unlockDate=new Date("May 12, 2026 00:00:00").getTime();
-
-function isUnlocked(){
-  return Date.now()>=unlockDate;
+/* ✨ STAR CANVAS */
+#stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
-// NAV
-function openPage(type){
-
-  menu.style.display="none";
-  timerPage.style.display="none";
-  videoPage.style.display="none";
-  book.style.display="none";
-
-  if(type==="video" && !isUnlocked()){
-    funText.innerText="🔒 Unlocks on May 12 🎂";
-    menu.style.display="block";
-    return;
-  }
-
-  if(type==="timer") timerPage.style.display="block";
-  if(type==="video") videoPage.style.display="block";
-  if(type==="book") book.style.display="block";
+/* 🖱 CURSOR GLOW */
+#cursorGlow {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(255,77,109,0.4), transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 20;
+  transform: translate(-50%, -50%);
 }
 
-// BACK
-function goBack(){
-  timerPage.style.display="none";
-  videoPage.style.display="none";
-  book.style.display="none";
-  menu.style.display="block";
+/* 🎬 INTRO */
+#intro {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #0f0f1a;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 34px;
+  z-index: 25;
 }
 
-window.openPage=openPage;
-window.goBack=goBack;
+/* 😂 TEXT */
+#funText {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff4d6d;
+  padding: 10px;
+  border-radius: 10px;
+  z-index: 15;
+}
 
-// TIMER
-setInterval(()=>{
-  let now=Date.now();
-  let gap=unlockDate-now;
+/* 🎁 3D GIFT */
+#gift {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+  transform: translate(-50%, -50%) rotateX(15deg);
+  cursor: pointer;
+}
 
-  let d=Math.floor(gap/(1000*60*60*24));
-  let h=Math.floor((gap/(1000*60*60))%24);
-  let m=Math.floor((gap/(1000*60))%60);
-  let s=Math.floor((gap/1000)%60);
+.box {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #ff4d6d, #ff2e55);
+  transform: translateZ(20px);
+  border-radius: 12px;
+}
 
-  countdown.innerHTML=`${d}d ${h}h ${m}m ${s}s`;
-  if(bigTimer) bigTimer.innerHTML=`${d}d ${h}h ${m}m ${s}s`;
+.lid {
+  width: 100%;
+  height: 35px;
+  background: #c9184a;
+  position: absolute;
+  top: -35px;
+  transform-origin: top;
+  transform: translateZ(25px);
+  border-radius: 10px;
+}
 
-},1000);
+/* 👑 GLASS UI */
+#menu,
+#timerPage,
+#videoPage {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) perspective(1000px) rotateX(5deg);
+  padding: 35px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  z-index: 10;
+  text-align: center;
+}
+
+/* BUTTON */
+button {
+  padding: 12px 22px;
+  margin: 10px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg,#ff4d6d,#ff758f);
+  color: white;
+  cursor: pointer;
+}
+
+/* TIMER */
+#bigTimer {
+  font-size: 40px;
+  color: gold;
+  text-shadow: 0 0 20px gold;
+}
+
+/* 📖 BOOK */
+#book {
+  display: none;
+  width: 800px;
+  height: 500px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  perspective: 2000px;
+}
+
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: white;
+  display: flex;
+  border-radius: 14px;
+}
+
+/* FINAL */
+#final {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px;
+  border-radius: 14px;
+}
