@@ -18,7 +18,6 @@
 
 <!-- GIFT -->
 <div id="gift">
-  <div class="lid"></div>
   <div class="box"></div>
 </div>
 
@@ -44,38 +43,28 @@
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- 📖 SCRAPBOOK -->
-<div id="book" style="display:none;">
+<!-- 📖 SCRAPBOOK (FIXED) -->
+<div id="book">
 
   <div id="pagesContainer">
 
-    <!-- PAGE 1 -->
     <div class="page active">
-      <div class="left">
-        <video src="./images/bhumika.mp4" autoplay loop muted></video>
-      </div>
-      <div class="right">
-        You know what… some people make life brighter ✨
-      </div>
+      <h2>Page 1</h2>
+      <p>You know what… some people make life brighter ✨</p>
     </div>
 
-    <!-- PAGE 2 -->
     <div class="page">
-      <div class="left">
-        <img src="./images/photo1.jpg">
-      </div>
-      <div class="right">
-        Every moment with you is special 💖
-      </div>
+      <h2>Page 2</h2>
+      <p>Every moment with you is special 💖</p>
     </div>
 
   </div>
 
-  <div style="margin-top:20px;">
-    <button onclick="prevPage()">⬅ Prev</button>
-    <button onclick="nextPage()">Next ➡</button>
-    <button onclick="goBack()">⬅ Back</button>
-  </div>
+  <br>
+
+  <button onclick="prevPage()">⬅ Prev</button>
+  <button onclick="nextPage()">Next ➡</button>
+  <button onclick="goBack()">⬅ Back</button>
 
 </div>
 
