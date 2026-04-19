@@ -411,3 +411,39 @@ img, video {
     font-size: 36px;
     font-weight: bold;
 }
+/* 🎁 3D GIFT */
+#gift {
+    transform: translate(-50%, -50%) perspective(800px) rotateX(10deg);
+}
+
+/* 👑 GLASS ROYAL UI */
+#menu,#timerPage,#videoPage{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    padding:30px 40px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(20px);
+    box-shadow:0 20px 60px rgba(0,0,0,0.4);
+    text-align:center;
+    z-index:8;
+}
+
+/* 👑 BUTTONS */
+#menu button,#timerPage button,#videoPage button{
+    padding:12px 20px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg,#ff4d6d,#ff758f);
+    color:white;
+    margin:8px;
+}
+
+/* ⏳ TIMER */
+#bigTimer{
+    font-size:40px;
+    color:gold;
+    text-shadow:0 0 20px gold;
+}
