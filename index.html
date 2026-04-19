@@ -3,53 +3,261 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Surprise</title>
-<link rel="stylesheet" href="style.css">
+<title>Happy Birthday Bhoomika 🎉</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  color: white;
+}
+
+/* STAGES */
+.stage {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* ACTIVE */
+.active {
+  display: flex;
+}
+
+/* COUNTDOWN */
+#countdown {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0,0,0,0.5);
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+/* GIFT */
+#gift {
+  font-size: 80px;
+  cursor: pointer;
+  position: absolute;
+}
+
+/* BOOK */
+.book {
+  width: 300px;
+  height: 400px;
+  position: relative;
+  perspective: 1500px;
+}
+
+.page {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: white;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-origin: left;
+  transition: transform 1s;
+  backface-visibility: hidden;
+  border-radius: 10px;
+}
+
+.page:nth-child(1) { z-index: 3; }
+.page:nth-child(2) { z-index: 2; }
+.page:nth-child(3) { z-index: 1; }
+
+.page.flipped {
+  transform: rotateY(-180deg);
+}
+
+/* BUTTERFLY CANVAS */
+#butterflyCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: white;
+  color: black;
+  cursor: pointer;
+}
+</style>
 </head>
 
 <body>
 
-<div id="intro">🎁 This is a Surprise...</div>
+<div id="countdown"></div>
 
-<div class="bg" id="bg"></div>
-
-<div id="funText"></div>
-
-<!-- 🎁 GIFT -->
-<div id="gift">
-    <div class="lid"></div>
-    <div class="box"></div>
+<!-- STAGE 1 -->
+<div id="stage1" class="stage active">
+  <h1>🎁 A Surprise is Waiting...</h1>
+  <button onclick="showStage('stage2')">Start</button>
 </div>
 
-<!-- 📖 BOOK -->
-<div id="book">
-
-    <div class="page" id="p1">
-        <div class="left">
-            <video autoplay muted loop>
-                <source src="bhumika.mp4">
-            </video>
-        </div>
-        <div class="right"><p id="text1"></p></div>
-    </div>
-
-    <div class="page" id="p2">
-        <div class="left"><img src="20240429_230322.jpg"></div>
-        <div class="right"><p id="text2"></p></div>
-    </div>
-
-    <div class="page" id="p3">
-        <div class="left"><img src="20240906_204953.jpg"></div>
-        <div class="right"><p id="text3"></p></div>
-    </div>
-
+<!-- STAGE 2 -->
+<div id="stage2" class="stage">
+  <h2>Catch the Gift 😜</h2>
+  <div id="gift">🎁</div>
 </div>
 
-<div id="final">
-    💌 More to go but need to wait...
+<!-- STAGE 3 -->
+<div id="stage3" class="stage">
+  <h1>🎁 Click to Open</h1>
+  <div id="openGift" style="font-size:80px;cursor:pointer;">🎁</div>
 </div>
 
-<script src="script.js"></script>
+<!-- STAGE 4 -->
+<div id="stage4" class="stage">
+  <div class="book">
+    <div class="page">💖 Memory 1</div>
+    <div class="page">📸 Memory 2</div>
+    <div class="page">🎉 Memory 3</div>
+  </div>
+</div>
 
+<!-- STAGE 5 -->
+<div id="stage5" class="stage">
+  <h1>💌 Happy Birthday Bhoomika 💖</h1>
+</div>
+
+<canvas id="butterflyCanvas"></canvas>
+
+<!-- AUDIO -->
+<audio id="bgMusic" loop src="audio/bg.mp3"></audio>
+<audio id="openSound" src="audio/open.mp3"></audio>
+<audio id="flipSound" src="audio/flip.mp3"></audio>
+
+<script>
+
+/* ---------------- STAGE CONTROL ---------------- */
+function showStage(id) {
+  document.querySelectorAll(".stage").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+/* ---------------- COUNTDOWN ---------------- */
+const target = new Date("May 12, 2026 00:00:00").getTime();
+
+setInterval(() => {
+  const now = new Date().getTime();
+  const gap = target - now;
+
+  const d = Math.floor(gap / (1000*60*60*24));
+  const h = Math.floor((gap/(1000*60*60))%24);
+  const m = Math.floor((gap/(1000*60))%60);
+  const s = Math.floor((gap/1000)%60);
+
+  document.getElementById("countdown").innerHTML =
+    `${d}d ${h}h ${m}m ${s}s`;
+},1000);
+
+/* ---------------- MUSIC ---------------- */
+const bgMusic = document.getElementById("bgMusic");
+document.body.addEventListener("click", () => {
+  bgMusic.play();
+}, { once: true });
+
+/* ---------------- GIFT GAME ---------------- */
+const gift = document.getElementById("gift");
+
+gift.addEventListener("mouseover", moveGift);
+
+function moveGift() {
+  let x = Math.random() * (window.innerWidth - 100);
+  let y = Math.random() * (window.innerHeight - 100);
+  gift.style.left = x + "px";
+  gift.style.top = y + "px";
+}
+
+setTimeout(() => {
+  gift.onclick = () => showStage("stage3");
+}, 10000);
+
+/* ---------------- GIFT OPEN ---------------- */
+const openGift = document.getElementById("openGift");
+const openSound = document.getElementById("openSound");
+
+openGift.addEventListener("click", () => {
+  openSound.play();
+  releaseButterflies();
+  setTimeout(()=> showStage("stage4"),2000);
+});
+
+/* ---------------- BUTTERFLIES ---------------- */
+function releaseButterflies() {
+  const canvas = document.getElementById("butterflyCanvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let particles = [];
+
+  for(let i=0;i<40;i++){
+    particles.push({
+      x: canvas.width/2,
+      y: canvas.height/2,
+      size: Math.random()*6+4,
+      vx: (Math.random()-0.5)*5,
+      vy: Math.random()*-5,
+      life: 1
+    });
+  }
+
+  function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    particles.forEach(p=>{
+      p.x+=p.vx;
+      p.y+=p.vy;
+      p.life-=0.02;
+
+      ctx.fillStyle=`rgba(255,105,180,${p.life})`;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      ctx.fill();
+    });
+
+    particles=particles.filter(p=>p.life>0);
+
+    if(particles.length>0){
+      requestAnimationFrame(animate);
+    }
+  }
+  animate();
+}
+
+/* ---------------- PAGE FLIP ---------------- */
+const pages = document.querySelectorAll(".page");
+const flipSound = document.getElementById("flipSound");
+
+pages.forEach((page, i) => {
+  page.addEventListener("click", () => {
+    page.classList.add("flipped");
+    flipSound.currentTime = 0;
+    flipSound.play();
+
+    if(i === pages.length - 1){
+      setTimeout(()=> showStage("stage5"),1500);
+    }
+  });
+});
+
+</script>
 </body>
 </html>
