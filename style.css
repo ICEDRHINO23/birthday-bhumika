@@ -1,4 +1,6 @@
-/* 🌌 BASE */
+/* =========================
+   🌌 BASE BACKGROUND
+========================= */
 body {
   margin: 0;
   overflow: hidden;
@@ -6,7 +8,39 @@ body {
   background: radial-gradient(circle at top, #1a1a2e, #0f0f1a 70%);
 }
 
-/* ✨ STAR CANVAS */
+/* ✨ GLOW ORBS */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: 0;
+  animation: floatGlow 10s infinite alternate;
+}
+
+body::before {
+  background: rgba(255, 77, 109, 0.4);
+  top: -120px;
+  left: -120px;
+}
+
+body::after {
+  background: rgba(255, 215, 0, 0.3);
+  bottom: -120px;
+  right: -120px;
+}
+
+@keyframes floatGlow {
+  from { transform: translateY(0); }
+  to { transform: translateY(40px); }
+}
+
+/* =========================
+   ✨ STAR CANVAS
+========================= */
 #stars {
   position: fixed;
   width: 100%;
@@ -14,19 +48,23 @@ body {
   z-index: 0;
 }
 
-/* 🖱 CURSOR GLOW */
+/* =========================
+   🖱 CURSOR GLOW
+========================= */
 #cursorGlow {
   position: fixed;
-  width: 150px;
-  height: 150px;
-  background: radial-gradient(circle, rgba(255,77,109,0.4), transparent);
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(255,77,109,0.35), transparent);
   border-radius: 50%;
   pointer-events: none;
   z-index: 20;
   transform: translate(-50%, -50%);
 }
 
-/* 🎬 INTRO */
+/* =========================
+   🎬 INTRO SCREEN
+========================= */
 #intro {
   position: fixed;
   width: 100%;
@@ -40,19 +78,25 @@ body {
   z-index: 25;
 }
 
-/* 😂 TEXT */
+/* =========================
+   😂 FUN TEXT
+========================= */
 #funText {
   position: fixed;
-  top: 20px;
+  top: 25px;
   left: 50%;
   transform: translateX(-50%);
   background: #ff4d6d;
-  padding: 10px;
-  border-radius: 10px;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 12px;
   z-index: 15;
+  box-shadow: 0 5px 15px rgba(255,77,109,0.5);
 }
 
-/* 🎁 3D GIFT */
+/* =========================
+   🎁 3D GIFT BOX
+========================= */
 #gift {
   width: 150px;
   height: 150px;
@@ -62,6 +106,12 @@ body {
   transform-style: preserve-3d;
   transform: translate(-50%, -50%) rotateX(15deg);
   cursor: pointer;
+  z-index: 10;
+  transition: transform 0.4s ease;
+}
+
+#gift:hover {
+  transform: translate(-50%, -50%) rotateX(20deg) rotateY(12deg);
 }
 
 .box {
@@ -83,7 +133,9 @@ body {
   border-radius: 10px;
 }
 
-/* 👑 GLASS UI */
+/* =========================
+   👑 GLASS UI (ALL PAGES)
+========================= */
 #menu,
 #timerPage,
 #videoPage {
@@ -91,35 +143,76 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) perspective(1000px) rotateX(5deg);
-  padding: 35px;
+
+  padding: 35px 45px;
   border-radius: 20px;
+
   background: rgba(255,255,255,0.08);
   backdrop-filter: blur(25px);
+
   border: 1px solid rgba(255,255,255,0.2);
-  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-  z-index: 10;
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.6),
+    inset 0 0 20px rgba(255,255,255,0.1);
+
   text-align: center;
+  z-index: 12;
 }
 
-/* BUTTON */
+/* =========================
+   🎛 BUTTONS
+========================= */
 button {
   padding: 12px 22px;
   margin: 10px;
   border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg,#ff4d6d,#ff758f);
+  font-size: 15px;
+
+  background: linear-gradient(135deg, #ff4d6d, #ff758f);
   color: white;
+
+  box-shadow:
+    0 10px 25px rgba(255, 77, 109, 0.5),
+    inset 0 0 10px rgba(255,255,255,0.2);
+
   cursor: pointer;
+  transition: 0.3s ease;
 }
 
-/* TIMER */
+button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow:
+    0 15px 35px rgba(255, 77, 109, 0.8);
+}
+
+/* =========================
+   ⏳ TIMER
+========================= */
 #bigTimer {
-  font-size: 40px;
+  font-size: 42px;
+  font-weight: bold;
   color: gold;
-  text-shadow: 0 0 20px gold;
+
+  text-shadow:
+    0 0 10px gold,
+    0 0 30px rgba(255,215,0,0.8),
+    0 0 60px rgba(255,215,0,0.5);
 }
 
-/* 📖 BOOK */
+/* =========================
+   🎥 VIDEO
+========================= */
+#videoPage video {
+  width: 80%;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+/* =========================
+   📖 SCRAPBOOK
+========================= */
 #book {
   display: none;
   width: 800px;
@@ -129,25 +222,67 @@ button {
   top: 50%;
   transform: translate(-50%, -50%);
   perspective: 2000px;
+  z-index: 10;
 }
 
 .page {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: white;
   display: flex;
+  background: white;
   border-radius: 14px;
+  transform-origin: left;
+  transition: transform 1s ease;
+  overflow: hidden;
 }
 
-/* FINAL */
+.page:hover {
+  transform: rotateY(-10deg);
+}
+
+.left,
+.right {
+  width: 50%;
+  padding: 20px;
+}
+
+.left img,
+.left video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  line-height: 1.6;
+  text-align: center;
+  color: #333;
+}
+
+/* =========================
+   💌 FINAL MESSAGE
+========================= */
 #final {
   display: none;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: white;
-  padding: 30px;
-  border-radius: 14px;
+  
+  padding: 30px 40px;
+  border-radius: 16px;
+
+  background: rgba(255,255,255,0.9);
+  text-align: center;
+
+  font-size: 24px;
+  font-weight: bold;
+
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
 }
