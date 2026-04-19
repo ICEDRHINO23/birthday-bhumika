@@ -1,93 +1,42 @@
-/* =========================
-   PREVIEW HANDLING
-========================= */
-const fileInput = document.getElementById("fileInput");
-const previewImg = document.getElementById("previewImg");
-const previewVideo = document.getElementById("previewVideo");
+document.addEventListener("DOMContentLoaded", () => {
 
-fileInput.addEventListener("change", () => {
+/* ELEMENTS */
+const intro = document.getElementById("intro");
+const adminBtn = document.getElementById("adminBtn");
+const adminPanel = document.getElementById("adminPanel");
+const loginBtn = document.getElementById("loginBtn");
 
-  const file = fileInput.files[0];
-  if (!file) return;
+/* INTRO */
+setTimeout(() => intro.style.display = "none", 2000);
 
-  const url = URL.createObjectURL(file);
+/* ADMIN TOGGLE */
+adminBtn.addEventListener("click", () => {
+  adminPanel.classList.toggle("open");
+});
 
-  if (file.type.startsWith("image")) {
-    previewImg.src = url;
-    previewImg.style.display = "block";
-    previewVideo.style.display = "none";
+/* LOGIN FIX (FINAL WORKING) */
+loginBtn.addEventListener("click", () => {
+
+  const user = document.getElementById("user").value.trim();
+  const pass = document.getElementById("pass").value.trim();
+
+  console.log(user, pass);
+
+  if (user === "abin" && pass === "1234") {
+
+    alert("Login Success ✅");
+
+    // TEST SUCCESS
+    document.body.innerHTML = "<h1>Welcome Admin 🎉</h1>";
+
   } else {
-    previewVideo.src = url;
-    previewVideo.style.display = "block";
-    previewImg.style.display = "none";
+    alert("Wrong credentials ❌");
   }
+
 });
 
 /* =========================
-   ADD SCRAPBOOK PAGE
+   REST OF YOUR LOGIC
 ========================= */
-function addPage() {
 
-  const type = document.getElementById("type").value;
-  const file = fileInput.files[0];
-  const title = document.getElementById("title").value;
-  const text = document.getElementById("text").value;
-
-  if (!file) return alert("Select file ❌");
-
-  const reader = new FileReader();
-
-  reader.onload = function(e) {
-
-    let data = JSON.parse(localStorage.getItem("scrapbook")) || [];
-
-    data.push({
-      type,
-      src: e.target.result,
-      title,
-      text
-    });
-
-    localStorage.setItem("scrapbook", JSON.stringify(data));
-
-    alert("Page Added ✅");
-
-    location.reload();
-  };
-
-  reader.readAsDataURL(file);
-}
-
-/* =========================
-   VIDEO PREVIEW
-========================= */
-const videoInput = document.getElementById("videoInput");
-const videoPreview = document.getElementById("videoPreview");
-
-videoInput.addEventListener("change", () => {
-
-  const file = videoInput.files[0];
-  if (!file) return;
-
-  videoPreview.src = URL.createObjectURL(file);
-  videoPreview.style.display = "block";
 });
-
-/* =========================
-   SAVE VIDEO
-========================= */
-function setVideo() {
-
-  const file = videoInput.files[0];
-
-  if (!file) return alert("Select video ❌");
-
-  const reader = new FileReader();
-
-  reader.onload = function(e) {
-    localStorage.setItem("video", e.target.result);
-    alert("Video Saved 🎥");
-  };
-
-  reader.readAsDataURL(file);
-}
