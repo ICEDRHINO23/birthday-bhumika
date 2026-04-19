@@ -1,93 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Admin Panel</title>
 
   <style>
     body {
-      font-family: 'Segoe UI';
-      background: linear-gradient(135deg,#f8cdda,#f6d365);
-      margin: 0;
-      padding: 20px;
+      font-family: Arial;
+      background: #f5f5f5;
       text-align: center;
+      padding: 40px;
     }
 
-    h1 {
-      color: #ff3366;
+    h2 {
+      color: #ff4d6d;
     }
 
-    .card {
-      background: white;
-      padding: 25px;
-      border-radius: 20px;
-      max-width: 400px;
-      margin: 20px auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
-
-    input, textarea, select {
-      width: 90%;
+    input, textarea {
+      width: 300px;
       padding: 10px;
       margin: 10px;
-      border-radius: 10px;
+      border-radius: 8px;
       border: 1px solid #ccc;
     }
 
     button {
       padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
       background: #ff4d6d;
       color: white;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
     }
 
-    .preview {
-      width: 90%;
-      margin-top: 10px;
-      border-radius: 10px;
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      display: inline-block;
     }
   </style>
 </head>
 
 <body>
 
-<h1>Admin Panel ⚙️</h1>
-
 <div class="card">
 
-<h3>Add Scrapbook Page</h3>
+  <h2>Add Scrapbook Page 📖</h2>
 
-<select id="type">
-  <option value="image">Image</option>
-  <option value="video">Video</option>
-</select>
+  <!-- FILE INPUT -->
+  <input type="file" id="fileInput"><br>
 
-<input type="file" id="fileInput">
+  <!-- TITLE -->
+  <input type="text" id="title" placeholder="Enter title"><br>
 
-<img id="previewImg" class="preview" style="display:none;">
-<video id="previewVideo" class="preview" controls style="display:none;"></video>
+  <!-- TEXT -->
+  <textarea id="text" placeholder="Write emotional message..."></textarea><br>
 
-<input id="title" placeholder="Title">
-<textarea id="text" placeholder="Emotional friendship message"></textarea>
-
-<button onclick="addPage()">Add Page</button>
+  <!-- ADD BUTTON -->
+  <button id="addBtn">Add Page</button>
 
 </div>
 
-<div class="card">
+<script>
 
-<h3>Set Effort Video</h3>
+/* =========================
+   ADD PAGE FUNCTION (FINAL)
+========================= */
+document.getElementById("addBtn").addEventListener("click", () => {
 
-<input type="file" id="videoInput">
+  const fileInput = document.getElementById("fileInput");
+  const title = document.getElementById("title").value.trim();
+  const text = document.getElementById("text").value.trim();
 
-<video id="videoPreview" class="preview" controls style="display:none;"></video>
+  const file = fileInput.files[0];
 
-<button onclick="setVideo()">Save Video</button>
+  if (!file) {
+    alert("Please select a file ❌");
+    return;
+  }
 
-</div>
+  if (!title || !text) {
+    alert("Fill title and text ❌");
+    return;
+  }
 
-<script src="admin.js"></script>
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+
+    const type = file.type.startsWith("video") ? "video" : "image";
+
+    let data = JSON.parse(localStorage.getItem("scrapbook") || "[]");
+
+    data.push({
+      type: type,
+      src: e.target.result, // 🔥 stored as base64
+      title: title,
+      text: text
+    });
+
+    localStorage.setItem("scrapbook", JSON.stringify(data));
+
+    alert("Page Added Successfully ✅");
+
+    // clear fields
+    fileInput.value = "";
+    document.getElementById("title").value = "";
+    document.getElementById("text").value = "";
+
+  };
+
+  reader.readAsDataURL(file);
+
+});
+
+</script>
 
 </body>
 </html>
