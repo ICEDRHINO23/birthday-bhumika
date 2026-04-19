@@ -7,30 +7,29 @@
 
 <link rel="stylesheet" href="style.css">
 
-<!-- GSAP (cinematic animations) -->
+<!-- GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 
 <body>
 
-<!-- 🎬 INTRO -->
+<!-- INTRO -->
 <div id="intro">This is a Surprise 🎁</div>
 
-<!-- 🎉 BACKGROUND -->
+<!-- BG -->
 <div class="bg"></div>
 
-<!-- 😂 FUN TEXT -->
+<!-- FUN TEXT -->
 <div id="funText">Catch the Gift 😜</div>
 
-<!-- 🎁 GIFT -->
+<!-- GIFT -->
 <div id="gift">
   <div class="lid"></div>
   <div class="box"></div>
 </div>
 
-<!-- 🎛 MENU AFTER OPEN -->
+<!-- MENU -->
 <div id="menu" style="display:none; text-align:center; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:8;">
-  
   <h2>Select Your Surprise 🎁</h2>
 
   <button onclick="openPage('timer')">⏳ Birthday Countdown</button>
@@ -40,18 +39,17 @@
   <br><br>
 
   <button onclick="openPage('book')">💖 Scrap Book</button>
-
 </div>
 
-<!-- ⏳ TIMER PAGE -->
+<!-- TIMER PAGE -->
 <div id="timerPage" style="display:none; text-align:center; margin-top:100px;">
-  <h1>🎂 Birthday Countdown</h1>
-  <div id="bigTimer" style="font-size:32px; margin-top:20px;"></div>
+  <h1>🎂 Countdown to Your Special Day</h1>
+  <div id="bigTimer" style="font-size:32px;"></div>
   <br>
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- 🎥 VIDEO PAGE -->
+<!-- VIDEO PAGE -->
 <div id="videoPage" style="display:none; text-align:center; margin-top:100px;">
   <h1>🎥 A Special Effort for You</h1>
   <video src="./images/birthday-video.mp4" controls style="width:80%; border-radius:12px;"></video>
@@ -59,58 +57,44 @@
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- 📖 SCRAP BOOK -->
+<!-- BOOK -->
 <div id="book">
 
-  <!-- PAGE 1 -->
   <div class="page" id="p1">
     <div class="left">
       <video src="./images/bhumika.mp4" autoplay loop muted></video>
     </div>
-    <div class="right">
-      You know what… some people just walk into life and make it brighter ✨
-    </div>
+    <div class="right">You know what… some people just walk into life and make it brighter ✨</div>
   </div>
 
-  <!-- PAGE 2 -->
   <div class="page" id="p2">
     <div class="left">
       <img src="./images/photo1.jpg">
     </div>
-    <div class="right">
-      Every moment with you becomes a memory worth keeping 💖
-    </div>
+    <div class="right">Every moment with you becomes a memory worth keeping 💖</div>
   </div>
 
-  <!-- PAGE 3 -->
   <div class="page" id="p3">
     <div class="left">
       <img src="./images/photo2.jpg">
     </div>
-    <div class="right">
-      And today… is all about celebrating YOU 🎉
-    </div>
+    <div class="right">And today… is all about celebrating YOU 🎉</div>
   </div>
 
 </div>
 
-<!-- 💌 FINAL MESSAGE -->
+<!-- FINAL -->
 <div id="final">
   💌 Happy Birthday Bhoomika 💖  
-  <br><br>
-  You are not just special today…  
-  you are special every single day ✨  
-  <br><br>
-  🎂 Stay happy, stay amazing 🎂
 </div>
 
-<!-- 🦋 BUTTERFLY -->
+<!-- CANVAS -->
 <canvas id="butterflyCanvas"></canvas>
 
-<!-- ⏳ SMALL TIMER -->
+<!-- SMALL TIMER -->
 <div id="countdown"></div>
 
-<!-- 🎵 AUDIO -->
+<!-- AUDIO -->
 <audio id="bgMusic" src="./audio/bg.mp3" loop></audio>
 <audio id="openSound" src="./audio/open.mp3"></audio>
 <audio id="flipSound" src="./audio/flip.mp3"></audio>
