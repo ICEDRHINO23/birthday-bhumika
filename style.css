@@ -154,7 +154,7 @@ video {
 }
 
 /* =========================
-   SCRAPBOOK (BOOK STYLE)
+   SCRAPBOOK (2 PAGE BOOK)
 ========================= */
 #book {
   perspective: 1200px;
@@ -162,11 +162,19 @@ video {
 
 /* BOOK FRAME */
 #pagesContainer {
-  position: relative;
   width: 100%;
-  max-width: 600px;
-  height: 450px;
+  max-width: 900px;
   margin: auto;
+}
+
+/* TWO PAGE SPREAD */
+.spread {
+  display: none;
+  width: 100%;
+  height: 450px;
+
+  display: flex;
+  gap: 10px;
 
   background: #fff;
   border-radius: 20px;
@@ -175,66 +183,51 @@ video {
   box-shadow: 0 25px 60px rgba(0,0,0,0.3);
 }
 
-/* PAGES */
-.page {
-  position: absolute;
+/* ACTIVE SPREAD */
+.spread.active {
+  display: flex;
+}
+
+/* LEFT SIDE (MEDIA) */
+.left {
+  width: 50%;
+  background: black;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left img,
+.left video {
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
+  object-fit: cover;
+}
 
-  padding: 20px;
+/* RIGHT SIDE (TEXT) */
+.right {
+  width: 50%;
+  padding: 25px;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  background: linear-gradient(135deg,#fff,#ffe6eb);
-
-  border-radius: 20px;
-
-  transform: rotateY(0deg);
-  transition: 0.6s;
-  backface-visibility: hidden;
+  text-align: left;
 }
 
-/* ACTIVE PAGE */
-.page.active {
-  z-index: 2;
-}
-
-/* FLIPPED PAGE */
-.page.flip {
-  transform: rotateY(-180deg);
-}
-
-/* IMAGE PERFECT FIT */
-.page img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 15px;
-  margin-bottom: 15px;
-
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
-
-/* VIDEO */
-.page video {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 15px;
-  margin-bottom: 15px;
+/* TITLE */
+.right h2 {
+  color: #ff4d6d;
+  margin-bottom: 10px;
 }
 
 /* TEXT */
-.page p {
-  font-size: 18px;
-  font-weight: 500;
-  background: linear-gradient(135deg,#ff4d6d,#ff758f);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.right p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #444;
 }
 
 /* =========================
@@ -245,20 +238,6 @@ video {
   justify-content: center;
   gap: 20px;
   margin-top: 20px;
-}
-
-/* =========================
-   ANIMATION
-========================= */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* =========================
