@@ -5,44 +5,26 @@
 </head>
 <body>
 
-<h2>🎬 Add Scrapbook Page</h2>
+<h2>Add Scrapbook Page</h2>
 
 <select id="type">
   <option value="image">Image</option>
   <option value="video">Video</option>
-</select>
+</select><br><br>
 
-<input type="text" id="src" placeholder="Enter image/video path">
-<textarea id="text" placeholder="Enter emotional text"></textarea>
+<input type="text" id="src" placeholder="File path"><br><br>
+<input type="text" id="title" placeholder="Title"><br><br>
+<textarea id="text" placeholder="Emotional text"></textarea><br><br>
 
 <button onclick="addPage()">Add Page</button>
 
 <hr>
 
-<h2>🎥 Effort Video</h2>
-<input type="text" id="videoSrc" placeholder="Enter video path">
-<button onclick="saveVideo()">Save Video</button>
+<h2>Set Effort Video</h2>
+<input type="text" id="videoSrc" placeholder="Video path">
+<button onclick="setVideo()">Save Video</button>
 
-<script>
-function addPage() {
-  let pages = JSON.parse(localStorage.getItem("pages") || "[]");
-
-  pages.push({
-    type: document.getElementById("type").value,
-    src: document.getElementById("src").value,
-    text: document.getElementById("text").value
-  });
-
-  localStorage.setItem("pages", JSON.stringify(pages));
-  alert("Page Added ✅");
-}
-
-function saveVideo() {
-  let src = document.getElementById("videoSrc").value;
-  localStorage.setItem("video", src);
-  alert("Video Saved ✅");
-}
-</script>
+<script src="admin.js"></script>
 
 </body>
 </html>
