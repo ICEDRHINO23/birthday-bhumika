@@ -1,5 +1,5 @@
 /* =========================
-   INIT
+   DOM READY
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
      GIFT UNLOCK DELAY
   ========================= */
   let unlocked = false;
+
   setTimeout(() => {
     unlocked = true;
   }, 3000);
@@ -35,9 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!unlocked) return;
 
-    // change to open image
     gift.src = "./image/gift-open.PNG";
-
     gift.classList.add("opened");
 
     setTimeout(() => {
@@ -60,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================= */
   window.openPage = function(type) {
 
-    // hide all
     menu.classList.add("hidden");
     timerPage.classList.add("hidden");
     videoPage.classList.add("hidden");
@@ -101,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(() => {
     let gap = unlockDate - Date.now();
 
-    if (gap < 0) {
+    if (gap <= 0) {
       bigTimer.innerHTML = "🎉 It's Time! 🎂";
       return;
     }
@@ -114,70 +112,35 @@ document.addEventListener("DOMContentLoaded", () => {
     bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
   }, 1000);
 
- /* =========================
-   SCRAPBOOK FLIP SYSTEM
-========================= */
+  /* =========================
+     SCRAPBOOK FLIP SYSTEM
+  ========================= */
+  let currentPage = 0;
 
-let currentPage = 0;
+  function getPages() {
+    return document.querySelectorAll("#pagesContainer .spread");
+  }
 
-function getPages() {
-  return document.querySelectorAll("#pagesContainer .spread");
-}
+  function showPage(index) {
+    const pages = getPages();
 
-function showPage(index) {
-  const pages = getPages();
+    pages.forEach((page, i) => {
+      page.classList.remove("active");
 
-  pages.forEach((page, i) => {
-    page.classList.remove("active");
+      if (i < index) {
+        page.classList.add("flip");
+      } else {
+        page.classList.remove("flip");
+      }
+    });
 
-    if (i < index) {
-      page.classList.add("flip");   // already flipped
-    } else {
-      page.classList.remove("flip");
+    if (pages[index]) {
+      pages[index].classList.add("active");
     }
-  });
-
-  if (pages[index]) {
-    pages[index].classList.add("active");
   }
-}
 
-/* NEXT */
-window.nextPage = function () {
-  const pages = getPages();
-
-  if (currentPage < pages.length - 1) {
-    currentPage++;
-    showPage(currentPage);
-  }
-};
-
-/* PREVIOUS */
-window.prevPage = function () {
-  if (currentPage > 0) {
-    currentPage--;
-    showPage(currentPage);
-  }
-};
-/* NEXT */
-window.nextPage = function () {
-  const pages = getPages();
-
-  if (currentPage < pages.length - 1) {
-    currentPage++;
-    showPage(currentPage);
-  }
-};
-
-/* PREVIOUS */
-window.prevPage = function () {
-  if (currentPage > 0) {
-    currentPage--;
-    showPage(currentPage);
-  }
-};
-  /* NEXT */
-  window.nextPage = function() {
+  /* NEXT PAGE */
+  window.nextPage = function () {
     const pages = getPages();
 
     if (currentPage < pages.length - 1) {
@@ -186,8 +149,8 @@ window.prevPage = function () {
     }
   };
 
-  /* PREVIOUS */
-  window.prevPage = function() {
+  /* PREVIOUS PAGE */
+  window.prevPage = function () {
     if (currentPage > 0) {
       currentPage--;
       showPage(currentPage);
