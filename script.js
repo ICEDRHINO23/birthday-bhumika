@@ -73,10 +73,10 @@ setInterval(() => {
 
   setTimeout(() => heart.remove(), 5000);
 
-}, 800);
+}, 900);
 
 /* =========================
-   GIFT FLOW (MAIN LOGIC)
+   GIFT FLOW (CLEAN TIMING)
 ========================= */
 let unlocked = false;
 
@@ -98,26 +98,26 @@ gift.addEventListener("click", () => {
     /* SHOW MENU */
     menu.classList.remove("hidden");
 
-    /* BIG MESSAGE DELAY */
+    /* STEP 1: BIG MESSAGE */
     setTimeout(() => {
 
       bigMessage.classList.remove("hidden");
       bigMessage.classList.add("show");
 
-      /* AUTO HIDE */
+      /* STEP 2: HIDE BIG MESSAGE */
       setTimeout(() => {
 
         bigMessage.classList.add("hide");
 
         setTimeout(() => {
           bigMessage.classList.add("hidden");
-        }, 1000);
+        }, 800);
 
-      }, 4000);
+      }, 3000);
 
-    }, 800);
+    }, 500);
 
-    /* SURPRISE TEXT */
+    /* STEP 3: TYPING MESSAGE (AFTER BIG MESSAGE) */
     setTimeout(() => {
 
       surprise.classList.remove("hidden");
@@ -127,16 +127,16 @@ gift.addEventListener("click", () => {
         typed
       );
 
-    }, 1500);
+    }, 4000);
 
   }, 1000);
 
 });
 
 /* =========================
-   TYPING EFFECT
+   TYPING EFFECT (SAFE)
 ========================= */
-function typeText(text, element, speed = 50) {
+function typeText(text, element, speed = 40) {
   let i = 0;
   element.innerHTML = "";
 
@@ -222,25 +222,10 @@ setInterval(() => {
 },1000);
 
 /* =========================
-   LOAD DATA
+   SCRAPBOOK
 ========================= */
 const scrapbookData = JSON.parse(localStorage.getItem("scrapbook")) || [];
-const videoData = localStorage.getItem("video");
 
-/* =========================
-   LOAD VIDEO
-========================= */
-if (videoData) {
-  videoPage.innerHTML = `
-    <h2>Effort Video 🎥</h2>
-    <video src="${videoData}" controls autoplay></video>
-    <br><button onclick="goBack()">⬅ Back</button>
-  `;
-}
-
-/* =========================
-   LOAD SCRAPBOOK
-========================= */
 function loadScrapbook(){
 
   pagesContainer.innerHTML = "";
@@ -271,9 +256,7 @@ function loadScrapbook(){
   showPage(0);
 }
 
-/* =========================
-   SCRAPBOOK NAV
-========================= */
+/* NAVIGATION */
 let currentPage = 0;
 
 function getPages(){
