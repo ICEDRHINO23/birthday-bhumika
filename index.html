@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Bhoomika 🎉</title>
+<title>Birthday Surprise 🎉</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -28,52 +28,34 @@
 <div id="menu" style="display:none;">
   <h2>Select Your Surprise 🎁</h2>
 
-  <button onclick="openPage('timer')">⏳ Birthday Countdown</button>
-  <button onclick="openPage('video')">🎥 Effort Video</button>
-  <button onclick="openPage('book')">💖 Scrap Book</button>
+  <button onclick="openPage('timer')">⏳ Timer</button>
+  <button onclick="openPage('video')">🎥 Video</button>
+  <button onclick="openPage('book')">💖 Scrapbook</button>
 </div>
 
 <!-- ⏳ TIMER -->
 <div id="timerPage" style="display:none;">
-  <h1>🎂 Countdown</h1>
+  <h1>Countdown 🎂</h1>
   <div id="bigTimer"></div>
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
 <!-- 🎥 VIDEO -->
 <div id="videoPage" style="display:none;">
-  <h1>🎥 Special Video</h1>
+  <h1>Special Video 🎥</h1>
   <video src="./images/birthday-video.mp4" controls></video>
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
 <!-- 📖 BOOK -->
-<div id="book">
-
-  <div class="page" id="p1">
-    <div class="left">
-      <video src="./images/bhumika.mp4" autoplay loop muted></video>
-    </div>
-    <div class="right">You make life brighter ✨</div>
+<div id="book" style="display:none;">
+  <div class="page">
+    <div class="left">💖</div>
+    <div class="right">You are special</div>
   </div>
-
-  <div class="page" id="p2">
-    <div class="left">
-      <img src="./images/photo1.jpg">
-    </div>
-    <div class="right">Memories with you are special 💖</div>
-  </div>
-
-  <div class="page" id="p3">
-    <div class="left">
-      <img src="./images/photo2.jpg">
-    </div>
-    <div class="right">Today is all about YOU 🎉</div>
-  </div>
-
 </div>
 
-<div id="final">💌 Happy Birthday Bhoomika 💖</div>
+<div id="final" style="display:none;">💌 Happy Birthday 💖</div>
 
 <canvas id="butterflyCanvas"></canvas>
 
@@ -81,7 +63,6 @@
 
 <audio id="bgMusic" src="./audio/bg.mp3" loop></audio>
 <audio id="openSound" src="./audio/open.mp3"></audio>
-<audio id="flipSound" src="./audio/flip.mp3"></audio>
 
 <script src="script.js"></script>
 
