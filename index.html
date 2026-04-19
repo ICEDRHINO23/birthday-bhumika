@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <title>Happy Birthday Bhoomika 🎂</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- REMOVE FAVICON ERROR -->
+  <link rel="icon" href="data:,">
 </head>
 
 <body>
@@ -17,62 +20,77 @@
 <!-- ADMIN PANEL -->
 <div id="adminPanel">
   <h3>Login 🔐</h3>
-  <input id="user" type="text" placeholder="Username"><br><br>
-  <input id="pass" type="password" placeholder="Password"><br><br>
+  <input id="user" placeholder="username"><br><br>
+  <input id="pass" type="password" placeholder="password"><br><br>
   <button id="loginBtn">Enter</button>
 </div>
 
-<!-- MUSIC -->
-<audio id="bgMusic" src="./music.mp3" loop></audio>
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" src="./audio/music.mp3" loop></audio>
 
-<!-- HEARTS -->
+<!-- FLOATING HEARTS -->
 <div id="hearts"></div>
 
 <!-- MAIN -->
 <div id="main">
 
-  <img id="profilePic" src="./image/bhoomika.jpg">
+  <!-- PROFILE -->
+  <img id="profilePic" src="./image/bhoomika.jpg" alt="Bhoomika">
 
   <h1>Happy Birthday Bhoomika 🎂</h1>
 
-  <p>Some people don’t just come into life... they stay, they change everything ❤️</p>
+  <p>
+    Some people don’t just come into life... they stay, they change everything ❤️
+  </p>
 
+  <!-- GIFT -->
   <div id="giftContainer">
-    <img id="giftImage" src="./image/gift.png">
+    <img id="giftImage" src="./image/gift-closed.PNG">
   </div>
 
+  <!-- BIG MESSAGE (DELAYED) -->
   <div id="bigMessage">
     You are one of the best things that ever happened in my life 💖
   </div>
 
+  <!-- TYPING TEXT -->
   <div id="surpriseText" class="hidden">
     <span id="typedText"></span>
   </div>
 
+  <!-- MENU -->
   <div id="menu" class="hidden">
-    <button onclick="openPage('timer')">⏳ Timer</button>
-    <button onclick="openPage('video')">🎥 Video</button>
+    <h2>Choose Something 💝</h2>
+
+    <button onclick="openPage('timer')">⏳ Countdown</button>
+    <button onclick="openPage('video')">🎬 Video</button>
     <button onclick="openPage('book')">📖 Scrapbook</button>
   </div>
 
 </div>
 
+<!-- TIMER -->
 <div id="timerPage" class="hidden">
+  <h2>Countdown 🎂</h2>
   <div id="bigTimer"></div>
   <button onclick="goBack()">Back</button>
 </div>
 
+<!-- VIDEO -->
 <div id="videoPage" class="hidden">
-  <video controls src="./video.mp4"></video>
+  <video controls src="./videos/bhumika.mp4"></video>
   <button onclick="goBack()">Back</button>
 </div>
 
+<!-- SCRAPBOOK -->
 <div id="book" class="hidden">
   <div id="pagesContainer"></div>
 
-  <button onclick="prevPage()">⬅</button>
-  <button onclick="nextPage()">➡</button>
-  <button onclick="goBack()">Back</button>
+  <div>
+    <button onclick="prevPage()">⬅</button>
+    <button onclick="nextPage()">➡</button>
+    <button onclick="goBack()">Back</button>
+  </div>
 </div>
 
 <script src="script.js"></script>
