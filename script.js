@@ -23,11 +23,13 @@ const heartsContainer = document.getElementById("hearts");
 const surprise = document.getElementById("surpriseText");
 const typed = document.getElementById("typedText");
 
+const bigMessage = document.getElementById("bigMessage");
+
 /* =========================
    INTRO
 ========================= */
 setTimeout(() => {
-  if (intro) intro.style.display = "none";
+  intro.style.display = "none";
 }, 2000);
 
 /* =========================
@@ -53,33 +55,28 @@ window.login = function () {
    MUSIC START
 ========================= */
 document.body.addEventListener("click", () => {
-  if (music) {
-    music.play().catch(() => {});
-  }
+  music.play().catch(()=>{});
 }, { once: true });
 
 /* =========================
-   FLOATING HEARTS
+   HEARTS (CONTROLLED)
 ========================= */
 setInterval(() => {
-
-  if (!heartsContainer) return;
 
   const heart = document.createElement("div");
   heart.className = "heart";
   heart.innerText = "💖";
 
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (15 + Math.random()*20) + "px";
 
   heartsContainer.appendChild(heart);
 
   setTimeout(() => heart.remove(), 5000);
 
-}, 300);
+}, 800);
 
 /* =========================
-   GIFT SYSTEM
+   GIFT FLOW (MAIN LOGIC)
 ========================= */
 let unlocked = false;
 
@@ -91,29 +88,48 @@ gift.addEventListener("click", () => {
 
   if (!unlocked) return;
 
-  /* open gift */
   gift.src = "./image/gift-open.PNG";
   gift.classList.add("opened");
 
-  /* show surprise text */
   setTimeout(() => {
 
-    if (surprise) {
+    document.getElementById("giftContainer").style.display = "none";
+
+    /* SHOW MENU */
+    menu.classList.remove("hidden");
+
+    /* BIG MESSAGE DELAY */
+    setTimeout(() => {
+
+      bigMessage.classList.remove("hidden");
+      bigMessage.classList.add("show");
+
+      /* AUTO HIDE */
+      setTimeout(() => {
+
+        bigMessage.classList.add("hide");
+
+        setTimeout(() => {
+          bigMessage.classList.add("hidden");
+        }, 1000);
+
+      }, 4000);
+
+    }, 800);
+
+    /* SURPRISE TEXT */
+    setTimeout(() => {
+
       surprise.classList.remove("hidden");
 
       typeText(
-        "You are one of the best things that ever happened in my life 💖",
+        "You didn’t just become a friend… you became a part of my life that I never want to lose ❤️",
         typed
       );
-    }
 
-  }, 600);
+    }, 1500);
 
-  /* go to menu */
-  setTimeout(() => {
-    document.getElementById("giftContainer").style.display = "none";
-    menu.classList.remove("hidden");
-  }, 2000);
+  }, 1000);
 
 });
 
@@ -189,8 +205,6 @@ window.goBack = function(){
 ========================= */
 setInterval(() => {
 
-  if (!bigTimer) return;
-
   let gap = unlockDate - Date.now();
 
   if(gap <= 0){
@@ -216,7 +230,7 @@ const videoData = localStorage.getItem("video");
 /* =========================
    LOAD VIDEO
 ========================= */
-if (videoData && videoPage) {
+if (videoData) {
   videoPage.innerHTML = `
     <h2>Effort Video 🎥</h2>
     <video src="${videoData}" controls autoplay></video>
@@ -228,8 +242,6 @@ if (videoData && videoPage) {
    LOAD SCRAPBOOK
 ========================= */
 function loadScrapbook(){
-
-  if (!pagesContainer) return;
 
   pagesContainer.innerHTML = "";
 
@@ -260,7 +272,7 @@ function loadScrapbook(){
 }
 
 /* =========================
-   SCRAPBOOK FLIP
+   SCRAPBOOK NAV
 ========================= */
 let currentPage = 0;
 
@@ -274,10 +286,8 @@ function showPage(index){
   pages.forEach((page, i) => {
     page.classList.remove("active");
 
-    if(i < index){
-      page.classList.add("flip");
-    } else {
-      page.classList.remove("flip");
+    if(i === index){
+      page.classList.add("active");
     }
   });
 }
