@@ -1,211 +1,172 @@
-document.addEventListener("DOMContentLoaded", () => {
+// ==============================
+// 🎬 STAGE CONTROL SYSTEM
+// ==============================
+function showStage(id) {
+  document.querySelectorAll(".stage").forEach(stage => {
+    stage.classList.remove("active");
+  });
+  document.getElementById(id).classList.add("active");
+}
 
-    const bg = document.getElementById("bg");
-    const gift = document.getElementById("gift");
-    const book = document.getElementById("book");
-    const fun = document.getElementById("funText");
+// ==============================
+// ⏳ COUNTDOWN TIMER (12 MAY 2026)
+// ==============================
+const targetDate = new Date("May 12, 2026 00:00:00").getTime();
 
-    let canOpen = false;
-    let allowMove = true;
-    let current = 1;
-    let typingDone = false;
+setInterval(() => {
+  const now = new Date().getTime();
+  const gap = targetDate - now;
 
-    const msgs = [
-        "😂 Catch me!",
-        "Too slow 😜",
-        "Not yet!",
-        "Hehe try again!"
-    ];
+  const days = Math.floor(gap / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((gap / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((gap / (1000 * 60)) % 60);
+  const seconds = Math.floor((gap / 1000) % 60);
 
-    /* 🎬 START */
-    setTimeout(() => {
-        document.body.classList.add("gift-mode");
-        canOpen = true;
-    }, 4000);
+  const countdown = document.getElementById("countdown");
+  if (countdown) {
+    countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }
+}, 1000);
 
-    /* 🎉 BACKGROUND */
-    const emojis = ["🎈","🎂","🎉","🎁","🎀"];
+// ==============================
+// 🎵 AUDIO SYSTEM
+// ==============================
+const bgMusic = document.getElementById("bgMusic");
+const openSound = document.getElementById("openSound");
+const flipSound = document.getElementById("flipSound");
 
-    for (let i = 0; i < 40; i++) {
-        let el = document.createElement("span");
-        el.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+// Start music only after first user interaction
+document.body.addEventListener("click", () => {
+  if (bgMusic) bgMusic.play();
+}, { once: true });
 
-        el.style.left = Math.random()*100 + "%";
-        el.style.fontSize = (25 + Math.random()*40) + "px";
-        el.style.animationDuration = (6 + Math.random()*10) + "s";
+// ==============================
+// 🎮 GIFT CHASE GAME
+// ==============================
+const gift = document.getElementById("gift");
 
-        bg.appendChild(el);
-    }
+if (gift) {
+  gift.style.position = "absolute";
 
-    /* 🧠 MOVE FUNCTION */
-    function moveGift() {
-        if (!allowMove) return;
+  function moveGift() {
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 120);
 
-        let x = Math.random() * (window.innerWidth - 160);
-        let y = Math.random() * (window.innerHeight - 160);
+    gift.style.left = x + "px";
+    gift.style.top = y + "px";
+  }
 
-        gift.style.left = x + "px";
-        gift.style.top = y + "px";
-        gift.style.transform = "none";
+  // Move on hover / touch
+  gift.addEventListener("mouseover", moveGift);
+  gift.addEventListener("touchstart", moveGift);
 
-        showMessage(msgs[Math.floor(Math.random()*msgs.length)]);
-    }
-
-    /* 😂 MESSAGE */
-    function showMessage(text) {
-        fun.innerText = text;
-        fun.style.opacity = "1";
-
-        setTimeout(() => {
-            fun.style.opacity = "0";
-        }, 1500);
-    }
-
-    /* 🎁 STOP AFTER 20 SEC */
-    setTimeout(() => {
-        allowMove = false;
-
-        gift.style.left = "50%";
-        gift.style.top = "50%";
-        gift.style.transform = "translate(-50%, -50%)";
-
-        showMessage("🎁 Now you can open me ❤️");
-
-    }, 20000);
-
-    /* 🎯 MOVEMENT TRIGGERS */
-   /* 📱 TOUCH FRIENDLY MOVEMENT */
-document.addEventListener("touchstart", (e) => {
-
-    if (!canOpen || !allowMove) return;
-
-    moveGift();
-
-});
-
-    gift.addEventListener("touchstart", () => {
-        if (canOpen) moveGift();
+  // After 10 sec → allow click
+  setTimeout(() => {
+    gift.addEventListener("click", () => {
+      showStage("stage3");
     });
+  }, 10000);
+}
 
-    document.addEventListener("mousemove", (e) => {
+// ==============================
+// 🎁 GIFT OPEN + BUTTERFLY
+// ==============================
+const openGift = document.getElementById("openGift");
 
-        if (!canOpen || !allowMove) return;
+if (openGift) {
+  openGift.addEventListener("click", () => {
+    if (openSound) openSound.play();
 
-        const rect = gift.getBoundingClientRect();
-
-        const dx = e.clientX - (rect.left + rect.width/2);
-        const dy = e.clientY - (rect.top + rect.height/2);
-
-        const dist = Math.sqrt(dx*dx + dy*dy);
-
-        if (dist < 120) moveGift();
-    });
-
-    /* 🎁 OPEN */
-   gift.addEventListener("click", () => {
-
-    // 📱 if still moving → tease again
-    if (!canOpen || allowMove) {
-        moveGift();
-        return;
-    }
-
-    // 🎁 open only after movement stops
-    gift.classList.add("open");
+    releaseButterflies();
 
     setTimeout(() => {
-        gift.style.display = "none";
-        book.style.display = "block";
+      showStage("stage4");
+    }, 2000);
+  });
+}
 
-        startTyping(current);
-    }, 500);
-});
-    /* ✍️ TYPEWRITER */
-    function startTyping(page) {
+// ==============================
+// 🦋 BUTTERFLY ANIMATION
+// ==============================
+function releaseButterflies() {
+  const canvas = document.getElementById("butterflyCanvas");
+  if (!canvas) return;
 
-        typingDone = false;
+  const ctx = canvas.getContext("2d");
 
-        const texts = {
-            1: "Dear Bhumika 💖\n\nYou are truly special.\nThis is just the beginning 😊",
-            2: "Every memory with you feels warm and unforgettable ✨",
-            3: "You deserve happiness, smiles and beautiful moments always 🎉"
-        };
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
-        const el = document.getElementById("text" + page);
-        el.innerHTML = "";
+  let particles = [];
 
-        let i = 0;
+  for (let i = 0; i < 50; i++) {
+    particles.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      size: Math.random() * 6 + 3,
+      speedX: (Math.random() - 0.5) * 6,
+      speedY: Math.random() * -6 - 2,
+      life: 1
+    });
+  }
 
-        function type() {
-            if (i < texts[page].length) {
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                if (texts[page][i] === "\n") {
-                    el.innerHTML += "<br>";
-                } else {
-                    el.innerHTML += texts[page][i];
-                }
+    particles.forEach(p => {
+      p.x += p.speedX;
+      p.y += p.speedY;
+      p.life -= 0.015;
 
-                i++;
-                setTimeout(type, 40);
-            } else {
-                typingDone = true;
-
-                showMessage("👉 Click right side to flip");
-            }
-        }
-
-        type();
-    }
-
-    /* 📖 FLIP */
-    function handleFlip() {
-
-        if (!typingDone) return;
-
-        const page = document.getElementById("p" + current);
-
-        if (!page) return;
-
-        page.classList.add("flipped");
-
-        current++;
-
-        if (current <= 3) {
-            setTimeout(() => startTyping(current), 400);
-        } else {
-            setTimeout(() => {
-                book.style.display = "none";
-
-                showFinal();
-            }, 800);
-        }
-    }
-
-    /* CLICK RIGHT SIDE */
-    book.addEventListener("click", (e) => {
-        if (!e.target.closest(".right")) return;
-        handleFlip();
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(255, 105, 180, ${p.life})`;
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
     });
 
-    /* 💌 FINAL WITH REFRESH */
-    function showFinal() {
+    particles = particles.filter(p => p.life > 0);
 
-        const final = document.getElementById("final");
+    if (particles.length > 0) {
+      requestAnimationFrame(animate);
+    }
+  }
 
-        final.innerHTML = `
-            💌 More to go but need to wait...<br><br>
-            <button onclick="location.reload()" style="
-                padding:10px 20px;
-                background:#ff4d6d;
-                color:white;
-                border:none;
-                border-radius:8px;
-                cursor:pointer;
-                font-size:16px;
-            ">Restart Surprise 🔄</button>
-        `;
+  animate();
+}
 
-        final.style.display = "block";
+// ==============================
+// 📖 3D PAGE FLIP SYSTEM
+// ==============================
+const pages = document.querySelectorAll(".page");
+
+pages.forEach((page, index) => {
+  page.addEventListener("click", () => {
+    page.classList.add("flipped");
+
+    if (flipSound) {
+      flipSound.currentTime = 0;
+      flipSound.play();
     }
 
+    // If last page → final stage
+    if (index === pages.length - 1) {
+      setTimeout(() => {
+        showStage("stage5");
+      }, 1500);
+    }
+  });
 });
+
+// ==============================
+// 🎯 OPTIONAL: AUTO STAGE FLOW
+// ==============================
+
+// Start from stage1
+window.onload = () => {
+  showStage("stage1");
+};
+
+// Optional: auto move to game after 3 sec
+setTimeout(() => {
+  showStage("stage2");
+}, 3000);
