@@ -7,27 +7,13 @@ body {
   background: linear-gradient(135deg, #f8cdda, #f6d365);
   text-align: center;
   overflow-x: hidden;
+
+  animation: fadePage 1s ease;
 }
 
-/* =========================
-   HERO
-========================= */
-#hero {
-  margin-top: 40px;
-}
-
-#hero img {
-  width: 180px;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 5px solid white;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-#hero h1 {
-  color: #ff3366;
-  margin-top: 15px;
+@keyframes fadePage {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 /* =========================
@@ -47,16 +33,60 @@ body {
 }
 
 /* =========================
+   PROFILE
+========================= */
+#profileContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+#profileImg {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+
+  border: 5px solid white;
+
+  box-shadow: 
+    0 0 25px rgba(255,105,180,0.6),
+    0 0 60px rgba(255,105,180,0.3);
+
+  animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* =========================
+   HERO TEXT
+========================= */
+h1 {
+  color: #ff3366;
+}
+
+#heroText {
+  font-size: 18px;
+  max-width: 600px;
+  margin: 10px auto;
+  color: #444;
+}
+
+/* =========================
    GIFT
 ========================= */
 #giftContainer {
-  margin-top: 50px;
+  margin-top: 40px;
 }
 
 #giftImage {
-  width: 220px;
+  width: 240px;
   cursor: pointer;
-  transition: 0.4s;
+  transition: 0.5s;
 }
 
 #giftImage:hover {
@@ -68,23 +98,75 @@ body {
 }
 
 /* =========================
-   MENU
+   ADMIN BUTTON
 ========================= */
-#menu {
-  margin-top: 30px;
+#adminBtn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+
+  background: linear-gradient(135deg,#ff4d6d,#ff758f);
+  color: white;
+  border: none;
+
+  border-radius: 25px;
+  padding: 10px 18px;
+
+  cursor: pointer;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+
+  transition: 0.3s;
+}
+
+#adminBtn:hover {
+  transform: scale(1.1);
 }
 
 /* =========================
-   BUTTONS
+   ADMIN PANEL
 ========================= */
+#adminPanel {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background: white;
+  padding: 20px;
+
+  box-shadow: 2px 0 20px rgba(0,0,0,0.3);
+
+  transition: 0.4s;
+}
+
+#adminPanel.open {
+  left: 0;
+}
+
+/* =========================
+   MENU
+========================= */
+#menu {
+  margin-top: 40px;
+}
+
 button {
   margin: 10px;
-  padding: 12px 20px;
+  padding: 12px 22px;
   border: none;
-  border-radius: 10px;
-  background: #ff4d6d;
+  border-radius: 12px;
+
+  background: linear-gradient(135deg,#ff4d6d,#ff758f);
   color: white;
+
   cursor: pointer;
+
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
 }
 
 /* =========================
@@ -93,34 +175,35 @@ button {
 #timerPage,
 #videoPage,
 #book {
-  margin: 40px auto;
+  margin: 50px auto;
   width: 90%;
   max-width: 900px;
-  background: white;
-  padding: 25px;
-  border-radius: 20px;
+
+  background: rgba(255,255,255,0.95);
+  padding: 30px;
+  border-radius: 25px;
+
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
 }
 
 /* =========================
    SCRAPBOOK
 ========================= */
 #pagesContainer {
-  position: relative;
-  height: 450px;
-  overflow: hidden;
+  max-width: 900px;
+  margin: auto;
 }
 
 .spread {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  transition: 0.8s;
-  transform-origin: left;
+  display: none;
+  height: 450px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.3);
 }
 
-.spread.flip {
-  transform: rotateY(-180deg);
+.spread.active {
+  display: flex;
 }
 
 .left {
@@ -137,53 +220,17 @@ button {
 
 .right {
   width: 50%;
-  padding: 20px;
+  padding: 25px;
   text-align: left;
-  background: #ffe6eb;
 }
 
-/* =========================
-   ADMIN BUTTON
-========================= */
-#adminBtn {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 1000;
-  background: #ff4d6d;
-  color: white;
+.right h2 {
+  color: #ff4d6d;
 }
 
-/* =========================
-   ADMIN PANEL
-========================= */
-#adminPanel {
-  position: fixed;
-  top: 0;
-  left: -260px;
-  width: 260px;
-  height: 100%;
-  background: white;
-  padding: 20px;
-  box-shadow: 5px 0 20px rgba(0,0,0,0.3);
-  transition: 0.4s;
-}
-
-#adminPanel.open {
-  left: 0;
-}
-
-#adminPanel input {
-  width: 90%;
-  padding: 8px;
-  margin: 10px 0;
-}
-
-/* =========================
-   HIDDEN
-========================= */
-.hidden {
-  display: none;
+.right p {
+  line-height: 1.6;
+  color: #444;
 }
 
 /* =========================
@@ -191,8 +238,6 @@ button {
 ========================= */
 #hearts {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -200,30 +245,30 @@ button {
 
 .heart {
   position: absolute;
-  color: pink;
-  font-size: 20px;
-  animation: floatUp 5s linear infinite;
+  animation: floatUp 5s linear;
 }
 
 @keyframes floatUp {
   from {
-    transform: translateY(100vh) scale(1);
+    transform: translateY(100vh);
     opacity: 1;
   }
   to {
-    transform: translateY(-10vh) scale(1.5);
+    transform: translateY(-10vh);
     opacity: 0;
   }
 }
 
 /* =========================
-   SURPRISE TEXT
+   SURPRISE
 ========================= */
 #surpriseText {
   position: fixed;
   top: 40%;
   width: 100%;
-  text-align: center;
-  font-size: 28px;
   color: #ff3366;
+}
+
+.hidden {
+  display: none;
 }
