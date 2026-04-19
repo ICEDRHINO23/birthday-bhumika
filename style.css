@@ -154,28 +154,50 @@ video {
 }
 
 /* =========================
-   SCRAPBOOK (FLIP BOOK)
+   SCRAPBOOK FLIP SYSTEM
 ========================= */
 
-#book {
-  perspective: 2000px;
+let currentPage = 0;
+
+function getPages() {
+  return document.querySelectorAll("#pagesContainer .spread");
 }
 
-/* BOOK FRAME */
-#pagesContainer {
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  height: 480px;
-  margin: auto;
+function showPage(index) {
+  const pages = getPages();
 
-  border-radius: 20px;
-  overflow: hidden;
+  pages.forEach((page, i) => {
+    page.classList.remove("active");
 
-  background: #fff;
+    if (i < index) {
+      page.classList.add("flip");   // already flipped
+    } else {
+      page.classList.remove("flip");
+    }
+  });
 
-  box-shadow: 0 30px 70px rgba(0,0,0,0.3);
+  if (pages[index]) {
+    pages[index].classList.add("active");
+  }
 }
+
+/* NEXT */
+window.nextPage = function () {
+  const pages = getPages();
+
+  if (currentPage < pages.length - 1) {
+    currentPage++;
+    showPage(currentPage);
+  }
+};
+
+/* PREVIOUS */
+window.prevPage = function () {
+  if (currentPage > 0) {
+    currentPage--;
+    showPage(currentPage);
+  }
+};
 
 /* SPREAD */
 .spread {
