@@ -10,23 +10,26 @@ const book = document.getElementById("book");
 
 const bigTimer = document.getElementById("bigTimer");
 
-// intro
+// ==============================
+// INTRO
+// ==============================
 setTimeout(() => intro.style.display="none",2000);
 
-// unlock delay
+// ==============================
+// GIFT UNLOCK
+// ==============================
 let unlocked = false;
 setTimeout(()=> unlocked = true, 3000);
 
+// ==============================
 // 🎁 GIFT CLICK
+// ==============================
 gift.addEventListener("click", () => {
 
   if(!unlocked) return;
 
-  // change to open image
   gift.src = "./image/gift-open.PNG";
-
-  gift.style.transform = "scale(1.2)";
-  gift.style.filter = "drop-shadow(0 0 40px gold)";
+  gift.classList.add("opened");
 
   setTimeout(()=>{
     document.getElementById("giftContainer").style.display="none";
@@ -35,14 +38,18 @@ gift.addEventListener("click", () => {
 
 });
 
+// ==============================
 // DATE LOCK
+// ==============================
 const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
 
 function isUnlocked(){
   return Date.now() >= unlockDate;
 }
 
+// ==============================
 // NAVIGATION
+// ==============================
 window.openPage = function(type){
 
   menu.classList.add("hidden");
@@ -69,7 +76,9 @@ window.openPage = function(type){
   }
 }
 
-// BACK
+// ==============================
+// BACK BUTTON
+// ==============================
 window.goBack = function(){
   timerPage.classList.add("hidden");
   videoPage.classList.add("hidden");
@@ -77,7 +86,9 @@ window.goBack = function(){
   menu.classList.remove("hidden");
 }
 
+// ==============================
 // TIMER
+// ==============================
 setInterval(()=>{
   let gap = unlockDate - Date.now();
 
@@ -86,35 +97,51 @@ setInterval(()=>{
   let m=Math.floor((gap/(1000*60))%60);
   let s=Math.floor((gap/1000)%60);
 
-  bigTimer.innerHTML=`${d}d ${h}h ${m}m ${s}s`;
+  if(bigTimer){
+    bigTimer.innerHTML=`${d}d ${h}h ${m}m ${s}s`;
+  }
 },1000);
 
-// SCRAPBOOK
+// ==============================
+// 📖 SCRAPBOOK (FIXED)
+// ==============================
 let currentPage = 0;
 
 function getPages(){
-  return document.querySelectorAll("#pagesContainer .page");
+  return document.querySelectorAll("#pagesContainer .spread");
 }
 
-function showPage(i){
+function showPage(index){
   const pages = getPages();
-  pages.forEach(p=>p.classList.remove("active"));
-  if(pages[i]) pages[i].classList.add("active");
+
+  pages.forEach((p, i) => {
+    p.classList.remove("active");
+
+    if(i === index){
+      p.classList.add("active");
+    }
+  });
 }
 
+// NEXT
 window.nextPage = function(){
   const pages = getPages();
-  if(currentPage < pages.length-1){
+
+  if(currentPage < pages.length - 1){
     currentPage++;
     showPage(currentPage);
   }
 }
 
+// PREV
 window.prevPage = function(){
-  if(currentPage>0){
+  if(currentPage > 0){
     currentPage--;
     showPage(currentPage);
   }
 }
+
+// INITIAL LOAD
+showPage(currentPage);
 
 });
