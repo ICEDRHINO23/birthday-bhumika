@@ -3,25 +3,28 @@
 <head>
   <title>Admin Panel</title>
 </head>
-<body>
+<body style="text-align:center;font-family:sans-serif">
 
-<h2>Add Scrapbook Page</h2>
+<h1>Admin Panel ⚙️</h1>
+
+<h3>Add Scrapbook Page</h3>
 
 <select id="type">
   <option value="image">Image</option>
   <option value="video">Video</option>
 </select><br><br>
 
-<input type="text" id="src" placeholder="File path"><br><br>
-<input type="text" id="title" placeholder="Title"><br><br>
+<input id="src" placeholder="Path (e.g. ./scrapbook/img1.jpg)"><br><br>
+<input id="title" placeholder="Title"><br><br>
 <textarea id="text" placeholder="Emotional text"></textarea><br><br>
 
 <button onclick="addPage()">Add Page</button>
 
 <hr>
 
-<h2>Set Effort Video</h2>
-<input type="text" id="videoSrc" placeholder="Video path">
+<h3>Set Effort Video</h3>
+
+<input id="videoSrc" placeholder="Video path"><br><br>
 <button onclick="setVideo()">Save Video</button>
 
 <script src="admin.js"></script>
