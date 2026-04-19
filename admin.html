@@ -3,6 +3,7 @@
 <head>
   <title>Admin Panel</title>
 </head>
+
 <body style="text-align:center;font-family:sans-serif">
 
 <h1>Admin Panel ⚙️</h1>
@@ -14,7 +15,9 @@
   <option value="video">Video</option>
 </select><br><br>
 
-<input id="src" placeholder="Path (e.g. ./scrapbook/img1.jpg)"><br><br>
+<!-- 🔥 FILE UPLOAD -->
+<input type="file" id="fileInput"><br><br>
+
 <input id="title" placeholder="Title"><br><br>
 <textarea id="text" placeholder="Emotional text"></textarea><br><br>
 
@@ -24,7 +27,7 @@
 
 <h3>Set Effort Video</h3>
 
-<input id="videoSrc" placeholder="Video path"><br><br>
+<input type="file" id="videoInput"><br><br>
 <button onclick="setVideo()">Save Video</button>
 
 <script src="admin.js"></script>
