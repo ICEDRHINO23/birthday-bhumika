@@ -154,19 +154,19 @@ video {
 }
 
 /* =========================
-   SCRAPBOOK (REAL BOOK FIX)
+   SCRAPBOOK (FLIP BOOK)
 ========================= */
 
 #book {
-  perspective: 1500px;
+  perspective: 2000px;
 }
 
-/* MAIN BOOK FRAME */
+/* BOOK FRAME */
 #pagesContainer {
-  position: relative;          /* 🔥 CRITICAL FIX */
+  position: relative;
   width: 100%;
   max-width: 900px;
-  height: 480px;               /* 🔥 FIX SCROLL ISSUE */
+  height: 480px;
   margin: auto;
 
   border-radius: 20px;
@@ -177,32 +177,45 @@ video {
   box-shadow: 0 30px 70px rgba(0,0,0,0.3);
 }
 
-/* EACH SPREAD */
+/* SPREAD */
 .spread {
-  position: absolute;          /* 🔥 FIX STACKING */
+  position: absolute;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
 
-  width: 100%;
-  height: 100%;
+  display: flex;
 
-  display: none;
-  flex-direction: row;
+  transform-origin: left;
+  transform-style: preserve-3d;
 
-  transition: 0.5s ease;
+  transition: transform 0.8s ease;
+
+  backface-visibility: hidden;
 }
 
-/* ONLY ACTIVE SHOWS */
+/* DEFAULT STATE */
+.spread {
+  transform: rotateY(0deg);
+  z-index: 1;
+}
+
+/* ACTIVE */
 .spread.active {
-  display: flex;
+  z-index: 3;
+}
+
+/* FLIPPED */
+.spread.flip {
+  transform: rotateY(-180deg);
   z-index: 2;
 }
 
-/* LEFT SIDE */
+/* LEFT */
 .left {
   width: 50%;
   height: 100%;
-
   background: black;
 
   display: flex;
@@ -212,15 +225,15 @@ video {
   overflow: hidden;
 }
 
-/* MEDIA FIT FIX */
+/* MEDIA */
 .left img,
 .left video {
   width: 100%;
   height: 100%;
-  object-fit: cover;   /* no stretching */
+  object-fit: cover;
 }
 
-/* RIGHT SIDE */
+/* RIGHT */
 .right {
   width: 50%;
   height: 100%;
@@ -236,28 +249,17 @@ video {
   background: linear-gradient(135deg,#fff,#ffe6eb);
 }
 
-/* TITLE */
+/* TEXT */
 .right h2 {
   color: #ff4d6d;
   margin-bottom: 15px;
-  font-size: 22px;
 }
 
-/* TEXT */
 .right p {
   font-size: 16px;
   line-height: 1.7;
   color: #444;
 }
-
-/* CONTROLS */
-#bookControls {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
-}
-
 /* =========================
    HIDDEN
 ========================= */
