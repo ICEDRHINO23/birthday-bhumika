@@ -1,5 +1,5 @@
 // ==============================
-// 🎬 INTRO CINEMATIC ENTRY
+// 🎬 INTRO CINEMATIC
 // ==============================
 gsap.from("#intro", {
   opacity: 0,
@@ -21,7 +21,7 @@ setTimeout(() => {
 
 
 // ==============================
-// 🎁 GIFT FLOAT ENTRY
+// 🎁 GIFT ENTRY ANIMATION
 // ==============================
 gsap.from("#gift", {
   y: -200,
@@ -32,10 +32,20 @@ gsap.from("#gift", {
 
 
 // ==============================
-// 🎮 SMART GIFT MOVEMENT
+// 🎮 GIFT CHASE SYSTEM
 // ==============================
 const gift = document.getElementById("gift");
+const funText = document.getElementById("funText");
+
 let unlocked = false;
+
+const messages = [
+  "Catch me 😜",
+  "Too slow 😂",
+  "Almost there!",
+  "Hehe try again!",
+  "You can do it 💪"
+];
 
 function moveGift() {
   if (unlocked) return;
@@ -44,35 +54,41 @@ function moveGift() {
   const y = Math.random() * (window.innerHeight - 160);
 
   gsap.to(gift, {
-    x: x - window.innerWidth / 2,
-    y: y - window.innerHeight / 2,
-    duration: 0.6,
+    left: x + "px",
+    top: y + "px",
+    duration: 0.5,
     ease: "power2.out"
   });
+
+  if (funText) {
+    funText.innerText = messages[Math.floor(Math.random() * messages.length)];
+  }
 }
 
 gift.addEventListener("mouseover", moveGift);
 gift.addEventListener("touchstart", moveGift);
 
+// unlock after 15 sec
 setTimeout(() => {
   unlocked = true;
+  if (funText) funText.innerText = "Okay fine… click me 🎁";
 }, 15000);
 
 
 // ==============================
-// 🎵 AUDIO
+// 🎵 AUDIO SYSTEM
 // ==============================
 const bgMusic = document.getElementById("bgMusic");
 const openSound = document.getElementById("openSound");
 const flipSound = document.getElementById("flipSound");
 
 document.body.addEventListener("click", () => {
-  bgMusic?.play();
+  bgMusic?.play().catch(()=>{});
 }, { once: true });
 
 
 // ==============================
-// 🎁 CINEMATIC GIFT OPEN
+// 🎁 GIFT OPEN → MENU
 // ==============================
 gift.addEventListener("click", () => {
 
@@ -80,24 +96,23 @@ gift.addEventListener("click", () => {
 
   openSound?.play();
 
-  // Lid animation (real feel)
+  // lid animation
   gsap.to(".lid", {
     rotationX: 130,
     transformOrigin: "top",
-    duration: 1,
-    ease: "power3.out"
+    duration: 1
   });
 
-  // Glow burst
+  // glow effect
   gsap.to("#gift", {
     boxShadow: "0 0 80px gold",
     duration: 0.5
   });
 
-  // Butterflies
+  // butterflies
   releaseButterflies();
 
-  // Fade gift out
+  // hide gift → show menu
   gsap.to("#gift", {
     scale: 0.5,
     opacity: 0,
@@ -105,7 +120,7 @@ gift.addEventListener("click", () => {
     delay: 0.5,
     onComplete: () => {
       gift.style.display = "none";
-      showBook();
+      document.getElementById("menu").style.display = "block";
     }
   });
 
@@ -113,24 +128,65 @@ gift.addEventListener("click", () => {
 
 
 // ==============================
-// 📖 BOOK CINEMATIC ENTRY
+// 🔒 LOCK SYSTEM
 // ==============================
-function showBook() {
-  const book = document.getElementById("book");
+const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
 
-  book.style.display = "block";
-
-  gsap.from("#book", {
-    scale: 0.6,
-    opacity: 0,
-    duration: 1,
-    ease: "power3.out"
-  });
+function isUnlocked() {
+  return new Date().getTime() >= unlockDate;
 }
 
 
 // ==============================
-// 📖 PAGE FLIP (SMOOTH)
+// 🎛 PAGE NAVIGATION
+// ==============================
+function openPage(type) {
+
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("book").style.display = "none";
+  document.getElementById("timerPage").style.display = "none";
+  document.getElementById("videoPage").style.display = "none";
+
+  // LOCK CHECK
+  if ((type === "timer" || type === "video") && !isUnlocked()) {
+    alert("🔒 Unlocks on May 12, 12:00 AM 🎂");
+    document.getElementById("menu").style.display = "block";
+    return;
+  }
+
+  if (type === "book") {
+    document.getElementById("book").style.display = "block";
+
+    gsap.from("#book", {
+      scale: 0.7,
+      opacity: 0,
+      duration: 1
+    });
+  }
+
+  if (type === "timer") {
+    document.getElementById("timerPage").style.display = "block";
+  }
+
+  if (type === "video") {
+    document.getElementById("videoPage").style.display = "block";
+  }
+}
+
+
+// ==============================
+// 🔙 BACK BUTTON
+// ==============================
+function goBack() {
+  document.getElementById("timerPage").style.display = "none";
+  document.getElementById("videoPage").style.display = "none";
+  document.getElementById("book").style.display = "none";
+  document.getElementById("menu").style.display = "block";
+}
+
+
+// ==============================
+// 📖 PAGE FLIP SYSTEM
 // ==============================
 const pages = document.querySelectorAll(".page");
 
@@ -139,14 +195,22 @@ pages.forEach((page, index) => {
 
     gsap.to(page, {
       rotationY: -160,
-      duration: 1,
-      ease: "power2.inOut"
+      duration: 1
     });
 
     flipSound?.play();
 
     if (index === pages.length - 1) {
-      setTimeout(showFinal, 1200);
+      setTimeout(() => {
+        document.getElementById("book").style.display = "none";
+        document.getElementById("final").style.display = "block";
+
+        gsap.from("#final", {
+          scale: 0.7,
+          opacity: 0,
+          duration: 1
+        });
+      }, 1200);
     }
 
   });
@@ -154,32 +218,7 @@ pages.forEach((page, index) => {
 
 
 // ==============================
-// 💌 FINAL CINEMATIC MESSAGE
-// ==============================
-function showFinal() {
-  const book = document.getElementById("book");
-  const final = document.getElementById("final");
-
-  gsap.to(book, {
-    opacity: 0,
-    duration: 0.8,
-    onComplete: () => {
-      book.style.display = "none";
-      final.style.display = "block";
-
-      gsap.from("#final", {
-        scale: 0.7,
-        opacity: 0,
-        duration: 1.2,
-        ease: "back.out(1.7)"
-      });
-    }
-  });
-}
-
-
-// ==============================
-// 🦋 REALISTIC BUTTERFLY STYLE
+// 🦋 BUTTERFLY EFFECT
 // ==============================
 function releaseButterflies() {
   const canvas = document.getElementById("butterflyCanvas");
@@ -228,14 +267,13 @@ function releaseButterflies() {
 
 
 // ==============================
-// ⏳ COUNTDOWN (CLEAN STYLE)
+// ⏳ SMALL TIMER (TOP)
 // ==============================
 const countdown = document.getElementById("countdown");
-const target = new Date("May 12, 2026 00:00:00").getTime();
 
 setInterval(() => {
   const now = new Date().getTime();
-  const gap = target - now;
+  const gap = unlockDate - now;
 
   const d = Math.floor(gap / (1000 * 60 * 60 * 24));
   const h = Math.floor((gap / (1000 * 60 * 60)) % 24);
@@ -243,7 +281,28 @@ setInterval(() => {
   const s = Math.floor((gap / 1000) % 60);
 
   if (countdown) {
-    countdown.innerHTML = `⏳ ${d}d ${h}h ${m}m ${s}s`;
+    countdown.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+  }
+}, 1000);
+
+
+// ==============================
+// ⏳ BIG TIMER (TIMER PAGE)
+// ==============================
+setInterval(() => {
+
+  const now = new Date().getTime();
+  const gap = unlockDate - now;
+
+  const d = Math.floor(gap / (1000 * 60 * 60 * 24));
+  const h = Math.floor((gap / (1000 * 60 * 60)) % 24);
+  const m = Math.floor((gap / (1000 * 60)) % 60);
+  const s = Math.floor((gap / 1000) % 60);
+
+  const bigTimer = document.getElementById("bigTimer");
+
+  if (bigTimer) {
+    bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
   }
 
 }, 1000);
