@@ -2,23 +2,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const intro = document.getElementById("intro");
 const gift = document.getElementById("gift");
-
 const menu = document.getElementById("menu");
 const timerPage = document.getElementById("timerPage");
 const videoPage = document.getElementById("videoPage");
 const book = document.getElementById("book");
-
 const bigTimer = document.getElementById("bigTimer");
 
 // INTRO
-setTimeout(() => {
-  intro.style.display = "none";
-}, 2000);
+setTimeout(()=> intro.style.display="none",2000);
 
 // OPEN GIFT
-gift.addEventListener("click", () => {
-  gift.style.display = "none";
-  menu.classList.remove("hidden");
+gift.addEventListener("click", ()=>{
+  document.querySelector(".gift-box").classList.add("open");
+
+  setTimeout(()=>{
+    gift.style.display="none";
+    menu.classList.remove("hidden");
+  },600);
 });
 
 // NAVIGATION
@@ -29,9 +29,10 @@ window.openPage = function(type){
   videoPage.classList.add("hidden");
   book.classList.add("hidden");
 
-  if(type === "timer") timerPage.classList.remove("hidden");
-  if(type === "video") videoPage.classList.remove("hidden");
-  if(type === "book") {
+  if(type==="timer") timerPage.classList.remove("hidden");
+  if(type==="video") videoPage.classList.remove("hidden");
+
+  if(type==="book"){
     book.classList.remove("hidden");
     showPage(currentPage);
   }
@@ -48,17 +49,15 @@ window.goBack = function(){
 // TIMER
 const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
 
-setInterval(() => {
-
+setInterval(()=>{
   let gap = unlockDate - Date.now();
 
-  let d = Math.floor(gap/(1000*60*60*24));
-  let h = Math.floor((gap/(1000*60*60))%24);
-  let m = Math.floor((gap/(1000*60))%60);
-  let s = Math.floor((gap/1000)%60);
+  let d=Math.floor(gap/(1000*60*60*24));
+  let h=Math.floor((gap/(1000*60*60))%24);
+  let m=Math.floor((gap/(1000*60))%60);
+  let s=Math.floor((gap/1000)%60);
 
-  bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
-
+  bigTimer.innerHTML=`${d}d ${h}h ${m}m ${s}s`;
 },1000);
 
 // SCRAPBOOK
@@ -68,22 +67,22 @@ function getPages(){
   return document.querySelectorAll(".page");
 }
 
-function showPage(index){
+function showPage(i){
   const pages = getPages();
-  pages.forEach(p => p.classList.remove("active"));
-  pages[index].classList.add("active");
+  pages.forEach(p=>p.classList.remove("active"));
+  pages[i].classList.add("active");
 }
 
 window.nextPage = function(){
   const pages = getPages();
-  if(currentPage < pages.length - 1){
+  if(currentPage < pages.length-1){
     currentPage++;
     showPage(currentPage);
   }
 }
 
 window.prevPage = function(){
-  if(currentPage > 0){
+  if(currentPage>0){
     currentPage--;
     showPage(currentPage);
   }
