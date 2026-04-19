@@ -1,24 +1,48 @@
 function addPage() {
 
   const type = document.getElementById("type").value;
-  const src = document.getElementById("src").value;
+  const file = document.getElementById("fileInput").files[0];
   const title = document.getElementById("title").value;
   const text = document.getElementById("text").value;
 
-  let data = JSON.parse(localStorage.getItem("scrapbook")) || [];
+  if (!file) {
+    alert("Please select a file ❌");
+    return;
+  }
 
-  data.push({ type, src, title, text });
+  const reader = new FileReader();
 
-  localStorage.setItem("scrapbook", JSON.stringify(data));
+  reader.onload = function(e) {
 
-  alert("Page Added ✅");
+    const src = e.target.result; // base64 image/video
+
+    let data = JSON.parse(localStorage.getItem("scrapbook")) || [];
+
+    data.push({ type, src, title, text });
+
+    localStorage.setItem("scrapbook", JSON.stringify(data));
+
+    alert("Page Added ✅");
+  };
+
+  reader.readAsDataURL(file);
 }
 
 function setVideo() {
 
-  const videoSrc = document.getElementById("videoSrc").value;
+  const file = document.getElementById("videoInput").files[0];
 
-  localStorage.setItem("video", videoSrc);
+  if (!file) {
+    alert("Select a video ❌");
+    return;
+  }
 
-  alert("Video Saved 🎥");
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    localStorage.setItem("video", e.target.result);
+    alert("Video Saved 🎥");
+  };
+
+  reader.readAsDataURL(file);
 }
