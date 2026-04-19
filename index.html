@@ -10,110 +10,95 @@
 
 <body>
 
-<!-- 🎬 INTRO -->
+<!-- INTRO -->
 <div id="intro">This is a Surprise 🎁</div>
 
-<!-- 🧠 TOP TEXT -->
+<!-- TEXT -->
 <div id="funText">Catch the Gift 😜</div>
 
-<!-- 🎁 GIFT -->
+<!-- 🎁 3D GIFT -->
 <div id="gift">
-  <div class="box"></div>
+  <div class="gift-box">
+    <div class="lid"></div>
+    <div class="box"></div>
+    <div class="ribbon-vertical"></div>
+    <div class="ribbon-horizontal"></div>
+  </div>
 </div>
 
-<!-- 🎯 MENU -->
+<!-- MENU -->
 <div id="menu" style="display:none;">
   <h2>Select Your Surprise 🎁</h2>
 
-  <button onclick="openPage('timer')">⏳ Birthday Timer</button>
-  <button onclick="openPage('video')">🎥 Effort Video</button>
+  <button onclick="openPage('timer')">⏳ Timer</button>
+  <button onclick="openPage('video')">🎥 Video</button>
   <button onclick="openPage('book')">💖 Scrapbook</button>
 </div>
 
-<!-- ⏳ TIMER PAGE -->
+<!-- TIMER -->
 <div id="timerPage" style="display:none;">
-  <h1>Countdown to Your Day 🎂</h1>
+  <h1>Countdown 🎂</h1>
   <div id="bigTimer"></div>
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- 🎥 VIDEO PAGE -->
+<!-- VIDEO -->
 <div id="videoPage" style="display:none; text-align:center;">
   <h1>Special Video 🎥</h1>
-
   <video src="./videos/bhumika.mp4" controls style="width:80%; border-radius:12px;"></video>
-
   <br><br>
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
 <!-- 📖 SCRAPBOOK -->
 <div id="book" style="display:none;">
-
   <div id="pagesContainer">
 
-    <!-- PAGE 1 -->
     <div class="page active">
       <div class="left">
         <img src="./scrapbook/20240429_230322.jpg">
       </div>
-      <div class="right">
-        You know what… some people just walk into life and make it brighter ✨
-      </div>
+      <div class="right">You make life brighter ✨</div>
     </div>
 
-    <!-- PAGE 2 -->
     <div class="page">
       <div class="left">
         <img src="./scrapbook/20240906_204953.jpg">
       </div>
-      <div class="right">
-        Every moment with you becomes a beautiful memory 💖
-      </div>
+      <div class="right">Every moment is special 💖</div>
     </div>
 
-    <!-- PAGE 3 -->
     <div class="page">
       <div class="left">
         <img src="./scrapbook/VideoCapture_20240427-034201.jpg">
       </div>
-      <div class="right">
-        Some memories stay forever in the heart 🌸
-      </div>
+      <div class="right">Memories stay forever 🌸</div>
     </div>
 
-    <!-- PAGE 4 -->
     <div class="page">
       <div class="left">
         <img src="./scrapbook/image.jpg">
       </div>
-      <div class="right">
-        Every picture tells a story 📸
-      </div>
+      <div class="right">Every picture tells a story 📸</div>
     </div>
 
-    <!-- PAGE 5 (VIDEO) -->
     <div class="page">
       <div class="left">
         <video src="./scrapbook/bhumika.mp4" autoplay loop muted></video>
       </div>
-      <div class="right">
-        Some moments deserve to be relived forever 🎬
-      </div>
+      <div class="right">Moments to relive 🎬</div>
     </div>
 
   </div>
 
-  <!-- CONTROLS -->
-  <div style="margin-top:20px; text-align:center;">
+  <div style="text-align:center; margin-top:20px;">
     <button onclick="prevPage()">⬅ Prev</button>
     <button onclick="nextPage()">Next ➡</button>
     <button onclick="goBack()">⬅ Back</button>
   </div>
-
 </div>
 
-<!-- 🎵 BACKGROUND MUSIC -->
+<!-- MUSIC -->
 <audio id="bgMusic" src="./audio/bg.mp3" loop></audio>
 
 <script src="script.js"></script>
