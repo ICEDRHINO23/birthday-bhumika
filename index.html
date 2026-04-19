@@ -7,16 +7,16 @@
 </head>
 <body>
 
-<!-- 🎵 MUSIC -->
+<!-- MUSIC -->
 <audio id="bgMusic" src="./audio/music.mp3" loop></audio>
 
-<!-- 💖 HEARTS -->
+<!-- HEARTS -->
 <div id="hearts"></div>
 
-<!-- 🔐 ADMIN BUTTON -->
+<!-- ADMIN BUTTON -->
 <button id="adminBtn">☰ My Space</button>
 
-<!-- 🔐 ADMIN PANEL -->
+<!-- ADMIN PANEL -->
 <div id="adminPanel">
   <h3>Login</h3>
   <input type="text" id="user" placeholder="Username">
@@ -24,97 +24,10 @@
   <button onclick="login()">Enter</button>
 </div>
 
-<!-- 🎬 INTRO -->
+<!-- INTRO -->
 <div id="intro">Loading Surprise...</div>
 
-<!-- 🎉 HERO SECTION -->
-<div id="home">
-
-  <div id="profileContainer">
-    <img src="./image/bhoomika.jpg" id="profileImg">
-  </div>
-
-  <h1>Happy Birthday Bhoomika 🎂</h1>
-
-  <p id="heroText">
-    Some people don’t just come into life…  
-    they stay, they change everything, and they become a part of you ❤️
-  </p>
-
-  <!-- 🎁 GIFT -->
-  <div id="giftContainer">
-    <img src="./image/gift-closed.PNG" id="giftImage">
-  </div>
-
-</div>
-
-<!-- 🎁 SURPRISE TEXT -->
-<div id="surpriseText" class="hidden">
-  <h2 id="typedText"></h2>
-</div>
-
-<!-- 📋 MENU -->
-<div id="menu" class="hidden">
-  <h2>Choose Something 💖</h2>
-  <button onclick="openPage('timer')">⏳ Countdown</button>
-  <button onclick="openPage('video')">🎥 Video</button>
-  <button onclick="openPage('book')">📖 Scrapbook</button>
-</div>
-
-<!-- ⏳ TIMER -->
-<div id="timerPage" class="hidden">
-  <h2>Countdown 🎂</h2>
-  <div id="bigTimer"></div>
-  <button onclick="goBack()">⬅ Back</button>
-</div>
-
-<!-- 🎥 VIDEO -->
-<div id="videoPage" class="hidden"></div>
-
-<!-- 📖 SCRAPBOOK -->
-<div id="book" class="hidden">
-
-  <div id="pagesContainer"></div>
-
-  <div id="bookControls">
-    <button onclick="prevPage()">⬅</button>
-    <button onclick="nextPage()">➡</button>
-    <button onclick="goBack()">Back</button>
-  </div>
-
-</div>
-
-<script src="script.js"></script>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Happy Birthday Bhoomika 🎂</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<!-- 🎵 MUSIC -->
-<audio id="bgMusic" src="./audio/music.mp3" loop></audio>
-
-<!-- 💖 HEARTS -->
-<div id="hearts"></div>
-
-<!-- 🔐 ADMIN BUTTON -->
-<button id="adminBtn">☰ My Space</button>
-
-<!-- 🔐 ADMIN PANEL -->
-<div id="adminPanel">
-  <h3>Login</h3>
-  <input type="text" id="user" placeholder="Username">
-  <input type="password" id="pass" placeholder="Password">
-  <button onclick="login()">Enter</button>
-</div>
-
-<!-- 🎬 INTRO -->
-<div id="intro">Loading Surprise...</div>
-
-<!-- 🎉 HOME -->
+<!-- HOME -->
 <div id="home">
 
   <!-- PROFILE -->
@@ -129,24 +42,24 @@
     they stay, they change everything, and they become a part of you ❤️
   </p>
 
-  <!-- 🎁 GIFT -->
+  <!-- GIFT -->
   <div id="giftContainer">
     <img src="./image/gift-closed.PNG" id="giftImage">
   </div>
 
 </div>
 
-<!-- 💥 BIG MESSAGE (HIDDEN INITIALLY) -->
+<!-- BIG MESSAGE (STATIC — NO TYPING) -->
 <h1 id="bigMessage" class="hidden">
-  You didn’t just become a friend… you became my safe place ❤️
+  You are one of the best things that ever happened in my life 💖
 </h1>
 
-<!-- 🎁 SURPRISE TEXT -->
+<!-- TYPING MESSAGE -->
 <div id="surpriseText" class="hidden">
   <h2 id="typedText"></h2>
 </div>
 
-<!-- 📋 MENU (HIDDEN INITIALLY) -->
+<!-- MENU -->
 <div id="menu" class="hidden">
   <h2>Choose Something 💖</h2>
   <button onclick="openPage('timer')">⏳ Countdown</button>
@@ -154,17 +67,17 @@
   <button onclick="openPage('book')">📖 Scrapbook</button>
 </div>
 
-<!-- ⏳ TIMER -->
+<!-- TIMER -->
 <div id="timerPage" class="hidden">
   <h2>Countdown 🎂</h2>
   <div id="bigTimer"></div>
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- 🎥 VIDEO -->
+<!-- VIDEO -->
 <div id="videoPage" class="hidden"></div>
 
-<!-- 📖 SCRAPBOOK -->
+<!-- SCRAPBOOK -->
 <div id="book" class="hidden">
 
   <div id="pagesContainer"></div>
@@ -179,7 +92,5 @@
 
 <script src="script.js"></script>
 
-</body>
-</html>
 </body>
 </html>
