@@ -1,20 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
 
 // ==============================
-// 🔧 SAFE ELEMENT GETTER
+// 🔧 SAFE ELEMENTS
 // ==============================
-function get(id){
-  return document.getElementById(id);
-}
-
-const intro = get("intro");
-const gift = get("gift");
-const menu = get("menu");
-const timerPage = get("timerPage");
-const videoPage = get("videoPage");
-const book = get("book");
-const funText = get("funText");
-const bigTimer = get("bigTimer");
+const intro = document.getElementById("intro");
+const gift = document.getElementById("gift");
+const menu = document.getElementById("menu");
+const timerPage = document.getElementById("timerPage");
+const videoPage = document.getElementById("videoPage");
+const book = document.getElementById("book");
+const funText = document.getElementById("funText");
+const bigTimer = document.getElementById("bigTimer");
 
 // ==============================
 // 🎬 INTRO
@@ -38,7 +34,9 @@ function moveGift() {
   gift.style.top = y + "px";
 }
 
-gift?.addEventListener("mouseover", moveGift);
+if(gift){
+  gift.addEventListener("mouseover", moveGift);
+}
 
 setTimeout(() => {
   unlocked = true;
@@ -48,14 +46,16 @@ setTimeout(() => {
 // ==============================
 // 🎁 OPEN GIFT
 // ==============================
-gift?.addEventListener("click", () => {
+if(gift){
+  gift.addEventListener("click", () => {
 
-  if (!unlocked) return;
+    if (!unlocked) return;
 
-  gift.style.display = "none";
-  if(menu) menu.style.display = "block";
+    gift.style.display = "none";
+    if(menu) menu.style.display = "block";
 
-});
+  });
+}
 
 // ==============================
 // 🔒 LOCK SYSTEM
@@ -67,7 +67,7 @@ function isUnlocked() {
 }
 
 // ==============================
-// 🎛 NAVIGATION
+// 🎛 NAVIGATION (FIXED)
 // ==============================
 window.openPage = function(type){
 
@@ -76,7 +76,6 @@ window.openPage = function(type){
   if(videoPage) videoPage.style.display = "none";
   if(book) book.style.display = "none";
 
-  // 🔒 LOCK VIDEO ONLY
   if(type === "video" && !isUnlocked()){
     if(funText) funText.innerText = "🔒 Unlocks on May 12 🎂";
     if(menu) menu.style.display = "block";
@@ -93,7 +92,12 @@ window.openPage = function(type){
 
   if(type === "book" && book){
     book.style.display = "block";
-    initBook(); // 🔥 important fix
+
+    // 🔥 IMPORTANT FIX
+    setTimeout(() => {
+      currentPage = 0;
+      showPage(currentPage);
+    }, 50);
   }
 }
 
@@ -134,12 +138,6 @@ function getPages(){
   return document.querySelectorAll("#pagesContainer .page");
 }
 
-// 🔥 IMPORTANT INIT FUNCTION
-function initBook(){
-  currentPage = 0;
-  showPage(currentPage);
-}
-
 function showPage(index){
   const pages = getPages();
 
@@ -155,7 +153,6 @@ function showPage(index){
 // NEXT
 window.nextPage = function(){
   const pages = getPages();
-
   if(currentPage < pages.length - 1){
     currentPage++;
     showPage(currentPage);
@@ -175,7 +172,7 @@ window.prevPage = function(){
 // ==============================
 window.addPage = function(type, src, text){
 
-  const container = get("pagesContainer");
+  const container = document.getElementById("pagesContainer");
   if(!container) return;
 
   const page = document.createElement("div");
