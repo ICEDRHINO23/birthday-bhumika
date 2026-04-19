@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: Arial;
-  background: radial-gradient(circle, #1a1a2e, #0f0f1a);
+  background: linear-gradient(135deg,#ffdde1,#ee9ca7);
   overflow: hidden;
 }
 
@@ -26,75 +26,76 @@ body {
   transform: translateX(-50%);
   background: #ff4d6d;
   color: white;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 10px 20px;
+  border-radius: 20px;
 }
 
-/* 🎁 GIFT */
+/* GIFT */
 #gift {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) perspective(800px);
+  transform: translate(-50%, -50%);
+  perspective: 800px;
   cursor: pointer;
 }
 
 .gift-box {
-  width: 150px;
-  height: 150px;
+  width: 140px;
+  height: 140px;
   position: relative;
-  transform-style: preserve-3d;
   transition: 0.5s;
 }
 
 .gift-box:hover {
-  transform: rotateX(10deg) rotateY(-10deg);
+  transform: rotateX(15deg) rotateY(-15deg);
 }
 
-.box {
-  width: 150px;
-  height: 120px;
-  background: #ff1e4d;
+.gift-base {
+  width: 140px;
+  height: 100px;
+  background: red;
   position: absolute;
   bottom: 0;
   border-radius: 10px;
 }
 
-.lid {
-  width: 160px;
+.gift-lid {
+  width: 150px;
   height: 40px;
-  background: #ff4d6d;
+  background: crimson;
   position: absolute;
   top: -30px;
   left: -5px;
   border-radius: 8px;
-  transition: 0.5s;
+  transition: 0.6s;
 }
 
-.ribbon-vertical {
+.ribbon-v {
   position: absolute;
-  width: 20px;
+  width: 18px;
   height: 100%;
   background: gold;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.ribbon-horizontal {
+.ribbon-h {
   position: absolute;
-  height: 20px;
+  height: 18px;
   width: 100%;
   background: gold;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.gift-open .lid {
+.gift-open .gift-lid {
   transform: rotateX(-120deg);
 }
 
-/* MENU */
-#menu {
+/* MENU + PAGES */
+#menu, #timerPage, #videoPage, #book {
+  display: none;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -102,23 +103,34 @@ body {
   text-align: center;
 }
 
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 /* TIMER */
 #bigTimer {
   font-size: 30px;
-  color: gold;
+  color: darkred;
+}
+
+/* VIDEO */
+video {
+  width: 80%;
+  border-radius: 10px;
 }
 
 /* SCRAPBOOK */
 #book {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 800px;
   height: 500px;
   background: white;
-  border-radius: 12px;
-  overflow: hidden;
+  border-radius: 10px;
 }
 
 .page {
@@ -142,8 +154,6 @@ body {
   object-fit: cover;
 }
 
-.right {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.book-controls {
+  margin-top: 10px;
 }
