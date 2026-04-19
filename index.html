@@ -5,84 +5,86 @@
   <title>Happy Birthday Bhoomika 🎂</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<!-- MUSIC -->
-<audio id="bgMusic" src="./audio/music.mp3" loop></audio>
-
-<!-- HEARTS -->
-<div id="hearts"></div>
+<!-- INTRO -->
+<div id="intro">✨ Loading Surprise... ✨</div>
 
 <!-- ADMIN BUTTON -->
 <button id="adminBtn">☰ My Space</button>
 
 <!-- ADMIN PANEL -->
 <div id="adminPanel">
-  <h3>Login</h3>
-  <input type="text" id="user" placeholder="Username">
-  <input type="password" id="pass" placeholder="Password">
+  <h3>Login 🔐</h3>
+  <input id="user" placeholder="Username"><br><br>
+  <input id="pass" type="password" placeholder="Password"><br><br>
   <button onclick="login()">Enter</button>
 </div>
 
-<!-- INTRO -->
-<div id="intro">Loading Surprise...</div>
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" src="./music.mp3" loop></audio>
 
-<!-- HOME -->
-<div id="home">
+<!-- FLOATING HEARTS -->
+<div id="hearts"></div>
 
-  <!-- PROFILE -->
-  <div id="profileContainer">
-    <img src="./image/bhoomika.jpg" id="profileImg">
-  </div>
+<!-- MAIN CONTENT -->
+<div id="main">
+
+  <!-- PROFILE IMAGE -->
+  <img id="profilePic" src="./image/her.jpg" alt="Bhoomika">
 
   <h1>Happy Birthday Bhoomika 🎂</h1>
 
-  <p id="heroText">
-    Some people don’t just come into life…  
-    they stay, they change everything, and they become a part of you ❤️
+  <p>
+    Some people don’t just come into life... they stay, they change everything ❤️
   </p>
 
   <!-- GIFT -->
   <div id="giftContainer">
-    <img src="./image/gift-closed.PNG" id="giftImage">
+    <img id="giftImage" src="./image/gift.png">
+  </div>
+
+  <!-- BIG MESSAGE -->
+  <div id="bigMessage">
+    You are one of the best things that ever happened in my life 💖
+  </div>
+
+  <!-- TYPING MESSAGE -->
+  <div id="surpriseText" class="hidden">
+    <span id="typedText"></span>
+  </div>
+
+  <!-- MENU -->
+  <div id="menu" class="hidden">
+    <h2>Choose Something 💝</h2>
+
+    <button onclick="openPage('timer')">⏳ Countdown</button>
+    <button onclick="openPage('video')">🎬 Video</button>
+    <button onclick="openPage('book')">📖 Scrapbook</button>
   </div>
 
 </div>
 
-<!-- BIG MESSAGE (STATIC — NO TYPING) -->
-<h1 id="bigMessage" class="hidden">
-  You are one of the best things that ever happened in my life 💖
-</h1>
-
-<!-- TYPING MESSAGE -->
-<div id="surpriseText" class="hidden">
-  <h2 id="typedText"></h2>
-</div>
-
-<!-- MENU -->
-<div id="menu" class="hidden">
-  <h2>Choose Something 💖</h2>
-  <button onclick="openPage('timer')">⏳ Countdown</button>
-  <button onclick="openPage('video')">🎥 Video</button>
-  <button onclick="openPage('book')">📖 Scrapbook</button>
-</div>
-
-<!-- TIMER -->
+<!-- TIMER PAGE -->
 <div id="timerPage" class="hidden">
   <h2>Countdown 🎂</h2>
   <div id="bigTimer"></div>
-  <button onclick="goBack()">⬅ Back</button>
+  <button onclick="goBack()">Back</button>
 </div>
 
-<!-- VIDEO -->
-<div id="videoPage" class="hidden"></div>
+<!-- VIDEO PAGE -->
+<div id="videoPage" class="hidden">
+  <video controls src="./video.mp4"></video>
+  <button onclick="goBack()">Back</button>
+</div>
 
 <!-- SCRAPBOOK -->
 <div id="book" class="hidden">
 
   <div id="pagesContainer"></div>
 
-  <div id="bookControls">
+  <div>
     <button onclick="prevPage()">⬅</button>
     <button onclick="nextPage()">➡</button>
     <button onclick="goBack()">Back</button>
