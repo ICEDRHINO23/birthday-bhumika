@@ -1,26 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Surprise 🎉</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Happy Birthday Bhoomika 🎂</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- INTRO -->
+<!-- =========================
+   INTRO
+========================= -->
 <div id="intro">This is a Surprise 🎁</div>
 
-<!-- TOP TEXT -->
-<div id="funText">Catch the Gift 😜</div>
-
-<!-- GIFT -->
-<div id="giftContainer">
-  <img id="giftImage" src="./image/gift-closed.PNG">
+<!-- =========================
+   HERO SECTION
+========================= -->
+<div id="hero">
+  <img src="./images/bhumika.jpg" alt="Bhoomika">
+  <h1>Happy Birthday Bhoomika 🎂</h1>
+  <p class="subText">
+    Some people don’t just come into life… they stay and make it better 💖
+  </p>
 </div>
 
-<!-- MENU -->
+<!-- =========================
+   FUN TEXT
+========================= -->
+<div id="funText">Click the Gift 🎁</div>
+
+<!-- =========================
+   GIFT
+========================= -->
+<div id="giftContainer">
+  <img id="giftImage" src="./image/gift-closed.PNG" alt="Gift">
+</div>
+
+<!-- =========================
+   MENU
+========================= -->
 <div id="menu" class="hidden">
   <h2>Select Your Surprise 🎁</h2>
 
@@ -29,85 +49,35 @@
   <button onclick="openPage('book')">💖 Scrapbook</button>
 </div>
 
-<!-- TIMER -->
+<!-- =========================
+   TIMER PAGE
+========================= -->
 <div id="timerPage" class="hidden">
   <h1>Countdown 🎂</h1>
   <div id="bigTimer"></div>
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- VIDEO -->
+<!-- =========================
+   VIDEO PAGE
+========================= -->
 <div id="videoPage" class="hidden">
-  <h1>Video 🎥</h1>
-  <video src="./videos/bhumika.mp4" controls></video>
+  <h1>Effort Video 🎥</h1>
+  <!-- video loads dynamically -->
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- 📖 SCRAPBOOK -->
+<!-- =========================
+   SCRAPBOOK
+========================= -->
 <div id="book" class="hidden">
 
-  <div id="pagesContainer">
+  <h1>Memories 💖</h1>
 
-    <!-- PAGE 1 -->
-    <div class="spread active">
-      <div class="left">
-        <img src="./scrapbook/20240429_230322.jpg">
-      </div>
-      <div class="right">
-        <h2>Some bonds just happen ❤️</h2>
-        <p>
-          You came into my life without any plan… and somehow,
-          you became one of the most important parts of it.
+  <!-- dynamic pages -->
+  <div id="pagesContainer"></div>
 
-          It wasn’t loud, it wasn’t dramatic — it was simple,
-          real, and meaningful.
-
-          You didn’t just become a friend,
-          you became a comfort I never knew I needed.
-        </p>
-      </div>
-    </div>
-
-    <!-- PAGE 2 -->
-    <div class="spread">
-      <div class="left">
-        <img src="./scrapbook/20240906_204953.jpg">
-      </div>
-      <div class="right">
-        <h2>You make everything better ✨</h2>
-        <p>
-          Even on the most normal days, you make things feel special.
-
-          Your presence, your smile, your energy —
-          it changes everything in the best way.
-
-          And honestly, life just feels lighter
-          when you're around.
-        </p>
-      </div>
-    </div>
-
-    <!-- PAGE 3 -->
-    <div class="spread">
-      <div class="left">
-        <video controls src="./scrapbook/bhumika.mp4"></video>
-      </div>
-      <div class="right">
-        <h2>Memories that matter 💖</h2>
-        <p>
-          These moments are not just memories,
-          they are pieces of time I never want to lose.
-
-          Every laugh, every second —
-          they mean something because you are part of them.
-
-          And I would choose them all over again.
-        </p>
-      </div>
-    </div>
-
-  </div>
-
+  <!-- controls -->
   <div id="bookControls">
     <button onclick="prevPage()">⬅ Prev</button>
     <button onclick="nextPage()">Next ➡</button>
@@ -116,6 +86,9 @@
 
 </div>
 
+<!-- =========================
+   SCRIPT
+========================= -->
 <script src="script.js"></script>
 
 </body>
