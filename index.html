@@ -10,37 +10,33 @@
 
 <body>
 
-<!-- =========================
-   INTRO
-========================= -->
+<!-- 🔐 ADMIN BUTTON -->
+<button id="adminBtn">☰ My Space</button>
+
+<!-- 🔐 ADMIN SLIDER -->
+<div id="adminPanel">
+  <h3>Login 🔐</h3>
+  <input id="user" placeholder="Username">
+  <input id="pass" type="password" placeholder="Password">
+  <button onclick="login()">Enter</button>
+</div>
+
+<!-- INTRO -->
 <div id="intro">This is a Surprise 🎁</div>
 
-<!-- =========================
-   HERO SECTION
-========================= -->
+<!-- HERO -->
 <div id="hero">
-  <img src="./images/bhumika.jpg" alt="Bhoomika">
+  <img src="./images/bhumika.jpg">
   <h1>Happy Birthday Bhoomika 🎂</h1>
-  <p class="subText">
-    Some people don’t just come into life… they stay and make it better 💖
-  </p>
+  <p>Some people don’t just come into life… they stay and make it better 💖</p>
 </div>
 
-<!-- =========================
-   FUN TEXT
-========================= -->
-<div id="funText">Click the Gift 🎁</div>
-
-<!-- =========================
-   GIFT
-========================= -->
+<!-- GIFT -->
 <div id="giftContainer">
-  <img id="giftImage" src="./image/gift-closed.PNG" alt="Gift">
+  <img id="giftImage" src="./image/gift-closed.PNG">
 </div>
 
-<!-- =========================
-   MENU
-========================= -->
+<!-- MENU -->
 <div id="menu" class="hidden">
   <h2>Select Your Surprise 🎁</h2>
 
@@ -49,46 +45,32 @@
   <button onclick="openPage('book')">💖 Scrapbook</button>
 </div>
 
-<!-- =========================
-   TIMER PAGE
-========================= -->
+<!-- TIMER -->
 <div id="timerPage" class="hidden">
   <h1>Countdown 🎂</h1>
   <div id="bigTimer"></div>
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- =========================
-   VIDEO PAGE
-========================= -->
+<!-- VIDEO -->
 <div id="videoPage" class="hidden">
   <h1>Effort Video 🎥</h1>
-  <!-- video loads dynamically -->
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- =========================
-   SCRAPBOOK
-========================= -->
+<!-- SCRAPBOOK -->
 <div id="book" class="hidden">
-
   <h1>Memories 💖</h1>
 
-  <!-- dynamic pages -->
   <div id="pagesContainer"></div>
 
-  <!-- controls -->
   <div id="bookControls">
     <button onclick="prevPage()">⬅ Prev</button>
     <button onclick="nextPage()">Next ➡</button>
     <button onclick="goBack()">⬅ Back</button>
   </div>
-
 </div>
 
-<!-- =========================
-   SCRIPT
-========================= -->
 <script src="script.js"></script>
 
 </body>
