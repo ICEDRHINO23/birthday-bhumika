@@ -347,3 +347,16 @@ img, video {
 .page.flipped {
   transform: rotateY(-180deg);
 }
+
+#menu::before,
+#timerPage::before,
+#videoPage::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(8px);
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
