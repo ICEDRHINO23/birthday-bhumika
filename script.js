@@ -115,24 +115,50 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 1000);
 
   /* =========================
-     SCRAPBOOK (SPREAD SYSTEM)
-  ========================= */
-  let currentPage = 0;
+   SCRAPBOOK FLIP SYSTEM
+========================= */
 
-  function getPages() {
-    return document.querySelectorAll("#pagesContainer .spread");
-  }
+let currentPage = 0;
 
-  function showPage(index) {
-    const pages = getPages();
+function getPages() {
+  return document.querySelectorAll("#pagesContainer .spread");
+}
 
-    pages.forEach(p => p.classList.remove("active"));
+function showPage(index) {
+  const pages = getPages();
 
-    if (pages[index]) {
-      pages[index].classList.add("active");
+  pages.forEach((page, i) => {
+    page.classList.remove("active");
+
+    if (i < index) {
+      page.classList.add("flip");   // already flipped
+    } else {
+      page.classList.remove("flip");
     }
-  }
+  });
 
+  if (pages[index]) {
+    pages[index].classList.add("active");
+  }
+}
+
+/* NEXT */
+window.nextPage = function () {
+  const pages = getPages();
+
+  if (currentPage < pages.length - 1) {
+    currentPage++;
+    showPage(currentPage);
+  }
+};
+
+/* PREVIOUS */
+window.prevPage = function () {
+  if (currentPage > 0) {
+    currentPage--;
+    showPage(currentPage);
+  }
+};
   /* NEXT */
   window.nextPage = function() {
     const pages = getPages();
