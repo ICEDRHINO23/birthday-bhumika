@@ -13,38 +13,36 @@ const bigTimer = document.getElementById("bigTimer");
 // intro
 setTimeout(() => intro.style.display="none",2000);
 
-// unlock delay
+// unlock
 let unlocked = false;
 setTimeout(()=> unlocked = true, 3000);
 
-// 🎁 CLICK GIFT
+// gift click
 gift.addEventListener("click", () => {
 
   if(!unlocked) return;
 
-  // change image → open box
-  gift.src = "./images/gift-open.png";
+  // change to open gift image
+  gift.src = "./image/gift-open.png";
 
-  // glow effect
-  gift.style.filter = "drop-shadow(0 0 40px gold)";
   gift.style.transform = "scale(1.2)";
+  gift.style.filter = "drop-shadow(0 0 40px gold)";
 
-  // show menu after animation
   setTimeout(()=>{
     document.getElementById("giftContainer").style.display="none";
     menu.classList.remove("hidden");
-  },1200);
+  },1000);
 
 });
 
-// DATE LOCK
+// date lock
 const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
 
 function isUnlocked(){
   return Date.now() >= unlockDate;
 }
 
-// NAVIGATION
+// navigation
 window.openPage = function(type){
 
   menu.classList.add("hidden");
@@ -71,7 +69,7 @@ window.openPage = function(type){
   }
 }
 
-// BACK
+// back
 window.goBack = function(){
   timerPage.classList.add("hidden");
   videoPage.classList.add("hidden");
@@ -79,7 +77,7 @@ window.goBack = function(){
   menu.classList.remove("hidden");
 }
 
-// TIMER
+// timer
 setInterval(()=>{
   let gap = unlockDate - Date.now();
 
@@ -91,7 +89,7 @@ setInterval(()=>{
   bigTimer.innerHTML=`${d}d ${h}h ${m}m ${s}s`;
 },1000);
 
-// SCRAPBOOK
+// scrapbook
 let currentPage = 0;
 
 function getPages(){
