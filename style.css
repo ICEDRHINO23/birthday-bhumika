@@ -53,8 +53,8 @@ body {
 #giftContainer::after {
   content: "";
   position: absolute;
-  width: 220px;
-  height: 220px;
+  width: 250px;
+  height: 250px;
   background: radial-gradient(circle, rgba(255,215,0,0.6), transparent);
   filter: blur(40px);
   z-index: -1;
@@ -75,8 +75,7 @@ body {
 }
 
 .opened {
-  transform: scale(1.25);
-  filter: drop-shadow(0 0 45px gold);
+  transform: scale(1.2);
 }
 
 /* =========================
@@ -114,7 +113,7 @@ button:hover {
 }
 
 /* =========================
-   PAGE CARD LAYOUT
+   PAGE CARD
 ========================= */
 #timerPage,
 #videoPage,
@@ -149,71 +148,103 @@ video {
   width: 100%;
   max-width: 700px;
   border-radius: 15px;
-
   box-shadow: 
     0 15px 40px rgba(0,0,0,0.5),
     0 0 20px rgba(255,105,180,0.3);
 }
 
 /* =========================
-   SCRAPBOOK
+   SCRAPBOOK (BOOK STYLE)
 ========================= */
 #book {
-  perspective: 1000px;
+  perspective: 1200px;
 }
 
+/* BOOK FRAME */
 #pagesContainer {
+  position: relative;
   width: 100%;
   max-width: 600px;
+  height: 450px;
   margin: auto;
+
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+
+  box-shadow: 0 25px 60px rgba(0,0,0,0.3);
 }
 
-/* page */
+/* PAGES */
 .page {
-  display: none;
-  background: linear-gradient(135deg,#fff,#ffe6eb);
-  border-radius: 25px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+
   padding: 20px;
 
-  box-shadow: 
-    0 25px 50px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-  animation: fadeIn 0.5s ease;
+  background: linear-gradient(135deg,#fff,#ffe6eb);
+
+  border-radius: 20px;
+
+  transform: rotateY(0deg);
+  transition: 0.6s;
+  backface-visibility: hidden;
 }
 
+/* ACTIVE PAGE */
 .page.active {
-  display: block;
+  z-index: 2;
 }
 
-/* ✅ FIXED IMAGE CROPPING */
+/* FLIPPED PAGE */
+.page.flip {
+  transform: rotateY(-180deg);
+}
+
+/* IMAGE PERFECT FIT */
 .page img {
   width: 100%;
-  max-height: 420px;
-  object-fit: contain;
-  background: #f5f5f5;
-  padding: 5px;
+  height: 300px;
+  object-fit: cover;
   border-radius: 15px;
   margin-bottom: 15px;
 
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
-/* video */
+/* VIDEO */
 .page video {
   width: 100%;
-  max-height: 400px;
+  height: 300px;
+  object-fit: cover;
   border-radius: 15px;
   margin-bottom: 15px;
 }
 
-/* improved text */
+/* TEXT */
 .page p {
   font-size: 18px;
   font-weight: 500;
-
   background: linear-gradient(135deg,#ff4d6d,#ff758f);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* =========================
+   BOOK CONTROLS
+========================= */
+#bookControls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
 }
 
 /* =========================
