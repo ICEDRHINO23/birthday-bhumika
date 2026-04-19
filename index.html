@@ -19,39 +19,38 @@
 <!-- 🎁 3D GIFT -->
 <div id="gift">
   <div class="gift-box">
-    <div class="lid"></div>
-    <div class="box"></div>
-    <div class="ribbon-vertical"></div>
-    <div class="ribbon-horizontal"></div>
+    <div class="gift-lid"></div>
+    <div class="gift-base"></div>
+    <div class="ribbon-v"></div>
+    <div class="ribbon-h"></div>
   </div>
 </div>
 
 <!-- MENU -->
-<div id="menu" style="display:none;">
+<div id="menu">
   <h2>Select Your Surprise 🎁</h2>
-
   <button onclick="openPage('timer')">⏳ Timer</button>
   <button onclick="openPage('video')">🎥 Video</button>
   <button onclick="openPage('book')">💖 Scrapbook</button>
 </div>
 
 <!-- TIMER -->
-<div id="timerPage" style="display:none;">
+<div id="timerPage">
   <h1>Countdown 🎂</h1>
   <div id="bigTimer"></div>
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
 <!-- VIDEO -->
-<div id="videoPage" style="display:none; text-align:center;">
+<div id="videoPage">
   <h1>Special Video 🎥</h1>
-  <video src="./videos/bhumika.mp4" controls style="width:80%; border-radius:12px;"></video>
-  <br><br>
+  <video src="./videos/bhumika.mp4" controls></video>
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- 📖 SCRAPBOOK -->
-<div id="book" style="display:none;">
+<!-- SCRAPBOOK -->
+<div id="book">
+
   <div id="pagesContainer">
 
     <div class="page active">
@@ -72,30 +71,24 @@
       <div class="left">
         <img src="./scrapbook/VideoCapture_20240427-034201.jpg">
       </div>
-      <div class="right">Memories stay forever 🌸</div>
+      <div class="right">Memories forever 🌸</div>
     </div>
 
     <div class="page">
       <div class="left">
-        <img src="./scrapbook/image.jpg">
-      </div>
-      <div class="right">Every picture tells a story 📸</div>
-    </div>
-
-    <div class="page">
-      <div class="left">
-        <video src="./scrapbook/bhumika.mp4" autoplay loop muted></video>
+        <video src="./scrapbook/bhumika.mp4" autoplay muted loop></video>
       </div>
       <div class="right">Moments to relive 🎬</div>
     </div>
 
   </div>
 
-  <div style="text-align:center; margin-top:20px;">
+  <div class="book-controls">
     <button onclick="prevPage()">⬅ Prev</button>
     <button onclick="nextPage()">Next ➡</button>
     <button onclick="goBack()">⬅ Back</button>
   </div>
+
 </div>
 
 <!-- MUSIC -->
