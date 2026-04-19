@@ -4,27 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Birthday Surprise 🎉</title>
-
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- INTRO -->
 <div id="intro">This is a Surprise 🎁</div>
 
-<!-- TEXT -->
 <div id="funText">Catch the Gift 😜</div>
 
-<!-- GIFT -->
+<!-- 🎁 3D GIFT -->
 <div id="gift">
-  <div class="box"></div>
+  <div class="gift-box">
+    <div class="lid"></div>
+    <div class="base"></div>
+    <div class="ribbon-v"></div>
+    <div class="ribbon-h"></div>
+  </div>
 </div>
 
 <!-- MENU -->
 <div id="menu" class="hidden">
   <h2>Select Your Surprise 🎁</h2>
-
   <button onclick="openPage('timer')">⏳ Timer</button>
   <button onclick="openPage('video')">🎥 Video</button>
   <button onclick="openPage('book')">💖 Scrapbook</button>
@@ -40,15 +41,13 @@
 <!-- VIDEO -->
 <div id="videoPage" class="hidden">
   <h1>Video 🎥</h1>
-  <video src="./videos/bhumika.mp4" controls width="80%"></video>
-  <br>
+  <video src="./videos/bhumika.mp4" controls></video>
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- SCRAPBOOK -->
+<!-- 📖 SCRAPBOOK -->
 <div id="book" class="hidden">
-
-  <div id="pagesContainer">
+  <div class="flip-container">
 
     <div class="page active">
       <img src="./scrapbook/20240429_230322.jpg">
@@ -68,10 +67,11 @@
 
   </div>
 
-  <button onclick="prevPage()">⬅ Prev</button>
-  <button onclick="nextPage()">Next ➡</button>
-  <button onclick="goBack()">⬅ Back</button>
-
+  <div class="controls">
+    <button onclick="prevPage()">⬅</button>
+    <button onclick="nextPage()">➡</button>
+    <button onclick="goBack()">Back</button>
+  </div>
 </div>
 
 <script src="script.js"></script>
