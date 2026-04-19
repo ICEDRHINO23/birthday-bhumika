@@ -1,25 +1,48 @@
 document.addEventListener("DOMContentLoaded", () => {
 
 const intro = document.getElementById("intro");
-const gift = document.getElementById("gift");
+const gift = document.getElementById("giftImage");
+
 const menu = document.getElementById("menu");
 const timerPage = document.getElementById("timerPage");
 const videoPage = document.getElementById("videoPage");
 const book = document.getElementById("book");
+
 const bigTimer = document.getElementById("bigTimer");
 
-// INTRO
-setTimeout(()=> intro.style.display="none",2000);
+// intro
+setTimeout(() => intro.style.display="none",2000);
 
-// OPEN GIFT
-gift.addEventListener("click", ()=>{
-  document.querySelector(".gift-box").classList.add("open");
+// unlock delay
+let unlocked = false;
+setTimeout(()=> unlocked = true, 3000);
 
+// 🎁 CLICK GIFT
+gift.addEventListener("click", () => {
+
+  if(!unlocked) return;
+
+  // change image → open box
+  gift.src = "./images/gift-open.png";
+
+  // glow effect
+  gift.style.filter = "drop-shadow(0 0 40px gold)";
+  gift.style.transform = "scale(1.2)";
+
+  // show menu after animation
   setTimeout(()=>{
-    gift.style.display="none";
+    document.getElementById("giftContainer").style.display="none";
     menu.classList.remove("hidden");
-  },600);
+  },1200);
+
 });
+
+// DATE LOCK
+const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
+
+function isUnlocked(){
+  return Date.now() >= unlockDate;
+}
 
 // NAVIGATION
 window.openPage = function(type){
@@ -29,8 +52,18 @@ window.openPage = function(type){
   videoPage.classList.add("hidden");
   book.classList.add("hidden");
 
-  if(type==="timer") timerPage.classList.remove("hidden");
-  if(type==="video") videoPage.classList.remove("hidden");
+  if(type==="timer"){
+    timerPage.classList.remove("hidden");
+  }
+
+  if(type==="video"){
+    if(!isUnlocked()){
+      alert("🔒 Unlocks on May 12 🎂");
+      menu.classList.remove("hidden");
+      return;
+    }
+    videoPage.classList.remove("hidden");
+  }
 
   if(type==="book"){
     book.classList.remove("hidden");
@@ -47,8 +80,6 @@ window.goBack = function(){
 }
 
 // TIMER
-const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
-
 setInterval(()=>{
   let gap = unlockDate - Date.now();
 
@@ -64,13 +95,13 @@ setInterval(()=>{
 let currentPage = 0;
 
 function getPages(){
-  return document.querySelectorAll(".page");
+  return document.querySelectorAll("#pagesContainer .page");
 }
 
 function showPage(i){
   const pages = getPages();
   pages.forEach(p=>p.classList.remove("active"));
-  pages[i].classList.add("active");
+  if(pages[i]) pages[i].classList.add("active");
 }
 
 window.nextPage = function(){
