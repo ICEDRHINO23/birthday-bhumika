@@ -2,33 +2,90 @@
 <html>
 <head>
   <title>Admin Panel</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI';
+      background: linear-gradient(135deg,#f8cdda,#f6d365);
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff3366;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 20px;
+      max-width: 400px;
+      margin: 20px auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    input, textarea, select {
+      width: 90%;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background: #ff4d6d;
+      color: white;
+      cursor: pointer;
+    }
+
+    .preview {
+      width: 90%;
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 
-<body style="text-align:center;font-family:sans-serif">
+<body>
 
 <h1>Admin Panel ⚙️</h1>
+
+<div class="card">
 
 <h3>Add Scrapbook Page</h3>
 
 <select id="type">
   <option value="image">Image</option>
   <option value="video">Video</option>
-</select><br><br>
+</select>
 
-<!-- 🔥 FILE UPLOAD -->
-<input type="file" id="fileInput"><br><br>
+<input type="file" id="fileInput">
 
-<input id="title" placeholder="Title"><br><br>
-<textarea id="text" placeholder="Emotional text"></textarea><br><br>
+<img id="previewImg" class="preview" style="display:none;">
+<video id="previewVideo" class="preview" controls style="display:none;"></video>
+
+<input id="title" placeholder="Title">
+<textarea id="text" placeholder="Emotional friendship message"></textarea>
 
 <button onclick="addPage()">Add Page</button>
 
-<hr>
+</div>
+
+<div class="card">
 
 <h3>Set Effort Video</h3>
 
-<input type="file" id="videoInput"><br><br>
+<input type="file" id="videoInput">
+
+<video id="videoPreview" class="preview" controls style="display:none;"></video>
+
 <button onclick="setVideo()">Save Video</button>
+
+</div>
 
 <script src="admin.js"></script>
 
