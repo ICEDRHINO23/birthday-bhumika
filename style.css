@@ -161,43 +161,44 @@ video {
   perspective: 1500px;
 }
 
-/* BOOK FRAME */
+/* MAIN BOOK FRAME */
 #pagesContainer {
-  position: relative;
+  position: relative;          /* 🔥 CRITICAL FIX */
   width: 100%;
   max-width: 900px;
-  height: 480px;
+  height: 480px;               /* 🔥 FIX SCROLL ISSUE */
   margin: auto;
 
   border-radius: 20px;
   overflow: hidden;
 
-  box-shadow: 0 30px 70px rgba(0,0,0,0.3);
+  background: #fff;
 
-  background: #fdfdfd;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.3);
 }
 
 /* EACH SPREAD */
 .spread {
-  position: absolute;   /* 🔥 FIX stacking */
-  width: 100%;
-  height: 100%;
+  position: absolute;          /* 🔥 FIX STACKING */
   top: 0;
   left: 0;
+
+  width: 100%;
+  height: 100%;
 
   display: none;
   flex-direction: row;
 
-  transition: 0.6s ease;
+  transition: 0.5s ease;
 }
 
-/* ACTIVE SPREAD ONLY */
+/* ONLY ACTIVE SHOWS */
 .spread.active {
   display: flex;
   z-index: 2;
 }
 
-/* LEFT PAGE (MEDIA) */
+/* LEFT SIDE */
 .left {
   width: 50%;
   height: 100%;
@@ -211,15 +212,15 @@ video {
   overflow: hidden;
 }
 
-/* IMAGE / VIDEO PERFECT FIT */
+/* MEDIA FIT FIX */
 .left img,
 .left video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover;   /* no stretching */
 }
 
-/* RIGHT PAGE (TEXT) */
+/* RIGHT SIDE */
 .right {
   width: 50%;
   height: 100%;
@@ -249,17 +250,7 @@ video {
   color: #444;
 }
 
-/* BOOK CONTROLS */
-#bookControls {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
-}
-
-/* =========================
-   BOOK CONTROLS
-========================= */
+/* CONTROLS */
 #bookControls {
   display: flex;
   justify-content: center;
