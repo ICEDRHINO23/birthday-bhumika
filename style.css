@@ -42,34 +42,34 @@ body {
 }
 
 #profileImg {
-  width: 160px;
-  height: 160px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
   border: 5px solid white;
 
   box-shadow: 
-    0 0 25px rgba(255,105,180,0.6),
-    0 0 60px rgba(255,105,180,0.3);
+    0 0 20px rgba(255,105,180,0.5),
+    0 0 40px rgba(255,105,180,0.3);
 
-  animation: pulseGlow 2s infinite;
+  animation: pulse 2s infinite;
 }
 
-@keyframes pulseGlow {
+@keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
 
 /* =========================
-   HERO TEXT
+   HERO
 ========================= */
 h1 {
   color: #ff3366;
 }
 
 #heroText {
-  font-size: 18px;
+  font-size: 17px;
   max-width: 600px;
   margin: 10px auto;
   color: #444;
@@ -79,15 +79,13 @@ h1 {
    GIFT
 ========================= */
 #giftContainer {
-  margin-top: 50px;
+  margin-top: 40px;
 }
 
 #giftImage {
-  width: 220px;
-  display: block;
-  margin: auto;
+  width: 200px;
   cursor: pointer;
-  transition: 0.5s;
+  transition: 0.4s ease;
 }
 
 #giftImage:hover {
@@ -132,10 +130,10 @@ h1 {
   height: 100%;
   background: white;
   padding: 20px;
-
-  box-shadow: 2px 0 20px rgba(0,0,0,0.3);
   transition: 0.4s;
   z-index: 1000;
+
+  box-shadow: 2px 0 20px rgba(0,0,0,0.3);
 }
 
 #adminPanel.open {
@@ -171,27 +169,12 @@ button:hover {
 }
 
 /* =========================
-   CARD
-========================= */
-#timerPage,
-#videoPage,
-#book {
-  margin: 50px auto;
-  width: 90%;
-  max-width: 900px;
-  background: rgba(255,255,255,0.95);
-  padding: 30px;
-  border-radius: 25px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-}
-
-/* =========================
-   BIG MESSAGE (DELAY SHOW)
+   BIG MESSAGE (FIXED)
 ========================= */
 #bigMessage {
-  font-size: 40px;
+  font-size: 32px;
   color: #ff3366;
-  margin-top: 40px;
+  margin-top: 30px;
 
   opacity: 0;
   transition: opacity 1s ease;
@@ -206,7 +189,7 @@ button:hover {
 }
 
 /* =========================
-   HEARTS
+   HEARTS (SOFT)
 ========================= */
 #hearts {
   position: fixed;
@@ -217,13 +200,14 @@ button:hover {
 
 .heart {
   position: absolute;
+  font-size: 18px;
   animation: floatUp 5s linear;
 }
 
 @keyframes floatUp {
   from {
     transform: translateY(100vh);
-    opacity: 1;
+    opacity: 0.8;
   }
   to {
     transform: translateY(-10vh);
@@ -236,9 +220,24 @@ button:hover {
 ========================= */
 #surpriseText {
   position: fixed;
-  top: 40%;
+  top: 50%;
   width: 100%;
+  transform: translateY(-50%);
   color: #ff3366;
+}
+
+/* =========================
+   CARD
+========================= */
+#timerPage,
+#videoPage,
+#book {
+  margin: 50px auto;
+  width: 90%;
+  max-width: 900px;
+  background: rgba(255,255,255,0.95);
+  padding: 25px;
+  border-radius: 20px;
 }
 
 /* =========================
@@ -251,10 +250,9 @@ button:hover {
 
 .spread {
   display: none;
-  height: 450px;
+  height: 420px;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.3);
 }
 
 .spread.active {
@@ -275,7 +273,7 @@ button:hover {
 
 .right {
   width: 50%;
-  padding: 25px;
+  padding: 20px;
   text-align: left;
 }
 
@@ -284,8 +282,8 @@ button:hover {
 }
 
 .right p {
-  line-height: 1.6;
   color: #444;
+  line-height: 1.6;
 }
 
 /* =========================
