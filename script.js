@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
   }, 1000);
 
-  /* =========================
+ /* =========================
    SCRAPBOOK FLIP SYSTEM
 ========================= */
 
@@ -142,6 +142,23 @@ function showPage(index) {
   }
 }
 
+/* NEXT */
+window.nextPage = function () {
+  const pages = getPages();
+
+  if (currentPage < pages.length - 1) {
+    currentPage++;
+    showPage(currentPage);
+  }
+};
+
+/* PREVIOUS */
+window.prevPage = function () {
+  if (currentPage > 0) {
+    currentPage--;
+    showPage(currentPage);
+  }
+};
 /* NEXT */
 window.nextPage = function () {
   const pages = getPages();
