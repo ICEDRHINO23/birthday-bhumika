@@ -1,31 +1,35 @@
 document.addEventListener("DOMContentLoaded", () => {
 
 // ==============================
-// ELEMENTS
+// 🔧 SAFE ELEMENT GETTER
 // ==============================
-const intro = document.getElementById("intro");
-const gift = document.getElementById("gift");
-const menu = document.getElementById("menu");
-const timerPage = document.getElementById("timerPage");
-const videoPage = document.getElementById("videoPage");
-const book = document.getElementById("book");
-const funText = document.getElementById("funText");
-const bigTimer = document.getElementById("bigTimer");
+function get(id){
+  return document.getElementById(id);
+}
+
+const intro = get("intro");
+const gift = get("gift");
+const menu = get("menu");
+const timerPage = get("timerPage");
+const videoPage = get("videoPage");
+const book = get("book");
+const funText = get("funText");
+const bigTimer = get("bigTimer");
 
 // ==============================
-// INTRO
+// 🎬 INTRO
 // ==============================
 setTimeout(() => {
-  intro.style.display = "none";
+  if(intro) intro.style.display = "none";
 }, 3000);
 
 // ==============================
-// GIFT MOVE
+// 🎮 GIFT MOVE
 // ==============================
 let unlocked = false;
 
 function moveGift() {
-  if (unlocked) return;
+  if (!gift || unlocked) return;
 
   let x = Math.random() * (window.innerWidth - 150);
   let y = Math.random() * (window.innerHeight - 150);
@@ -34,27 +38,27 @@ function moveGift() {
   gift.style.top = y + "px";
 }
 
-gift.addEventListener("mouseover", moveGift);
+gift?.addEventListener("mouseover", moveGift);
 
 setTimeout(() => {
   unlocked = true;
-  funText.innerText = "Click me 🎁";
+  if(funText) funText.innerText = "Click me 🎁";
 }, 8000);
 
 // ==============================
-// OPEN GIFT
+// 🎁 OPEN GIFT
 // ==============================
-gift.addEventListener("click", () => {
+gift?.addEventListener("click", () => {
 
   if (!unlocked) return;
 
   gift.style.display = "none";
-  menu.style.display = "block";
+  if(menu) menu.style.display = "block";
 
 });
 
 // ==============================
-// LOCK SYSTEM
+// 🔒 LOCK SYSTEM
 // ==============================
 const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
 
@@ -63,43 +67,48 @@ function isUnlocked() {
 }
 
 // ==============================
-// NAVIGATION
+// 🎛 NAVIGATION
 // ==============================
 window.openPage = function(type){
 
-  menu.style.display = "none";
-  timerPage.style.display = "none";
-  videoPage.style.display = "none";
-  book.style.display = "none";
+  if(menu) menu.style.display = "none";
+  if(timerPage) timerPage.style.display = "none";
+  if(videoPage) videoPage.style.display = "none";
+  if(book) book.style.display = "none";
 
+  // 🔒 LOCK VIDEO ONLY
   if(type === "video" && !isUnlocked()){
-    funText.innerText = "🔒 Unlocks on May 12 🎂";
-    menu.style.display = "block";
+    if(funText) funText.innerText = "🔒 Unlocks on May 12 🎂";
+    if(menu) menu.style.display = "block";
     return;
   }
 
-  if(type === "timer") timerPage.style.display = "block";
-  if(type === "video") videoPage.style.display = "block";
+  if(type === "timer" && timerPage){
+    timerPage.style.display = "block";
+  }
 
-  if(type === "book"){
+  if(type === "video" && videoPage){
+    videoPage.style.display = "block";
+  }
+
+  if(type === "book" && book){
     book.style.display = "block";
-    currentPage = 0;
-    showPage(currentPage);
+    initBook(); // 🔥 important fix
   }
 }
 
 // ==============================
-// BACK BUTTON
+// 🔙 BACK BUTTON
 // ==============================
 window.goBack = function(){
-  timerPage.style.display = "none";
-  videoPage.style.display = "none";
-  book.style.display = "none";
-  menu.style.display = "block";
+  if(timerPage) timerPage.style.display = "none";
+  if(videoPage) videoPage.style.display = "none";
+  if(book) book.style.display = "none";
+  if(menu) menu.style.display = "block";
 }
 
 // ==============================
-// TIMER
+// ⏳ TIMER
 // ==============================
 setInterval(() => {
 
@@ -117,7 +126,7 @@ setInterval(() => {
 },1000);
 
 // ==============================
-// 📖 SCRAPBOOK SYSTEM
+// 📖 SCRAPBOOK SYSTEM (FIXED)
 // ==============================
 let currentPage = 0;
 
@@ -125,8 +134,16 @@ function getPages(){
   return document.querySelectorAll("#pagesContainer .page");
 }
 
+// 🔥 IMPORTANT INIT FUNCTION
+function initBook(){
+  currentPage = 0;
+  showPage(currentPage);
+}
+
 function showPage(index){
   const pages = getPages();
+
+  if(!pages.length) return;
 
   pages.forEach(p => p.classList.remove("active"));
 
@@ -135,14 +152,17 @@ function showPage(index){
   }
 }
 
+// NEXT
 window.nextPage = function(){
   const pages = getPages();
+
   if(currentPage < pages.length - 1){
     currentPage++;
     showPage(currentPage);
   }
 }
 
+// PREV
 window.prevPage = function(){
   if(currentPage > 0){
     currentPage--;
@@ -151,11 +171,12 @@ window.prevPage = function(){
 }
 
 // ==============================
-// ➕ ADD PAGE FUNCTION
+// ➕ ADD PAGE FUNCTION (SAFE)
 // ==============================
 window.addPage = function(type, src, text){
 
-  const container = document.getElementById("pagesContainer");
+  const container = get("pagesContainer");
+  if(!container) return;
 
   const page = document.createElement("div");
   page.className = "page";
@@ -163,11 +184,11 @@ window.addPage = function(type, src, text){
   let media = "";
 
   if(type === "image"){
-    media = `<img src="${src}">`;
+    media = `<img src="${src}" style="width:100%">`;
   }
 
   if(type === "video"){
-    media = `<video src="${src}" autoplay loop muted></video>`;
+    media = `<video src="${src}" autoplay loop muted style="width:100%"></video>`;
   }
 
   page.innerHTML = `
