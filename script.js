@@ -12,11 +12,11 @@ const bgMusic = document.getElementById("bgMusic");
 // INTRO
 setTimeout(() => intro.style.display = "none", 3000);
 
-// GIFT OPEN
+// UNLOCK
 let unlocked = false;
+setTimeout(() => unlocked = true, 4000);
 
-setTimeout(() => unlocked = true, 5000);
-
+// OPEN GIFT
 gift.addEventListener("click", () => {
   if (!unlocked) return;
 
@@ -65,7 +65,9 @@ setInterval(() => {
   let m = Math.floor((gap/(1000*60))%60);
   let s = Math.floor((gap/1000)%60);
 
-  if(bigTimer) bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+  if(bigTimer){
+    bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+  }
 
 },1000);
 
@@ -84,14 +86,17 @@ function showPage(index){
 
 window.nextPage = function(){
   const pages = getPages();
-  currentPage = (currentPage + 1) % pages.length;
-  showPage(currentPage);
+  if(currentPage < pages.length - 1){
+    currentPage++;
+    showPage(currentPage);
+  }
 }
 
 window.prevPage = function(){
-  const pages = getPages();
-  currentPage = (currentPage - 1 + pages.length) % pages.length;
-  showPage(currentPage);
+  if(currentPage > 0){
+    currentPage--;
+    showPage(currentPage);
+  }
 }
 
 });
