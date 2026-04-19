@@ -1,36 +1,29 @@
 // 🎬 INTRO
-gsap.from("#intro", { opacity:0, scale:0.8, duration:1.5 });
+gsap.from("#intro",{opacity:0,scale:0.8,duration:1.5});
 
 setTimeout(()=>{
-  gsap.to("#intro",{
-    opacity:0,
-    onComplete:()=>{
-      document.getElementById("intro").style.display="none";
-      document.body.classList.add("gift-mode");
-    }
-  });
+  gsap.to("#intro",{opacity:0,onComplete:()=>{
+    intro.style.display="none";
+    document.body.classList.add("gift-mode");
+  }});
 },3000);
 
 // 🎁 GIFT ENTRY
-gsap.from("#gift",{ y:-200, opacity:0, duration:1.5, ease:"bounce.out" });
+gsap.from("#gift",{y:-200,opacity:0,duration:1.5,ease:"bounce.out"});
 
-const gift = document.getElementById("gift");
-const funText = document.getElementById("funText");
+const gift=document.getElementById("gift");
+const funText=document.getElementById("funText");
 
 let unlocked=false;
 
-// 🎮 GIFT MOVE
+// 🎮 MOVE
 function moveGift(){
   if(unlocked) return;
 
-  const x=Math.random()*(window.innerWidth-160);
-  const y=Math.random()*(window.innerHeight-160);
+  let x=Math.random()*(window.innerWidth-160);
+  let y=Math.random()*(window.innerHeight-160);
 
-  gsap.to(gift,{
-    left:x+"px",
-    top:y+"px",
-    duration:0.5
-  });
+  gsap.to(gift,{left:x+"px",top:y+"px",duration:0.5});
 }
 
 gift.addEventListener("mouseover",moveGift);
@@ -38,117 +31,114 @@ gift.addEventListener("touchstart",moveGift);
 
 setTimeout(()=>{
   unlocked=true;
-  if(funText) funText.innerText="Okay fine… click me 🎁";
+  funText.innerText="Okay fine… click me 🎁";
 },15000);
 
 // 🎵 AUDIO
-const bgMusic=document.getElementById("bgMusic");
-const openSound=document.getElementById("openSound");
-const flipSound=document.getElementById("flipSound");
-
 document.body.addEventListener("click",()=>{
-  bgMusic?.play().catch(()=>{});
+  bgMusic.play().catch(()=>{});
 },{once:true});
 
-// 🎁 OPEN GIFT
+// 🎁 OPEN (3D + CENTER)
 gift.addEventListener("click",()=>{
+
   if(!unlocked) return;
 
-  openSound?.play();
+  openSound.play();
 
-  gsap.to(".lid",{ rotationX:130, duration:1 });
+  gsap.to(gift,{
+    left:"50%",
+    top:"50%",
+    xPercent:-50,
+    yPercent:-50,
+    duration:0.6
+  });
+
+  gsap.to(".lid",{rotationX:140,duration:1});
 
   releaseButterflies();
 
-  gsap.to("#gift",{
-    opacity:0,
+  gsap.to(gift,{
     scale:0.5,
+    opacity:0,
     duration:1,
+    delay:0.5,
     onComplete:()=>{
       gift.style.display="none";
-      document.getElementById("menu").style.display="block";
+      menu.style.display="block";
     }
   });
+
 });
 
-// 🔒 LOCK DATE
+// 🔒 LOCK
 const unlockDate=new Date("May 12, 2026 00:00:00").getTime();
 
 function isUnlocked(){
   return new Date().getTime()>=unlockDate;
 }
 
-// 🎛 PAGE NAVIGATION (FIXED)
+// 🎛 NAV
 function openPage(type){
 
-  document.getElementById("menu").style.display="none";
-  document.getElementById("book").style.display="none";
-  document.getElementById("timerPage").style.display="none";
-  document.getElementById("videoPage").style.display="none";
+  menu.style.display="none";
+  book.style.display="none";
+  timerPage.style.display="none";
+  videoPage.style.display="none";
 
-  // 🔒 ONLY VIDEO LOCKED
   if(type==="video" && !isUnlocked()){
-    if(funText){
-      funText.innerText="🔒 Video unlocks on May 12 🎂";
-    }
-    document.getElementById("menu").style.display="block";
+    funText.innerText="🔒 Unlocks on May 12 🎂";
+    menu.style.display="block";
     return;
   }
 
-  // ✅ TIMER ALWAYS OPEN
-  if(type==="timer"){
-    document.getElementById("timerPage").style.display="block";
-  }
-
-  if(type==="video"){
-    document.getElementById("videoPage").style.display="block";
-  }
-
-  if(type==="book"){
-    document.getElementById("book").style.display="block";
-  }
+  if(type==="timer") timerPage.style.display="block";
+  if(type==="video") videoPage.style.display="block";
+  if(type==="book") book.style.display="block";
 }
 
-// 🔙 BACK
+// 🔙 BACK FIX
 function goBack(){
-  document.getElementById("menu").style.display="block";
-  document.getElementById("timerPage").style.display="none";
-  document.getElementById("videoPage").style.display="none";
-  document.getElementById("book").style.display="none";
+
+  timerPage.style.display="none";
+  videoPage.style.display="none";
+  book.style.display="none";
+
+  menu.style.display="block";
+
+  gsap.from("#menu",{scale:0.8,opacity:0,duration:0.5});
 }
 
-// 🌍 GLOBAL FIX
 window.openPage=openPage;
 window.goBack=goBack;
 
-// 📖 PAGE FLIP
-document.querySelectorAll(".page").forEach((page,i)=>{
-  page.addEventListener("click",()=>{
-    gsap.to(page,{ rotationY:-160, duration:1 });
-    flipSound?.play();
+// 📖 FLIP
+document.querySelectorAll(".page").forEach((p,i)=>{
+  p.addEventListener("click",()=>{
+    gsap.to(p,{rotationY:-160,duration:1});
+    flipSound.play();
 
     if(i===2){
       setTimeout(()=>{
-        document.getElementById("book").style.display="none";
-        document.getElementById("final").style.display="block";
+        book.style.display="none";
+        final.style.display="block";
       },1000);
     }
   });
 });
 
-// 🦋 BUTTERFLIES
+// 🦋 BUTTERFLY
 function releaseButterflies(){
-  const c=document.getElementById("butterflyCanvas");
-  const ctx=c.getContext("2d");
+  let c=butterflyCanvas;
+  let ctx=c.getContext("2d");
 
-  c.width=window.innerWidth;
-  c.height=window.innerHeight;
+  c.width=innerWidth;
+  c.height=innerHeight;
 
   let p=[];
   for(let i=0;i<60;i++){
     p.push({
-      x:c.width/2,
-      y:c.height/2,
+      x:c.width/2,y:c.height/2,
       vx:(Math.random()-0.5)*6,
       vy:Math.random()*-6,
       life:1
@@ -176,19 +166,15 @@ function releaseButterflies(){
 
 // ⏳ TIMER
 setInterval(()=>{
-  const now=new Date().getTime();
-  const gap=unlockDate-now;
+  let now=Date.now();
+  let gap=unlockDate-now;
 
-  const d=Math.floor(gap/(1000*60*60*24));
-  const h=Math.floor((gap/(1000*60*60))%24);
-  const m=Math.floor((gap/(1000*60))%60);
-  const s=Math.floor((gap/1000)%60);
+  let d=Math.floor(gap/(1000*60*60*24));
+  let h=Math.floor((gap/(1000*60*60))%24);
+  let m=Math.floor((gap/(1000*60))%60);
+  let s=Math.floor((gap/1000)%60);
 
-  document.getElementById("countdown").innerHTML=`${d}d ${h}h ${m}m ${s}s`;
-
-  const big=document.getElementById("bigTimer");
-  if(big){
-    big.innerHTML=`${d}d ${h}h ${m}m ${s}s`;
-  }
+  countdown.innerHTML=`${d}d ${h}h ${m}m ${s}s`;
+  if(bigTimer) bigTimer.innerHTML=`${d}d ${h}h ${m}m ${s}s`;
 
 },1000);
