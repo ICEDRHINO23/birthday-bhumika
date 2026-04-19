@@ -1,83 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Surprise 🎉</title>
+<div id="pagesContainer">
 
-<link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-<!-- INTRO -->
-<div id="intro">This is a Surprise 🎁</div>
-
-<!-- TEXT -->
-<div id="funText">Catch the Gift 😜</div>
-
-<!-- GIFT -->
-<div id="gift">
-  <div class="lid"></div>
-  <div class="box"></div>
-</div>
-
-<!-- MENU -->
-<div id="menu" style="display:none;">
-  <h2>Select Your Surprise 🎁</h2>
-
-  <button onclick="openPage('timer')">⏳ Timer</button>
-  <button onclick="openPage('video')">🎥 Video</button>
-  <button onclick="openPage('book')">💖 Scrapbook</button>
-</div>
-
-<!-- TIMER -->
-<div id="timerPage" style="display:none;">
-  <h1>Countdown 🎂</h1>
-  <div id="bigTimer"></div>
-  <button onclick="goBack()">⬅ Back</button>
-</div>
-
-<!-- VIDEO -->
-<div id="videoPage" style="display:none;">
-  <h1>Video 🎥</h1>
-  <button onclick="goBack()">⬅ Back</button>
-</div>
-
-<!-- 📖 SCRAPBOOK -->
-<div id="book">
-
-  <div id="pagesContainer">
-
-    <div class="page active">
-      <div class="left">
-        <img src="./images/photo1.jpg">
-      </div>
-      <div class="right">
-        You know what… some people make life brighter ✨
-      </div>
+  <!-- PAGE 1 -->
+  <div class="page active">
+    <div class="left">
+      <img src="./scrapbook/20240429_230322.jpg">
     </div>
-
-    <div class="page">
-      <div class="left">
-        <video src="./images/bhumika.mp4" autoplay loop muted></video>
-      </div>
-      <div class="right">
-        Every moment with you is special 💖
-      </div>
+    <div class="right">
+      You know what… some people just walk into life and make it brighter ✨
     </div>
-
   </div>
 
-  <div style="margin-top:20px;">
-    <button onclick="prevPage()">⬅ Prev</button>
-    <button onclick="nextPage()">Next ➡</button>
-    <button onclick="goBack()">⬅ Back</button>
+  <!-- PAGE 2 -->
+  <div class="page">
+    <div class="left">
+      <img src="./scrapbook/20240906_204953.jpg">
+    </div>
+    <div class="right">
+      Every moment with you becomes a beautiful memory 💖
+    </div>
+  </div>
+
+  <!-- PAGE 3 -->
+  <div class="page">
+    <div class="left">
+      <img src="./scrapbook/VideoCapture_20240427-034201.jpg">
+    </div>
+    <div class="right">
+      Some memories stay forever in the heart 🌸
+    </div>
+  </div>
+
+  <!-- PAGE 4 -->
+  <div class="page">
+    <div class="left">
+      <img src="./scrapbook/image.jpg">
+    </div>
+    <div class="right">
+      Every picture tells a story 📸
+    </div>
+  </div>
+
+  <!-- PAGE 5 (VIDEO) -->
+  <div class="page">
+    <div class="left">
+      <video src="./scrapbook/bhumika.mp4" autoplay loop muted></video>
+    </div>
+    <div class="right">
+      Some moments deserve to be relived forever 🎬
+    </div>
   </div>
 
 </div>
-
-<script src="script.js"></script>
-
-</body>
-</html>
