@@ -9,25 +9,25 @@
 
 <body>
 
-<div id="intro">This is a Surprise 🎁</div>
+<!-- INTRO -->
+<div id="intro">
+  <h1>This is a Surprise 🎁</h1>
+</div>
 
+<!-- TOP TEXT -->
 <div id="funText">Catch the Gift 😜</div>
 
-<!-- 🎁 3D GIFT -->
-<div id="gift">
-  <div class="gift-box">
-    <div class="lid"></div>
-    <div class="base"></div>
-    <div class="ribbon-v"></div>
-    <div class="ribbon-h"></div>
-  </div>
+<!-- 🎁 IMAGE GIFT -->
+<div id="giftContainer">
+  <img id="giftImage" src="./images/gift-closed.png">
 </div>
 
 <!-- MENU -->
 <div id="menu" class="hidden">
   <h2>Select Your Surprise 🎁</h2>
+
   <button onclick="openPage('timer')">⏳ Timer</button>
-  <button onclick="openPage('video')">🎥 Video</button>
+  <button onclick="openPage('video')">🎥 Effort Video</button>
   <button onclick="openPage('book')">💖 Scrapbook</button>
 </div>
 
@@ -45,33 +45,35 @@
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- 📖 SCRAPBOOK -->
+<!-- SCRAPBOOK -->
 <div id="book" class="hidden">
-  <div class="flip-container">
+  <div id="pagesContainer">
 
     <div class="page active">
       <img src="./scrapbook/20240429_230322.jpg">
+      <p>You make life brighter ✨</p>
     </div>
 
     <div class="page">
       <img src="./scrapbook/20240906_204953.jpg">
+      <p>Every moment is special 💖</p>
     </div>
 
     <div class="page">
       <img src="./scrapbook/VideoCapture_20240427-034201.jpg">
+      <p>Memories forever 🌸</p>
     </div>
 
     <div class="page">
       <video src="./scrapbook/bhumika.mp4" autoplay muted loop></video>
+      <p>Moments to relive 🎬</p>
     </div>
 
   </div>
 
-  <div class="controls">
-    <button onclick="prevPage()">⬅</button>
-    <button onclick="nextPage()">➡</button>
-    <button onclick="goBack()">Back</button>
-  </div>
+  <button onclick="prevPage()">⬅</button>
+  <button onclick="nextPage()">➡</button>
+  <button onclick="goBack()">⬅ Back</button>
 </div>
 
 <script src="script.js"></script>
