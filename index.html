@@ -15,7 +15,7 @@
 <!-- TOP TEXT -->
 <div id="funText">Catch the Gift 😜</div>
 
-<!-- 🎁 GIFT -->
+<!-- GIFT -->
 <div id="giftContainer">
   <img id="giftImage" src="./image/gift-closed.PNG">
 </div>
@@ -43,36 +43,76 @@
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- SCRAPBOOK -->
+<!-- 📖 SCRAPBOOK -->
 <div id="book" class="hidden">
 
   <div id="pagesContainer">
 
-    <div class="page active">
-      <img src="./scrapbook/20240429_230322.jpg">
-      <p>You make life brighter ✨</p>
+    <!-- PAGE 1 -->
+    <div class="spread active">
+      <div class="left">
+        <img src="./scrapbook/20240429_230322.jpg">
+      </div>
+      <div class="right">
+        <h2>Some bonds just happen ❤️</h2>
+        <p>
+          You came into my life without any plan… and somehow,
+          you became one of the most important parts of it.
+
+          It wasn’t loud, it wasn’t dramatic — it was simple,
+          real, and meaningful.
+
+          You didn’t just become a friend,
+          you became a comfort I never knew I needed.
+        </p>
+      </div>
     </div>
 
-    <div class="page">
-      <img src="./scrapbook/20240906_204953.jpg">
-      <p>Every moment with you is special 💖</p>
+    <!-- PAGE 2 -->
+    <div class="spread">
+      <div class="left">
+        <img src="./scrapbook/20240906_204953.jpg">
+      </div>
+      <div class="right">
+        <h2>You make everything better ✨</h2>
+        <p>
+          Even on the most normal days, you make things feel special.
+
+          Your presence, your smile, your energy —
+          it changes everything in the best way.
+
+          And honestly, life just feels lighter
+          when you're around.
+        </p>
+      </div>
     </div>
 
-    <div class="page">
-      <img src="./scrapbook/VideoCapture_20240427-034201.jpg">
-      <p>Memories forever 🌸</p>
-    </div>
+    <!-- PAGE 3 -->
+    <div class="spread">
+      <div class="left">
+        <video controls src="./scrapbook/bhumika.mp4"></video>
+      </div>
+      <div class="right">
+        <h2>Memories that matter 💖</h2>
+        <p>
+          These moments are not just memories,
+          they are pieces of time I never want to lose.
 
-    <div class="page">
-      <video src="./scrapbook/bhumika.mp4" autoplay muted loop></video>
-      <p>Beautiful moments 🎬</p>
+          Every laugh, every second —
+          they mean something because you are part of them.
+
+          And I would choose them all over again.
+        </p>
+      </div>
     </div>
 
   </div>
 
-  <button onclick="prevPage()">⬅</button>
-  <button onclick="nextPage()">➡</button>
-  <button onclick="goBack()">⬅ Back</button>
+  <div id="bookControls">
+    <button onclick="prevPage()">⬅ Prev</button>
+    <button onclick="nextPage()">Next ➡</button>
+    <button onclick="goBack()">⬅ Back</button>
+  </div>
 
 </div>
 
