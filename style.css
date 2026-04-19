@@ -360,3 +360,54 @@ img, video {
     left: 0;
     z-index: -1;
 }
+
+/* CENTER UI */
+#menu,
+#timerPage,
+#videoPage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 7;
+    text-align: center;
+}
+
+/* KEEP BG VISIBLE */
+#timerPage,
+#videoPage,
+#menu {
+    background: transparent;
+}
+
+/* CARD STYLE */
+#timerPage,
+#videoPage {
+    background: rgba(255,255,255,0.9);
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+/* BUTTONS */
+#menu button,
+#timerPage button,
+#videoPage button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+}
+
+#menu button:hover {
+    background: #e63956;
+}
+
+/* BIG TIMER */
+#bigTimer {
+    font-size: 36px;
+    font-weight: bold;
+}
