@@ -1,32 +1,61 @@
 // ==============================
-// 🎬 STAGE CONTROL SYSTEM
+// 🎬 INTRO → GIFT MODE
 // ==============================
-function showStage(id) {
-  document.querySelectorAll(".stage").forEach(stage => {
-    stage.classList.remove("active");
-  });
-  document.getElementById(id).classList.add("active");
+setTimeout(() => {
+  document.body.classList.add("gift-mode");
+}, 3000);
+
+
+// ==============================
+// 🎮 FUN TEXT SYSTEM
+// ==============================
+const funText = document.getElementById("funText");
+
+const messages = [
+  "Catch me 😜",
+  "Too slow 😂",
+  "Almost there!",
+  "Hehe try again!",
+  "You can do it 💪"
+];
+
+function showMessage() {
+  if (!funText) return;
+  funText.innerText = messages[Math.floor(Math.random() * messages.length)];
 }
 
+
 // ==============================
-// ⏳ COUNTDOWN TIMER (12 MAY 2026)
+// 🎁 GIFT CHASE SYSTEM
 // ==============================
-const targetDate = new Date("May 12, 2026 00:00:00").getTime();
+const gift = document.getElementById("gift");
 
-setInterval(() => {
-  const now = new Date().getTime();
-  const gap = targetDate - now;
+let giftUnlocked = false;
 
-  const days = Math.floor(gap / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((gap / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((gap / (1000 * 60)) % 60);
-  const seconds = Math.floor((gap / 1000) % 60);
+if (gift) {
 
-  const countdown = document.getElementById("countdown");
-  if (countdown) {
-    countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  function moveGift() {
+    if (giftUnlocked) return;
+
+    const x = Math.random() * (window.innerWidth - 160);
+    const y = Math.random() * (window.innerHeight - 160);
+
+    gift.style.left = x + "px";
+    gift.style.top = y + "px";
+
+    showMessage();
   }
-}, 1000);
+
+  gift.addEventListener("mouseover", moveGift);
+  gift.addEventListener("touchstart", moveGift);
+
+  // Unlock after 20 sec
+  setTimeout(() => {
+    giftUnlocked = true;
+    if (funText) funText.innerText = "Okay fine… click me 🎁";
+  }, 20000);
+}
+
 
 // ==============================
 // 🎵 AUDIO SYSTEM
@@ -35,60 +64,44 @@ const bgMusic = document.getElementById("bgMusic");
 const openSound = document.getElementById("openSound");
 const flipSound = document.getElementById("flipSound");
 
-// Start music only after first user interaction
+// Start music on first interaction
 document.body.addEventListener("click", () => {
   if (bgMusic) bgMusic.play();
 }, { once: true });
 
+
 // ==============================
-// 🎮 GIFT CHASE GAME
+// 🎁 GIFT OPEN LOGIC
 // ==============================
-const gift = document.getElementById("gift");
+const lid = document.querySelector(".lid");
+const book = document.getElementById("book");
 
-if (gift) {
-  gift.style.position = "absolute";
+gift?.addEventListener("click", () => {
 
-  function moveGift() {
-    const x = Math.random() * (window.innerWidth - 120);
-    const y = Math.random() * (window.innerHeight - 120);
+  if (!giftUnlocked) return;
 
-    gift.style.left = x + "px";
-    gift.style.top = y + "px";
-  }
+  // Open lid animation
+  gift.classList.add("open");
 
-  // Move on hover / touch
-  gift.addEventListener("mouseover", moveGift);
-  gift.addEventListener("touchstart", moveGift);
+  if (openSound) openSound.play();
 
-  // After 10 sec → allow click
+  // Butterfly effect
+  releaseButterflies();
+
+  // Show book after delay
   setTimeout(() => {
-    gift.addEventListener("click", () => {
-      showStage("stage3");
-    });
-  }, 10000);
-}
+    gift.style.display = "none";
+    if (book) book.style.display = "block";
+  }, 1200);
+
+});
+
 
 // ==============================
-// 🎁 GIFT OPEN + BUTTERFLY
-// ==============================
-const openGift = document.getElementById("openGift");
-
-if (openGift) {
-  openGift.addEventListener("click", () => {
-    if (openSound) openSound.play();
-
-    releaseButterflies();
-
-    setTimeout(() => {
-      showStage("stage4");
-    }, 2000);
-  });
-}
-
-// ==============================
-// 🦋 BUTTERFLY ANIMATION
+// 🦋 BUTTERFLY EFFECT (UPGRADED)
 // ==============================
 function releaseButterflies() {
+
   const canvas = document.getElementById("butterflyCanvas");
   if (!canvas) return;
 
@@ -99,13 +112,13 @@ function releaseButterflies() {
 
   let particles = [];
 
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 60; i++) {
     particles.push({
       x: canvas.width / 2,
       y: canvas.height / 2,
-      size: Math.random() * 6 + 3,
-      speedX: (Math.random() - 0.5) * 6,
-      speedY: Math.random() * -6 - 2,
+      size: Math.random() * 5 + 3,
+      vx: (Math.random() - 0.5) * 7,
+      vy: Math.random() * -7 - 2,
       life: 1
     });
   }
@@ -114,13 +127,14 @@ function releaseButterflies() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     particles.forEach(p => {
-      p.x += p.speedX;
-      p.y += p.speedY;
-      p.life -= 0.015;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= 0.012;
+
+      ctx.fillStyle = `rgba(255,182,193,${p.life})`;
 
       ctx.beginPath();
-      ctx.fillStyle = `rgba(255, 105, 180, ${p.life})`;
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.ellipse(p.x, p.y, p.size, p.size / 2, 0, 0, Math.PI * 2);
       ctx.fill();
     });
 
@@ -134,13 +148,15 @@ function releaseButterflies() {
   animate();
 }
 
+
 // ==============================
-// 📖 3D PAGE FLIP SYSTEM
+// 📖 PAGE FLIP SYSTEM (YOUR BOOK)
 // ==============================
 const pages = document.querySelectorAll(".page");
 
 pages.forEach((page, index) => {
   page.addEventListener("click", () => {
+
     page.classList.add("flipped");
 
     if (flipSound) {
@@ -148,25 +164,37 @@ pages.forEach((page, index) => {
       flipSound.play();
     }
 
-    // If last page → final stage
+    // Last page → show final message
     if (index === pages.length - 1) {
       setTimeout(() => {
-        showStage("stage5");
-      }, 1500);
+        document.getElementById("book").style.display = "none";
+        document.getElementById("final").style.display = "block";
+      }, 1200);
     }
+
   });
 });
 
-// ==============================
-// 🎯 OPTIONAL: AUTO STAGE FLOW
-// ==============================
 
-// Start from stage1
-window.onload = () => {
-  showStage("stage1");
-};
+// ==============================
+// ⏳ COUNTDOWN TIMER (NEW)
+// ==============================
+const countdown = document.getElementById("countdown");
 
-// Optional: auto move to game after 3 sec
-setTimeout(() => {
-  showStage("stage2");
-}, 3000);
+const targetDate = new Date("May 12, 2026 00:00:00").getTime();
+
+setInterval(() => {
+
+  if (!countdown) return;
+
+  const now = new Date().getTime();
+  const gap = targetDate - now;
+
+  const d = Math.floor(gap / (1000 * 60 * 60 * 24));
+  const h = Math.floor((gap / (1000 * 60 * 60)) % 24);
+  const m = Math.floor((gap / (1000 * 60)) % 60);
+  const s = Math.floor((gap / 1000) % 60);
+
+  countdown.innerHTML = `⏳ ${d}d ${h}h ${m}m ${s}s`;
+
+}, 1000);
