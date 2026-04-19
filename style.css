@@ -8,8 +8,9 @@ body {
   text-align: center;
   overflow-x: hidden;
 }
+
 /* =========================
-   HERO SECTION
+   HERO
 ========================= */
 #hero {
   margin-top: 40px;
@@ -20,9 +21,7 @@ body {
   height: 180px;
   object-fit: cover;
   border-radius: 50%;
-
   border: 5px solid white;
-
   box-shadow: 
     0 10px 30px rgba(0,0,0,0.3),
     0 0 20px rgba(255,105,180,0.4);
@@ -38,6 +37,7 @@ body {
   font-size: 16px;
   color: #555;
 }
+
 /* =========================
    INTRO
 ========================= */
@@ -55,52 +55,22 @@ body {
 }
 
 /* =========================
-   TOP TEXT
-========================= */
-#funText {
-  margin-top: 30px;
-  display: inline-block;
-  padding: 12px 25px;
-  background: linear-gradient(135deg,#ff4d6d,#ff758f);
-  color: white;
-  border-radius: 25px;
-  font-weight: bold;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-}
-
-/* =========================
    GIFT
 ========================= */
 #giftContainer {
   margin-top: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
-}
-
-#giftContainer::after {
-  content: "";
-  position: absolute;
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(circle, rgba(255,215,0,0.6), transparent);
-  filter: blur(40px);
-  z-index: -1;
 }
 
 #giftImage {
   width: 260px;
-  max-width: 90%;
   cursor: pointer;
   transition: 0.5s ease;
-  mix-blend-mode: multiply;
   filter: drop-shadow(0 10px 25px rgba(0,0,0,0.3));
 }
 
 #giftImage:hover {
   transform: scale(1.1);
-  filter: drop-shadow(0 0 30px gold);
 }
 
 .opened {
@@ -114,11 +84,6 @@ body {
   margin-top: 40px;
 }
 
-#menu h2 {
-  color: #b30059;
-  margin-bottom: 15px;
-}
-
 /* =========================
    BUTTONS
 ========================= */
@@ -129,154 +94,52 @@ button {
   border-radius: 12px;
   background: linear-gradient(135deg,#ff4d6d,#ff758f);
   color: white;
-  font-size: 15px;
-  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
 /* =========================
-   PAGE CARD
+   CARD
 ========================= */
 #timerPage,
 #videoPage,
 #book {
-  margin: 50px auto;
+  margin: 40px auto;
   width: 90%;
   max-width: 900px;
-  background: rgba(255,255,255,0.95);
+  background: white;
   padding: 30px;
-  border-radius: 25px;
-  backdrop-filter: blur(10px);
-
-  box-shadow: 
-    0 20px 50px rgba(0,0,0,0.25),
-    inset 0 0 20px rgba(255,255,255,0.3);
+  border-radius: 20px;
 }
 
 /* =========================
-   TIMER
+   SCRAPBOOK FLIP
 ========================= */
-#bigTimer {
-  font-size: 38px;
-  font-weight: bold;
-  color: #cc0052;
-  margin: 20px 0;
-}
-
-/* =========================
-   VIDEO
-========================= */
-video {
+#pagesContainer {
+  position: relative;
   width: 100%;
-  max-width: 700px;
-  border-radius: 15px;
-  box-shadow: 
-    0 15px 40px rgba(0,0,0,0.5),
-    0 0 20px rgba(255,105,180,0.3);
+  height: 480px;
+  overflow: hidden;
 }
 
-/* =========================
-   SCRAPBOOK FLIP SYSTEM
-========================= */
-
-let currentPage = 0;
-
-function getPages() {
-  return document.querySelectorAll("#pagesContainer .spread");
-}
-
-function showPage(index) {
-  const pages = getPages();
-
-  pages.forEach((page, i) => {
-    page.classList.remove("active");
-
-    if (i < index) {
-      page.classList.add("flip");   // already flipped
-    } else {
-      page.classList.remove("flip");
-    }
-  });
-
-  if (pages[index]) {
-    pages[index].classList.add("active");
-  }
-}
-
-/* NEXT */
-window.nextPage = function () {
-  const pages = getPages();
-
-  if (currentPage < pages.length - 1) {
-    currentPage++;
-    showPage(currentPage);
-  }
-};
-
-/* PREVIOUS */
-window.prevPage = function () {
-  if (currentPage > 0) {
-    currentPage--;
-    showPage(currentPage);
-  }
-};
-
-/* SPREAD */
 .spread {
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-
   display: flex;
-
   transform-origin: left;
-  transform-style: preserve-3d;
-
-  transition: transform 0.8s ease;
-
-  backface-visibility: hidden;
+  transition: 0.8s;
 }
 
-/* DEFAULT STATE */
-.spread {
-  transform: rotateY(0deg);
-  z-index: 1;
-}
-
-/* ACTIVE */
-.spread.active {
-  z-index: 3;
-}
-
-/* FLIPPED */
+/* flip effect */
 .spread.flip {
   transform: rotateY(-180deg);
-  z-index: 2;
 }
 
-/* LEFT */
 .left {
   width: 50%;
-  height: 100%;
   background: black;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  overflow: hidden;
 }
 
-/* MEDIA */
 .left img,
 .left video {
   width: 100%;
@@ -284,33 +147,13 @@ window.prevPage = function () {
   object-fit: cover;
 }
 
-/* RIGHT */
 .right {
   width: 50%;
-  height: 100%;
-
   padding: 30px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
   text-align: left;
-
-  background: linear-gradient(135deg,#fff,#ffe6eb);
+  background: #ffe6eb;
 }
 
-/* TEXT */
-.right h2 {
-  color: #ff4d6d;
-  margin-bottom: 15px;
-}
-
-.right p {
-  font-size: 16px;
-  line-height: 1.7;
-  color: #444;
-}
 /* =========================
    HIDDEN
 ========================= */
