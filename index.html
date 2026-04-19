@@ -3,84 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <title>Happy Birthday Bhoomika 🎂</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+
+<!-- 🎵 MUSIC -->
+<audio id="bgMusic" src="./audio/music.mp3" loop></audio>
+
+<!-- 💖 HEARTS -->
+<div id="hearts"></div>
 
 <!-- 🔐 ADMIN BUTTON -->
 <button id="adminBtn">☰ My Space</button>
 
-<!-- 🔐 ADMIN SLIDER -->
+<!-- 🔐 ADMIN PANEL -->
 <div id="adminPanel">
-  <h3>Login 🔐</h3>
-  <input id="user" placeholder="Username">
-  <input id="pass" type="password" placeholder="Password">
+  <h3>Login</h3>
+  <input type="text" id="user" placeholder="Username">
+  <input type="password" id="pass" placeholder="Password">
   <button onclick="login()">Enter</button>
 </div>
 
-<!-- INTRO -->
-<div id="intro">This is a Surprise 🎁</div>
+<!-- 🎬 INTRO -->
+<div id="intro">Loading Surprise...</div>
 
-<!-- HERO -->
-<div id="hero">
-  <img src="./images/bhumika.jpg">
-  <h1>Happy Birthday Bhoomika 🎂</h1>
-  <p>Some people don’t just come into life… they stay and make it better 💖</p>
-</div>
+<!-- 🎉 HERO SECTION -->
+<div id="home">
 
-<!-- GIFT -->
-<div id="giftContainer">
-  <img id="giftImage" src="./image/gift-closed.PNG">
-</div>
-
-<!-- MENU -->
-<div id="menu" class="hidden">
-  <h2>Select Your Surprise 🎁</h2>
-
-  <button onclick="openPage('timer')">⏳ Timer</button>
-  <button onclick="openPage('video')">🎥 Effort Video</button>
-  <button onclick="openPage('book')">💖 Scrapbook</button>
-</div>
-
-<!-- TIMER -->
-<div id="timerPage" class="hidden">
-  <h1>Countdown 🎂</h1>
-  <div id="bigTimer"></div>
-  <button onclick="goBack()">⬅ Back</button>
-</div>
-
-<!-- VIDEO -->
-<div id="videoPage" class="hidden">
-  <h1>Effort Video 🎥</h1>
-  <button onclick="goBack()">⬅ Back</button>
-</div>
-
-<!-- SCRAPBOOK -->
-<div id="book" class="hidden">
-  <h1>Memories 💖</h1>
-
-  <div id="pagesContainer"></div>
-
-  <div id="bookControls">
-    <button onclick="prevPage()">⬅ Prev</button>
-    <button onclick="nextPage()">Next ➡</button>
-    <button onclick="goBack()">⬅ Back</button>
+  <div id="profileContainer">
+    <img src="./image/bhoomika.jpg" id="profileImg">
   </div>
+
+  <h1>Happy Birthday Bhoomika 🎂</h1>
+
+  <p id="heroText">
+    Some people don’t just come into life…  
+    they stay, they change everything, and they become a part of you ❤️
+  </p>
+
+  <!-- 🎁 GIFT -->
+  <div id="giftContainer">
+    <img src="./image/gift-closed.PNG" id="giftImage">
+  </div>
+
 </div>
-
-<script src="script.js"></script>
-<!-- 🎶 BACKGROUND MUSIC -->
-<audio id="bgMusic" src="./audio/music.mp3" loop></audio>
-
-<!-- 💖 HEART CONTAINER -->
-<div id="hearts"></div>
 
 <!-- 🎁 SURPRISE TEXT -->
 <div id="surpriseText" class="hidden">
   <h2 id="typedText"></h2>
 </div>
+
+<!-- 📋 MENU -->
+<div id="menu" class="hidden">
+  <h2>Choose Something 💖</h2>
+  <button onclick="openPage('timer')">⏳ Countdown</button>
+  <button onclick="openPage('video')">🎥 Video</button>
+  <button onclick="openPage('book')">📖 Scrapbook</button>
+</div>
+
+<!-- ⏳ TIMER -->
+<div id="timerPage" class="hidden">
+  <h2>Countdown 🎂</h2>
+  <div id="bigTimer"></div>
+  <button onclick="goBack()">⬅ Back</button>
+</div>
+
+<!-- 🎥 VIDEO -->
+<div id="videoPage" class="hidden"></div>
+
+<!-- 📖 SCRAPBOOK -->
+<div id="book" class="hidden">
+
+  <div id="pagesContainer"></div>
+
+  <div id="bookControls">
+    <button onclick="prevPage()">⬅</button>
+    <button onclick="nextPage()">➡</button>
+    <button onclick="goBack()">Back</button>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
