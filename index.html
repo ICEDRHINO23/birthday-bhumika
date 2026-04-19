@@ -10,10 +10,6 @@
 
 <body>
 
-<!-- ⭐ IMPORTANT ELEMENTS -->
-<canvas id="stars"></canvas>
-<div id="cursorGlow"></div>
-
 <!-- INTRO -->
 <div id="intro">This is a Surprise 🎁</div>
 
@@ -29,8 +25,10 @@
 <!-- MENU -->
 <div id="menu" style="display:none;">
   <h2>Select Your Surprise 🎁</h2>
+
   <button onclick="openPage('timer')">⏳ Timer</button>
   <button onclick="openPage('video')">🎥 Video</button>
+  <button onclick="openPage('book')">💖 Scrapbook</button>
 </div>
 
 <!-- TIMER -->
@@ -46,7 +44,41 @@
   <button onclick="goBack()">⬅ Back</button>
 </div>
 
-<!-- SCRIPT AT BOTTOM -->
+<!-- 📖 SCRAPBOOK -->
+<div id="book" style="display:none;">
+
+  <div id="pagesContainer">
+
+    <!-- PAGE 1 -->
+    <div class="page active">
+      <div class="left">
+        <video src="./images/bhumika.mp4" autoplay loop muted></video>
+      </div>
+      <div class="right">
+        You know what… some people make life brighter ✨
+      </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page">
+      <div class="left">
+        <img src="./images/photo1.jpg">
+      </div>
+      <div class="right">
+        Every moment with you is special 💖
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:20px;">
+    <button onclick="prevPage()">⬅ Prev</button>
+    <button onclick="nextPage()">Next ➡</button>
+    <button onclick="goBack()">⬅ Back</button>
+  </div>
+
+</div>
+
 <script src="script.js"></script>
 
 </body>
