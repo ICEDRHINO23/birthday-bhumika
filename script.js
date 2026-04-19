@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-// ==============================
-// 🔧 SAFE ELEMENTS
-// ==============================
 const intro = document.getElementById("intro");
 const gift = document.getElementById("gift");
 const menu = document.getElementById("menu");
@@ -12,108 +9,46 @@ const book = document.getElementById("book");
 const funText = document.getElementById("funText");
 const bigTimer = document.getElementById("bigTimer");
 
-// ==============================
-// 🎬 INTRO
-// ==============================
+// INTRO
 setTimeout(() => {
-  if(intro) intro.style.display = "none";
+  intro.style.display = "none";
 }, 3000);
 
-// ==============================
-// 🎮 GIFT MOVE
-// ==============================
-let unlocked = false;
+// GIFT
+gift.addEventListener("click", () => {
+  gift.style.display = "none";
+  menu.style.display = "block";
+});
 
-function moveGift() {
-  if (!gift || unlocked) return;
-
-  let x = Math.random() * (window.innerWidth - 150);
-  let y = Math.random() * (window.innerHeight - 150);
-
-  gift.style.left = x + "px";
-  gift.style.top = y + "px";
-}
-
-if(gift){
-  gift.addEventListener("mouseover", moveGift);
-}
-
-setTimeout(() => {
-  unlocked = true;
-  if(funText) funText.innerText = "Click me 🎁";
-}, 8000);
-
-// ==============================
-// 🎁 OPEN GIFT
-// ==============================
-if(gift){
-  gift.addEventListener("click", () => {
-
-    if (!unlocked) return;
-
-    gift.style.display = "none";
-    if(menu) menu.style.display = "block";
-
-  });
-}
-
-// ==============================
-// 🔒 LOCK SYSTEM
-// ==============================
-const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
-
-function isUnlocked() {
-  return Date.now() >= unlockDate;
-}
-
-// ==============================
-// 🎛 NAVIGATION (FIXED)
-// ==============================
+// NAVIGATION
 window.openPage = function(type){
 
-  if(menu) menu.style.display = "none";
-  if(timerPage) timerPage.style.display = "none";
-  if(videoPage) videoPage.style.display = "none";
-  if(book) book.style.display = "none";
+  menu.style.display = "none";
+  timerPage.style.display = "none";
+  videoPage.style.display = "none";
+  book.style.display = "none";
 
-  if(type === "video" && !isUnlocked()){
-    if(funText) funText.innerText = "🔒 Unlocks on May 12 🎂";
-    if(menu) menu.style.display = "block";
-    return;
-  }
+  if(type === "timer") timerPage.style.display = "block";
+  if(type === "video") videoPage.style.display = "block";
 
-  if(type === "timer" && timerPage){
-    timerPage.style.display = "block";
-  }
-
-  if(type === "video" && videoPage){
-    videoPage.style.display = "block";
-  }
-
-  if(type === "book" && book){
+  if(type === "book"){
     book.style.display = "block";
-
-    // 🔥 IMPORTANT FIX
-    setTimeout(() => {
-      currentPage = 0;
-      showPage(currentPage);
-    }, 50);
+    currentPage = 0;
+    showPage(currentPage);
   }
 }
 
-// ==============================
-// 🔙 BACK BUTTON
-// ==============================
+// BACK
 window.goBack = function(){
-  if(timerPage) timerPage.style.display = "none";
-  if(videoPage) videoPage.style.display = "none";
-  if(book) book.style.display = "none";
-  if(menu) menu.style.display = "block";
+  timerPage.style.display = "none";
+  videoPage.style.display = "none";
+  book.style.display = "none";
+  menu.style.display = "block";
 }
 
-// ==============================
-// ⏳ TIMER
-// ==============================
+// TIMER
+const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
+
 setInterval(() => {
 
   let gap = unlockDate - Date.now();
@@ -129,9 +64,7 @@ setInterval(() => {
 
 },1000);
 
-// ==============================
-// 📖 SCRAPBOOK SYSTEM (FIXED)
-// ==============================
+// 📖 SCRAPBOOK
 let currentPage = 0;
 
 function getPages(){
@@ -141,8 +74,6 @@ function getPages(){
 function showPage(index){
   const pages = getPages();
 
-  if(!pages.length) return;
-
   pages.forEach(p => p.classList.remove("active"));
 
   if(pages[index]){
@@ -150,7 +81,6 @@ function showPage(index){
   }
 }
 
-// NEXT
 window.nextPage = function(){
   const pages = getPages();
   if(currentPage < pages.length - 1){
@@ -159,41 +89,11 @@ window.nextPage = function(){
   }
 }
 
-// PREV
 window.prevPage = function(){
   if(currentPage > 0){
     currentPage--;
     showPage(currentPage);
   }
-}
-
-// ==============================
-// ➕ ADD PAGE FUNCTION (SAFE)
-// ==============================
-window.addPage = function(type, src, text){
-
-  const container = document.getElementById("pagesContainer");
-  if(!container) return;
-
-  const page = document.createElement("div");
-  page.className = "page";
-
-  let media = "";
-
-  if(type === "image"){
-    media = `<img src="${src}" style="width:100%">`;
-  }
-
-  if(type === "video"){
-    media = `<video src="${src}" autoplay loop muted style="width:100%"></video>`;
-  }
-
-  page.innerHTML = `
-    <div class="left">${media}</div>
-    <div class="right">${text}</div>
-  `;
-
-  container.appendChild(page);
 }
 
 });
