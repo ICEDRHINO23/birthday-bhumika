@@ -14,6 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const bigTimer = document.getElementById("bigTimer");
   const pagesContainer = document.getElementById("pagesContainer");
 
+  const adminBtn = document.getElementById("adminBtn");
+  const adminPanel = document.getElementById("adminPanel");
+
   /* =========================
      INTRO
   ========================= */
@@ -22,7 +25,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     GIFT UNLOCK
+     ADMIN SLIDER
+  ========================= */
+  adminBtn.addEventListener("click", () => {
+    adminPanel.classList.toggle("open");
+  });
+
+  /* =========================
+     LOGIN SYSTEM
+  ========================= */
+  window.login = function () {
+    const user = document.getElementById("user").value;
+    const pass = document.getElementById("pass").value;
+
+    if (user === "abin" && pass === "1234") {
+      window.location.href = "admin.html";
+    } else {
+      alert("Wrong credentials ❌");
+    }
+  };
+
+  /* =========================
+     GIFT
   ========================= */
   let unlocked = false;
   setTimeout(() => unlocked = true, 3000);
@@ -81,9 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  /* =========================
-     BACK BUTTON
-  ========================= */
   window.goBack = function() {
     timerPage.classList.add("hidden");
     videoPage.classList.add("hidden");
@@ -113,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     LOAD DATA (ADMIN PANEL)
+     LOAD DATA
   ========================= */
   const scrapbookData = JSON.parse(localStorage.getItem("scrapbook")) || [];
   const videoData = localStorage.getItem("video");
@@ -164,12 +185,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     SCRAPBOOK FLIP SYSTEM
+     SCRAPBOOK FLIP
   ========================= */
   let currentPage = 0;
 
   function getPages() {
-    return document.querySelectorAll("#pagesContainer .spread");
+    return document.querySelectorAll(".spread");
   }
 
   function showPage(index) {
@@ -184,10 +205,6 @@ document.addEventListener("DOMContentLoaded", () => {
         page.classList.remove("flip");
       }
     });
-
-    if (pages[index]) {
-      pages[index].classList.add("active");
-    }
   }
 
   window.nextPage = function () {
