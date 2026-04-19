@@ -16,34 +16,35 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      INTRO LOADER
   ========================= */
-  setTimeout(() => {
-    intro.style.display = "none";
-  }, 2000);
+  if (intro) {
+    setTimeout(() => {
+      intro.style.display = "none";
+    }, 2000);
+  }
 
   /* =========================
      GIFT UNLOCK DELAY
   ========================= */
   let unlocked = false;
-
-  setTimeout(() => {
-    unlocked = true;
-  }, 3000);
+  setTimeout(() => unlocked = true, 3000);
 
   /* =========================
      GIFT CLICK
   ========================= */
-  gift.addEventListener("click", () => {
+  if (gift) {
+    gift.addEventListener("click", () => {
 
-    if (!unlocked) return;
+      if (!unlocked) return;
 
-    gift.src = "./image/gift-open.PNG";
-    gift.classList.add("opened");
+      gift.src = "./image/gift-open.PNG";
+      gift.classList.add("opened");
 
-    setTimeout(() => {
-      document.getElementById("giftContainer").style.display = "none";
-      menu.classList.remove("hidden");
-    }, 1000);
-  });
+      setTimeout(() => {
+        document.getElementById("giftContainer").style.display = "none";
+        menu.classList.remove("hidden");
+      }, 1000);
+    });
+  }
 
   /* =========================
      DATE LOCK
@@ -79,7 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (type === "book") {
       book.classList.remove("hidden");
-      showPage(currentPage);
+      currentPage = 0;          // ✅ reset book
+      showPage(currentPage);    // ✅ ensure first page loads
     }
   };
 
@@ -96,21 +98,23 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      TIMER
   ========================= */
-  setInterval(() => {
-    let gap = unlockDate - Date.now();
+  if (bigTimer) {
+    setInterval(() => {
+      let gap = unlockDate - Date.now();
 
-    if (gap <= 0) {
-      bigTimer.innerHTML = "🎉 It's Time! 🎂";
-      return;
-    }
+      if (gap <= 0) {
+        bigTimer.innerHTML = "🎉 It's Time! 🎂";
+        return;
+      }
 
-    let d = Math.floor(gap / (1000 * 60 * 60 * 24));
-    let h = Math.floor((gap / (1000 * 60 * 60)) % 24);
-    let m = Math.floor((gap / (1000 * 60)) % 60);
-    let s = Math.floor((gap / 1000) % 60);
+      let d = Math.floor(gap / (1000 * 60 * 60 * 24));
+      let h = Math.floor((gap / (1000 * 60 * 60)) % 24);
+      let m = Math.floor((gap / (1000 * 60)) % 60);
+      let s = Math.floor((gap / 1000) % 60);
 
-    bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
-  }, 1000);
+      bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+    }, 1000);
+  }
 
   /* =========================
      SCRAPBOOK FLIP SYSTEM
@@ -138,6 +142,9 @@ document.addEventListener("DOMContentLoaded", () => {
       pages[index].classList.add("active");
     }
   }
+
+  /* INITIAL LOAD */
+  showPage(currentPage);
 
   /* NEXT PAGE */
   window.nextPage = function () {
