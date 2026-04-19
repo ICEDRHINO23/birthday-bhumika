@@ -1,38 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-// ==============================
-// 🔧 ELEMENTS
-// ==============================
-const gift = document.getElementById("gift");
-const menu = document.getElementById("menu");
-const timerPage = document.getElementById("timerPage");
-const videoPage = document.getElementById("videoPage");
-const book = document.getElementById("book");
-const funText = document.getElementById("funText");
+// ======================
+// SAFE GET FUNCTION
+// ======================
+function get(id){
+  return document.getElementById(id);
+}
 
-const countdown = document.getElementById("countdown");
-const bigTimer = document.getElementById("bigTimer");
+const intro = get("intro");
+const gift = get("gift");
+const menu = get("menu");
+const timerPage = get("timerPage");
+const videoPage = get("videoPage");
+const funText = get("funText");
+const bigTimer = get("bigTimer");
+const stars = get("stars");
+const cursor = get("cursorGlow");
 
-const bgMusic = document.getElementById("bgMusic");
-const openSound = document.getElementById("openSound");
-
-const cursor = document.getElementById("cursorGlow");
-const starCanvas = document.getElementById("stars");
-
-// ==============================
-// 🎬 INTRO
-// ==============================
+// ======================
+// INTRO FIX
+// ======================
 setTimeout(() => {
-  document.getElementById("intro").style.display = "none";
+  if(intro) intro.style.display = "none";
 }, 3000);
 
-// ==============================
-// 🎮 GIFT MOVE
-// ==============================
+// ======================
+// GIFT MOVE
+// ======================
 let unlocked = false;
 
-function moveGift() {
-  if (unlocked) return;
+function moveGift(){
+  if(!gift || unlocked) return;
 
   let x = Math.random() * (window.innerWidth - 150);
   let y = Math.random() * (window.innerHeight - 150);
@@ -41,163 +39,112 @@ function moveGift() {
   gift.style.top = y + "px";
 }
 
-gift.addEventListener("mouseover", moveGift);
-gift.addEventListener("touchstart", moveGift);
+gift?.addEventListener("mouseover", moveGift);
 
-setTimeout(() => {
+setTimeout(()=>{
   unlocked = true;
-  funText.innerText = "Click me 🎁";
-}, 10000);
+  if(funText) funText.innerText = "Click me 🎁";
+}, 8000);
 
-// ==============================
-// 🎵 AUDIO
-// ==============================
-document.body.addEventListener("click", () => {
-  bgMusic.play().catch(() => {});
-}, { once: true });
+// ======================
+// GIFT CLICK
+// ======================
+gift?.addEventListener("click", () => {
 
-// ==============================
-// 🎁 OPEN GIFT
-// ==============================
-gift.addEventListener("click", () => {
+  if(!unlocked) return;
 
-  if (!unlocked) return;
-
-  openSound.play();
-
-  gift.style.left = "50%";
-  gift.style.top = "50%";
-  gift.style.transform = "translate(-50%, -50%)";
-
-  setTimeout(() => {
-    gift.style.display = "none";
-    menu.style.display = "block";
-  }, 800);
+  gift.style.display = "none";
+  if(menu) menu.style.display = "block";
 
 });
 
-// ==============================
-// 🔒 LOCK SYSTEM
-// ==============================
+// ======================
+// LOCK SYSTEM
+// ======================
 const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
 
-function isUnlocked() {
+function isUnlocked(){
   return Date.now() >= unlockDate;
 }
 
-// ==============================
-// 🎛 NAVIGATION
-// ==============================
-function openPage(type) {
+// ======================
+// NAVIGATION
+// ======================
+window.openPage = function(type){
 
-  menu.style.display = "none";
-  timerPage.style.display = "none";
-  videoPage.style.display = "none";
-  book.style.display = "none";
+  if(menu) menu.style.display = "none";
+  if(timerPage) timerPage.style.display = "none";
+  if(videoPage) videoPage.style.display = "none";
 
-  if (type === "video" && !isUnlocked()) {
-    funText.innerText = "🔒 Unlocks on May 12 🎂";
-    menu.style.display = "block";
+  if(type === "video" && !isUnlocked()){
+    if(funText) funText.innerText = "🔒 Locked until May 12 🎂";
+    if(menu) menu.style.display = "block";
     return;
   }
 
-  if (type === "timer") timerPage.style.display = "block";
-  if (type === "video") videoPage.style.display = "block";
-  if (type === "book") book.style.display = "block";
+  if(type === "timer" && timerPage) timerPage.style.display = "block";
+  if(type === "video" && videoPage) videoPage.style.display = "block";
 }
 
-// ==============================
-// 🔙 BACK
-// ==============================
-function goBack() {
-  timerPage.style.display = "none";
-  videoPage.style.display = "none";
-  book.style.display = "none";
-  menu.style.display = "block";
+// ======================
+// BACK BUTTON
+// ======================
+window.goBack = function(){
+  if(timerPage) timerPage.style.display = "none";
+  if(videoPage) videoPage.style.display = "none";
+  if(menu) menu.style.display = "block";
 }
 
-window.openPage = openPage;
-window.goBack = goBack;
+// ======================
+// TIMER
+// ======================
+setInterval(()=>{
+  if(!bigTimer) return;
 
-// ==============================
-// ⏳ TIMER
-// ==============================
-setInterval(() => {
+  let gap = unlockDate - Date.now();
 
-  const now = Date.now();
-  const gap = unlockDate - now;
+  let d = Math.floor(gap/(1000*60*60*24));
+  let h = Math.floor((gap/(1000*60*60))%24);
+  let m = Math.floor((gap/(1000*60))%60);
+  let s = Math.floor((gap/1000)%60);
 
-  const d = Math.floor(gap / (1000 * 60 * 60 * 24));
-  const h = Math.floor((gap / (1000 * 60 * 60)) % 24);
-  const m = Math.floor((gap / (1000 * 60)) % 60);
-  const s = Math.floor((gap / 1000) % 60);
+  bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
 
-  countdown.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+},1000);
 
-  if (bigTimer) {
-    bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+// ======================
+// STARS (SAFE)
+// ======================
+if(stars){
+  const ctx = stars.getContext("2d");
+  stars.width = window.innerWidth;
+  stars.height = window.innerHeight;
+
+  let arr = Array.from({length:80},()=>({
+    x:Math.random()*stars.width,
+    y:Math.random()*stars.height,
+    s:Math.random()*2
+  }));
+
+  function draw(){
+    ctx.clearRect(0,0,stars.width,stars.height);
+    arr.forEach(p=>{
+      ctx.fillStyle="white";
+      ctx.fillRect(p.x,p.y,p.s,p.s);
+    });
+    requestAnimationFrame(draw);
   }
-
-}, 1000);
-
-// ==============================
-// ✨ STAR PARTICLES
-// ==============================
-const ctx = starCanvas.getContext("2d");
-
-starCanvas.width = window.innerWidth;
-starCanvas.height = window.innerHeight;
-
-let stars = [];
-
-for (let i = 0; i < 100; i++) {
-  stars.push({
-    x: Math.random() * starCanvas.width,
-    y: Math.random() * starCanvas.height,
-    size: Math.random() * 2,
-    speed: Math.random() * 0.5
-  });
+  draw();
 }
 
-function animateStars() {
-  ctx.clearRect(0, 0, starCanvas.width, starCanvas.height);
-
-  stars.forEach(s => {
-    s.y += s.speed;
-    if (s.y > starCanvas.height) s.y = 0;
-
-    ctx.fillStyle = "white";
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-    ctx.fill();
-  });
-
-  requestAnimationFrame(animateStars);
-}
-
-animateStars();
-
-// ==============================
-// 🖱 CURSOR GLOW
-// ==============================
-document.addEventListener("mousemove", (e) => {
-  cursor.style.left = e.clientX + "px";
-  cursor.style.top = e.clientY + "px";
-});
-
-// ==============================
-// 🧠 PARALLAX
-// ==============================
-document.addEventListener("mousemove", (e) => {
-
-  let x = (window.innerWidth / 2 - e.clientX) / 25;
-  let y = (window.innerHeight / 2 - e.clientY) / 25;
-
-  document.querySelectorAll("#menu,#timerPage,#videoPage").forEach(el => {
-    el.style.transform =
-      `translate(-50%, -50%) perspective(1000px) rotateX(${y}deg) rotateY(${x}deg)`;
-  });
-
+// ======================
+// CURSOR GLOW (SAFE)
+// ======================
+document.addEventListener("mousemove",(e)=>{
+  if(cursor){
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+  }
 });
 
 });
