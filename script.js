@@ -5,61 +5,45 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================= */
   const gift = document.getElementById("giftImage");
   const giftContainer = document.getElementById("giftContainer");
-
   const bigMessage = document.getElementById("bigMessage");
   const menu = document.getElementById("menu");
-
   const videoPage = document.getElementById("videoPage");
   const book = document.getElementById("book");
-
   const music = document.getElementById("bgMusic");
-
   const adminBtn = document.getElementById("adminBtn");
   const adminPanel = document.getElementById("adminPanel");
   const loginBtn = document.getElementById("loginBtn");
-
-  const userInput = document.getElementById("user");
-  const passInput = document.getElementById("pass");
-
   const bigTimer = document.getElementById("bigTimer");
 
   /* =========================
-     INTRO REMOVE
+     CONFIG
+  ========================= */
+  const REPO = "ICEDRHINO23/birthday-bhumika";
+  const DATA_FILE = "data/scrapbook.json";
+
+  /* =========================
+     INTRO
   ========================= */
   setTimeout(() => {
-    const intro = document.getElementById("intro");
-    if (intro) intro.style.display = "none";
+    document.getElementById("intro")?.remove();
   }, 2000);
 
   /* =========================
-     ADMIN PANEL
+     ADMIN
   ========================= */
-  if (adminBtn && adminPanel) {
-    adminBtn.addEventListener("click", () => {
-      adminPanel.classList.toggle("open");
-    });
-  }
+  adminBtn.onclick = () => adminPanel.classList.toggle("open");
+
+  loginBtn.onclick = () => {
+    let u = document.getElementById("user").value.trim();
+    let p = document.getElementById("pass").value.trim();
+
+    if (u === "abin" && p === "1234") {
+      window.location.href = "admin.html";
+    } else alert("Wrong ❌");
+  };
 
   /* =========================
-     LOGIN
-  ========================= */
-  if (loginBtn) {
-    loginBtn.addEventListener("click", () => {
-
-      const u = userInput?.value.trim();
-      const p = passInput?.value.trim();
-
-      if (u === "abin" && p === "1234") {
-        window.location.href = "admin.html";
-      } else {
-        alert("Wrong credentials ❌");
-      }
-
-    });
-  }
-
-  /* =========================
-     TIMER (ALWAYS ON HOME)
+     TIMER
   ========================= */
   const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
 
@@ -67,115 +51,173 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!bigTimer) return;
 
-    const now = new Date().getTime();
-    const gap = unlockDate - now;
+    let gap = unlockDate - Date.now();
 
     if (gap <= 0) {
       bigTimer.innerHTML = "🎉 It's Time 🎂";
       return;
     }
 
-    const d = Math.floor(gap / (1000 * 60 * 60 * 24));
-    const h = Math.floor((gap / (1000 * 60 * 60)) % 24);
-    const m = Math.floor((gap / (1000 * 60)) % 60);
-    const s = Math.floor((gap / 1000) % 60);
+    let d = Math.floor(gap/(1000*60*60*24));
+    let h = Math.floor((gap/(1000*60*60))%24);
+    let m = Math.floor((gap/(1000*60))%60);
+    let s = Math.floor((gap/1000)%60);
 
     bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
 
-  }, 1000);
+  },1000);
 
   /* =========================
-     GIFT SYSTEM
+     GIFT
   ========================= */
   let unlocked = false;
 
-  setTimeout(() => {
-    unlocked = true;
-  }, 2000);
+  setTimeout(()=> unlocked = true, 2000);
 
-  if (gift) {
-    gift.addEventListener("click", () => {
+  gift.onclick = () => {
 
-      if (!unlocked) {
-        alert("Wait a second 😄");
-        return;
-      }
+    if (!unlocked) return alert("Wait 😄");
 
-      /* CHANGE IMAGE */
-      gift.src = "./image/gift-open.PNG";
+    gift.src = "./image/gift-open.PNG";
 
-      /* MUSIC */
-      if (music) {
-        music.volume = 0;
-        music.play().catch(() => {});
+    music.volume = 0;
+    music.play().catch(()=>{});
 
-        let v = 0;
-        let fade = setInterval(() => {
-          v += 0.05;
-          music.volume = v;
-          if (v >= 1) clearInterval(fade);
-        }, 200);
-      }
+    let v=0;
+    let fade=setInterval(()=>{
+      v+=0.05;
+      music.volume=v;
+      if(v>=1) clearInterval(fade);
+    },200);
 
-      /* BIG MESSAGE */
-      if (bigMessage) {
-        setTimeout(() => {
-          bigMessage.classList.add("show");
-        }, 1000);
-      }
+    setTimeout(()=> bigMessage.classList.add("show"),1000);
 
-      /* SHOW MENU */
-      setTimeout(() => {
-        if (giftContainer) giftContainer.style.display = "none";
-        if (menu) menu.classList.remove("hidden");
-      }, 2500);
-
-    });
-  }
-
-  /* =========================
-     HEARTS
-  ========================= */
-  setInterval(() => {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.innerHTML = "💖";
-    h.style.left = Math.random() * 100 + "vw";
-
-    document.body.appendChild(h);
-
-    setTimeout(() => h.remove(), 4000);
-  }, 600);
+    setTimeout(()=>{
+      giftContainer.style.display="none";
+      menu.classList.remove("hidden");
+    },2500);
+  };
 
 });
 
 
 /* =========================
-   GLOBAL FUNCTIONS (IMPORTANT)
+   NAVIGATION
 ========================= */
+window.openPage = function(type){
 
-window.openPage = function(type) {
+  document.getElementById("menu").classList.add("hidden");
+  document.getElementById("videoPage").classList.add("hidden");
+  document.getElementById("book").classList.add("hidden");
 
-  const menu = document.getElementById("menu");
-  const videoPage = document.getElementById("videoPage");
-  const book = document.getElementById("book");
-
-  if (menu) menu.classList.add("hidden");
-  if (videoPage) videoPage.classList.add("hidden");
-  if (book) book.classList.add("hidden");
-
-  if (type === "video") {
-    videoPage.classList.remove("hidden");
+  if(type==="video"){
+    document.getElementById("videoPage").classList.remove("hidden");
   }
 
-  if (type === "book") {
-    book.classList.remove("hidden");
-    loadScrapbook(); // 🔥 must exist later
+  if(type==="book"){
+    document.getElementById("book").classList.remove("hidden");
+    loadScrapbook();
   }
 };
 
-window.goBack = function() {
-  document.getElementById("videoPage")?.classList.add("hidden");
-  document.getElementById("book")?.classList.add("hidden");
-  document.getElementById("menu")?.classList.remove("hidden");
+window.goBack = function(){
+  document.getElementById("videoPage").classList.add("hidden");
+  document.getElementById("book").classList.add("hidden");
+  document.getElementById("menu").classList.remove("hidden");
 };
+
+
+/* =========================
+   SCRAPBOOK LOAD (GITHUB)
+========================= */
+async function loadScrapbook(){
+
+  const container = document.getElementById("pagesContainer");
+  container.innerHTML = "Loading...";
+
+  try{
+
+    let res = await fetch("https://raw.githubusercontent.com/ICEDRHINO23/birthday-bhumika/main/data/scrapbook.json");
+    let data = await res.json();
+
+    container.innerHTML = "";
+
+    if(data.length === 0){
+      container.innerHTML = "<h2>No memories yet 💔</h2>";
+      return;
+    }
+
+    data.forEach((item,index)=>{
+
+      let div = document.createElement("div");
+      div.className = "spread";
+
+      let media = item.type==="video"
+        ? `<video src="${item.src}" controls class="media"></video>`
+        : `<img src="${item.src}" class="media">`;
+
+      div.innerHTML = `
+        <div class="left">${media}</div>
+        <div class="right">
+          <h2>${item.title}</h2>
+          <p>${item.text}</p>
+
+          <button onclick="editPage(${index})">Edit</button>
+          <button onclick="deletePage(${index})">Delete</button>
+        </div>
+      `;
+
+      container.appendChild(div);
+
+    });
+
+    showPage(0);
+
+  }catch(e){
+    container.innerHTML="Failed to load";
+    console.error(e);
+  }
+
+}
+
+
+/* =========================
+   PAGE FLIP
+========================= */
+let current = 0;
+
+function showPage(i){
+
+  const pages = document.querySelectorAll(".spread");
+
+  pages.forEach((p,index)=>{
+    p.classList.remove("active","flip");
+
+    if(index < i) p.classList.add("flip");
+  });
+
+  if(pages[i]) pages[i].classList.add("active");
+
+  current = i;
+}
+
+function nextPage(){
+  const pages=document.querySelectorAll(".spread");
+  if(current < pages.length-1) showPage(current+1);
+}
+
+function prevPage(){
+  if(current>0) showPage(current-1);
+}
+
+
+/* =========================
+   EDIT / DELETE (ADMIN ONLY)
+========================= */
+function editPage(index){
+  alert("Edit from admin panel 🔐");
+}
+
+function deletePage(index){
+  alert("Delete from admin panel 🔐");
+}
