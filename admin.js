@@ -1,7 +1,7 @@
 /* =========================
    CONFIG
 ========================= */
-const TOKEN = "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"; // 🔥 replace
+const TOKEN ="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"; // 🔥 replace
 const REPO = "ICEDRHINO23/birthday-bhumika";
 const FILE = "data/scrapbook.json";
 
