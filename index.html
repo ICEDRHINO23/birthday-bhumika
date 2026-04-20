@@ -5,7 +5,7 @@
   <title>Happy Birthday Bhoomika 🎂</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- REMOVE FAVICON ERROR -->
+  <!-- Fix favicon error -->
   <link rel="icon" href="data:,">
 </head>
 
@@ -25,22 +25,23 @@
   <button id="loginBtn">Enter</button>
 </div>
 
-<!-- BACKGROUND MUSIC -->
+<!-- MUSIC -->
 <audio id="bgMusic" src="./audio/music.mp3" loop></audio>
 
-<!-- FLOATING HEARTS -->
+<!-- HEARTS -->
 <div id="hearts"></div>
 
 <!-- MAIN -->
 <div id="main">
 
   <!-- PROFILE -->
-  <img id="profilePic" src="./image/bhoomika.jpg" alt="Bhoomika">
+  <img id="profilePic" src="./image/bhoomika.jpg">
 
   <h1>Happy Birthday Bhoomika 🎂</h1>
 
   <p>
-    Some people don’t just come into life... they stay, they change everything ❤️
+    Some people don’t just come into life…  
+    they stay, they change everything ❤️
   </p>
 
   <!-- GIFT -->
@@ -48,7 +49,7 @@
     <img id="giftImage" src="./image/gift-closed.PNG">
   </div>
 
-  <!-- BIG MESSAGE (DELAYED) -->
+  <!-- BIG MESSAGE -->
   <div id="bigMessage">
     You are one of the best things that ever happened in my life 💖
   </div>
@@ -60,11 +61,18 @@
 
   <!-- MENU -->
   <div id="menu" class="hidden">
+
     <h2>Choose Something 💝</h2>
 
     <button onclick="openPage('timer')">⏳ Countdown</button>
+
     <button onclick="openPage('video')">🎬 Video</button>
-    <button onclick="openPage('book')">📖 Scrapbook</button>
+
+    <!-- ✅ UPDATED BUTTON -->
+    <button onclick="window.location.href='scrapbook.html'">
+      📖 Scrapbook
+    </button>
+
   </div>
 
 </div>
@@ -80,17 +88,6 @@
 <div id="videoPage" class="hidden">
   <video controls src="./videos/bhumika.mp4"></video>
   <button onclick="goBack()">Back</button>
-</div>
-
-<!-- SCRAPBOOK -->
-<div id="book" class="hidden">
-  <div id="pagesContainer"></div>
-
-  <div>
-    <button onclick="prevPage()">⬅</button>
-    <button onclick="nextPage()">➡</button>
-    <button onclick="goBack()">Back</button>
-  </div>
 </div>
 
 <script src="script.js"></script>
