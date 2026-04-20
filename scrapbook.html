@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scrapbook 💖</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>Memories 💖</h1>
+
+<!-- SCRAPBOOK -->
+<div id="book">
+
+  <div id="pagesContainer"></div>
+
+  <div>
+    <button onclick="prevPage()">⬅</button>
+    <button onclick="nextPage()">➡</button>
+    <button onclick="goHome()">🏠 Home</button>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+<script>
+/* GO BACK HOME */
+function goHome(){
+  window.location.href = "index.html";
+}
+
+/* LOAD DIRECTLY */
+document.addEventListener("DOMContentLoaded", () => {
+  if(typeof loadScrapbook === "function"){
+    loadScrapbook();
+  }
+});
+</script>
+
+</body>
+</html>
