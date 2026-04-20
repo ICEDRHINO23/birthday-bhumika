@@ -1,173 +1,61 @@
-/* =========================
-   CONFIG
-========================= */
-const TOKEN = "YOUR_GITHUB_TOKEN"; // 🔥 replace
-const REPO = "ICEDRHINO23/birthday-bhumika";
-const BRANCH = "main";
-const DATA_FILE = "data/scrapbook.json";
+document.addEventListener("DOMContentLoaded", () => {
 
-/* =========================
-   LOAD SCRAPBOOK FROM GITHUB
-========================= */
-async function loadScrapbook() {
+const gift = document.getElementById("giftImage");
+const bigMessage = document.getElementById("bigMessage");
+const menu = document.getElementById("menu");
+const music = document.getElementById("bgMusic");
 
-  const container = document.getElementById("pagesContainer");
-  if (!container) return;
+const adminBtn = document.getElementById("adminBtn");
+const adminPanel = document.getElementById("adminPanel");
 
-  container.innerHTML = "Loading...";
+/* ADMIN */
+adminBtn.onclick = () => {
+  adminPanel.classList.toggle("open");
+};
 
-  try {
+/* LOGIN */
+document.getElementById("loginBtn").onclick = () => {
+  let u = document.getElementById("user").value;
+  let p = document.getElementById("pass").value;
 
-    let res = await fetch(`https://raw.githubusercontent.com/${REPO}/${BRANCH}/${DATA_FILE}`);
-    let data = await res.json();
+  if(u==="abin" && p==="1234"){
+    window.location.href = "admin.html";
+  } else alert("Wrong");
+};
 
-    console.log("Scrapbook Data:", data);
+/* GIFT */
+gift.onclick = () => {
 
-    container.innerHTML = "";
+  gift.src = "./image/gift-open.PNG";
 
-    if (data.length === 0) {
-      container.innerHTML = "<h2>No memories yet 💔</h2>";
-      return;
-    }
+  music.volume = 0;
+  music.play();
 
-    data.forEach((item, index) => {
+  let v = 0;
+  let fade = setInterval(()=>{
+    v+=0.05;
+    music.volume=v;
+    if(v>=1) clearInterval(fade);
+  },200);
 
-      const page = document.createElement("div");
-      page.className = "spread";
+  setTimeout(()=>{
+    bigMessage.classList.add("show");
+  },1500);
 
-      let media = item.type === "image"
-        ? `<img src="${item.src}" class="media">`
-        : `<video src="${item.src}" controls class="media"></video>`;
+  setTimeout(()=>{
+    document.getElementById("giftContainer").style.display="none";
+    menu.classList.remove("hidden");
+  },3000);
+};
 
-      page.innerHTML = `
-        <div class="left">${media}</div>
+/* HEARTS */
+setInterval(()=>{
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💖";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),4000);
+},500);
 
-        <div class="right">
-          <h2>${item.title}</h2>
-          <p>${item.text}</p>
-
-          <div class="actions">
-            <button onclick="editPage(${index})">✏️ Edit</button>
-            <button onclick="deletePage(${index})">🗑 Delete</button>
-          </div>
-        </div>
-      `;
-
-      container.appendChild(page);
-    });
-
-    showPage(0);
-
-  } catch (err) {
-    console.error(err);
-    container.innerHTML = "Failed to load 💔";
-  }
-}
-
-/* =========================
-   DELETE
-========================= */
-async function deletePage(index) {
-
-  if (!confirm("Delete this memory? 💔")) return;
-
-  let data = await getData();
-
-  data.splice(index, 1);
-
-  await updateGitHubJSON(data);
-
-  location.reload();
-}
-
-/* =========================
-   EDIT
-========================= */
-async function editPage(index) {
-
-  let data = await getData();
-
-  let newTitle = prompt("Edit Title", data[index].title);
-  let newText = prompt("Edit Text", data[index].text);
-
-  if (!newTitle || !newText) return;
-
-  data[index].title = newTitle;
-  data[index].text = newText;
-
-  await updateGitHubJSON(data);
-
-  location.reload();
-}
-
-/* =========================
-   GET DATA
-========================= */
-async function getData() {
-
-  let res = await fetch(`https://api.github.com/repos/${REPO}/contents/${DATA_FILE}`);
-  let file = await res.json();
-
-  return JSON.parse(atob(file.content));
-}
-
-/* =========================
-   UPDATE GITHUB JSON
-========================= */
-async function updateGitHubJSON(data) {
-
-  let res = await fetch(`https://api.github.com/repos/${REPO}/contents/${DATA_FILE}`);
-  let file = await res.json();
-
-  await fetch(`https://api.github.com/repos/${REPO}/contents/${DATA_FILE}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `token ${TOKEN}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      message: "update scrapbook",
-      content: btoa(JSON.stringify(data, null, 2)),
-      sha: file.sha
-    })
-  });
-}
-
-/* =========================
-   BOOK NAVIGATION
-========================= */
-let current = 0;
-
-function showPage(i) {
-
-  const pages = document.querySelectorAll(".spread");
-
-  pages.forEach((p, index) => {
-    p.classList.remove("active", "flip");
-
-    if (index < i) p.classList.add("flip");
-  });
-
-  if (pages[i]) pages[i].classList.add("active");
-
-  current = i;
-}
-
-function nextPage() {
-  const pages = document.querySelectorAll(".spread");
-
-  if (current < pages.length - 1) {
-    showPage(current + 1);
-  }
-}
-
-function prevPage() {
-  if (current > 0) {
-    showPage(current - 1);
-  }
-}
-
-/* =========================
-   INIT
-========================= */
-document.addEventListener("DOMContentLoaded", loadScrapbook);
+});
