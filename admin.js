@@ -46,7 +46,7 @@ function toBase64(file) {
 }
 
 /* =========================
-   GET DATA FROM GITHUB
+   FETCH FILE
 ========================= */
 async function getData() {
 
@@ -56,8 +56,8 @@ async function getData() {
 
   if (!res.ok) {
     const err = await res.json();
-    console.error(err);
-    alert("❌ GitHub Auth Failed (Check Token)");
+    console.error("GitHub Error:", err);
+    alert("❌ Auth failed / check token");
     throw new Error("Auth failed");
   }
 
@@ -65,7 +65,7 @@ async function getData() {
 }
 
 /* =========================
-   SAVE DATA TO GITHUB
+   SAVE FILE
 ========================= */
 async function saveData(data, sha) {
 
@@ -84,7 +84,7 @@ async function saveData(data, sha) {
 
   if (!res.ok) {
     const err = await res.json();
-    console.error(err);
+    console.error("Save Error:", err);
     alert("❌ Failed to update JSON");
     return false;
   }
@@ -126,12 +126,12 @@ addBtn.onclick = async () => {
 
     if (!uploadRes.ok) {
       const err = await uploadRes.json();
-      console.error(err);
+      console.error("Upload Error:", err);
       alert("❌ Media upload failed");
       return;
     }
 
-    /* GET EXISTING JSON */
+    /* GET JSON */
     const fileData = await getData();
 
     let data = [];
@@ -164,26 +164,43 @@ addBtn.onclick = async () => {
 };
 
 /* =========================
-   LOAD LIST
+   LOAD LIST (FIXED)
 ========================= */
 async function loadList() {
 
   try {
 
-    const fileData = await getData();
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`, {
+      headers: { Authorization: `token ${TOKEN}` }
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      console.error(err);
+      list.innerHTML = "❌ Failed to load (check token)";
+      return;
+    }
+
+    const fileData = await res.json();
 
     let data = [];
 
-    try {
-      data = JSON.parse(atob(fileData.content));
-    } catch {
-      data = [];
+    if (fileData.content) {
+      try {
+        data = JSON.parse(atob(fileData.content));
+      } catch {
+        data = [];
+      }
     }
 
     list.innerHTML = "";
 
-    data.forEach((item, i) => {
+    if (!data.length) {
+      list.innerHTML = "<p>No pages yet</p>";
+      return;
+    }
 
+    data.forEach((item, i) => {
       list.innerHTML += `
         <div>
           <b>${item.title}</b><br>
@@ -192,11 +209,11 @@ async function loadList() {
           <hr>
         </div>
       `;
-
     });
 
   } catch (err) {
     console.error(err);
+    list.innerHTML = "❌ Unexpected error";
   }
 }
 
@@ -208,7 +225,14 @@ loadList();
 window.editPage = async (i) => {
 
   const fileData = await getData();
-  const data = JSON.parse(atob(fileData.content));
+
+  let data = [];
+
+  try {
+    data = JSON.parse(atob(fileData.content));
+  } catch {
+    data = [];
+  }
 
   const item = data[i];
 
@@ -235,7 +259,14 @@ updateBtn.onclick = async () => {
   }
 
   const fileData = await getData();
-  let data = JSON.parse(atob(fileData.content));
+
+  let data = [];
+
+  try {
+    data = JSON.parse(atob(fileData.content));
+  } catch {
+    data = [];
+  }
 
   data[editIndex].title = titleInput.value.trim();
   data[editIndex].text = textInput.value.trim();
@@ -256,7 +287,14 @@ window.deletePage = async (i) => {
   if (!confirm("Delete this page?")) return;
 
   const fileData = await getData();
-  let data = JSON.parse(atob(fileData.content));
+
+  let data = [];
+
+  try {
+    data = JSON.parse(atob(fileData.content));
+  } catch {
+    data = [];
+  }
 
   data.splice(i, 1);
 
