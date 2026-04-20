@@ -1,291 +1,173 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* =========================
+   CONFIG
+========================= */
+const TOKEN = "YOUR_GITHUB_TOKEN"; // 🔥 replace
+const REPO = "ICEDRHINO23/birthday-bhumika";
+const BRANCH = "main";
+const DATA_FILE = "data/scrapbook.json";
 
-  /* =========================
-     ELEMENT SAFETY GET
-  ========================= */
-  const intro = document.getElementById("intro");
-  const adminBtn = document.getElementById("adminBtn");
-  const adminPanel = document.getElementById("adminPanel");
-  const loginBtn = document.getElementById("loginBtn");
+/* =========================
+   LOAD SCRAPBOOK FROM GITHUB
+========================= */
+async function loadScrapbook() {
 
-  const gift = document.getElementById("giftImage");
-  const menu = document.getElementById("menu");
-  const timerPage = document.getElementById("timerPage");
-  const videoPage = document.getElementById("videoPage");
-  const book = document.getElementById("book");
+  const container = document.getElementById("pagesContainer");
+  if (!container) return;
 
-  const bigTimer = document.getElementById("bigTimer");
-  const bigMessage = document.getElementById("bigMessage");
+  container.innerHTML = "Loading...";
 
-  const music = document.getElementById("bgMusic");
-  const heartsContainer = document.getElementById("hearts");
+  try {
 
-  const typedText = document.getElementById("typedText");
-  const surpriseText = document.getElementById("surpriseText");
+    let res = await fetch(`https://raw.githubusercontent.com/${REPO}/${BRANCH}/${DATA_FILE}`);
+    let data = await res.json();
 
-  /* =========================
-     INTRO
-  ========================= */
-  if (intro) {
-    setTimeout(() => {
-      intro.style.display = "none";
-    }, 2000);
-  }
+    console.log("Scrapbook Data:", data);
 
-  /* =========================
-     ADMIN PANEL
-  ========================= */
-  if (adminBtn && adminPanel) {
-    adminBtn.addEventListener("click", () => {
-      adminPanel.classList.toggle("open");
-    });
-  }
+    container.innerHTML = "";
 
-  /* =========================
-     LOGIN
-  ========================= */
-  if (loginBtn) {
-    loginBtn.addEventListener("click", () => {
-
-      const user = document.getElementById("user").value.trim();
-      const pass = document.getElementById("pass").value.trim();
-
-      if (user === "abin" && pass === "1234") {
-        alert("Login Success ✅");
-        window.location.href = "admin.html";
-      } else {
-        alert("Wrong credentials ❌");
-      }
-
-    });
-  }
-
-  /* =========================
-     GIFT SYSTEM
-  ========================= */
-  let unlocked = false;
-  setTimeout(() => unlocked = true, 3000);
-
-  if (gift) {
-    gift.addEventListener("click", () => {
-
-      if (!unlocked) return;
-
-      gift.src = "./image/gift-open.PNG";
-      gift.classList.add("opened");
-
-      if (music) {
-        music.play().catch(() => {});
-      }
-
-      setTimeout(() => {
-        if (bigMessage) bigMessage.style.opacity = "1";
-      }, 1200);
-
-      setTimeout(() => startTyping(), 2000);
-
-      setTimeout(() => {
-        const giftContainer = document.getElementById("giftContainer");
-        if (giftContainer) giftContainer.style.display = "none";
-
-        if (menu) menu.classList.remove("hidden");
-      }, 3000);
-
-    });
-  }
-
-  /* =========================
-     TYPING EFFECT
-  ========================= */
-  function startTyping() {
-
-    if (!typedText || !surpriseText) return;
-
-    surpriseText.classList.remove("hidden");
-
-    const text = "You didn’t just become a friend… you became my comfort, my peace, my happiness 💖";
-
-    let i = 0;
-
-    function typing() {
-      if (i < text.length) {
-        typedText.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typing, 40);
-      }
-    }
-
-    typing();
-  }
-
-  /* =========================
-     HEARTS
-  ========================= */
-  function createHeart() {
-    if (!heartsContainer) return;
-
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "💖";
-
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (Math.random() * 20 + 15) + "px";
-
-    heartsContainer.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 4000);
-  }
-
-  setInterval(createHeart, 500);
-
-  /* =========================
-     TIMER
-  ========================= */
-  const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
-
-  function isUnlocked() {
-    return Date.now() >= unlockDate;
-  }
-
-  setInterval(() => {
-
-    if (!bigTimer) return;
-
-    let gap = unlockDate - Date.now();
-
-    if (gap <= 0) {
-      bigTimer.innerHTML = "🎉 It's Time! 🎂";
+    if (data.length === 0) {
+      container.innerHTML = "<h2>No memories yet 💔</h2>";
       return;
     }
 
-    let d = Math.floor(gap / (1000 * 60 * 60 * 24));
-    let h = Math.floor((gap / (1000 * 60 * 60)) % 24);
-    let m = Math.floor((gap / (1000 * 60)) % 60);
-    let s = Math.floor((gap / 1000) % 60);
+    data.forEach((item, index) => {
 
-    bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+      const page = document.createElement("div");
+      page.className = "spread";
 
-  }, 1000);
+      let media = item.type === "image"
+        ? `<img src="${item.src}" class="media">`
+        : `<video src="${item.src}" controls class="media"></video>`;
 
-  /* =========================
-     NAVIGATION
-  ========================= */
-  window.openPage = function(type) {
+      page.innerHTML = `
+        <div class="left">${media}</div>
 
-    if (menu) menu.classList.add("hidden");
-    if (timerPage) timerPage.classList.add("hidden");
-    if (videoPage) videoPage.classList.add("hidden");
-    if (book) book.classList.add("hidden");
+        <div class="right">
+          <h2>${item.title}</h2>
+          <p>${item.text}</p>
 
-    if (type === "timer" && timerPage) {
-      timerPage.classList.remove("hidden");
-    }
+          <div class="actions">
+            <button onclick="editPage(${index})">✏️ Edit</button>
+            <button onclick="deletePage(${index})">🗑 Delete</button>
+          </div>
+        </div>
+      `;
 
-    if (type === "video" && videoPage) {
-      if (!isUnlocked()) {
-        alert("🔒 Unlocks on May 12 🎂");
-        if (menu) menu.classList.remove("hidden");
-        return;
-      }
-      videoPage.classList.remove("hidden");
-    }
+      container.appendChild(page);
+    });
 
-    if (type === "book" && book) {
-      book.classList.remove("hidden");
-      loadScrapbook();
-    }
-  };
+    showPage(0);
 
-  window.goBack = function() {
-    if (timerPage) timerPage.classList.add("hidden");
-    if (videoPage) videoPage.classList.add("hidden");
-    if (book) book.classList.add("hidden");
-    if (menu) menu.classList.remove("hidden");
-  };
-
-});
-
-/* =========================
-   SCRAPBOOK (GLOBAL FIX)
-========================= */
-window.loadScrapbook = function () {
-
-  const container = document.getElementById("pagesContainer");
-
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  let data = JSON.parse(localStorage.getItem("scrapbook") || "[]");
-
-  console.log("Scrapbook Data:", data);
-
-  if (data.length === 0) {
-    container.innerHTML = "<h3>No memories yet 💔</h3>";
-    return;
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = "Failed to load 💔";
   }
-
-  data.forEach(item => {
-
-    const page = document.createElement("div");
-    page.className = "spread";
-
-    let media = "";
-
-    if (item.type === "image") {
-      media = `<img src="${item.src}">`;
-    } else {
-      media = `<video src="${item.src}" controls></video>`;
-    }
-
-    page.innerHTML = `
-      <div class="left">${media}</div>
-      <div class="right">
-        <h2>${item.title}</h2>
-        <p>${item.text}</p>
-      </div>
-    `;
-
-    container.appendChild(page);
-  });
-
-  showPage(0);
-};
-
-/* =========================
-   PAGE NAVIGATION (GLOBAL)
-========================= */
-let currentPage = 0;
-
-function getPages() {
-  return document.querySelectorAll(".spread");
 }
 
-window.showPage = function(index) {
+/* =========================
+   DELETE
+========================= */
+async function deletePage(index) {
 
-  const pages = getPages();
+  if (!confirm("Delete this memory? 💔")) return;
 
-  pages.forEach((p, i) => {
-    p.classList.remove("active");
+  let data = await getData();
 
-    if (i < index) p.classList.add("flip");
-    else p.classList.remove("flip");
+  data.splice(index, 1);
+
+  await updateGitHubJSON(data);
+
+  location.reload();
+}
+
+/* =========================
+   EDIT
+========================= */
+async function editPage(index) {
+
+  let data = await getData();
+
+  let newTitle = prompt("Edit Title", data[index].title);
+  let newText = prompt("Edit Text", data[index].text);
+
+  if (!newTitle || !newText) return;
+
+  data[index].title = newTitle;
+  data[index].text = newText;
+
+  await updateGitHubJSON(data);
+
+  location.reload();
+}
+
+/* =========================
+   GET DATA
+========================= */
+async function getData() {
+
+  let res = await fetch(`https://api.github.com/repos/${REPO}/contents/${DATA_FILE}`);
+  let file = await res.json();
+
+  return JSON.parse(atob(file.content));
+}
+
+/* =========================
+   UPDATE GITHUB JSON
+========================= */
+async function updateGitHubJSON(data) {
+
+  let res = await fetch(`https://api.github.com/repos/${REPO}/contents/${DATA_FILE}`);
+  let file = await res.json();
+
+  await fetch(`https://api.github.com/repos/${REPO}/contents/${DATA_FILE}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `token ${TOKEN}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: "update scrapbook",
+      content: btoa(JSON.stringify(data, null, 2)),
+      sha: file.sha
+    })
+  });
+}
+
+/* =========================
+   BOOK NAVIGATION
+========================= */
+let current = 0;
+
+function showPage(i) {
+
+  const pages = document.querySelectorAll(".spread");
+
+  pages.forEach((p, index) => {
+    p.classList.remove("active", "flip");
+
+    if (index < i) p.classList.add("flip");
   });
 
-  if (pages[index]) pages[index].classList.add("active");
+  if (pages[i]) pages[i].classList.add("active");
 
-  currentPage = index;
-};
+  current = i;
+}
 
-window.nextPage = function() {
-  const pages = getPages();
-  if (currentPage < pages.length - 1) {
-    showPage(currentPage + 1);
+function nextPage() {
+  const pages = document.querySelectorAll(".spread");
+
+  if (current < pages.length - 1) {
+    showPage(current + 1);
   }
-};
+}
 
-window.prevPage = function() {
-  if (currentPage > 0) {
-    showPage(currentPage - 1);
+function prevPage() {
+  if (current > 0) {
+    showPage(current - 1);
   }
-};
+}
+
+/* =========================
+   INIT
+========================= */
+document.addEventListener("DOMContentLoaded", loadScrapbook);
