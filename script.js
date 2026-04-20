@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* =========================
-     TIMER
+     TIMER (HOME)
   ========================= */
   setInterval(() => {
 
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },200);
     }
 
-    /* MESSAGE */
+    /* BIG MESSAGE */
     setTimeout(()=>{
       bigMessage?.classList.add("show");
     },800);
@@ -128,7 +128,7 @@ window.openPage = function(type){
     return;
   }
 
-  /* RESET UI */
+  /* RESET */
   menu?.classList.add("hidden");
   book?.classList.add("hidden");
 
@@ -149,14 +149,14 @@ window.goBack = function(){
 
 
 /* =========================
-   SCRAPBOOK (FINAL FIX)
+   SCRAPBOOK FINAL (5 PAGE)
 ========================= */
 async function loadScrapbook(){
 
   const container = document.getElementById("pagesContainer");
   if(!container) return;
 
-  container.innerHTML = "Loading..." ;
+  container.innerHTML = "Loading...";
 
   try{
 
@@ -173,7 +173,33 @@ async function loadScrapbook(){
       return;
     }
 
-    data.forEach((item,i)=>{
+    /* 🎯 LIMIT TO 5 */
+    const pagesData = data.slice(0,5);
+
+    /* 💬 FRIENDSHIP TEXT */
+    const texts = [
+
+      `Some people enter life quietly…  
+but slowly they become part of everything.  
+That’s how this started — simple, real, effortless.`,
+
+      `Not every friendship gives comfort…  
+but this one did.  
+Even silence felt understood.`,
+
+      `Memories were never planned…  
+they just happened.  
+And somehow, they stayed.`,
+
+      `Some bonds don’t need explanation.  
+They just exist… strong and constant.`,
+
+      `Not loud, not obvious…  
+but something that quietly stays,  
+no matter what changes.`
+    ];
+
+    pagesData.forEach((item,i)=>{
 
       const div = document.createElement("div");
       div.className = "spread";
@@ -185,17 +211,15 @@ async function loadScrapbook(){
       div.innerHTML = `
         <div class="left">${media}</div>
         <div class="right">
-          <h2>${item.title}</h2>
-          <p>${item.text}</p>
+          <h2>Memory ${i+1}</h2>
+          <p>${texts[i]}</p>
         </div>
       `;
 
       container.appendChild(div);
-
     });
 
-    /* 🔥 FORCE FIRST PAGE ACTIVE */
-    setTimeout(() => showPage(0), 100);
+    setTimeout(()=> showPage(0),100);
 
   }catch(err){
     container.innerHTML = "Failed ❌";
