@@ -277,3 +277,67 @@ button:hover {
 .hidden {
   display: none;
 }
+/* BOOK PAGE */
+.book-body {
+  margin: 0;
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+}
+
+.book-title {
+  margin-top: 20px;
+  color: #333;
+}
+
+.book {
+  width: 90%;
+  max-width: 900px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* PAGE STYLE */
+.page {
+  display: flex;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  transition: transform 0.4s;
+}
+
+.page:hover {
+  transform: scale(1.02);
+}
+
+/* LEFT SIDE */
+.left {
+  width: 50%;
+}
+
+.left img,
+.left video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* RIGHT SIDE */
+.right {
+  width: 50%;
+  padding: 20px;
+  text-align: left;
+}
+
+.right h2 {
+  margin-bottom: 10px;
+  color: #ff4d6d;
+}
+
+.right p {
+  line-height: 1.6;
+  color: #444;
+}
