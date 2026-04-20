@@ -1,7 +1,7 @@
 /* =========================
    CONFIG (VERY IMPORTANT)
 ========================= */
-const TOKEN = "PASTE_YOUR_GITHUB_TOKEN_HERE"; // ⚠️ required
+const TOKEN = "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"; // ⚠️ required
 const REPO = "ICEDRHINO23/birthday-bhumika";
 const FILE_PATH = "data/scrapbook.json";
 const BRANCH = "main";
