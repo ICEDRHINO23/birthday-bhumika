@@ -1,7 +1,7 @@
 /* =========================
-   CONFIG (VERY IMPORTANT)
+   CONFIG
 ========================= */
-const TOKEN = "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"; // ⚠️ required
+const TOKEN = "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";   // 🔥 your new token
 const REPO = "ICEDRHINO23/birthday-bhumika";
 const FILE_PATH = "data/scrapbook.json";
 const BRANCH = "main";
@@ -13,7 +13,11 @@ const fileInput = document.getElementById("fileInput");
 const titleInput = document.getElementById("title");
 const textInput = document.getElementById("text");
 const preview = document.getElementById("preview");
+
 const addBtn = document.getElementById("addBtn");
+const updateBtn = document.getElementById("updateBtn");
+
+let editIndex = null;
 
 /* =========================
    PREVIEW
@@ -26,29 +30,54 @@ fileInput.addEventListener("change", () => {
 
   const url = URL.createObjectURL(file);
 
-  if (file.type.startsWith("video")) {
-    preview.innerHTML = `<video src="${url}" controls></video>`;
-  } else {
-    preview.innerHTML = `<img src="${url}">`;
-  }
+  preview.innerHTML = file.type.startsWith("video")
+    ? `<video src="${url}" controls></video>`
+    : `<img src="${url}">`;
 });
 
 /* =========================
-   GET EXISTING FILE (WITH SHA)
+   GET FILE FROM GITHUB
 ========================= */
-async function getFile() {
+async function getFileData(){
   const res = await fetch(
-    `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,
+    `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,
+    { headers: { Authorization: `token ${TOKEN}` } }
+  );
+
+  if(!res.ok) throw new Error("Fetch failed");
+
+  return res.json();
+}
+
+/* =========================
+   SAVE FILE TO GITHUB
+========================= */
+async function saveFile(json, sha){
+
+  const res = await fetch(
+    `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,
     {
+      method: "PUT",
       headers: {
-        Authorization: `token ${TOKEN}`
-      }
+        Authorization: `token ${TOKEN}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: "Updated scrapbook",
+        content: btoa(JSON.stringify(json, null, 2)),
+        sha: sha,
+        branch: BRANCH
+      })
     }
   );
 
-  if (!res.ok) throw new Error("Failed to fetch file");
+  if(!res.ok){
+    console.error(await res.json());
+    alert("GitHub update failed ❌");
+    return false;
+  }
 
-  return res.json();
+  return true;
 }
 
 /* =========================
@@ -65,69 +94,130 @@ addBtn.addEventListener("click", async () => {
     return;
   }
 
-  try {
+  const reader = new FileReader();
 
-    /* 1️⃣ READ FILE */
-    const reader = new FileReader();
+  reader.onload = async function(e){
 
-    reader.onload = async function (e) {
+    const fileData = await getFileData();
+    let json = JSON.parse(atob(fileData.content));
 
-      const base64Media = e.target.result;
+    json.push({
+      type: file.type.startsWith("video") ? "video" : "image",
+      src: e.target.result,
+      title,
+      text
+    });
 
-      /* 2️⃣ GET EXISTING JSON */
-      const fileData = await getFile();
+    const success = await saveFile(json, fileData.sha);
 
-      const content = atob(fileData.content);
-      let json = JSON.parse(content);
+    if(success){
+      alert("Added ✅");
+      location.reload();
+    }
 
-      /* 3️⃣ ADD NEW PAGE */
-      json.push({
-        type: file.type.startsWith("video") ? "video" : "image",
-        src: base64Media,
-        title: title,
-        text: text
-      });
+  };
 
-      /* 4️⃣ UPDATE FILE */
-      const updateRes = await fetch(
-        `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `token ${TOKEN}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            message: "Added scrapbook page",
-            content: btoa(JSON.stringify(json, null, 2)),
-            sha: fileData.sha,
-            branch: BRANCH
-          })
-        }
-      );
+  reader.readAsDataURL(file);
 
-      if (updateRes.ok) {
-        alert("Uploaded successfully ✅");
-        location.reload();
-      } else {
-        alert("Upload failed ❌");
-        console.error(await updateRes.json());
-      }
+});
 
-    };
+/* =========================
+   LOAD EXISTING DATA (FOR EDIT)
+========================= */
+async function loadData(){
 
-    reader.readAsDataURL(file);
+  const fileData = await getFileData();
+  const json = JSON.parse(atob(fileData.content));
 
-  } catch (err) {
-    console.error(err);
-    alert("Error ❌");
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  json.forEach((item, index)=>{
+
+    const div = document.createElement("div");
+
+    div.innerHTML = `
+      <b>${item.title}</b><br>
+      <button onclick="editPage(${index})">Edit</button>
+      <button onclick="deletePage(${index})">Delete</button>
+      <hr>
+    `;
+
+    list.appendChild(div);
+
+  });
+
+}
+
+window.onload = loadData;
+
+/* =========================
+   EDIT PAGE
+========================= */
+window.editPage = async function(index){
+
+  const fileData = await getFileData();
+  const json = JSON.parse(atob(fileData.content));
+
+  const item = json[index];
+
+  titleInput.value = item.title;
+  textInput.value = item.text;
+
+  preview.innerHTML = item.type === "video"
+    ? `<video src="${item.src}" controls></video>`
+    : `<img src="${item.src}">`;
+
+  editIndex = index;
+
+  alert("Now click UPDATE button ✏️");
+};
+
+/* =========================
+   UPDATE PAGE
+========================= */
+updateBtn.addEventListener("click", async () => {
+
+  if(editIndex === null){
+    alert("Select page first ❌");
+    return;
+  }
+
+  const title = titleInput.value.trim();
+  const text = textInput.value.trim();
+
+  const fileData = await getFileData();
+  let json = JSON.parse(atob(fileData.content));
+
+  json[editIndex].title = title;
+  json[editIndex].text = text;
+
+  const success = await saveFile(json, fileData.sha);
+
+  if(success){
+    alert("Updated ✅");
+    location.reload();
   }
 
 });
 
 /* =========================
-   LOGOUT
+   DELETE PAGE
 ========================= */
-function logout() {
-  window.location.href = "index.html";
-}
+window.deletePage = async function(index){
+
+  if(!confirm("Delete this page? ❌")) return;
+
+  const fileData = await getFileData();
+  let json = JSON.parse(atob(fileData.content));
+
+  json.splice(index,1);
+
+  const success = await saveFile(json, fileData.sha);
+
+  if(success){
+    alert("Deleted 🗑️");
+    location.reload();
+  }
+
+};
