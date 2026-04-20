@@ -1,177 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Panel 🔐</title>
+<meta charset="UTF-8">
+<title>Admin Panel 🔐</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      background: linear-gradient(135deg, #f8cdda, #f6d365);
-      text-align: center;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(135deg, #f8cdda, #f6d365);
+  text-align: center;
+}
 
-    .container {
-      margin-top: 60px;
-      background: white;
-      display: inline-block;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-    }
+.container {
+  margin-top: 40px;
+  background: white;
+  display: inline-block;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
 
-    input, textarea {
-      width: 280px;
-      padding: 10px;
-      margin: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-    }
+input, textarea {
+  width: 260px;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
 
-    button {
-      padding: 10px 20px;
-      margin: 10px;
-      border-radius: 10px;
-      border: none;
-      background: #ff4d6d;
-      color: white;
-      cursor: pointer;
-    }
+button {
+  padding: 10px 18px;
+  margin: 8px;
+  border-radius: 10px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+  cursor: pointer;
+}
 
-    #preview img,
-    #preview video {
-      width: 200px;
-      margin-top: 10px;
-      border-radius: 10px;
-    }
-  </style>
+button:hover {
+  opacity: 0.9;
+}
+
+#preview img,
+#preview video {
+  width: 180px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+#list {
+  margin-top: 30px;
+}
+</style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-  <h2>Admin Panel 📖</h2>
+<h2>Admin Panel 📖</h2>
 
-  <input type="file" id="fileInput"><br>
+<input type="file" id="fileInput"><br>
 
-  <div id="preview"></div>
+<div id="preview"></div>
 
-  <input type="text" id="title" placeholder="Enter title"><br>
+<input type="text" id="title" placeholder="Enter title"><br>
 
-  <textarea id="text" placeholder="Write emotional message..."></textarea><br>
+<textarea id="text" placeholder="Write emotional message..."></textarea><br>
 
-  <button id="addBtn">Upload to Scrapbook</button>
-  <button onclick="logout()">Logout 🚪</button>
-  <button id="updateBtn">Update Page ✏️</button>
+<button id="addBtn">Add Page ➕</button>
+<button id="updateBtn">Update Page ✏️</button>
+<button onclick="logout()">Logout 🚪</button>
 
 </div>
+
 <div id="list"></div>
+
 <script>
 
 /* =========================
-   CONFIG (IMPORTANT)
+   CONFIG
 ========================= */
-const TOKEN = "YOUR_GITHUB_TOKEN";  // 🔥 put your token
+const TOKEN = "PASTE_YOUR_REAL_TOKEN_HERE";
 const REPO = "ICEDRHINO23/birthday-bhumika";
 const FILE = "data/scrapbook.json";
+
+let editIndex = null;
 
 /* =========================
    PREVIEW
 ========================= */
-document.getElementById("fileInput").addEventListener("change", function(){
-
+fileInput.onchange = function(){
   const file = this.files[0];
-  const preview = document.getElementById("preview");
-
   preview.innerHTML = "";
 
   if(!file) return;
 
   const url = URL.createObjectURL(file);
 
-  if(file.type.startsWith("video")){
-    preview.innerHTML = `<video src="${url}" controls></video>`;
-  } else {
-    preview.innerHTML = `<img src="${url}">`;
-  }
-
-});
+  preview.innerHTML = file.type.startsWith("video")
+    ? `<video src="${url}" controls></video>`
+    : `<img src="${url}">`;
+};
 
 /* =========================
-   ADD PAGE (GITHUB SAVE)
-========================= */
-document.getElementById("addBtn").addEventListener("click", async () => {
-
-  const file = document.getElementById("fileInput").files[0];
-  const title = document.getElementById("title").value.trim();
-  const text = document.getElementById("text").value.trim();
-
-  if (!file || !title || !text) {
-    alert("Fill all fields ❌");
-    return;
-  }
-
-  try {
-
-    const base64 = await toBase64(file);
-    const filePath = `scrapbook/${Date.now()}-${file.name}`;
-
-    /* UPLOAD MEDIA */
-    await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `token ${TOKEN}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        message: "upload media",
-        content: base64.split(",")[1]
-      })
-    });
-
-    /* GET EXISTING JSON */
-    let res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`, {
-      headers: { Authorization: `token ${TOKEN}` }
-    });
-
-    let json = await res.json();
-    let data = JSON.parse(atob(json.content));
-
-    /* ADD NEW PAGE */
-    data.push({
-      type: file.type.startsWith("video") ? "video" : "image",
-      src: `./${filePath}`,
-      title: title,
-      text: text
-    });
-
-    /* UPDATE JSON */
-    await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `token ${TOKEN}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        message: "update scrapbook",
-        content: btoa(JSON.stringify(data, null, 2)),
-        sha: json.sha
-      })
-    });
-
-    alert("Uploaded to GitHub ✅");
-
-  } catch (err) {
-    console.error(err);
-    alert("Upload failed ❌");
-  }
-
-});
-
-/* =========================
-   HELPER
+   BASE64
 ========================= */
 function toBase64(file){
   return new Promise(resolve=>{
@@ -182,10 +118,172 @@ function toBase64(file){
 }
 
 /* =========================
+   GET JSON
+========================= */
+async function getData(){
+  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`,{
+    headers:{ Authorization:`token ${TOKEN}` }
+  });
+  return await res.json();
+}
+
+/* =========================
+   SAVE JSON
+========================= */
+async function saveData(data, sha){
+  await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`,{
+    method:"PUT",
+    headers:{
+      Authorization:`token ${TOKEN}`,
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+      message:"update scrapbook",
+      content:btoa(JSON.stringify(data,null,2)),
+      sha:sha
+    })
+  });
+}
+
+/* =========================
+   ADD PAGE
+========================= */
+addBtn.onclick = async () => {
+
+  const file = fileInput.files[0];
+  const titleVal = title.value.trim();
+  const textVal = text.value.trim();
+
+  if(!file || !titleVal || !textVal){
+    alert("Fill all fields ❌");
+    return;
+  }
+
+  const base64 = await toBase64(file);
+  const filePath = `scrapbook/${Date.now()}-${file.name}`;
+
+  /* upload media */
+  await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`,{
+    method:"PUT",
+    headers:{
+      Authorization:`token ${TOKEN}`,
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+      message:"upload media",
+      content:base64.split(",")[1]
+    })
+  });
+
+  const fileData = await getData();
+  let data = JSON.parse(atob(fileData.content));
+
+  data.push({
+    type: file.type.startsWith("video") ? "video" : "image",
+    src:`./${filePath}`,
+    title:titleVal,
+    text:textVal
+  });
+
+  await saveData(data, fileData.sha);
+
+  alert("Added ✅");
+  location.reload();
+};
+
+/* =========================
+   LOAD LIST
+========================= */
+async function loadList(){
+
+  const fileData = await getData();
+  const data = JSON.parse(atob(fileData.content));
+
+  list.innerHTML = "";
+
+  data.forEach((item,i)=>{
+
+    list.innerHTML += `
+      <div>
+        <b>${item.title}</b><br>
+        <button onclick="editPage(${i})">Edit</button>
+        <button onclick="deletePage(${i})">Delete</button>
+        <hr>
+      </div>
+    `;
+  });
+
+}
+
+loadList();
+
+/* =========================
+   EDIT
+========================= */
+window.editPage = async function(i){
+
+  const fileData = await getData();
+  const data = JSON.parse(atob(fileData.content));
+
+  const item = data[i];
+
+  title.value = item.title;
+  text.value = item.text;
+
+  preview.innerHTML = item.type === "video"
+    ? `<video src="${item.src}" controls></video>`
+    : `<img src="${item.src}">`;
+
+  editIndex = i;
+
+  alert("Click UPDATE to save ✏️");
+};
+
+/* =========================
+   UPDATE
+========================= */
+updateBtn.onclick = async () => {
+
+  if(editIndex === null){
+    alert("Select page first ❌");
+    return;
+  }
+
+  const fileData = await getData();
+  let data = JSON.parse(atob(fileData.content));
+
+  data[editIndex].title = title.value;
+  data[editIndex].text = text.value;
+
+  await saveData(data, fileData.sha);
+
+  alert("Updated ✅");
+  location.reload();
+};
+
+/* =========================
+   DELETE
+========================= */
+window.deletePage = async function(i){
+
+  if(!confirm("Delete this page?")) return;
+
+  const fileData = await getData();
+  let data = JSON.parse(atob(fileData.content));
+
+  data.splice(i,1);
+
+  await saveData(data, fileData.sha);
+
+  alert("Deleted 🗑️");
+  location.reload();
+};
+
+/* =========================
    LOGOUT
 ========================= */
 function logout(){
-  window.location.href = "index.html";
+  window.location.href="index.html";
 }
 
 </script>
