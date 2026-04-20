@@ -1,42 +1,159 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* =========================
+   CONFIG
+========================= */
+const TOKEN = "YOUR_GITHUB_TOKEN"; // 🔥 replace this
+const REPO = "ICEDRHINO23/birthday-bhumika";
+const BRANCH = "main";
 
-/* ELEMENTS */
-const intro = document.getElementById("intro");
-const adminBtn = document.getElementById("adminBtn");
-const adminPanel = document.getElementById("adminPanel");
-const loginBtn = document.getElementById("loginBtn");
+const DATA_FILE = "data/scrapbook.json";
 
-/* INTRO */
-setTimeout(() => intro.style.display = "none", 2000);
+/* =========================
+   ELEMENTS
+========================= */
+const fileInput = document.getElementById("fileInput");
+const preview = document.getElementById("preview");
+const titleInput = document.getElementById("title");
+const textInput = document.getElementById("text");
+const addBtn = document.getElementById("addBtn");
 
-/* ADMIN TOGGLE */
-adminBtn.addEventListener("click", () => {
-  adminPanel.classList.toggle("open");
-});
+/* =========================
+   FILE PREVIEW
+========================= */
+fileInput.addEventListener("change", () => {
 
-/* LOGIN FIX (FINAL WORKING) */
-loginBtn.addEventListener("click", () => {
+  const file = fileInput.files[0];
+  preview.innerHTML = "";
 
-  const user = document.getElementById("user").value.trim();
-  const pass = document.getElementById("pass").value.trim();
+  if (!file) return;
 
-  console.log(user, pass);
+  const url = URL.createObjectURL(file);
 
-  if (user === "abin" && pass === "1234") {
-
-    alert("Login Success ✅");
-
-    // TEST SUCCESS
-    document.body.innerHTML = "<h1>Welcome Admin 🎉</h1>";
-
+  if (file.type.startsWith("video")) {
+    preview.innerHTML = `<video src="${url}" controls></video>`;
   } else {
-    alert("Wrong credentials ❌");
+    preview.innerHTML = `<img src="${url}">`;
   }
 
 });
 
 /* =========================
-   REST OF YOUR LOGIC
+   ADD PAGE (UPLOAD TO GITHUB)
 ========================= */
+addBtn.addEventListener("click", async () => {
+
+  const file = fileInput.files[0];
+  const title = titleInput.value.trim();
+  const text = textInput.value.trim();
+
+  if (!file || !title || !text) {
+    alert("Fill all fields ❌");
+    return;
+  }
+
+  try {
+
+    /* 1️⃣ Convert to base64 */
+    const base64 = await fileToBase64(file);
+
+    /* 2️⃣ Create unique file path */
+    const filePath = `scrapbook/${Date.now()}-${file.name}`;
+
+    /* 3️⃣ Upload media file */
+    await uploadToGitHub(filePath, base64.split(",")[1], "upload media");
+
+    /* 4️⃣ Get existing JSON */
+    const { content, sha } = await getFile(DATA_FILE);
+
+    let data = content ? JSON.parse(atob(content)) : [];
+
+    /* 5️⃣ Add new entry */
+    data.push({
+      type: file.type.startsWith("video") ? "video" : "image",
+      src: `./${filePath}`,
+      title: title,
+      text: text
+    });
+
+    /* 6️⃣ Update JSON file */
+    await uploadToGitHub(
+      DATA_FILE,
+      btoa(JSON.stringify(data, null, 2)),
+      "update scrapbook data",
+      sha
+    );
+
+    alert("Uploaded to GitHub ✅");
+
+    /* CLEAR FORM */
+    fileInput.value = "";
+    titleInput.value = "";
+    textInput.value = "";
+    preview.innerHTML = "";
+
+  } catch (err) {
+    console.error(err);
+    alert("Upload failed ❌");
+  }
 
 });
+
+/* =========================
+   HELPERS
+========================= */
+
+/* Convert file to base64 */
+function fileToBase64(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsDataURL(file);
+  });
+}
+
+/* Get file from GitHub */
+async function getFile(path) {
+
+  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}?ref=${BRANCH}`, {
+    headers: {
+      Authorization: `token ${TOKEN}`
+    }
+  });
+
+  if (res.status === 404) {
+    return { content: null, sha: null };
+  }
+
+  const data = await res.json();
+
+  return {
+    content: data.content,
+    sha: data.sha
+  };
+}
+
+/* Upload / Update file */
+async function uploadToGitHub(path, content, message, sha = null) {
+
+  const body = {
+    message: message,
+    content: content,
+    branch: BRANCH
+  };
+
+  if (sha) body.sha = sha;
+
+  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `token ${TOKEN}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    console.error(err);
+    throw new Error("GitHub upload failed");
+  }
+}
