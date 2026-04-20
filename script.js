@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const bigTimer = document.getElementById("bigTimer");
 
   /* =========================
-     DATE LOCK (STRICT)
+     DATE LOCK
   ========================= */
   const unlockDate = new Date("2026-05-12T00:00:00+05:30").getTime();
 
@@ -34,8 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   loginBtn?.addEventListener("click", () => {
-    let u = document.getElementById("user")?.value.trim();
-    let p = document.getElementById("pass")?.value.trim();
+    const u = document.getElementById("user")?.value.trim();
+    const p = document.getElementById("pass")?.value.trim();
 
     if (u === "abin" && p === "1234") {
       window.location.href = "admin.html";
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* =========================
-     TIMER (LIVE)
+     TIMER
   ========================= */
   setInterval(() => {
 
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
 
-  },1000);
+  }, 1000);
 
   /* =========================
      GIFT SYSTEM
@@ -77,30 +77,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!unlocked) return alert("Wait 😄");
 
-    /* FIX IMAGE PATH */
     gift.src = "./image/gift-open.png";
 
-    /* MUSIC FADE */
-    if(music){
+    /* MUSIC */
+    if (music) {
       music.volume = 0;
       music.play().catch(()=>{});
 
-      let v=0;
-      let fade=setInterval(()=>{
-        v+=0.05;
-        music.volume=v;
-        if(v>=1) clearInterval(fade);
+      let v = 0;
+      let fade = setInterval(()=>{
+        v += 0.05;
+        music.volume = v;
+        if(v >= 1) clearInterval(fade);
       },200);
     }
 
-    /* BIG MESSAGE */
+    /* MESSAGE */
     setTimeout(()=>{
       bigMessage?.classList.add("show");
     },800);
 
-    /* MENU APPEAR */
+    /* MENU */
     setTimeout(()=>{
-      giftContainer.style.display="none";
+      giftContainer.style.display = "none";
       menu?.classList.remove("hidden");
     },2200);
 
@@ -119,20 +118,21 @@ window.openPage = function(type){
 
   const unlockDate = new Date("2026-05-12T00:00:00+05:30").getTime();
 
-  if(type==="video"){
-
+  /* 🔒 VIDEO LOCK */
+  if(type === "video"){
     if(Date.now() < unlockDate){
       alert("🔒 Unlocks on May 12 🎂");
       return;
     }
-
     window.location.href = "video.html";
     return;
   }
 
+  /* RESET UI */
   menu?.classList.add("hidden");
+  book?.classList.add("hidden");
 
-  if(type==="book"){
+  if(type === "book"){
     book?.classList.remove("hidden");
     loadScrapbook();
   }
@@ -149,7 +149,7 @@ window.goBack = function(){
 
 
 /* =========================
-   SCRAPBOOK (FIXED)
+   SCRAPBOOK (FINAL FIX)
 ========================= */
 async function loadScrapbook(){
 
@@ -161,7 +161,7 @@ async function loadScrapbook(){
   try{
 
     const res = await fetch(
-      "https://raw.githubusercontent.com/ICEDRHINO23/birthday-bhumika/main/data/scrapbook.json?cache=" + Date.now()
+      "https://raw.githubusercontent.com/ICEDRHINO23/birthday-bhumika/main/data/scrapbook.json?nocache=" + Date.now()
     );
 
     const data = await res.json();
@@ -175,10 +175,10 @@ async function loadScrapbook(){
 
     data.forEach((item,i)=>{
 
-      let div = document.createElement("div");
+      const div = document.createElement("div");
       div.className = "spread";
 
-      let media = item.type==="video"
+      const media = item.type === "video"
         ? `<video src="${item.src}" controls></video>`
         : `<img src="${item.src}">`;
 
@@ -194,7 +194,8 @@ async function loadScrapbook(){
 
     });
 
-    showPage(0);
+    /* 🔥 FORCE FIRST PAGE ACTIVE */
+    setTimeout(() => showPage(0), 100);
 
   }catch(err){
     container.innerHTML = "Failed ❌";
@@ -214,18 +215,26 @@ function showPage(i){
 
   pages.forEach((p,index)=>{
     p.classList.remove("active","flip");
+
     if(index < i) p.classList.add("flip");
   });
 
-  pages[i]?.classList.add("active");
+  if(pages[i]){
+    pages[i].classList.add("active");
+  }
+
   current = i;
 }
 
 function nextPage(){
-  const pages=document.querySelectorAll(".spread");
-  if(current < pages.length-1) showPage(current+1);
+  const pages = document.querySelectorAll(".spread");
+  if(current < pages.length - 1){
+    showPage(current + 1);
+  }
 }
 
 function prevPage(){
-  if(current>0) showPage(current-1);
+  if(current > 0){
+    showPage(current - 1);
+  }
 }
