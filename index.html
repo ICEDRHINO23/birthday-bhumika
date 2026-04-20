@@ -41,9 +41,16 @@
 
   <p>Some people don’t just come into life… they stay, they change everything ❤️</p>
 
+  <!-- 🔥 TIMER ALWAYS VISIBLE -->
+  <div id="timerBox">
+    <h2>Countdown 🎂</h2>
+    <div id="bigTimer"></div>
+  </div>
+
   <!-- GIFT -->
   <div id="giftContainer">
-    <img id="giftImage" src="./image/gift.png">
+    <!-- ✅ FIXED IMAGE NAME -->
+    <img id="giftImage" src="./image/gift-closed.PNG">
   </div>
 
   <!-- BIG MESSAGE -->
@@ -56,25 +63,18 @@
     <span id="typedText"></span>
   </div>
 
-  <!-- MENU -->
+  <!-- MENU (ONLY AFTER GIFT) -->
   <div id="menu" class="hidden">
     <h2>Choose Something 💝</h2>
 
-    <button onclick="openPage('timer')">⏳ Countdown</button>
+    <!-- ❌ REMOVED TIMER BUTTON -->
     <button onclick="openPage('video')">🎬 Video</button>
     <button onclick="openPage('book')">📖 Scrapbook</button>
   </div>
 
 </div>
 
-<!-- TIMER -->
-<div id="timerPage" class="hidden">
-  <h2>Countdown 🎂</h2>
-  <div id="bigTimer"></div>
-  <button onclick="goBack()">Back</button>
-</div>
-
-<!-- VIDEO -->
+<!-- VIDEO PAGE -->
 <div id="videoPage" class="hidden">
   <video controls src="./videos/bhumika.mp4"></video>
   <button onclick="goBack()">Back</button>
