@@ -21,10 +21,6 @@
       box-shadow: 0 15px 40px rgba(0,0,0,0.2);
     }
 
-    h2 {
-      color: #ff4d6d;
-    }
-
     input, textarea {
       width: 280px;
       padding: 10px;
@@ -33,35 +29,21 @@
       border: 1px solid #ccc;
     }
 
-    textarea {
-      height: 100px;
-      resize: none;
-    }
-
     button {
       padding: 10px 20px;
       margin: 10px;
-      border: none;
       border-radius: 10px;
+      border: none;
       background: #ff4d6d;
       color: white;
       cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      opacity: 0.9;
-    }
-
-    #preview {
-      margin-top: 10px;
     }
 
     #preview img,
     #preview video {
       width: 200px;
-      border-radius: 10px;
       margin-top: 10px;
+      border-radius: 10px;
     }
   </style>
 </head>
@@ -72,20 +54,15 @@
 
   <h2>Admin Panel 📖</h2>
 
-  <!-- FILE INPUT -->
   <input type="file" id="fileInput"><br>
 
-  <!-- PREVIEW -->
   <div id="preview"></div>
 
-  <!-- TITLE -->
   <input type="text" id="title" placeholder="Enter title"><br>
 
-  <!-- TEXT -->
   <textarea id="text" placeholder="Write emotional message..."></textarea><br>
 
-  <!-- BUTTONS -->
-  <button id="addBtn">Add Page</button>
+  <button id="addBtn">Upload to Scrapbook</button>
   <button onclick="logout()">Logout 🚪</button>
 
 </div>
@@ -93,7 +70,14 @@
 <script>
 
 /* =========================
-   PREVIEW FILE
+   CONFIG (IMPORTANT)
+========================= */
+const TOKEN = "YOUR_GITHUB_TOKEN";  // 🔥 put your token
+const REPO = "ICEDRHINO23/birthday-bhumika";
+const FILE = "data/scrapbook.json";
+
+/* =========================
+   PREVIEW
 ========================= */
 document.getElementById("fileInput").addEventListener("change", function(){
 
@@ -115,62 +99,91 @@ document.getElementById("fileInput").addEventListener("change", function(){
 });
 
 /* =========================
-   ADD PAGE (FINAL)
+   ADD PAGE (GITHUB SAVE)
 ========================= */
-document.getElementById("addBtn").addEventListener("click", () => {
+document.getElementById("addBtn").addEventListener("click", async () => {
 
-  const fileInput = document.getElementById("fileInput");
+  const file = document.getElementById("fileInput").files[0];
   const title = document.getElementById("title").value.trim();
   const text = document.getElementById("text").value.trim();
 
-  const file = fileInput.files[0];
-
-  if (!file) {
-    alert("Select a file ❌");
-    return;
-  }
-
-  if (!title || !text) {
+  if (!file || !title || !text) {
     alert("Fill all fields ❌");
     return;
   }
 
-  const reader = new FileReader();
+  try {
 
-  reader.onload = function (e) {
+    const base64 = await toBase64(file);
+    const filePath = `scrapbook/${Date.now()}-${file.name}`;
 
-    const type = file.type.startsWith("video") ? "video" : "image";
+    /* UPLOAD MEDIA */
+    await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `token ${TOKEN}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: "upload media",
+        content: base64.split(",")[1]
+      })
+    });
 
-    let data = JSON.parse(localStorage.getItem("scrapbook") || "[]");
+    /* GET EXISTING JSON */
+    let res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`, {
+      headers: { Authorization: `token ${TOKEN}` }
+    });
 
+    let json = await res.json();
+    let data = JSON.parse(atob(json.content));
+
+    /* ADD NEW PAGE */
     data.push({
-      type: type,
-      src: e.target.result,
+      type: file.type.startsWith("video") ? "video" : "image",
+      src: `./${filePath}`,
       title: title,
       text: text
     });
 
-    localStorage.setItem("scrapbook", JSON.stringify(data));
+    /* UPDATE JSON */
+    await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `token ${TOKEN}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: "update scrapbook",
+        content: btoa(JSON.stringify(data, null, 2)),
+        sha: json.sha
+      })
+    });
 
-    alert("Page Added Successfully ✅");
+    alert("Uploaded to GitHub ✅");
 
-    // clear form
-    fileInput.value = "";
-    document.getElementById("title").value = "";
-    document.getElementById("text").value = "";
-    document.getElementById("preview").innerHTML = "";
-
-  };
-
-  reader.readAsDataURL(file);
+  } catch (err) {
+    console.error(err);
+    alert("Upload failed ❌");
+  }
 
 });
+
+/* =========================
+   HELPER
+========================= */
+function toBase64(file){
+  return new Promise(resolve=>{
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsDataURL(file);
+  });
+}
 
 /* =========================
    LOGOUT
 ========================= */
 function logout(){
-  alert("Logged out 👋");
   window.location.href = "index.html";
 }
 
