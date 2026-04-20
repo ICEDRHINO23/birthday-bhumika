@@ -1,26 +1,24 @@
 /* =========================
-   CONFIG
+   CONFIG (VERY IMPORTANT)
 ========================= */
-const TOKEN = "YOUR_GITHUB_TOKEN"; // 🔥 replace
+const TOKEN = "PASTE_YOUR_GITHUB_TOKEN_HERE"; // ⚠️ required
 const REPO = "ICEDRHINO23/birthday-bhumika";
+const FILE_PATH = "data/scrapbook.json";
 const BRANCH = "main";
-
-const DATA_FILE = "data/scrapbook.json";
 
 /* =========================
    ELEMENTS
 ========================= */
 const fileInput = document.getElementById("fileInput");
-const preview = document.getElementById("preview");
 const titleInput = document.getElementById("title");
 const textInput = document.getElementById("text");
+const preview = document.getElementById("preview");
 const addBtn = document.getElementById("addBtn");
 
 /* =========================
    PREVIEW
 ========================= */
 fileInput.addEventListener("change", () => {
-
   const file = fileInput.files[0];
   preview.innerHTML = "";
 
@@ -33,11 +31,28 @@ fileInput.addEventListener("change", () => {
   } else {
     preview.innerHTML = `<img src="${url}">`;
   }
-
 });
 
 /* =========================
-   ADD PAGE (GITHUB ONLY)
+   GET EXISTING FILE (WITH SHA)
+========================= */
+async function getFile() {
+  const res = await fetch(
+    `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,
+    {
+      headers: {
+        Authorization: `token ${TOKEN}`
+      }
+    }
+  );
+
+  if (!res.ok) throw new Error("Failed to fetch file");
+
+  return res.json();
+}
+
+/* =========================
+   ADD PAGE
 ========================= */
 addBtn.addEventListener("click", async () => {
 
@@ -52,99 +67,67 @@ addBtn.addEventListener("click", async () => {
 
   try {
 
-    // 1️⃣ Convert file
-    const base64 = await fileToBase64(file);
+    /* 1️⃣ READ FILE */
+    const reader = new FileReader();
 
-    const filePath = `scrapbook/${Date.now()}-${file.name}`;
+    reader.onload = async function (e) {
 
-    // 2️⃣ Upload media
-    await uploadFile(filePath, base64.split(",")[1]);
+      const base64Media = e.target.result;
 
-    // 3️⃣ Get JSON
-    const { content, sha } = await getFile(DATA_FILE);
+      /* 2️⃣ GET EXISTING JSON */
+      const fileData = await getFile();
 
-    let data = content ? JSON.parse(atob(content)) : [];
+      const content = atob(fileData.content);
+      let json = JSON.parse(content);
 
-    // 4️⃣ Push new item
-    data.push({
-      type: file.type.startsWith("video") ? "video" : "image",
-      src: `./${filePath}`,
-      title: title,
-      text: text
-    });
+      /* 3️⃣ ADD NEW PAGE */
+      json.push({
+        type: file.type.startsWith("video") ? "video" : "image",
+        src: base64Media,
+        title: title,
+        text: text
+      });
 
-    // 5️⃣ Update JSON
-    await updateJSON(data, sha);
+      /* 4️⃣ UPDATE FILE */
+      const updateRes = await fetch(
+        `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `token ${TOKEN}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: "Added scrapbook page",
+            content: btoa(JSON.stringify(json, null, 2)),
+            sha: fileData.sha,
+            branch: BRANCH
+          })
+        }
+      );
 
-    alert("Uploaded to GitHub ✅");
+      if (updateRes.ok) {
+        alert("Uploaded successfully ✅");
+        location.reload();
+      } else {
+        alert("Upload failed ❌");
+        console.error(await updateRes.json());
+      }
+
+    };
+
+    reader.readAsDataURL(file);
 
   } catch (err) {
     console.error(err);
-    alert("Upload failed ❌");
+    alert("Error ❌");
   }
 
 });
 
 /* =========================
-   HELPERS
+   LOGOUT
 ========================= */
-
-function fileToBase64(file) {
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.readAsDataURL(file);
-  });
-}
-
-async function getFile(path) {
-
-  const res = await fetch(
-    `https://api.github.com/repos/${REPO}/contents/${path}?ref=${BRANCH}`,
-    { headers: { Authorization: `token ${TOKEN}` } }
-  );
-
-  if (res.status === 404) {
-    return { content: null, sha: null };
-  }
-
-  const data = await res.json();
-
-  return {
-    content: data.content,
-    sha: data.sha
-  };
-}
-
-async function uploadFile(path, content) {
-
-  await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `token ${TOKEN}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      message: "upload media",
-      content: content,
-      branch: BRANCH
-    })
-  });
-}
-
-async function updateJSON(data, sha) {
-
-  await fetch(`https://api.github.com/repos/${REPO}/contents/${DATA_FILE}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `token ${TOKEN}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      message: "update scrapbook",
-      content: btoa(JSON.stringify(data, null, 2)),
-      sha: sha,
-      branch: BRANCH
-    })
-  });
+function logout() {
+  window.location.href = "index.html";
 }
