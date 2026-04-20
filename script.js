@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const giftContainer = document.getElementById("giftContainer");
   const bigMessage = document.getElementById("bigMessage");
   const menu = document.getElementById("menu");
-  const videoPage = document.getElementById("videoPage");
   const book = document.getElementById("book");
   const music = document.getElementById("bgMusic");
   const adminBtn = document.getElementById("adminBtn");
@@ -16,10 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const bigTimer = document.getElementById("bigTimer");
 
   /* =========================
-     CONFIG
+     DATE LOCK (GLOBAL)
   ========================= */
-  const REPO = "ICEDRHINO23/birthday-bhumika";
-  const DATA_FILE = "data/scrapbook.json";
+  const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
+
+  function isUnlocked(){
+    return Date.now() >= unlockDate;
+  }
 
   /* =========================
      INTRO
@@ -45,8 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      TIMER
   ========================= */
-  const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
-
   setInterval(() => {
 
     if (!bigTimer) return;
@@ -102,28 +102,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =========================
-   NAVIGATION
+   NAVIGATION (UPDATED)
 ========================= */
 window.openPage = function(type){
 
-  document.getElementById("menu").classList.add("hidden");
-  document.getElementById("videoPage").classList.add("hidden");
-  document.getElementById("book").classList.add("hidden");
+  const menu = document.getElementById("menu");
+  const book = document.getElementById("book");
 
+  menu.classList.add("hidden");
+  book.classList.add("hidden");
+
+  /* 🔥 VIDEO LOCK SYSTEM */
   if(type==="video"){
-    document.getElementById("videoPage").classList.remove("hidden");
+
+    const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
+
+    if(Date.now() < unlockDate){
+      alert("🔒 Video unlocks on May 12, 12:00 AM 🎂");
+      menu.classList.remove("hidden");
+      return;
+    }
+
+    /* ✅ OPEN SEPARATE PAGE */
+    window.location.href = "video.html";
   }
 
   if(type==="book"){
-    document.getElementById("book").classList.remove("hidden");
+    book.classList.remove("hidden");
     loadScrapbook();
   }
 };
 
 window.goBack = function(){
-  document.getElementById("videoPage").classList.add("hidden");
-  document.getElementById("book").classList.add("hidden");
-  document.getElementById("menu").classList.remove("hidden");
+  document.getElementById("book")?.classList.add("hidden");
+  document.getElementById("menu")?.classList.remove("hidden");
 };
 
 
@@ -212,7 +224,7 @@ function prevPage(){
 
 
 /* =========================
-   EDIT / DELETE (ADMIN ONLY)
+   EDIT / DELETE
 ========================= */
 function editPage(index){
   alert("Edit from admin panel 🔐");
