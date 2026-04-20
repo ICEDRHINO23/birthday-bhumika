@@ -118,22 +118,12 @@ function toBase64(file){
 }
 
 /* =========================
-   SAFE PARSE (FINAL FIX)
+   SAFE PARSE
 ========================= */
-function safeParse(fileData){
-
-  if(!fileData || fileData.message){
-    console.warn("GitHub error:", fileData);
-    return [];
-  }
-
-  if(!fileData.content){
-    return [];
-  }
+function safeParse(content){
 
   try{
-    /* 🔥 REMOVE NEWLINES */
-    const clean = fileData.content.replace(/\n/g, "");
+    const clean = (content || "").replace(/\n/g, "");
     return JSON.parse(atob(clean));
   }catch(e){
     console.error("Decode error:", e);
@@ -146,15 +136,18 @@ function safeParse(fileData){
 ========================= */
 async function getData(){
 
-  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`,{
-    headers:{ Authorization:`token ${TOKEN}` }
-  });
+  const res = await fetch(
+    `https://api.github.com/repos/${REPO}/contents/${FILE}`,
+    {
+      headers:{ Authorization:`token ${TOKEN}` }
+    }
+  );
 
   const data = await res.json();
 
   if(!res.ok){
-    console.error(data);
-    throw new Error("GitHub error");
+    console.error("GitHub Error:", data);
+    throw new Error(data.message || "GitHub error");
   }
 
   return data;
@@ -165,18 +158,21 @@ async function getData(){
 ========================= */
 async function saveData(data, sha){
 
-  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`,{
-    method:"PUT",
-    headers:{
-      Authorization:`token ${TOKEN}`,
-      "Content-Type":"application/json"
-    },
-    body:JSON.stringify({
-      message:"update scrapbook",
-      content:btoa(JSON.stringify(data,null,2)),
-      sha:sha
-    })
-  });
+  const res = await fetch(
+    `https://api.github.com/repos/${REPO}/contents/${FILE}`,
+    {
+      method:"PUT",
+      headers:{
+        Authorization:`token ${TOKEN}`,
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        message:"update scrapbook",
+        content:btoa(JSON.stringify(data,null,2)),
+        sha:sha
+      })
+    }
+  );
 
   if(!res.ok){
     console.error(await res.json());
@@ -206,17 +202,20 @@ addBtn.onclick = async () => {
     const base64 = await toBase64(file);
     const filePath = `scrapbook/${Date.now()}-${file.name}`;
 
-    const upload = await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`,{
-      method:"PUT",
-      headers:{
-        Authorization:`token ${TOKEN}`,
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        message:"upload media",
-        content:base64.split(",")[1]
-      })
-    });
+    const upload = await fetch(
+      `https://api.github.com/repos/${REPO}/contents/${filePath}`,
+      {
+        method:"PUT",
+        headers:{
+          Authorization:`token ${TOKEN}`,
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          message:"upload media",
+          content:base64.split(",")[1]
+        })
+      }
+    );
 
     if(!upload.ok){
       console.error(await upload.json());
@@ -225,7 +224,7 @@ addBtn.onclick = async () => {
     }
 
     const fileData = await getData();
-    let data = safeParse(fileData);
+    let data = safeParse(fileData.content);
 
     data.push({
       type: file.type.startsWith("video") ? "video" : "image",
@@ -248,14 +247,42 @@ addBtn.onclick = async () => {
 };
 
 /* =========================
-   LOAD LIST
+   LOAD LIST (FINAL FIX)
 ========================= */
 async function loadList(){
 
   try{
 
-    const fileData = await getData();
-    const data = safeParse(fileData);
+    const res = await fetch(
+      `https://api.github.com/repos/${REPO}/contents/${FILE}`,
+      {
+        headers:{ Authorization:`token ${TOKEN}` }
+      }
+    );
+
+    const fileData = await res.json();
+
+    if(!res.ok){
+      console.error("GitHub Error:", fileData);
+      list.innerHTML = `
+        <p style="color:red;">
+          ❌ ${fileData.message}
+        </p>
+      `;
+      return;
+    }
+
+    let raw = (fileData.content || "").replace(/\n/g, "");
+
+    let data = [];
+
+    try{
+      data = JSON.parse(atob(raw));
+    }catch(e){
+      console.error("Decode failed:", e);
+      list.innerHTML = "❌ JSON decode failed";
+      return;
+    }
 
     list.innerHTML = "";
 
@@ -277,7 +304,7 @@ async function loadList(){
 
   }catch(err){
     console.error(err);
-    list.innerHTML = "❌ Failed to load";
+    list.innerHTML = "❌ Unexpected error";
   }
 }
 
@@ -289,7 +316,7 @@ loadList();
 window.editPage = async function(i){
 
   const fileData = await getData();
-  const data = safeParse(fileData);
+  const data = safeParse(fileData.content);
 
   const item = data[i];
 
@@ -314,7 +341,7 @@ updateBtn.onclick = async () => {
   }
 
   const fileData = await getData();
-  let data = safeParse(fileData);
+  let data = safeParse(fileData.content);
 
   data[editIndex].title = title.value.trim();
   data[editIndex].text = text.value.trim();
@@ -335,7 +362,7 @@ window.deletePage = async function(i){
   if(!confirm("Delete this page?")) return;
 
   const fileData = await getData();
-  let data = safeParse(fileData);
+  let data = safeParse(fileData.content);
 
   data.splice(i,1);
 
