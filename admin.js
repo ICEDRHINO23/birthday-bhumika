@@ -1,7 +1,7 @@
 /* =========================
    CONFIG
 ========================= */
-const TOKEN = "YOUR_GITHUB_TOKEN"; // 🔥 replace this
+const TOKEN = "YOUR_GITHUB_TOKEN"; // 🔥 replace
 const REPO = "ICEDRHINO23/birthday-bhumika";
 const BRANCH = "main";
 
@@ -17,7 +17,7 @@ const textInput = document.getElementById("text");
 const addBtn = document.getElementById("addBtn");
 
 /* =========================
-   FILE PREVIEW
+   PREVIEW
 ========================= */
 fileInput.addEventListener("change", () => {
 
@@ -37,7 +37,7 @@ fileInput.addEventListener("change", () => {
 });
 
 /* =========================
-   ADD PAGE (UPLOAD TO GITHUB)
+   ADD PAGE (GITHUB ONLY)
 ========================= */
 addBtn.addEventListener("click", async () => {
 
@@ -52,21 +52,20 @@ addBtn.addEventListener("click", async () => {
 
   try {
 
-    /* 1️⃣ Convert to base64 */
+    // 1️⃣ Convert file
     const base64 = await fileToBase64(file);
 
-    /* 2️⃣ Create unique file path */
     const filePath = `scrapbook/${Date.now()}-${file.name}`;
 
-    /* 3️⃣ Upload media file */
-    await uploadToGitHub(filePath, base64.split(",")[1], "upload media");
+    // 2️⃣ Upload media
+    await uploadFile(filePath, base64.split(",")[1]);
 
-    /* 4️⃣ Get existing JSON */
+    // 3️⃣ Get JSON
     const { content, sha } = await getFile(DATA_FILE);
 
     let data = content ? JSON.parse(atob(content)) : [];
 
-    /* 5️⃣ Add new entry */
+    // 4️⃣ Push new item
     data.push({
       type: file.type.startsWith("video") ? "video" : "image",
       src: `./${filePath}`,
@@ -74,21 +73,10 @@ addBtn.addEventListener("click", async () => {
       text: text
     });
 
-    /* 6️⃣ Update JSON file */
-    await uploadToGitHub(
-      DATA_FILE,
-      btoa(JSON.stringify(data, null, 2)),
-      "update scrapbook data",
-      sha
-    );
+    // 5️⃣ Update JSON
+    await updateJSON(data, sha);
 
     alert("Uploaded to GitHub ✅");
-
-    /* CLEAR FORM */
-    fileInput.value = "";
-    titleInput.value = "";
-    textInput.value = "";
-    preview.innerHTML = "";
 
   } catch (err) {
     console.error(err);
@@ -101,23 +89,20 @@ addBtn.addEventListener("click", async () => {
    HELPERS
 ========================= */
 
-/* Convert file to base64 */
 function fileToBase64(file) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result);
     reader.readAsDataURL(file);
   });
 }
 
-/* Get file from GitHub */
 async function getFile(path) {
 
-  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}?ref=${BRANCH}`, {
-    headers: {
-      Authorization: `token ${TOKEN}`
-    }
-  });
+  const res = await fetch(
+    `https://api.github.com/repos/${REPO}/contents/${path}?ref=${BRANCH}`,
+    { headers: { Authorization: `token ${TOKEN}` } }
+  );
 
   if (res.status === 404) {
     return { content: null, sha: null };
@@ -131,29 +116,35 @@ async function getFile(path) {
   };
 }
 
-/* Upload / Update file */
-async function uploadToGitHub(path, content, message, sha = null) {
+async function uploadFile(path, content) {
 
-  const body = {
-    message: message,
-    content: content,
-    branch: BRANCH
-  };
-
-  if (sha) body.sha = sha;
-
-  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+  await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
     method: "PUT",
     headers: {
       Authorization: `token ${TOKEN}`,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify({
+      message: "upload media",
+      content: content,
+      branch: BRANCH
+    })
   });
+}
 
-  if (!res.ok) {
-    const err = await res.json();
-    console.error(err);
-    throw new Error("GitHub upload failed");
-  }
+async function updateJSON(data, sha) {
+
+  await fetch(`https://api.github.com/repos/${REPO}/contents/${DATA_FILE}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `token ${TOKEN}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: "update scrapbook",
+      content: btoa(JSON.stringify(data, null, 2)),
+      sha: sha,
+      branch: BRANCH
+    })
+  });
 }
