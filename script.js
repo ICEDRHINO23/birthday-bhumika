@@ -27,31 +27,35 @@ document.addEventListener("DOMContentLoaded", () => {
      INTRO
   ========================= */
   setTimeout(() => {
-    intro.style.display = "none";
+    if (intro) intro.style.display = "none";
   }, 2000);
 
   /* =========================
-     ADMIN PANEL TOGGLE
+     ADMIN PANEL
   ========================= */
-  adminBtn.addEventListener("click", () => {
-    adminPanel.classList.toggle("open");
-  });
+  if (adminBtn) {
+    adminBtn.addEventListener("click", () => {
+      adminPanel.classList.toggle("open");
+    });
+  }
 
   /* =========================
-     LOGIN SYSTEM
+     LOGIN SYSTEM (FIXED)
   ========================= */
-  loginBtn.addEventListener("click", () => {
+  if (loginBtn) {
+    loginBtn.addEventListener("click", () => {
 
-    const user = document.getElementById("user").value.trim();
-    const pass = document.getElementById("pass").value.trim();
+      const user = document.getElementById("user").value.trim();
+      const pass = document.getElementById("pass").value.trim();
 
-    if (user === "abin" && pass === "1234") {
-      alert("Login Success ✅");
-      window.location.href = "admin.html";
-    } else {
-      alert("Wrong credentials ❌");
-    }
-  });
+      if (user === "abin" && pass === "1234") {
+        alert("Login Success ✅");
+        window.location.href = "admin.html";
+      } else {
+        alert("Wrong credentials ❌");
+      }
+    });
+  }
 
   /* =========================
      GIFT UNLOCK DELAY
@@ -62,44 +66,46 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      GIFT CLICK
   ========================= */
-  gift.addEventListener("click", () => {
+  if (gift) {
+    gift.addEventListener("click", () => {
 
-    if (!unlocked) return;
+      if (!unlocked) return;
 
-    gift.src = "./image/gift-open.PNG";
-    gift.classList.add("opened");
+      gift.src = "./image/gift-open.PNG";
+      gift.classList.add("opened");
 
-    // play music
-    if (music) {
-      music.play().catch(() => {});
-    }
+      // play music
+      if (music) {
+        music.play().catch(() => {});
+      }
 
-    // show big message
-    setTimeout(() => {
-      bigMessage.style.opacity = "1";
-    }, 1200);
+      // show big message
+      setTimeout(() => {
+        if (bigMessage) bigMessage.style.opacity = "1";
+      }, 1200);
 
-    // typing effect
-    setTimeout(() => {
-      startTyping();
-    }, 2000);
+      // typing effect
+      setTimeout(() => startTyping(), 2000);
 
-    // show menu
-    setTimeout(() => {
-      document.getElementById("giftContainer").style.display = "none";
-      menu.classList.remove("hidden");
-    }, 3000);
+      // show menu
+      setTimeout(() => {
+        document.getElementById("giftContainer").style.display = "none";
+        menu.classList.remove("hidden");
+      }, 3000);
 
-  });
+    });
+  }
 
   /* =========================
      TYPING EFFECT
   ========================= */
   function startTyping() {
 
+    if (!typedText || !surpriseText) return;
+
     surpriseText.classList.remove("hidden");
 
-    const text = "You didn’t just become a friend... you became my comfort, my safe place, my happiness 💖";
+    const text = "You didn’t just become a friend… you became my comfort, my peace, my happiness 💖";
 
     let i = 0;
 
@@ -118,18 +124,18 @@ document.addEventListener("DOMContentLoaded", () => {
      FLOATING HEARTS
   ========================= */
   function createHeart() {
+    if (!heartsContainer) return;
+
     const heart = document.createElement("div");
     heart.classList.add("heart");
     heart.innerHTML = "💖";
 
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+    heart.style.fontSize = (Math.random() * 20 + 15) + "px";
 
     heartsContainer.appendChild(heart);
 
-    setTimeout(() => {
-      heart.remove();
-    }, 4000);
+    setTimeout(() => heart.remove(), 4000);
   }
 
   setInterval(createHeart, 500);
@@ -187,6 +193,8 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================= */
   setInterval(() => {
 
+    if (!bigTimer) return;
+
     let gap = unlockDate - Date.now();
 
     if (gap <= 0) {
@@ -204,14 +212,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 1000);
 
   /* =========================
-     SCRAPBOOK (DYNAMIC)
+     SCRAPBOOK LOAD (FIXED)
   ========================= */
   function loadScrapbook() {
 
     const container = document.getElementById("pagesContainer");
+    if (!container) return;
+
     container.innerHTML = "";
 
     const data = JSON.parse(localStorage.getItem("scrapbook") || "[]");
+
+    if (data.length === 0) {
+      container.innerHTML = "<p>No memories yet 💔</p>";
+      return;
+    }
 
     data.forEach(item => {
 
@@ -240,6 +255,9 @@ document.addEventListener("DOMContentLoaded", () => {
     showPage(0);
   }
 
+  /* =========================
+     PAGE NAVIGATION
+  ========================= */
   let currentPage = 0;
 
   function getPages() {
@@ -247,10 +265,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showPage(index) {
+
     const pages = getPages();
 
     pages.forEach((p, i) => {
       p.classList.remove("active");
+
       if (i < index) p.classList.add("flip");
       else p.classList.remove("flip");
     });
