@@ -1,43 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Scrapbook 💖</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Our Scrapbook 📖</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="book-body">
 
-<h1>Memories 💖</h1>
+<h1 class="book-title">Our Little Story 📖</h1>
 
-<!-- SCRAPBOOK -->
-<div id="book">
+<div class="book">
 
-  <div id="pagesContainer"></div>
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="left">
+      <img src="./image/p1.jpg">
+    </div>
+    <div class="right">
+      <h2>The Beginning</h2>
+      <p>
+        Some people enter life quietly… without any grand moment or introduction. 
+        But slowly, without even realizing it, they become a part of your everyday thoughts.
+        That’s how it started. Just simple conversations, random moments, 
+        and a comfort that didn’t need explanation.  
+        It never felt forced… it just felt right.
+      </p>
+    </div>
+  </div>
 
-  <div>
-    <button onclick="prevPage()">⬅</button>
-    <button onclick="nextPage()">➡</button>
-    <button onclick="goHome()">🏠 Home</button>
+  <!-- PAGE 2 -->
+  <div class="page">
+    <div class="left">
+      <img src="./image/p2.jpg">
+    </div>
+    <div class="right">
+      <h2>The Comfort</h2>
+      <p>
+        Not every friendship gives you peace… but this one did.  
+        There was a strange calm in the chaos, like no matter how the day went, 
+        a simple talk could make everything lighter.  
+        It wasn’t about big things, just small moments that stayed longer than expected.
+      </p>
+    </div>
+  </div>
+
+  <!-- PAGE 3 -->
+  <div class="page">
+    <div class="left">
+      <video src="./videos/v1.mp4" controls></video>
+    </div>
+    <div class="right">
+      <h2>The Memories</h2>
+      <p>
+        Memories don’t always come from planned events…  
+        sometimes they come from the most random days.  
+        Laughing over nothing, sharing silence without awkwardness, 
+        and understanding things that were never even said out loud.  
+        Those are the moments that quietly stay forever.
+      </p>
+    </div>
+  </div>
+
+  <!-- PAGE 4 -->
+  <div class="page">
+    <div class="left">
+      <img src="./image/p3.jpg">
+    </div>
+    <div class="right">
+      <h2>The Bond</h2>
+      <p>
+        Not every bond needs a name.  
+        Some connections just exist… strong, steady, and unspoken.  
+        It’s not about how often we talk or meet, 
+        but the fact that the connection never fades.  
+        That kind of presence is rare.
+      </p>
+    </div>
+  </div>
+
+  <!-- PAGE 5 -->
+  <div class="page">
+    <div class="left">
+      <img src="./image/p4.jpg">
+    </div>
+    <div class="right">
+      <h2>The Forever Part</h2>
+      <p>
+        Some people become memories…  
+        but some become a constant.  
+        No matter where life takes us, there will always be a part of this journey 
+        that feels incomplete without you in it.  
+        And maybe that’s what makes it special… 
+        not loud, not obvious… but something that quietly stays.
+      </p>
+    </div>
   </div>
 
 </div>
-
-<script src="script.js"></script>
-
-<script>
-/* GO BACK HOME */
-function goHome(){
-  window.location.href = "index.html";
-}
-
-/* LOAD DIRECTLY */
-document.addEventListener("DOMContentLoaded", () => {
-  if(typeof loadScrapbook === "function"){
-    loadScrapbook();
-  }
-});
-</script>
 
 </body>
 </html>
