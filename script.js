@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   /* =========================
-     ELEMENTS
+     ELEMENTS (SAFE)
   ========================= */
   const gift = document.getElementById("giftImage");
   const giftContainer = document.getElementById("giftContainer");
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const bigTimer = document.getElementById("bigTimer");
 
   /* =========================
-     DATE LOCK (GLOBAL)
+     DATE LOCK
   ========================= */
   const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
 
@@ -31,21 +31,27 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 2000);
 
   /* =========================
-     ADMIN
+     ADMIN PANEL
   ========================= */
-  adminBtn.onclick = () => adminPanel.classList.toggle("open");
+  if(adminBtn && adminPanel){
+    adminBtn.onclick = () => adminPanel.classList.toggle("open");
+  }
 
-  loginBtn.onclick = () => {
-    let u = document.getElementById("user").value.trim();
-    let p = document.getElementById("pass").value.trim();
+  if(loginBtn){
+    loginBtn.onclick = () => {
+      let u = document.getElementById("user")?.value.trim();
+      let p = document.getElementById("pass")?.value.trim();
 
-    if (u === "abin" && p === "1234") {
-      window.location.href = "admin.html";
-    } else alert("Wrong ❌");
-  };
+      if (u === "abin" && p === "1234") {
+        window.location.href = "admin.html";
+      } else {
+        alert("Wrong ❌");
+      }
+    };
+  }
 
   /* =========================
-     TIMER
+     TIMER (HOME)
   ========================= */
   setInterval(() => {
 
@@ -68,71 +74,81 @@ document.addEventListener("DOMContentLoaded", () => {
   },1000);
 
   /* =========================
-     GIFT
+     GIFT SYSTEM
   ========================= */
   let unlocked = false;
-
   setTimeout(()=> unlocked = true, 2000);
 
-  gift.onclick = () => {
+  if(gift){
+    gift.onclick = () => {
 
-    if (!unlocked) return alert("Wait 😄");
+      if (!unlocked) return alert("Wait 😄");
 
-    gift.src = "./image/gift-open.PNG";
+      gift.src = "./image/gift-open.PNG";
 
-    music.volume = 0;
-    music.play().catch(()=>{});
+      /* MUSIC */
+      if(music){
+        music.volume = 0;
+        music.play().catch(()=>{});
 
-    let v=0;
-    let fade=setInterval(()=>{
-      v+=0.05;
-      music.volume=v;
-      if(v>=1) clearInterval(fade);
-    },200);
+        let v=0;
+        let fade=setInterval(()=>{
+          v+=0.05;
+          music.volume=v;
+          if(v>=1) clearInterval(fade);
+        },200);
+      }
 
-    setTimeout(()=> bigMessage.classList.add("show"),1000);
+      /* MESSAGE */
+      setTimeout(()=> bigMessage?.classList.add("show"),1000);
 
-    setTimeout(()=>{
-      giftContainer.style.display="none";
-      menu.classList.remove("hidden");
-    },2500);
-  };
+      /* SHOW MENU */
+      setTimeout(()=>{
+        giftContainer?.style && (giftContainer.style.display="none");
+        menu?.classList.remove("hidden");
+      },2500);
+    };
+  }
 
 });
 
 
 /* =========================
-   NAVIGATION (UPDATED)
+   NAVIGATION (FINAL FIX)
 ========================= */
 window.openPage = function(type){
 
   const menu = document.getElementById("menu");
   const book = document.getElementById("book");
 
-  menu.classList.add("hidden");
-  book.classList.add("hidden");
+  const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
 
-  /* 🔥 VIDEO LOCK SYSTEM */
+  /* 🔒 VIDEO LOCK FIRST */
   if(type==="video"){
-
-    const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
 
     if(Date.now() < unlockDate){
       alert("🔒 Video unlocks on May 12, 12:00 AM 🎂");
-      menu.classList.remove("hidden");
-      return;
+      return; // ❗ STOP here
     }
 
-    /* ✅ OPEN SEPARATE PAGE */
     window.location.href = "video.html";
+    return;
   }
 
+  /* NORMAL NAV */
+  menu?.classList.add("hidden");
+  book?.classList.add("hidden");
+
   if(type==="book"){
-    book.classList.remove("hidden");
+    book?.classList.remove("hidden");
     loadScrapbook();
   }
 };
 
+
+/* =========================
+   BACK
+========================= */
 window.goBack = function(){
   document.getElementById("book")?.classList.add("hidden");
   document.getElementById("menu")?.classList.remove("hidden");
@@ -140,16 +156,22 @@ window.goBack = function(){
 
 
 /* =========================
-   SCRAPBOOK LOAD (GITHUB)
+   SCRAPBOOK LOAD (FIXED)
 ========================= */
 async function loadScrapbook(){
 
   const container = document.getElementById("pagesContainer");
+  if(!container) return;
+
   container.innerHTML = "Loading...";
 
   try{
 
-    let res = await fetch("https://raw.githubusercontent.com/ICEDRHINO23/birthday-bhumika/main/data/scrapbook.json");
+    /* 🔥 CACHE FIX */
+    let res = await fetch(
+      "https://raw.githubusercontent.com/ICEDRHINO23/birthday-bhumika/main/data/scrapbook.json?nocache=" + Date.now()
+    );
+
     let data = await res.json();
 
     container.innerHTML = "";
@@ -186,7 +208,7 @@ async function loadScrapbook(){
     showPage(0);
 
   }catch(e){
-    container.innerHTML="Failed to load";
+    container.innerHTML="Failed to load ❌";
     console.error(e);
   }
 
@@ -224,7 +246,7 @@ function prevPage(){
 
 
 /* =========================
-   EDIT / DELETE
+   EDIT / DELETE (PLACEHOLDER)
 ========================= */
 function editPage(index){
   alert("Edit from admin panel 🔐");
