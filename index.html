@@ -4,9 +4,6 @@
   <meta charset="UTF-8">
   <title>Happy Birthday Bhoomika 🎂</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- Fix favicon error -->
-  <link rel="icon" href="data:,">
 </head>
 
 <body>
@@ -14,14 +11,18 @@
 <!-- INTRO -->
 <div id="intro">✨ Loading Surprise... ✨</div>
 
+<!-- BACKGROUND -->
+<div id="bgBlur"></div>
+<div id="overlay"></div>
+
 <!-- ADMIN BUTTON -->
 <button id="adminBtn">☰ My Space</button>
 
 <!-- ADMIN PANEL -->
 <div id="adminPanel">
   <h3>Login 🔐</h3>
-  <input id="user" placeholder="username"><br><br>
-  <input id="pass" type="password" placeholder="password"><br><br>
+  <input id="user" placeholder="Username">
+  <input id="pass" type="password" placeholder="Password">
   <button id="loginBtn">Enter</button>
 </div>
 
@@ -34,19 +35,15 @@
 <!-- MAIN -->
 <div id="main">
 
-  <!-- PROFILE -->
   <img id="profilePic" src="./image/bhoomika.jpg">
 
   <h1>Happy Birthday Bhoomika 🎂</h1>
 
-  <p>
-    Some people don’t just come into life…  
-    they stay, they change everything ❤️
-  </p>
+  <p>Some people don’t just come into life… they stay, they change everything ❤️</p>
 
   <!-- GIFT -->
   <div id="giftContainer">
-    <img id="giftImage" src="./image/gift-closed.PNG">
+    <img id="giftImage" src="./image/gift.png">
   </div>
 
   <!-- BIG MESSAGE -->
@@ -54,25 +51,18 @@
     You are one of the best things that ever happened in my life 💖
   </div>
 
-  <!-- TYPING TEXT -->
+  <!-- TYPING -->
   <div id="surpriseText" class="hidden">
     <span id="typedText"></span>
   </div>
 
   <!-- MENU -->
   <div id="menu" class="hidden">
-
     <h2>Choose Something 💝</h2>
 
     <button onclick="openPage('timer')">⏳ Countdown</button>
-
     <button onclick="openPage('video')">🎬 Video</button>
-
-    <!-- ✅ UPDATED BUTTON -->
-    <button onclick="window.location.href='scrapbook.html'">
-      📖 Scrapbook
-    </button>
-
+    <button onclick="openPage('book')">📖 Scrapbook</button>
   </div>
 
 </div>
@@ -90,7 +80,17 @@
   <button onclick="goBack()">Back</button>
 </div>
 
-<script src="script.js"></script>
+<!-- SCRAPBOOK -->
+<div id="book" class="hidden">
+  <div id="pagesContainer"></div>
 
+  <div id="controls">
+    <button onclick="prevPage()">⬅</button>
+    <button onclick="nextPage()">➡</button>
+    <button onclick="goBack()">Back</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
