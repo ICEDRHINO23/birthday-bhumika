@@ -1,1 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For You 🎬</title>
 
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial;
+      flex-direction: column;
+    }
+
+    video {
+      width: 90%;
+      max-width: 900px;
+      border-radius: 15px;
+      box-shadow: 0 0 40px rgba(255,77,109,0.5);
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: none;
+      background: #ff4d6d;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+<video controls autoplay>
+  <source src="./videos/bhumika.mp4" type="video/mp4">
+</video>
+
+<button onclick="goBack()">⬅ Back</button>
+
+<script>
+function goBack(){
+  window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
