@@ -84,7 +84,7 @@ button:hover {
 /* =========================
    CONFIG
 ========================= */
-const TOKEN = "PASTE_YOUR_REAL_TOKEN_HERE"; // 🔥 replace
+const TOKEN = "PASTE_YOUR_REAL_TOKEN_HERE";
 const REPO = "ICEDRHINO23/birthday-bhumika";
 const FILE = "data/scrapbook.json";
 
@@ -118,18 +118,29 @@ function toBase64(file){
 }
 
 /* =========================
-   SAFE PARSE
+   SAFE PARSE (FINAL FIX)
 ========================= */
-function safeParse(content){
+function safeParse(fileData){
+
+  if(!fileData || fileData.message){
+    console.warn("GitHub error:", fileData);
+    return [];
+  }
+
+  if(!fileData.content){
+    return [];
+  }
+
   try{
-    return JSON.parse(atob(content));
-  }catch{
+    return JSON.parse(atob(fileData.content));
+  }catch(e){
+    console.error("Decode error:", e);
     return [];
   }
 }
 
 /* =========================
-   GET DATA (SAFE)
+   GET DATA
 ========================= */
 async function getData(){
 
@@ -138,8 +149,7 @@ async function getData(){
   });
 
   if(!res.ok){
-    const err = await res.json();
-    console.error("GitHub Error:", err);
+    console.error(await res.json());
     throw new Error("Auth/File error");
   }
 
@@ -192,7 +202,6 @@ addBtn.onclick = async () => {
     const base64 = await toBase64(file);
     const filePath = `scrapbook/${Date.now()}-${file.name}`;
 
-    /* UPLOAD MEDIA */
     const upload = await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`,{
       method:"PUT",
       headers:{
@@ -211,9 +220,8 @@ addBtn.onclick = async () => {
       return;
     }
 
-    /* LOAD JSON */
     const fileData = await getData();
-    let data = safeParse(fileData.content);
+    let data = safeParse(fileData);
 
     data.push({
       type: file.type.startsWith("video") ? "video" : "image",
@@ -236,14 +244,14 @@ addBtn.onclick = async () => {
 };
 
 /* =========================
-   LOAD LIST
+   LOAD LIST (FIXED)
 ========================= */
 async function loadList(){
 
   try{
 
     const fileData = await getData();
-    const data = safeParse(fileData.content);
+    const data = safeParse(fileData);
 
     list.innerHTML = "";
 
@@ -253,7 +261,6 @@ async function loadList(){
     }
 
     data.forEach((item,i)=>{
-
       list.innerHTML += `
         <div>
           <b>${item.title}</b><br>
@@ -278,7 +285,7 @@ loadList();
 window.editPage = async function(i){
 
   const fileData = await getData();
-  const data = safeParse(fileData.content);
+  const data = safeParse(fileData);
 
   const item = data[i];
 
@@ -303,7 +310,7 @@ updateBtn.onclick = async () => {
   }
 
   const fileData = await getData();
-  let data = safeParse(fileData.content);
+  let data = safeParse(fileData);
 
   data[editIndex].title = title.value.trim();
   data[editIndex].text = text.value.trim();
@@ -324,7 +331,7 @@ window.deletePage = async function(i){
   if(!confirm("Delete this page?")) return;
 
   const fileData = await getData();
-  let data = safeParse(fileData.content);
+  let data = safeParse(fileData);
 
   data.splice(i,1);
 
