@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   /* =========================
-     ELEMENTS
+     ELEMENT SAFETY GET
   ========================= */
   const intro = document.getElementById("intro");
   const adminBtn = document.getElementById("adminBtn");
@@ -26,21 +26,23 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      INTRO
   ========================= */
-  setTimeout(() => {
-    if (intro) intro.style.display = "none";
-  }, 2000);
+  if (intro) {
+    setTimeout(() => {
+      intro.style.display = "none";
+    }, 2000);
+  }
 
   /* =========================
      ADMIN PANEL
   ========================= */
-  if (adminBtn) {
+  if (adminBtn && adminPanel) {
     adminBtn.addEventListener("click", () => {
       adminPanel.classList.toggle("open");
     });
   }
 
   /* =========================
-     LOGIN SYSTEM (FIXED)
+     LOGIN
   ========================= */
   if (loginBtn) {
     loginBtn.addEventListener("click", () => {
@@ -54,18 +56,16 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         alert("Wrong credentials ❌");
       }
+
     });
   }
 
   /* =========================
-     GIFT UNLOCK DELAY
+     GIFT SYSTEM
   ========================= */
   let unlocked = false;
   setTimeout(() => unlocked = true, 3000);
 
-  /* =========================
-     GIFT CLICK
-  ========================= */
   if (gift) {
     gift.addEventListener("click", () => {
 
@@ -74,23 +74,21 @@ document.addEventListener("DOMContentLoaded", () => {
       gift.src = "./image/gift-open.PNG";
       gift.classList.add("opened");
 
-      // play music
       if (music) {
         music.play().catch(() => {});
       }
 
-      // show big message
       setTimeout(() => {
         if (bigMessage) bigMessage.style.opacity = "1";
       }, 1200);
 
-      // typing effect
       setTimeout(() => startTyping(), 2000);
 
-      // show menu
       setTimeout(() => {
-        document.getElementById("giftContainer").style.display = "none";
-        menu.classList.remove("hidden");
+        const giftContainer = document.getElementById("giftContainer");
+        if (giftContainer) giftContainer.style.display = "none";
+
+        if (menu) menu.classList.remove("hidden");
       }, 3000);
 
     });
@@ -121,13 +119,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     FLOATING HEARTS
+     HEARTS
   ========================= */
   function createHeart() {
     if (!heartsContainer) return;
 
     const heart = document.createElement("div");
-    heart.classList.add("heart");
+    heart.className = "heart";
     heart.innerHTML = "💖";
 
     heart.style.left = Math.random() * 100 + "vw";
@@ -141,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(createHeart, 500);
 
   /* =========================
-     DATE LOCK
+     TIMER
   ========================= */
   const unlockDate = new Date("May 12, 2026 00:00:00").getTime();
 
@@ -149,48 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return Date.now() >= unlockDate;
   }
 
-  /* =========================
-     NAVIGATION
-  ========================= */
-  window.openPage = function(type) {
-
-    menu.classList.add("hidden");
-    timerPage.classList.add("hidden");
-    videoPage.classList.add("hidden");
-    book.classList.add("hidden");
-
-    if (type === "timer") {
-      timerPage.classList.remove("hidden");
-    }
-
-    if (type === "video") {
-      if (!isUnlocked()) {
-        alert("🔒 Unlocks on May 12 🎂");
-        menu.classList.remove("hidden");
-        return;
-      }
-      videoPage.classList.remove("hidden");
-    }
-
-    if (type === "book") {
-      book.classList.remove("hidden");
-      loadScrapbook();
-    }
-  };
-
-  /* =========================
-     BACK
-  ========================= */
-  window.goBack = function() {
-    timerPage.classList.add("hidden");
-    videoPage.classList.add("hidden");
-    book.classList.add("hidden");
-    menu.classList.remove("hidden");
-  };
-
-  /* =========================
-     TIMER
-  ========================= */
   setInterval(() => {
 
     if (!bigTimer) return;
@@ -212,85 +168,124 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 1000);
 
   /* =========================
-     SCRAPBOOK LOAD (FIXED)
+     NAVIGATION
   ========================= */
-  function loadScrapbook() {
+  window.openPage = function(type) {
 
-    const container = document.getElementById("pagesContainer");
-    if (!container) return;
+    if (menu) menu.classList.add("hidden");
+    if (timerPage) timerPage.classList.add("hidden");
+    if (videoPage) videoPage.classList.add("hidden");
+    if (book) book.classList.add("hidden");
 
-    container.innerHTML = "";
-
-    const data = JSON.parse(localStorage.getItem("scrapbook") || "[]");
-
-    if (data.length === 0) {
-      container.innerHTML = "<p>No memories yet 💔</p>";
-      return;
+    if (type === "timer" && timerPage) {
+      timerPage.classList.remove("hidden");
     }
 
-    data.forEach(item => {
-
-      const page = document.createElement("div");
-      page.className = "spread";
-
-      let media = "";
-
-      if (item.type === "image") {
-        media = `<img src="${item.src}">`;
-      } else {
-        media = `<video src="${item.src}" controls></video>`;
+    if (type === "video" && videoPage) {
+      if (!isUnlocked()) {
+        alert("🔒 Unlocks on May 12 🎂");
+        if (menu) menu.classList.remove("hidden");
+        return;
       }
+      videoPage.classList.remove("hidden");
+    }
 
-      page.innerHTML = `
-        <div class="left">${media}</div>
-        <div class="right">
-          <h2>${item.title}</h2>
-          <p>${item.text}</p>
-        </div>
-      `;
-
-      container.appendChild(page);
-    });
-
-    showPage(0);
-  }
-
-  /* =========================
-     PAGE NAVIGATION
-  ========================= */
-  let currentPage = 0;
-
-  function getPages() {
-    return document.querySelectorAll(".spread");
-  }
-
-  function showPage(index) {
-
-    const pages = getPages();
-
-    pages.forEach((p, i) => {
-      p.classList.remove("active");
-
-      if (i < index) p.classList.add("flip");
-      else p.classList.remove("flip");
-    });
-
-    if (pages[index]) pages[index].classList.add("active");
-
-    currentPage = index;
-  }
-
-  window.nextPage = function() {
-    const pages = getPages();
-    if (currentPage < pages.length - 1) {
-      showPage(currentPage + 1);
+    if (type === "book" && book) {
+      book.classList.remove("hidden");
+      loadScrapbook();
     }
   };
 
-  window.prevPage = function() {
-    if (currentPage > 0) {
-      showPage(currentPage - 1);
-    }
+  window.goBack = function() {
+    if (timerPage) timerPage.classList.add("hidden");
+    if (videoPage) videoPage.classList.add("hidden");
+    if (book) book.classList.add("hidden");
+    if (menu) menu.classList.remove("hidden");
   };
 
 });
+
+/* =========================
+   SCRAPBOOK (GLOBAL FIX)
+========================= */
+window.loadScrapbook = function () {
+
+  const container = document.getElementById("pagesContainer");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  let data = JSON.parse(localStorage.getItem("scrapbook") || "[]");
+
+  console.log("Scrapbook Data:", data);
+
+  if (data.length === 0) {
+    container.innerHTML = "<h3>No memories yet 💔</h3>";
+    return;
+  }
+
+  data.forEach(item => {
+
+    const page = document.createElement("div");
+    page.className = "spread";
+
+    let media = "";
+
+    if (item.type === "image") {
+      media = `<img src="${item.src}">`;
+    } else {
+      media = `<video src="${item.src}" controls></video>`;
+    }
+
+    page.innerHTML = `
+      <div class="left">${media}</div>
+      <div class="right">
+        <h2>${item.title}</h2>
+        <p>${item.text}</p>
+      </div>
+    `;
+
+    container.appendChild(page);
+  });
+
+  showPage(0);
+};
+
+/* =========================
+   PAGE NAVIGATION (GLOBAL)
+========================= */
+let currentPage = 0;
+
+function getPages() {
+  return document.querySelectorAll(".spread");
+}
+
+window.showPage = function(index) {
+
+  const pages = getPages();
+
+  pages.forEach((p, i) => {
+    p.classList.remove("active");
+
+    if (i < index) p.classList.add("flip");
+    else p.classList.remove("flip");
+  });
+
+  if (pages[index]) pages[index].classList.add("active");
+
+  currentPage = index;
+};
+
+window.nextPage = function() {
+  const pages = getPages();
+  if (currentPage < pages.length - 1) {
+    showPage(currentPage + 1);
+  }
+};
+
+window.prevPage = function() {
+  if (currentPage > 0) {
+    showPage(currentPage - 1);
+  }
+};
