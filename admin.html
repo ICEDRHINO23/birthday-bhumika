@@ -13,16 +13,16 @@ body {
 }
 
 .container {
-  margin-top: 40px;
+  margin-top: 60px;
   background: white;
   display: inline-block;
-  padding: 25px;
+  padding: 30px;
   border-radius: 20px;
   box-shadow: 0 15px 40px rgba(0,0,0,0.2);
 }
 
 input, textarea {
-  width: 260px;
+  width: 280px;
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
@@ -30,8 +30,8 @@ input, textarea {
 }
 
 button {
-  padding: 10px 18px;
-  margin: 8px;
+  padding: 10px 20px;
+  margin: 10px;
   border-radius: 10px;
   border: none;
   background: #ff4d6d;
@@ -39,22 +39,26 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  opacity: 0.9;
-}
-
 #preview img,
 #preview video {
-  width: 180px;
-  border-radius: 10px;
+  width: 200px;
   margin-top: 10px;
+  border-radius: 10px;
 }
 
 #list {
   margin-top: 30px;
 }
-</style>
 
+.card {
+  background: white;
+  padding: 15px;
+  margin: 10px auto;
+  width: 300px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+</style>
 </head>
 
 <body>
@@ -64,11 +68,9 @@ button:hover {
 <h2>Admin Panel 📖</h2>
 
 <input type="file" id="fileInput"><br>
-
 <div id="preview"></div>
 
 <input type="text" id="title" placeholder="Enter title"><br>
-
 <textarea id="text" placeholder="Write emotional message..."></textarea><br>
 
 <button id="addBtn">Add Page ➕</button>
@@ -84,7 +86,7 @@ button:hover {
 /* =========================
    CONFIG
 ========================= */
-const TOKEN = "PASTE_YOUR_REAL_TOKEN_HERE";
+const TOKEN = "PASTE_YOUR_TOKEN_HERE";
 const REPO = "ICEDRHINO23/birthday-bhumika";
 const FILE = "data/scrapbook.json";
 
@@ -93,94 +95,81 @@ let editIndex = null;
 /* =========================
    PREVIEW
 ========================= */
-fileInput.onchange = function(){
-  const file = this.files[0];
+fileInput.onchange = () => {
+  const file = fileInput.files[0];
   preview.innerHTML = "";
 
-  if(!file) return;
+  if (!file) return;
 
   const url = URL.createObjectURL(file);
 
-  preview.innerHTML = file.type.startsWith("video")
-    ? `<video src="${url}" controls></video>`
-    : `<img src="${url}">`;
+  if (file.type.startsWith("video")) {
+    preview.innerHTML = `<video src="${url}" controls></video>`;
+  } else {
+    preview.innerHTML = `<img src="${url}">`;
+  }
 };
 
 /* =========================
-   BASE64
+   LOAD LIST
 ========================= */
-function toBase64(file){
-  return new Promise(resolve=>{
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.readAsDataURL(file);
+async function loadList() {
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`, {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        Accept: "application/vnd.github+json"
+      }
+    });
+
+    if (!res.ok) throw new Error("Auth failed");
+
+    const json = await res.json();
+
+    let data = [];
+
+    try {
+      if (json.content) {
+        data = JSON.parse(atob(json.content));
+      }
+    } catch {
+      data = [];
+    }
+
+    renderList(data, json.sha);
+
+  } catch (err) {
+    list.innerHTML = "<p style='color:red'>❌ Failed to load (check token)</p>";
+  }
+}
+
+/* =========================
+   RENDER LIST
+========================= */
+function renderList(data, sha) {
+
+  list.innerHTML = "";
+
+  data.forEach((item, index) => {
+
+    list.innerHTML += `
+    <div class="card">
+      ${item.type === "video"
+        ? `<video src="${item.src}" controls></video>`
+        : `<img src="${item.src}">`
+      }
+      <h4>${item.title}</h4>
+      <p>${item.text}</p>
+
+      <button onclick="editPage(${index})">Edit</button>
+      <button onclick="deletePage(${index})">Delete</button>
+    </div>
+    `;
   });
-}
 
-/* =========================
-   SAFE PARSE
-========================= */
-function safeParse(content){
-
-  try{
-    const clean = (content || "").replace(/\n/g, "");
-    return JSON.parse(atob(clean));
-  }catch(e){
-    console.error("Decode error:", e);
-    return [];
-  }
-}
-
-/* =========================
-   GET DATA
-========================= */
-async function getData(){
-
-  const res = await fetch(
-    `https://api.github.com/repos/${REPO}/contents/${FILE}`,
-    {
-      headers:{ Authorization:`token ${TOKEN}` }
-    }
-  );
-
-  const data = await res.json();
-
-  if(!res.ok){
-    console.error("GitHub Error:", data);
-    throw new Error(data.message || "GitHub error");
-  }
-
-  return data;
-}
-
-/* =========================
-   SAVE DATA
-========================= */
-async function saveData(data, sha){
-
-  const res = await fetch(
-    `https://api.github.com/repos/${REPO}/contents/${FILE}`,
-    {
-      method:"PUT",
-      headers:{
-        Authorization:`token ${TOKEN}`,
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        message:"update scrapbook",
-        content:btoa(JSON.stringify(data,null,2)),
-        sha:sha
-      })
-    }
-  );
-
-  if(!res.ok){
-    console.error(await res.json());
-    alert("❌ Save failed");
-    return false;
-  }
-
-  return true;
+  window.currentData = data;
+  window.currentSha = sha;
 }
 
 /* =========================
@@ -189,197 +178,171 @@ async function saveData(data, sha){
 addBtn.onclick = async () => {
 
   const file = fileInput.files[0];
-  const titleVal = title.value.trim();
-  const textVal = text.value.trim();
+  const t = title.value.trim();
+  const txt = text.value.trim();
 
-  if(!file || !titleVal || !textVal){
+  if (!file || !t || !txt) {
     alert("Fill all fields ❌");
     return;
   }
 
-  try{
+  try {
 
     const base64 = await toBase64(file);
-    const filePath = `scrapbook/${Date.now()}-${file.name}`;
+    const path = `scrapbook/${Date.now()}-${file.name}`;
 
-    const upload = await fetch(
-      `https://api.github.com/repos/${REPO}/contents/${filePath}`,
-      {
-        method:"PUT",
-        headers:{
-          Authorization:`token ${TOKEN}`,
-          "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-          message:"upload media",
-          content:base64.split(",")[1]
-        })
-      }
-    );
-
-    if(!upload.ok){
-      console.error(await upload.json());
-      alert("❌ Upload failed");
-      return;
-    }
-
-    const fileData = await getData();
-    let data = safeParse(fileData.content);
-
-    data.push({
-      type: file.type.startsWith("video") ? "video" : "image",
-      src:`./${filePath}`,
-      title:titleVal,
-      text:textVal
+    /* UPLOAD MEDIA */
+    await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        Accept: "application/vnd.github+json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: "upload media",
+        content: base64.split(",")[1]
+      })
     });
 
-    const ok = await saveData(data, fileData.sha);
-
-    if(ok){
-      alert("Added ✅");
-      location.reload();
-    }
-
-  }catch(err){
-    console.error(err);
-    alert("❌ Error occurred");
-  }
-};
-
-/* =========================
-   LOAD LIST (FINAL FIX)
-========================= */
-async function loadList(){
-
-  try{
-
-    const res = await fetch(
-      `https://api.github.com/repos/${REPO}/contents/${FILE}`,
-      {
-        headers:{ Authorization:`token ${TOKEN}` }
+    /* GET JSON */
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`, {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        Accept: "application/vnd.github+json"
       }
-    );
+    });
 
-    const fileData = await res.json();
-
-    if(!res.ok){
-      console.error("GitHub Error:", fileData);
-      list.innerHTML = `
-        <p style="color:red;">
-          ❌ ${fileData.message}
-        </p>
-      `;
-      return;
-    }
-
-    let raw = (fileData.content || "").replace(/\n/g, "");
+    const json = await res.json();
 
     let data = [];
 
-    try{
-      data = JSON.parse(atob(raw));
-    }catch(e){
-      console.error("Decode failed:", e);
-      list.innerHTML = "❌ JSON decode failed";
-      return;
+    try {
+      data = JSON.parse(atob(json.content));
+    } catch {
+      data = [];
     }
 
-    list.innerHTML = "";
-
-    if(!data.length){
-      list.innerHTML = "<p>No pages yet</p>";
-      return;
-    }
-
-    data.forEach((item,i)=>{
-      list.innerHTML += `
-        <div>
-          <b>${item.title}</b><br>
-          <button onclick="editPage(${i})">Edit</button>
-          <button onclick="deletePage(${i})">Delete</button>
-          <hr>
-        </div>
-      `;
+    data.push({
+      type: file.type.startsWith("video") ? "video" : "image",
+      src: `./${path}`,
+      title: t,
+      text: txt
     });
 
-  }catch(err){
-    console.error(err);
-    list.innerHTML = "❌ Unexpected error";
-  }
-}
+    /* UPDATE JSON */
+    await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        Accept: "application/vnd.github+json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: "update scrapbook",
+        content: btoa(JSON.stringify(data, null, 2)),
+        sha: json.sha
+      })
+    });
 
-loadList();
+    alert("Uploaded ✅");
+
+    loadList();
+
+  } catch (err) {
+    console.error(err);
+    alert("Upload failed ❌");
+  }
+};
 
 /* =========================
    EDIT
 ========================= */
-window.editPage = async function(i){
-
-  const fileData = await getData();
-  const data = safeParse(fileData.content);
-
-  const item = data[i];
+function editPage(i) {
+  const item = currentData[i];
 
   title.value = item.title;
   text.value = item.text;
 
-  preview.innerHTML = item.type === "video"
-    ? `<video src="${item.src}" controls></video>`
-    : `<img src="${item.src}">`;
-
   editIndex = i;
-};
+}
 
 /* =========================
    UPDATE
 ========================= */
 updateBtn.onclick = async () => {
 
-  if(editIndex === null){
-    alert("Select page first ❌");
+  if (editIndex === null) {
+    alert("Select item first");
     return;
   }
 
-  const fileData = await getData();
-  let data = safeParse(fileData.content);
+  currentData[editIndex].title = title.value;
+  currentData[editIndex].text = text.value;
 
-  data[editIndex].title = title.value.trim();
-  data[editIndex].text = text.value.trim();
+  await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+      Accept: "application/vnd.github+json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: "update page",
+      content: btoa(JSON.stringify(currentData, null, 2)),
+      sha: currentSha
+    })
+  });
 
-  const ok = await saveData(data, fileData.sha);
-
-  if(ok){
-    alert("Updated ✅");
-    location.reload();
-  }
+  alert("Updated ✅");
+  loadList();
 };
 
 /* =========================
    DELETE
 ========================= */
-window.deletePage = async function(i){
+async function deletePage(i) {
 
-  if(!confirm("Delete this page?")) return;
+  currentData.splice(i, 1);
 
-  const fileData = await getData();
-  let data = safeParse(fileData.content);
+  await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+      Accept: "application/vnd.github+json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: "delete page",
+      content: btoa(JSON.stringify(currentData, null, 2)),
+      sha: currentSha
+    })
+  });
 
-  data.splice(i,1);
+  alert("Deleted 🗑️");
+  loadList();
+}
 
-  const ok = await saveData(data, fileData.sha);
-
-  if(ok){
-    alert("Deleted 🗑️");
-    location.reload();
-  }
-};
+/* =========================
+   HELPER
+========================= */
+function toBase64(file) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsDataURL(file);
+  });
+}
 
 /* =========================
    LOGOUT
 ========================= */
 function logout(){
-  window.location.href="index.html";
+  window.location.href = "index.html";
 }
+
+/* INIT */
+loadList();
 
 </script>
 
