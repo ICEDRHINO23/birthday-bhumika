@@ -1,8 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const container = document.getElementById("pageContent"); // ✅ FIXED ID
-  let index = 0;
+  const book = document.getElementById("book");
+  const container = document.getElementById("pagesContainer");
 
+  let current = 0;
+
+  /* =========================
+     DATA
+  ========================= */
   const pages = [
     { type: "image", src: "./scrapbook/1.jpg" },
     { type: "image", src: "./scrapbook/2.jpg" },
@@ -12,66 +17,92 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const texts = [
-    "There are some people who don’t try to become important… yet somehow they just are. You became that without even realizing it.",
+    "There are people who enter quietly… but slowly become part of everything. You became that comfort without even trying.",
 
-    "Our conversations were never planned, never perfect… but they always felt real. And that’s rare.",
+    "Our conversations were never planned… but they always felt real. And in a world full of noise, that meant everything.",
 
-    "Some friendships don’t need constant talking… they just stay, quietly strong in the background.",
+    "Some friendships don’t need daily talks… they stay strong silently. And that’s exactly what makes them special.",
 
-    "Maybe this was never meant to be loud or obvious… but somewhere in between, it became something that mattered more than expected.",
+    "We never gave this a name… but somewhere between laughs and random talks, it became something meaningful.",
 
-    "Not everything needs to be said out loud… some things are just understood. And whatever this is, it’s something I truly value. So maybe this isn’t the end… just something waiting ahead."
+    "Not everything needs words… some things are just felt. And whatever this is, it’s something I truly value. Maybe this isn’t the end… just something waiting ahead."
   ];
 
-  function renderPage() {
-    if (!container) return;
+  /* =========================
+     CREATE PAGES (STACK)
+  ========================= */
+  pages.forEach((p, i) => {
 
-    const page = pages[index];
-    const isLast = index === pages.length - 1;
+    const page = document.createElement("div");
+    page.className = "page";
+    page.style.zIndex = pages.length - i;
 
-    container.innerHTML = `
-      <div class="page">
-        <div class="front">
+    page.innerHTML = `
+      <div class="front">
 
-          <div class="left">
-            ${
-              page.type === "video"
-              ? `<video src="${page.src}" controls autoplay muted loop></video>`
-              : `<img src="${page.src}?v=${Date.now()}" onerror="this.src='./image/bhoomika.jpg'">`
-            }
-          </div>
-
-          <div class="right">
-            ${
-              isLast
-              ? `<h2>Wait for the real gifts 🎁✨</h2><p>${texts[index]}</p>`
-              : `<p>${texts[index]}</p>`
-            }
-          </div>
-
+        <div class="left">
+          ${
+            p.type === "video"
+              ? `<video src="${p.src}" autoplay muted loop controls></video>`
+              : `<img src="${p.src}" />`
+          }
         </div>
+
+        <div class="right">
+          ${
+            i === pages.length - 1
+              ? `<h2>Wait for the real gifts 🎁✨</h2><p>${texts[i]}</p>`
+              : `<p>${texts[i]}</p>`
+          }
+        </div>
+
       </div>
     `;
-  }
 
+    container.appendChild(page);
+  });
+
+  const allPages = document.querySelectorAll(".page");
+
+  /* =========================
+     COVER CLICK
+  ========================= */
+  const cover = document.getElementById("cover");
+
+  cover.addEventListener("click", () => {
+    cover.classList.add("flipped");
+    current = 0;
+  });
+
+  /* =========================
+     NEXT
+  ========================= */
   window.nextPage = function () {
-    if (index < pages.length - 1) {
-      index++;
-      renderPage();
+
+    if (current < allPages.length) {
+      allPages[current].classList.add("flipped");
+      current++;
     }
   };
 
+  /* =========================
+     PREV
+  ========================= */
   window.prevPage = function () {
-    if (index > 0) {
-      index--;
-      renderPage();
+
+    if (current > 0) {
+      current--;
+      allPages[current].classList.remove("flipped");
+    } else {
+      cover.classList.remove("flipped");
     }
   };
 
+  /* =========================
+     BACK
+  ========================= */
   window.goHome = function () {
     window.location.href = "index.html";
   };
-
-  renderPage();
 
 });
