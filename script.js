@@ -1,59 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Happy Birthday Bhoomika 🎂</title>
-<link rel="stylesheet" href="style.css">
-</head>
+document.addEventListener("DOMContentLoaded", () => {
 
-<body>
+  setTimeout(()=>document.getElementById("intro").style.display="none",1500);
 
-<div id="intro">✨ Loading Surprise... ✨</div>
+  let count = 0;
 
-<button id="adminBtn">☰ My Space</button>
+  const tapBtn = document.getElementById("tapBtn");
+  const tapCount = document.getElementById("tapCount");
+  const gameBox = document.getElementById("gameBox");
+  const giftContainer = document.getElementById("giftContainer");
+  const gift = document.getElementById("giftImage");
+  const funSection = document.getElementById("funSection");
+  const funText = document.getElementById("funText");
+  const menu = document.getElementById("menu");
 
-<div id="adminPanel">
-  <h3>Login 🔐</h3>
-  <input id="user" placeholder="Username">
-  <input id="pass" type="password">
-  <button id="loginBtn">Enter</button>
-</div>
+  const funny = [
+    "That was fast 😂",
+    "You are too curious 😏",
+    "Wait… almost there 😌",
+    "Okay now real surprise 💫"
+  ];
 
-<audio id="bgMusic" src="./audio/music.mp3" loop></audio>
+  tapBtn.onclick = () => {
+    count++;
+    tapCount.innerText = `Taps: ${count}`;
 
-<div id="main">
+    if(count >= 5){
+      gameBox.style.display = "none";
+      giftContainer.classList.remove("hidden");
+    }
+  };
 
-  <img id="profilePic" src="./image/bhoomika.jpg">
+  gift.onclick = () => {
 
-  <h1>Happy Birthday Bhoomika 🎂</h1>
+    gift.src = "image/gift-open.PNG";
 
-  <!-- 🎮 GAME -->
-  <div id="gameBox">
-    <h3>🎯 Tap 5 times to unlock surprise</h3>
-    <button id="tapBtn">Tap Me</button>
-    <p id="tapCount"></p>
-  </div>
+    setTimeout(()=>{
+      giftContainer.style.display="none";
+      funSection.classList.remove("hidden");
 
-  <!-- 🎁 GIFT -->
-  <div id="giftContainer" class="hidden">
-    <img id="giftImage" src="./image/gift-closed.PNG">
-  </div>
+      let i=0;
+      funText.innerText = funny[i];
 
-  <!-- 😂 FUN -->
-  <div id="funSection" class="hidden">
-    <p id="funText"></p>
-    <button onclick="continueAfterFun()">Continue 👉</button>
-  </div>
+      const int = setInterval(()=>{
+        i++;
+        if(i<funny.length){
+          funText.innerText = funny[i];
+        } else clearInterval(int);
+      },2000);
 
-  <!-- MENU -->
-  <div id="menu" class="hidden">
-    <button onclick="openScrapbook()">📖 Scrapbook</button>
-    <button onclick="openVideo()">🎥 Special Video</button>
-  </div>
+    },1000);
+  };
 
-</div>
+  window.continueAfterFun = () => {
+    funSection.classList.add("hidden");
+    menu.classList.remove("hidden");
+  };
 
-<script src="script.js"></script>
+  window.openScrapbook = () => {
+    window.location.href = "scrapbook.html";
+  };
 
-</body>
-</html>
+  window.openVideo = () => {
+    const now = new Date();
+    const unlockDate = new Date("2026-05-12T00:00:00");
+
+    if(now >= unlockDate){
+      window.location.href = "video.html";
+    } else {
+      alert("🎁 Unlocks on Birthday!");
+    }
+  };
+
+});
