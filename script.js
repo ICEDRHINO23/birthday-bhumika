@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   /* ===============================
-     FIX LOADING SCREEN (NO STUCK)
+     INTRO LOADER FIX
   =============================== */
   setTimeout(() => {
     const intro = document.getElementById("intro");
@@ -10,7 +10,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ===============================
-     SCRAPBOOK DATA (YOUR FILES)
+     ELEMENTS
+  =============================== */
+  const gift = document.getElementById("giftImage");
+  const giftContainer = document.getElementById("giftContainer");
+  const menu = document.getElementById("menu");
+  const scrapbookSection = document.getElementById("pagesContainer");
+  const bigMessage = document.getElementById("bigMessage");
+  const music = document.getElementById("bgMusic");
+
+
+  /* ===============================
+     SCRAPBOOK DATA
   =============================== */
   const pages = [
     { type: "image", src: "scrapbook/1.jpg" },
@@ -29,33 +40,27 @@ document.addEventListener("DOMContentLoaded", () => {
     "Maybe this was never meant to be loud or obvious… but somewhere in between, it became something that mattered more than expected."
   ];
 
-
-  /* ===============================
-     ELEMENT
-  =============================== */
-  const container = document.getElementById("pagesContainer");
   let index = 0;
 
 
   /* ===============================
-     RENDER PAGE (NO BLACK SCREEN)
+     RENDER PAGE
   =============================== */
   function renderPage() {
 
-    if (!container) return;
+    if (!scrapbookSection) return;
 
     const page = pages[index];
 
-    container.innerHTML = `
+    scrapbookSection.innerHTML = `
       <div class="book">
-
         <div class="page">
 
           <div class="left">
             ${
               page.type === "video"
               ? `<video controls autoplay muted loop src="${page.src}"></video>`
-              : `<img src="${page.src}" onerror="this.style.display='none'">`
+              : `<img src="${page.src}">`
             }
           </div>
 
@@ -64,14 +69,13 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
 
         </div>
-
       </div>
     `;
   }
 
 
   /* ===============================
-     NAVIGATION
+     PAGE NAVIGATION
   =============================== */
   window.nextPage = function () {
     if (index < pages.length - 1) {
@@ -91,10 +95,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ===============================
-     3D FLIP EFFECT
+     FLIP ANIMATION
   =============================== */
   function flipAnimation(reverse = false) {
-
     const book = document.querySelector(".book");
     if (!book) return;
 
@@ -109,8 +112,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ===============================
-     INITIAL LOAD
+     GIFT CLICK (MAIN FIX 🔥)
   =============================== */
-  renderPage();
+  if (gift) {
+
+    gift.addEventListener("click", () => {
+
+      console.log("Gift clicked ✅");
+
+      // change image
+      gift.src = "image/gift-open.PNG";
+
+      // play music
+      if (music) {
+        music.play().catch(() => {});
+      }
+
+      // show message
+      if (bigMessage) {
+        bigMessage.classList.add("show");
+      }
+
+      // move to scrapbook
+      setTimeout(() => {
+
+        if (giftContainer) giftContainer.style.display = "none";
+
+        if (menu) {
+          menu.classList.remove("hidden");
+          menu.style.display = "block";
+        }
+
+        if (scrapbookSection) {
+          scrapbookSection.style.display = "flex";
+          renderPage(); // 🔥 LOAD SCRAPBOOK AFTER GIFT
+        }
+
+      }, 1200);
+
+    });
+
+  } else {
+    console.log("❌ giftImage not found");
+  }
 
 });
