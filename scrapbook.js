@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const book = document.getElementById("book");
   const container = document.getElementById("pagesContainer");
+  const cover = document.getElementById("cover");
 
   let current = 0;
 
@@ -29,12 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   /* =========================
-     CREATE PAGES (STACK)
+     CREATE STACKED PAGES
   ========================= */
   pages.forEach((p, i) => {
 
     const page = document.createElement("div");
     page.className = "page";
+
+    /* 🔥 IMPORTANT FIX */
     page.style.zIndex = pages.length - i;
 
     page.innerHTML = `
@@ -57,6 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
 
       </div>
+
+      <div class="back"></div>
     `;
 
     container.appendChild(page);
@@ -65,20 +69,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const allPages = document.querySelectorAll(".page");
 
   /* =========================
-     COVER CLICK
+     COVER CLICK (OPEN BOOK)
   ========================= */
-  const cover = document.getElementById("cover");
-
   cover.addEventListener("click", () => {
     cover.classList.add("flipped");
-    current = 0;
   });
 
   /* =========================
-     NEXT
+     NEXT PAGE
   ========================= */
   window.nextPage = function () {
-
     if (current < allPages.length) {
       allPages[current].classList.add("flipped");
       current++;
@@ -86,10 +86,9 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* =========================
-     PREV
+     PREVIOUS PAGE
   ========================= */
   window.prevPage = function () {
-
     if (current > 0) {
       current--;
       allPages[current].classList.remove("flipped");
@@ -99,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* =========================
-     BACK
+     BACK TO HOME
   ========================= */
   window.goHome = function () {
     window.location.href = "index.html";
