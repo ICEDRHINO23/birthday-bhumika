@@ -1,74 +1,133 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  setTimeout(()=>document.getElementById("intro").style.display="none",1500);
+  /* ===============================
+     LOADING SCREEN
+  =============================== */
+  setTimeout(() => {
+    const intro = document.getElementById("intro");
+    if (intro) intro.style.display = "none";
+  }, 1200);
+
+
+  /* ===============================
+     ELEMENTS
+  =============================== */
+  const tapBtn = document.getElementById("tapBtn");
+  const tapCountText = document.getElementById("tapCount");
+
+  const gameBox = document.getElementById("gameBox");
+  const giftContainer = document.getElementById("giftContainer");
+  const giftImage = document.getElementById("giftImage");
+
+  const funSection = document.getElementById("funSection");
+  const funText = document.getElementById("funText");
+
+  const menu = document.getElementById("menu");
+
+  const music = document.getElementById("bgMusic");
 
   let count = 0;
 
-  const tapBtn = document.getElementById("tapBtn");
-  const tapCount = document.getElementById("tapCount");
-  const gameBox = document.getElementById("gameBox");
-  const giftContainer = document.getElementById("giftContainer");
-  const gift = document.getElementById("giftImage");
-  const funSection = document.getElementById("funSection");
-  const funText = document.getElementById("funText");
-  const menu = document.getElementById("menu");
 
-  const funny = [
-    "That was fast 😂",
-    "You are too curious 😏",
-    "Wait… almost there 😌",
-    "Okay now real surprise 💫"
-  ];
+  /* ===============================
+     GAME LOGIC
+  =============================== */
+  tapBtn.addEventListener("click", () => {
 
-  tapBtn.onclick = () => {
     count++;
-    tapCount.innerText = `Taps: ${count}`;
+    tapCountText.innerText = `Tapped: ${count}/5`;
 
-    if(count >= 5){
-      gameBox.style.display = "none";
+    if (count === 1) music.play();
+
+    if (count >= 5) {
+      gameBox.classList.add("hidden");
       giftContainer.classList.remove("hidden");
     }
-  };
+  });
 
-  gift.onclick = () => {
 
-    gift.src = "image/gift-open.PNG";
+  /* ===============================
+     GIFT CLICK
+  =============================== */
+  giftImage.addEventListener("click", () => {
 
-    setTimeout(()=>{
-      giftContainer.style.display="none";
+    giftImage.src = "./image/gift-open.PNG";
+
+    setTimeout(() => {
+      giftContainer.classList.add("hidden");
+
       funSection.classList.remove("hidden");
 
-      let i=0;
-      funText.innerText = funny[i];
+      funText.innerText = getFunnyMessage();
+    }, 800);
+  });
 
-      const int = setInterval(()=>{
-        i++;
-        if(i<funny.length){
-          funText.innerText = funny[i];
-        } else clearInterval(int);
-      },2000);
 
-    },1000);
-  };
-
-  window.continueAfterFun = () => {
+  /* ===============================
+     FUN SECTION
+  =============================== */
+  window.continueAfterFun = function () {
     funSection.classList.add("hidden");
     menu.classList.remove("hidden");
   };
 
-  window.openScrapbook = () => {
+  function getFunnyMessage() {
+    const messages = [
+      "You really thought gift will open so easily? 😂",
+      "Patience level: zero detected 🤭",
+      "Still waiting? Good things take time 😌",
+      "Okay okay… now real surprise coming 😄"
+    ];
+
+    return messages[Math.floor(Math.random() * messages.length)];
+  }
+
+
+  /* ===============================
+     SCRAPBOOK NAVIGATION
+  =============================== */
+  window.openScrapbook = function () {
     window.location.href = "scrapbook.html";
   };
 
-  window.openVideo = () => {
+
+  /* ===============================
+     VIDEO (DATE LOCK)
+     ONLY AFTER 12 MAY 2026 12:00 AM
+  =============================== */
+  window.openVideo = function () {
+
     const now = new Date();
     const unlockDate = new Date("2026-05-12T00:00:00");
 
-    if(now >= unlockDate){
+    if (now >= unlockDate) {
       window.location.href = "video.html";
     } else {
-      alert("🎁 Unlocks on Birthday!");
+      alert("⏳ This video will unlock on Birthday 🎂");
     }
   };
+
+
+  /* ===============================
+     ADMIN PANEL (OPTIONAL)
+  =============================== */
+  const adminBtn = document.getElementById("adminBtn");
+  const adminPanel = document.getElementById("adminPanel");
+  const loginBtn = document.getElementById("loginBtn");
+
+  adminBtn.addEventListener("click", () => {
+    adminPanel.classList.toggle("open");
+  });
+
+  loginBtn.addEventListener("click", () => {
+    const user = document.getElementById("user").value;
+    const pass = document.getElementById("pass").value;
+
+    if (user === "admin" && pass === "1234") {
+      alert("Login successful");
+    } else {
+      alert("Invalid credentials");
+    }
+  });
 
 });
