@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const giftContainer = document.getElementById("giftContainer");
   const bigMessage = document.getElementById("bigMessage");
   const menu = document.getElementById("menu");
-  const book = document.getElementById("book");
   const music = document.getElementById("bgMusic");
   const adminBtn = document.getElementById("adminBtn");
   const adminPanel = document.getElementById("adminPanel");
@@ -40,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (u === "abin" && p === "1234") {
       window.location.href = "admin.html";
     } else {
-      alert("Wrong ❌");
+      alert("Wrong credentials ❌");
     }
   });
 
@@ -75,11 +74,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   gift?.addEventListener("click", () => {
 
-    if (!unlocked) return alert("Wait 😄");
+    if (!unlocked) {
+      alert("Wait a second 😄");
+      return;
+    }
 
+    /* OPEN GIFT IMAGE */
     gift.src = "./image/gift-open.png";
 
-    /* MUSIC */
+    /* PLAY MUSIC */
     if (music) {
       music.volume = 0;
       music.play().catch(()=>{});
@@ -92,12 +95,12 @@ document.addEventListener("DOMContentLoaded", () => {
       },200);
     }
 
-    /* BIG MESSAGE */
+    /* SHOW MESSAGE */
     setTimeout(()=>{
       bigMessage?.classList.add("show");
     },800);
 
-    /* MENU */
+    /* SHOW MENU */
     setTimeout(()=>{
       giftContainer.style.display = "none";
       menu?.classList.remove("hidden");
@@ -120,15 +123,17 @@ window.openPage = function(type){
 
   /* 🔒 VIDEO LOCK */
   if(type === "video"){
+
     if(Date.now() < unlockDate){
-      alert("🔒 Unlocks on May 12 🎂");
+      alert("🔒 Video unlocks on May 12 🎂");
       return;
     }
+
     window.location.href = "video.html";
     return;
   }
 
-  /* RESET */
+  /* RESET UI */
   menu?.classList.add("hidden");
   book?.classList.add("hidden");
 
@@ -149,7 +154,7 @@ window.goBack = function(){
 
 
 /* =========================
-   SCRAPBOOK FINAL (5 PAGE)
+   SCRAPBOOK (FINAL STABLE)
 ========================= */
 async function loadScrapbook(){
 
@@ -161,8 +166,12 @@ async function loadScrapbook(){
   try{
 
     const res = await fetch(
-      "https://raw.githubusercontent.com/ICEDRHINO23/birthday-bhumika/main/data/scrapbook.json?nocache=" + Date.now()
+      "https://raw.githubusercontent.com/ICEDRHINO23/birthday-bhumika/main/data/scrapbook.json"
     );
+
+    if(!res.ok){
+      throw new Error("Failed to fetch JSON");
+    }
 
     const data = await res.json();
 
@@ -173,40 +182,26 @@ async function loadScrapbook(){
       return;
     }
 
-    /* 🎯 LIMIT TO 5 */
-    const pagesData = data.slice(0,5);
+    /* LIMIT TO 5 */
+    const pages = data.slice(0,5);
 
-    /* 💬 FRIENDSHIP TEXT */
+    /* FRIENDSHIP TEXT */
     const texts = [
-
-      `Some people enter life quietly…  
-but slowly they become part of everything.  
-That’s how this started — simple, real, effortless.`,
-
-      `Not every friendship gives comfort…  
-but this one did.  
-Even silence felt understood.`,
-
-      `Memories were never planned…  
-they just happened.  
-And somehow, they stayed.`,
-
-      `Some bonds don’t need explanation.  
-They just exist… strong and constant.`,
-
-      `Not loud, not obvious…  
-but something that quietly stays,  
-no matter what changes.`
+      "Some people enter life quietly… but they become part of everything.",
+      "This friendship was never loud, but always real and steady.",
+      "Memories were never planned… they just stayed longer than expected.",
+      "Some bonds don’t need explanation… they just exist.",
+      "Not obvious… but something that always remains."
     ];
 
-    pagesData.forEach((item,i)=>{
+    pages.forEach((item,i)=>{
 
       const div = document.createElement("div");
       div.className = "spread";
 
       const media = item.type === "video"
         ? `<video src="${item.src}" controls></video>`
-        : `<img src="${item.src}">`;
+        : `<img src="${item.src}" alt="memory">`;
 
       div.innerHTML = `
         <div class="left">${media}</div>
@@ -217,12 +212,13 @@ no matter what changes.`
       `;
 
       container.appendChild(div);
+
     });
 
-    setTimeout(()=> showPage(0),100);
+    showPage(0);
 
   }catch(err){
-    container.innerHTML = "Failed ❌";
+    container.innerHTML = "❌ Failed to load scrapbook";
     console.error(err);
   }
 }
