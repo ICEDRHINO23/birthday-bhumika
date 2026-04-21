@@ -3,12 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
   let index = 0;
 
   const pages = [
-    { type: "cover" },
-    { type: "image", src: "scrapbook/1.jpg" },
-    { type: "image", src: "scrapbook/2.jpg" },
-    { type: "image", src: "scrapbook/3.jpg" },
-    { type: "video", src: "scrapbook/4.mp4" },
-    { type: "end" }
+   const pages = [
+  { type: "image", src: "scrapbook/1.jpg" },
+  { type: "image", src: "scrapbook/2.jpg" },
+  { type: "image", src: "scrapbook/3.jpg" },
+  { type: "video", src: "scrapbook/4.mp4" },
+  { type: "image", src: "scrapbook/5.jpg" } // ✅ LAST PAGE IMAGE
+];
   ];
 
   const texts = [
