@@ -1,115 +1,106 @@
-let index = 0;
+document.addEventListener("DOMContentLoaded", () => {
 
-const pages = [
-  { type: "cover" },
+  let index = 0;
 
-  { type: "image", src: "scrapbook/1.jpg" },
-  { type: "image", src: "scrapbook/2.jpg" },
-  { type: "image", src: "scrapbook/3.jpg" },
-  { type: "video", src: "scrapbook/4.mp4" },
-  { type: "end" }
-];
+  const pages = [
+    { type: "cover" },
+    { type: "image", src: "scrapbook/1.jpg" },
+    { type: "image", src: "scrapbook/2.jpg" },
+    { type: "image", src: "scrapbook/3.jpg" },
+    { type: "video", src: "scrapbook/4.mp4" },
+    { type: "end" }
+  ];
 
-const texts = [
-  "",
-  "Some people don’t enter life loudly… they just slowly become important. That’s how this started — quietly, naturally, without effort.",
-  
-  "Not every friendship brings peace… but this one did. There was always comfort, even in silence, even without trying.",
-  
-  "There were moments that didn’t feel big then… but now they stay. Small things turned into meaningful memories.",
-  
-  "Some memories don’t fade… they just settle inside quietly. And no matter what changes, some bonds just remain.",
-  
-  "Maybe this was never meant to be loud… but it became something meaningful. And that’s enough."
-];
+  const texts = [
+    "",
+    "Some people don’t enter life loudly… they slowly become important. That’s how this started — quietly, naturally.",
+    "Not every friendship gives peace… but this one did. There was always comfort, even without trying.",
+    "Some moments don’t feel big then… but later they stay. Small things became meaningful memories.",
+    "Some memories don’t fade… they stay quietly within, no matter how time changes things.",
+    "Maybe this was never meant to be loud… but it became something meaningful."
+  ];
 
-const container = document.getElementById("pageContent");
+  const container = document.getElementById("pageContent");
 
-/* ===============================
-   RENDER PAGE
-=============================== */
-function renderPage() {
+  function renderPage() {
 
-  const page = pages[index];
+    if (!container) return;
 
-  if (!page) return;
+    const page = pages[index];
 
-  if (page.type === "cover") {
-    container.innerHTML = `
-      <div class="page">
-        <div class="front cover">
-          <h2>🎂 Happy Birthday Bhoomika 🎉</h2>
-          <p>Something special, just for you 💫</p>
+    if (page.type === "cover") {
+      container.innerHTML = `
+        <div class="page">
+          <div class="front cover">
+            <h2>🎂 Happy Birthday Bhoomika 🎉</h2>
+            <p>Something special just for you 💫</p>
+          </div>
         </div>
-      </div>
-    `;
-    return;
-  }
+      `;
+      return;
+    }
 
-  if (page.type === "end") {
+    if (page.type === "end") {
+      container.innerHTML = `
+        <div class="page">
+          <div class="front">
+            <div class="left">
+              <img src="scrapbook/image.jpg">
+            </div>
+            <div class="right">
+              <p>Wait for the real gifts 🎁✨</p>
+            </div>
+          </div>
+        </div>
+      `;
+
+      setTimeout(() => {
+        alert("🎁 More surprises are waiting...");
+      }, 800);
+
+      return;
+    }
+
     container.innerHTML = `
       <div class="page">
         <div class="front">
+
           <div class="left">
-            <img src="scrapbook/image.jpg">
+            ${
+              page.type === "video"
+              ? `<video src="${page.src}" controls muted></video>`
+              : `<img src="${page.src}" onerror="this.src='image/bhoomika.jpg'">`
+            }
           </div>
+
           <div class="right">
-            <p>Wait for the real gifts 🎁✨</p>
+            <p>${texts[index]}</p>
           </div>
+
         </div>
       </div>
     `;
-
-    setTimeout(() => {
-      alert("🎁 More surprises are waiting for you...");
-    }, 800);
-
-    return;
   }
 
-  container.innerHTML = `
-    <div class="page">
-      <div class="front">
+  window.nextPage = function () {
+    if (index < pages.length - 1) {
+      index++;
+      renderPage();
+    }
+  };
 
-        <div class="left">
-          ${
-            page.type === "video"
-            ? `<video src="${page.src}" controls muted></video>`
-            : `<img src="${page.src}" onerror="this.src='image/bhoomika.jpg'">`
-          }
-        </div>
+  window.prevPage = function () {
+    if (index > 0) {
+      index--;
+      renderPage();
+    }
+  };
 
-        <div class="right">
-          <p>${texts[index]}</p>
-        </div>
+  window.goHome = function () {
+    window.location.href = "index.html";
+  };
 
-      </div>
-    </div>
-  `;
-}
+  /* INITIAL LOAD */
+  renderPage();
 
-/* ===============================
-   NAVIGATION
-=============================== */
-function nextPage() {
-  if (index < pages.length - 1) {
-    index++;
-    renderPage();
-  }
-}
-
-function prevPage() {
-  if (index > 0) {
-    index--;
-    renderPage();
-  }
-}
-
-function goHome() {
-  window.location.href = "index.html";
-}
-
-/* ===============================
-   INIT
-=============================== */
-renderPage();
+});
