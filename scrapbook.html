@@ -11,8 +11,19 @@
 <h1 class="book-title">Our Story 📖</h1>
 
 <div class="scene">
-  <div class="book">
-    <div id="pageContent"></div>
+  <div class="book" id="book">
+
+    <!-- 🔥 COVER PAGE -->
+    <div class="page cover-page" id="cover">
+      <div class="front cover">
+        <h2>Happy Birthday 🎂</h2>
+        <p>Tap to open your story 💖</p>
+      </div>
+    </div>
+
+    <!-- PAGES WILL LOAD HERE -->
+    <div id="pagesContainer"></div>
+
   </div>
 </div>
 
@@ -22,7 +33,6 @@
   <button onclick="goHome()">Back</button>
 </div>
 
-<!-- 🔥 IMPORTANT: script at END -->
 <script src="scrapbook.js"></script>
 
 </body>
