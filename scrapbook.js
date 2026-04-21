@@ -1,17 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ===============================
-     FIX LOADING
-  =============================== */
-  setTimeout(() => {
-    const intro = document.getElementById("intro");
-    if (intro) intro.style.display = "none";
-  }, 1200);
+  const container = document.getElementById("pageContent"); // ✅ FIXED ID
+  let index = 0;
 
-
-  /* ===============================
-     DATA (MATCHES YOUR FOLDER)
-  =============================== */
   const pages = [
     { type: "image", src: "./scrapbook/1.jpg" },
     { type: "image", src: "./scrapbook/2.jpg" },
@@ -32,94 +23,55 @@ document.addEventListener("DOMContentLoaded", () => {
     "Not everything needs to be said out loud… some things are just understood. And whatever this is, it’s something I truly value. So maybe this isn’t the end… just something waiting ahead."
   ];
 
-
-  /* ===============================
-     ELEMENT
-  =============================== */
-  const container = document.getElementById("pagesContainer");
-  let index = 0;
-
-
-  /* ===============================
-     RENDER PAGE
-  =============================== */
   function renderPage() {
+    if (!container) return;
 
     const page = pages[index];
     const isLast = index === pages.length - 1;
 
     container.innerHTML = `
-      <div class="book">
+      <div class="page">
+        <div class="front">
 
-        <div class="page">
+          <div class="left">
+            ${
+              page.type === "video"
+              ? `<video src="${page.src}" controls autoplay muted loop></video>`
+              : `<img src="${page.src}?v=${Date.now()}" onerror="this.src='./image/bhoomika.jpg'">`
+            }
+          </div>
 
-          <div class="front">
-
-            <div class="left">
-              ${
-                page.type === "video"
-                  ? `<video src="${page.src}" controls autoplay muted loop></video>`
-                  : `<img src="${page.src}?v=${Date.now()}" onerror="this.src='./image/bhoomika.jpg'">`
-              }
-            </div>
-
-            <div class="right">
-              ${
-                isLast
-                  ? `<h2>Wait for the real gifts 🎁✨</h2><p>${texts[index]}</p>`
-                  : `<p>${texts[index]}</p>`
-              }
-            </div>
-
+          <div class="right">
+            ${
+              isLast
+              ? `<h2>Wait for the real gifts 🎁✨</h2><p>${texts[index]}</p>`
+              : `<p>${texts[index]}</p>`
+            }
           </div>
 
         </div>
-
       </div>
     `;
   }
 
-
-  /* ===============================
-     NAVIGATION
-  =============================== */
   window.nextPage = function () {
     if (index < pages.length - 1) {
       index++;
-      flip();
-      setTimeout(renderPage, 400);
+      renderPage();
     }
   };
 
   window.prevPage = function () {
     if (index > 0) {
       index--;
-      flip(true);
-      setTimeout(renderPage, 400);
+      renderPage();
     }
   };
 
+  window.goHome = function () {
+    window.location.href = "index.html";
+  };
 
-  /* ===============================
-     FLIP EFFECT
-  =============================== */
-  function flip(reverse = false) {
-    const book = document.querySelector(".book");
-    if (!book) return;
-
-    book.style.transform = reverse
-      ? "rotateY(-180deg)"
-      : "rotateY(180deg)";
-
-    setTimeout(() => {
-      book.style.transform = "rotateY(0deg)";
-    }, 400);
-  }
-
-
-  /* ===============================
-     LOAD FIRST PAGE
-  =============================== */
   renderPage();
 
 });
