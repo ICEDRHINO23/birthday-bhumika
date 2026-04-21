@@ -104,9 +104,9 @@ button {
   z-index: 1;
 }
 
-/* 🔥 COVER ALWAYS TOP */
+/* COVER ALWAYS TOP */
 .cover-page {
-  z-index: 9999 !important;
+  z-index: 9999;
 }
 
 /* FLIP */
@@ -133,23 +133,34 @@ button {
   border-radius: 20px;
 }
 
-/* ======================================
-   💖 FIXED COVER PAGE (MAIN FIX)
-====================================== */
+/* =========================
+   PAGE DESIGN (DEFAULT WHITE)
+========================= */
+.front {
+  display: flex;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+}
+
+/* ONLY INNER PAGES WHITE */
+#pagesContainer .front {
+  background: white;
+}
+
+/* =========================
+   💖 COVER PAGE (FINAL FIX)
+========================= */
 .cover-page .front {
+  background: linear-gradient(135deg, #ff4d6d, #ff9a9e) !important;
+  color: white;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  background: linear-gradient(135deg, #ff4d6d, #ff9a9e) !important;
-  color: white;
-
-  border-radius: 20px;
   text-align: center;
-
-  width: 100%;
-  height: 100%;
 
   box-shadow: 0 0 60px rgba(255, 105, 180, 0.6);
 }
@@ -162,21 +173,12 @@ button {
 
 .cover-page p {
   font-size: 18px;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 /* =========================
-   PAGE DESIGN
+   LEFT MEDIA
 ========================= */
-.front {
-  display: flex;
-  background: white;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-}
-
-/* LEFT MEDIA */
 .left {
   width: 50%;
   display: flex;
@@ -185,7 +187,7 @@ button {
   background: black;
 }
 
-/* 🔥 PERFECT IMAGE FIT */
+/* PERFECT FIT */
 .left img,
 .left video {
   width: 100%;
@@ -193,7 +195,9 @@ button {
   object-fit: contain;
 }
 
-/* RIGHT TEXT */
+/* =========================
+   RIGHT TEXT
+========================= */
 .right {
   width: 50%;
   padding: 40px;
