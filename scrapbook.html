@@ -1,76 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Our Scrapbook 📖</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body class="book-body">
 
-<h1 class="book-title">Our Little Story 📖</h1>
+<h1>Our Story 📖</h1>
 
 <div class="scene">
+<div id="book" class="book">
 
-  <div id="book" class="book">
+<div class="page active">
+<div class="front">
+<div class="left"><img src="scrapbook/1.jpg"></div>
+<div class="right"><p>You became important without trying.</p></div>
+</div>
+</div>
 
-    <!-- PAGE 1 -->
-    <div class="page active">
-      <div class="front">
-        <div class="left">
-          <img src="scrapbook/1.jpg">
-        </div>
-        <div class="right">
-          <h2>The Beginning</h2>
-          <p>Some people enter life quietly… without any grand moment...</p>
-        </div>
-      </div>
-    </div>
+<div class="page">
+<div class="front">
+<div class="left"><img src="scrapbook/2.jpg"></div>
+<div class="right"><p>Our bond stayed even in silence.</p></div>
+</div>
+</div>
 
-    <!-- PAGE 2 -->
-    <div class="page">
-      <div class="front">
-        <div class="left">
-          <img src="scrapbook/2.jpg">
-        </div>
-        <div class="right">
-          <p>Not every friendship gives peace… but this one did...</p>
-        </div>
-      </div>
-    </div>
+<div class="page">
+<div class="front">
+<div class="left"><img src="scrapbook/3.jpg"></div>
+<div class="right"><p>Moments felt simple but meaningful.</p></div>
+</div>
+</div>
 
-    <!-- PAGE 3 -->
-    <div class="page">
-      <div class="front">
-        <div class="left">
-          <img src="scrapbook/3.jpg">
-        </div>
-        <div class="right">
-          <p>Some bonds don’t need explanation… they just exist...</p>
-        </div>
-      </div>
-    </div>
+<div class="page">
+<div class="front">
+<div class="left"><video src="scrapbook/4.mp4" autoplay muted loop></video></div>
+<div class="right"><p>Memories stay longer than expected.</p></div>
+</div>
+</div>
 
-    <!-- PAGE 4 (VIDEO) -->
-    <div class="page">
-      <div class="front">
-        <div class="left">
-          <video src="scrapbook/4.mp4" autoplay muted loop></video>
-        </div>
-        <div class="right">
-          <p>Moments like these… stay longer than we expect...</p>
-        </div>
-      </div>
-    </div>
+<div class="page">
+<div class="front">
+<div class="left"><img src="scrapbook/5.jpg"></div>
+<div class="right"><p>Wait for the real gifts 🎁✨</p></div>
+</div>
+</div>
 
-  </div>
-
+</div>
 </div>
 
 <div class="controls">
-  <button onclick="prevPage()">⬅</button>
-  <button onclick="nextPage()">➡</button>
-  <button onclick="goHome()">🏠</button>
+<button onclick="prevPage()">⬅</button>
+<button onclick="nextPage()">➡</button>
+<button onclick="goHome()">Back</button>
 </div>
 
 <script src="scrapbook.js"></script>
