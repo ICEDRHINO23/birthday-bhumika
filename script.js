@@ -1,144 +1,59 @@
-document.addEventListener("DOMContentLoaded", () => {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Bhoomika 🎂</title>
+<link rel="stylesheet" href="style.css">
+</head>
 
-  /* ===============================
-     INTRO LOADER
-  =============================== */
-  setTimeout(() => {
-    const intro = document.getElementById("intro");
-    if (intro) intro.style.display = "none";
-  }, 1500);
+<body>
 
+<div id="intro">✨ Loading Surprise... ✨</div>
 
-  /* ===============================
-     ELEMENTS
-  =============================== */
-  const gift = document.getElementById("giftImage");
-  const giftContainer = document.getElementById("giftContainer");
-  const menu = document.getElementById("menu");
-  const funSection = document.getElementById("funSection");
-  const funText = document.getElementById("funText");
-  const bigMessage = document.getElementById("bigMessage");
-  const music = document.getElementById("bgMusic");
+<button id="adminBtn">☰ My Space</button>
 
-  const adminBtn = document.getElementById("adminBtn");
-  const adminPanel = document.getElementById("adminPanel");
-  const loginBtn = document.getElementById("loginBtn");
+<div id="adminPanel">
+  <h3>Login 🔐</h3>
+  <input id="user" placeholder="Username">
+  <input id="pass" type="password">
+  <button id="loginBtn">Enter</button>
+</div>
 
-  const userInput = document.getElementById("user");
-  const passInput = document.getElementById("pass");
+<audio id="bgMusic" src="./audio/music.mp3" loop></audio>
 
+<div id="main">
 
-  /* ===============================
-     ADMIN PANEL TOGGLE
-  =============================== */
-  if (adminBtn && adminPanel) {
-    adminBtn.onclick = () => {
-      adminPanel.classList.toggle("open");
-    };
-  }
+  <img id="profilePic" src="./image/bhoomika.jpg">
 
+  <h1>Happy Birthday Bhoomika 🎂</h1>
 
-  /* ===============================
-     LOGIN SYSTEM
-  =============================== */
-  if (loginBtn) {
-    loginBtn.onclick = () => {
+  <!-- 🎮 GAME -->
+  <div id="gameBox">
+    <h3>🎯 Tap 5 times to unlock surprise</h3>
+    <button id="tapBtn">Tap Me</button>
+    <p id="tapCount"></p>
+  </div>
 
-      const user = userInput.value.trim();
-      const pass = passInput.value.trim();
+  <!-- 🎁 GIFT -->
+  <div id="giftContainer" class="hidden">
+    <img id="giftImage" src="./image/gift-closed.PNG">
+  </div>
 
-      if (user === "abin" && pass === "1234") {
-        window.location.href = "admin.html";
-      } else {
-        alert("Wrong credentials ❌");
-      }
+  <!-- 😂 FUN -->
+  <div id="funSection" class="hidden">
+    <p id="funText"></p>
+    <button onclick="continueAfterFun()">Continue 👉</button>
+  </div>
 
-    };
-  }
+  <!-- MENU -->
+  <div id="menu" class="hidden">
+    <button onclick="openScrapbook()">📖 Scrapbook</button>
+    <button onclick="openVideo()">🎥 Special Video</button>
+  </div>
 
+</div>
 
-  /* ===============================
-     FUNNY MESSAGE SEQUENCE
-  =============================== */
-  const funnyMessages = [
-    "You really thought it's over after opening the gift? 😂",
-    "Patience level = 0 I guess 😏",
-    "Wait… good things take time 😌",
-    "Okay okay… now you're ready for the real surprise 💫"
-  ];
+<script src="script.js"></script>
 
-
-  /* ===============================
-     GIFT CLICK (MAIN FLOW)
-  =============================== */
-  if (gift) {
-
-    gift.onclick = () => {
-
-      console.log("Gift clicked ✅");
-
-      // Open gift image
-      gift.src = "image/gift-open.PNG";
-
-      // Play music
-      if (music) {
-        music.play().catch(() => {});
-      }
-
-      // Show emotional message
-      if (bigMessage) {
-        bigMessage.style.opacity = "1";
-      }
-
-      // Move to fun section
-      setTimeout(() => {
-
-        if (giftContainer) giftContainer.style.display = "none";
-
-        if (funSection) {
-          funSection.classList.remove("hidden");
-
-          let i = 0;
-          funText.innerText = funnyMessages[i];
-
-          const interval = setInterval(() => {
-            i++;
-            if (i < funnyMessages.length) {
-              funText.innerText = funnyMessages[i];
-            } else {
-              clearInterval(interval);
-            }
-          }, 2000);
-        }
-
-      }, 1200);
-
-    };
-
-  } else {
-    console.log("❌ giftImage not found");
-  }
-
-
-  /* ===============================
-     CONTINUE AFTER FUN
-  =============================== */
-  window.continueAfterFun = function () {
-
-    if (funSection) funSection.classList.add("hidden");
-
-    if (menu) menu.classList.remove("hidden");
-
-  };
-
-
-  /* ===============================
-     OPEN SCRAPBOOK PAGE (FIXED)
-  =============================== */
-  window.openScrapbookPage = function () {
-
-    window.location.href = "scrapbook.html"; // ✅ CORRECT FILE
-
-  };
-
-});
+</body>
+</html>
