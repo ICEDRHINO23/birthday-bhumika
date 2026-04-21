@@ -2,129 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Scrapbook 📖</title>
+<title>Our Scrapbook 📖</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="book-body">
 
-<h1 class="book-title">Our Little Story 📖</h1>
+<h1 class="book-title">Our Story 📖</h1>
 
 <div class="scene">
-<div id="book" class="book">
-
-<!-- 🎉 COVER PAGE -->
-<div class="page active">
-<div class="front cover">
-  <h2>🎂 Happy Birthday Bhoomika 🎉</h2>
-  <p>Something special, just for you… 💫</p>
-</div>
-</div>
-
-<!-- PAGE 1 -->
-<div class="page">
-<div class="front">
-<div class="left">
-<img src="scrapbook/1.jpg">
-</div>
-<div class="right">
-<p>
-Some people don’t walk into life with noise or attention…
-they just quietly become a part of your everyday moments.
-That’s exactly how this began — no big start,
-no dramatic introduction… just simple conversations,
-random laughs, and a comfort that slowly became something real.
-And without even realizing it,
-you became someone I started valuing more than expected.
-</p>
-</div>
-</div>
-</div>
-
-<!-- PAGE 2 -->
-<div class="page">
-<div class="front">
-<div class="left">
-<img src="scrapbook/2.jpg">
-</div>
-<div class="right">
-<p>
-Not every friendship gives peace…
-but this one somehow did.
-Even in chaos, there was always a calm when we talked.
-No pressure, no expectations — just understanding.
-And honestly, that kind of connection is rare.
-It didn’t need effort to feel right… it just did.
-</p>
-</div>
-</div>
-</div>
-
-<!-- PAGE 3 -->
-<div class="page">
-<div class="front">
-<div class="left">
-<img src="scrapbook/3.jpg">
-</div>
-<div class="right">
-<p>
-There were moments that didn’t seem big at that time,
-but later… they stayed.
-Those random talks, those small jokes,
-those unnoticed pauses —
-they built something stronger than it looks.
-And maybe that’s what makes it special…
-it was never forced, never planned.
-</p>
-</div>
-</div>
-</div>
-
-<!-- PAGE 4 (VIDEO) -->
-<div class="page">
-<div class="front">
-<div class="left">
-<video src="scrapbook/4.mp4" autoplay muted loop></video>
-</div>
-<div class="right">
-<p>
-Some memories don’t fade with time…
-they settle quietly and stay.
-And even if things change,
-some connections don’t really go away —
-they just evolve into something deeper,
-something that remains… without needing words.
-</p>
-</div>
-</div>
-</div>
-
-<!-- PAGE 5 (ENDING) -->
-<div class="page">
-<div class="front">
-<div class="left">
-<img src="scrapbook/5.jpg">
-</div>
-<div class="right">
-<p>
-Maybe this was never meant to be loud or obvious…
-but somewhere in between,
-it became something meaningful.
-Not everything needs a name —
-some things are just meant to be felt.
-And this… is one of them.
-</p>
-</div>
-</div>
-</div>
-
-</div>
+  <div id="book" class="book">
+    <div id="pageContent"></div>
+  </div>
 </div>
 
 <div class="controls">
-<button onclick="prevPage()">⬅</button>
-<button onclick="nextPage()">➡</button>
-<button onclick="goHome()">Back</button>
+  <button onclick="prevPage()">⬅</button>
+  <button onclick="nextPage()">➡</button>
+  <button onclick="goHome()">Back</button>
 </div>
 
 <script src="scrapbook.js"></script>
