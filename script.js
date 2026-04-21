@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* CHANGE IMAGE */
-    gift.src = "./image/gift-open.png";
+    gift.src = "./image/gift-open.PNG";
 
     /* MUSIC */
     if (music) {
