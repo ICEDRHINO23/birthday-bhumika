@@ -1,12 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* INTRO */
+  /* ===============================
+     INTRO LOADER
+  =============================== */
   setTimeout(() => {
     const intro = document.getElementById("intro");
     if (intro) intro.style.display = "none";
   }, 1500);
 
-  /* ELEMENTS */
+
+  /* ===============================
+     ELEMENTS
+  =============================== */
   const gift = document.getElementById("giftImage");
   const giftContainer = document.getElementById("giftContainer");
   const menu = document.getElementById("menu");
@@ -22,22 +27,39 @@ document.addEventListener("DOMContentLoaded", () => {
   const userInput = document.getElementById("user");
   const passInput = document.getElementById("pass");
 
-  /* ADMIN */
+
+  /* ===============================
+     ADMIN PANEL TOGGLE
+  =============================== */
   if (adminBtn && adminPanel) {
-    adminBtn.onclick = () => adminPanel.classList.toggle("open");
+    adminBtn.onclick = () => {
+      adminPanel.classList.toggle("open");
+    };
   }
 
+
+  /* ===============================
+     LOGIN SYSTEM
+  =============================== */
   if (loginBtn) {
     loginBtn.onclick = () => {
-      if (userInput.value === "abin" && passInput.value === "1234") {
+
+      const user = userInput.value.trim();
+      const pass = passInput.value.trim();
+
+      if (user === "abin" && pass === "1234") {
         window.location.href = "admin.html";
       } else {
         alert("Wrong credentials ❌");
       }
+
     };
   }
 
-  /* FUN MESSAGES */
+
+  /* ===============================
+     FUNNY MESSAGE SEQUENCE
+  =============================== */
   const funnyMessages = [
     "You really thought it's over after opening the gift? 😂",
     "Patience level = 0 I guess 😏",
@@ -45,47 +67,78 @@ document.addEventListener("DOMContentLoaded", () => {
     "Okay okay… now you're ready for the real surprise 💫"
   ];
 
-  /* GIFT CLICK */
+
+  /* ===============================
+     GIFT CLICK (MAIN FLOW)
+  =============================== */
   if (gift) {
+
     gift.onclick = () => {
 
+      console.log("Gift clicked ✅");
+
+      // Open gift image
       gift.src = "image/gift-open.PNG";
 
-      if (music) music.play().catch(() => {});
+      // Play music
+      if (music) {
+        music.play().catch(() => {});
+      }
 
-      if (bigMessage) bigMessage.style.opacity = "1";
+      // Show emotional message
+      if (bigMessage) {
+        bigMessage.style.opacity = "1";
+      }
 
+      // Move to fun section
       setTimeout(() => {
 
-        giftContainer.style.display = "none";
+        if (giftContainer) giftContainer.style.display = "none";
 
-        funSection.classList.remove("hidden");
+        if (funSection) {
+          funSection.classList.remove("hidden");
 
-        let i = 0;
-        funText.innerText = funnyMessages[i];
+          let i = 0;
+          funText.innerText = funnyMessages[i];
 
-        const interval = setInterval(() => {
-          i++;
-          if (i < funnyMessages.length) {
-            funText.innerText = funnyMessages[i];
-          } else {
-            clearInterval(interval);
-          }
-        }, 2000);
+          const interval = setInterval(() => {
+            i++;
+            if (i < funnyMessages.length) {
+              funText.innerText = funnyMessages[i];
+            } else {
+              clearInterval(interval);
+            }
+          }, 2000);
+        }
 
       }, 1200);
+
     };
+
+  } else {
+    console.log("❌ giftImage not found");
   }
 
-  /* CONTINUE AFTER FUN */
+
+  /* ===============================
+     CONTINUE AFTER FUN
+  =============================== */
   window.continueAfterFun = function () {
-    funSection.classList.add("hidden");
-    menu.classList.remove("hidden");
+
+    if (funSection) funSection.classList.add("hidden");
+
+    if (menu) menu.classList.remove("hidden");
+
   };
 
-  /* OPEN SCRAPBOOK PAGE */
+
+  /* ===============================
+     OPEN SCRAPBOOK PAGE (FIXED)
+  =============================== */
   window.openScrapbookPage = function () {
-    window.location.href = "scrapbook.html";
+
+    window.location.href = "scrapbook.html"; // ✅ CORRECT FILE
+
   };
 
 });
