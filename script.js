@@ -1,7 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   /* =========================
-     ELEMENTS
+     GLOBAL ERROR HANDLER
+  ========================= */
+  window.onerror = function (msg, url, line) {
+    console.log("ERROR:", msg, "at line", line);
+  };
+
+  /* =========================
+     INTRO FIX (NEVER STUCK)
+  ========================= */
+  const intro = document.getElementById("intro");
+  setTimeout(() => {
+    if (intro) intro.style.display = "none";
+  }, 2000);
+
+  /* =========================
+     ELEMENTS (SAFE FETCH)
   ========================= */
   const gift = document.getElementById("giftImage");
   const giftContainer = document.getElementById("giftContainer");
@@ -31,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (loginBtn) {
     loginBtn.onclick = () => {
-      if (userInput.value === "abin" && passInput.value === "1234") {
+      if (userInput?.value === "abin" && passInput?.value === "1234") {
         window.location.href = "admin.html";
       } else {
         alert("Wrong credentials ❌");
@@ -40,11 +55,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     GIFT OPEN
+     GIFT SYSTEM
   ========================= */
   let unlocked = false;
-
-  setTimeout(() => unlocked = true, 2000);
+  setTimeout(() => unlocked = true, 1500);
 
   if (gift) {
     gift.onclick = () => {
@@ -56,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       gift.src = "image/gift-open.PNG";
 
-      // Music fade in
+      // Music fade
       if (music) {
         music.volume = 0;
         music.play().catch(() => {});
@@ -68,16 +82,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 200);
       }
 
-      // Message
-      setTimeout(() => {
-        bigMessage.classList.add("show");
-      }, 800);
+      setTimeout(() => bigMessage?.classList.add("show"), 800);
 
-      // Show menu
       setTimeout(() => {
-        giftContainer.style.display = "none";
-        menu.classList.remove("hidden");
-      }, 2000);
+        if (giftContainer) giftContainer.style.display = "none";
+        menu?.classList.remove("hidden");
+      }, 1800);
     };
   }
 
@@ -87,71 +97,58 @@ document.addEventListener("DOMContentLoaded", () => {
   window.openPage = (page) => {
 
     document.getElementById("main").style.display = "none";
-    bookPage.classList.add("hidden");
-    timerPage.classList.add("hidden");
-    videoPage.classList.add("hidden");
+    bookPage?.classList.add("hidden");
+    timerPage?.classList.add("hidden");
+    videoPage?.classList.add("hidden");
 
     if (page === "book") {
-      bookPage.classList.remove("hidden");
-      renderPage();
+      bookPage?.classList.remove("hidden");
+      safeRender();
     }
 
     if (page === "timer") {
-      timerPage.classList.remove("hidden");
+      timerPage?.classList.remove("hidden");
     }
 
     if (page === "video") {
-
       const now = new Date();
-      const unlockDate = new Date("May 12, 2026 00:00:00");
+      const unlock = new Date("May 12, 2026 00:00:00");
 
-      if (now < unlockDate) {
-        alert("This video unlocks on 12 May 🎂");
+      if (now < unlock) {
+        alert("🎁 Opens on May 12");
         return;
       }
 
-      videoPage.classList.remove("hidden");
+      videoPage?.classList.remove("hidden");
     }
   };
 
   window.goBack = () => {
     document.getElementById("main").style.display = "block";
-    bookPage.classList.add("hidden");
-    timerPage.classList.add("hidden");
-    videoPage.classList.add("hidden");
+    bookPage?.classList.add("hidden");
+    timerPage?.classList.add("hidden");
+    videoPage?.classList.add("hidden");
   };
 
   /* =========================
-     SCRAPBOOK (FINAL)
+     SCRAPBOOK (CINEMATIC)
   ========================= */
 
-  const pagesData = [
-    {
-      type: "image",
-      src: "scrapbook/20240429_230322.jpg"
-    },
-    {
-      type: "image",
-      src: "scrapbook/20240906_204953.jpg"
-    },
-    {
-      type: "image",
-      src: "scrapbook/image.jpg"
-    },
-    {
-      type: "video",
-      src: "scrapbook/bhumika.mp4"
-    }
+  const pages = [
+    { type: "image", src: "scrapbook/1.jpg" },
+    { type: "image", src: "scrapbook/2.jpg" },
+    { type: "image", src: "scrapbook/3.jpg" },
+    { type: "video", src: "scrapbook/4.mp4" }
   ];
 
   const texts = [
-    "Some people just become important without any announcement… you are one of them.",
-    "We didn’t plan this friendship, but somehow it became something I value a lot.",
-    "It’s rare to find someone who feels easy to talk to… and even easier to miss.",
-    "Maybe it’s not about what we say… but what we never had to say."
+    "Some people just become important without any announcement…",
+    "We didn’t plan this friendship… yet it became something real.",
+    "There’s a comfort here that doesn’t need effort or explanation.",
+    "Maybe not everything needs words… some things are just felt."
   ];
 
-  let currentPage = 0;
+  let current = 0;
 
   function renderPage() {
 
@@ -159,7 +156,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     container.innerHTML = "";
 
-    const page = pagesData[currentPage];
+    const page = pages[current];
+
+    const book = document.createElement("div");
+    book.className = "flip-book";
 
     const left = document.createElement("div");
     const right = document.createElement("div");
@@ -170,33 +170,44 @@ document.addEventListener("DOMContentLoaded", () => {
     if (page.type === "video") {
       left.innerHTML = `<video controls src="${page.src}"></video>`;
     } else {
-      left.innerHTML = `<img src="${page.src}" alt="memory">`;
+      left.innerHTML = `<img src="${page.src}" alt="img"
+        onerror="this.style.border='3px solid red'">`;
     }
 
-    right.innerHTML = `<p>${texts[currentPage]}</p>`;
+    right.innerHTML = `<p>${texts[current]}</p>`;
 
-    container.appendChild(left);
-    container.appendChild(right);
+    book.appendChild(left);
+    book.appendChild(right);
+    container.appendChild(book);
+
+    setTimeout(() => book.classList.add("flip"), 50);
+  }
+
+  function safeRender() {
+    try {
+      renderPage();
+    } catch (e) {
+      console.error("Scrapbook error:", e);
+    }
   }
 
   window.nextPage = () => {
-    if (currentPage < pagesData.length - 1) {
-      currentPage++;
-      renderPage();
+    if (current < pages.length - 1) {
+      current++;
+      safeRender();
     }
   };
 
   window.prevPage = () => {
-    if (currentPage > 0) {
-      currentPage--;
-      renderPage();
+    if (current > 0) {
+      current--;
+      safeRender();
     }
   };
 
   /* =========================
      TIMER
   ========================= */
-
   const timer = document.getElementById("bigTimer");
 
   if (timer) {
@@ -220,9 +231,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     HEART ANIMATION
+     HEARTS
   ========================= */
-
   setInterval(() => {
     const h = document.createElement("div");
     h.className = "heart";
