@@ -313,3 +313,10 @@ button:hover {
   border: none;
   border-radius: 10px;
 }
+#profilePic{
+width:200px;
+height:200px;
+object-fit:cover;
+object-position:top; /* 🔥 FIX CROPPING */
+border-radius:50%;
+}
