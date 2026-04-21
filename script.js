@@ -1,20 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ===============================
-     INTRO LOADER
-  =============================== */
+  /* INTRO */
   setTimeout(() => {
     const intro = document.getElementById("intro");
     if (intro) intro.style.display = "none";
   }, 1500);
 
-
-  /* ===============================
-     ELEMENTS
-  =============================== */
+  /* ELEMENTS */
   const gift = document.getElementById("giftImage");
   const giftContainer = document.getElementById("giftContainer");
   const menu = document.getElementById("menu");
+  const funSection = document.getElementById("funSection");
+  const funText = document.getElementById("funText");
   const bigMessage = document.getElementById("bigMessage");
   const music = document.getElementById("bgMusic");
 
@@ -25,98 +22,70 @@ document.addEventListener("DOMContentLoaded", () => {
   const userInput = document.getElementById("user");
   const passInput = document.getElementById("pass");
 
-
-  /* ===============================
-     ADMIN PANEL
-  =============================== */
+  /* ADMIN */
   if (adminBtn && adminPanel) {
-    adminBtn.addEventListener("click", () => {
-      adminPanel.classList.toggle("open");
-    });
+    adminBtn.onclick = () => adminPanel.classList.toggle("open");
   }
 
-
-  /* ===============================
-     LOGIN
-  =============================== */
   if (loginBtn) {
-    loginBtn.addEventListener("click", () => {
-
-      const user = userInput.value.trim();
-      const pass = passInput.value.trim();
-
-      if (user === "abin" && pass === "1234") {
+    loginBtn.onclick = () => {
+      if (userInput.value === "abin" && passInput.value === "1234") {
         window.location.href = "admin.html";
       } else {
         alert("Wrong credentials ❌");
       }
-
-    });
+    };
   }
 
+  /* FUN MESSAGES */
+  const funnyMessages = [
+    "You really thought it's over after opening the gift? 😂",
+    "Patience level = 0 I guess 😏",
+    "Wait… good things take time 😌",
+    "Okay okay… now you're ready for the real surprise 💫"
+  ];
 
-  /* ===============================
-     🎁 GIFT SYSTEM (MAIN FIX)
-  =============================== */
+  /* GIFT CLICK */
   if (gift) {
+    gift.onclick = () => {
 
-    gift.addEventListener("click", () => {
-
-      console.log("Gift clicked ✅");
-
-      // open gift
       gift.src = "image/gift-open.PNG";
 
-      // play music
-      if (music) {
-        music.play().catch(() => {});
-      }
+      if (music) music.play().catch(() => {});
 
-      // show message
-      if (bigMessage) {
-        bigMessage.style.opacity = "1";
-      }
+      if (bigMessage) bigMessage.style.opacity = "1";
 
-      // show menu
       setTimeout(() => {
 
-        if (giftContainer) giftContainer.style.display = "none";
+        giftContainer.style.display = "none";
 
-        if (menu) {
-          menu.classList.remove("hidden");
-        }
+        funSection.classList.remove("hidden");
 
-      }, 1500);
+        let i = 0;
+        funText.innerText = funnyMessages[i];
 
-    });
+        const interval = setInterval(() => {
+          i++;
+          if (i < funnyMessages.length) {
+            funText.innerText = funnyMessages[i];
+          } else {
+            clearInterval(interval);
+          }
+        }, 2000);
 
-  } else {
-    console.log("❌ giftImage not found");
+      }, 1200);
+    };
   }
 
-
-  /* ===============================
-     ✅ OPEN BOOK (FIXED)
-  =============================== */
-  window.openBook = function () {
-    window.location.href = "book.html";
+  /* CONTINUE AFTER FUN */
+  window.continueAfterFun = function () {
+    funSection.classList.add("hidden");
+    menu.classList.remove("hidden");
   };
 
-
-  /* ===============================
-     FLOATING HEARTS
-  =============================== */
-  setInterval(() => {
-
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "💖";
-    heart.style.left = Math.random() * 100 + "vw";
-
-    document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 4000);
-
-  }, 700);
+  /* OPEN SCRAPBOOK PAGE */
+  window.openScrapbookPage = function () {
+    window.location.href = "scrapbook.html";
+  };
 
 });
