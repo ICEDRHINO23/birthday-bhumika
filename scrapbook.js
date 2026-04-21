@@ -1,107 +1,125 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  let index = 0;
+  /* ===============================
+     FIX LOADING
+  =============================== */
+  setTimeout(() => {
+    const intro = document.getElementById("intro");
+    if (intro) intro.style.display = "none";
+  }, 1200);
 
+
+  /* ===============================
+     DATA (MATCHES YOUR FOLDER)
+  =============================== */
   const pages = [
-   const pages = [
-  { type: "image", src: "scrapbook/1.jpg" },
-  { type: "image", src: "scrapbook/2.jpg" },
-  { type: "image", src: "scrapbook/3.jpg" },
-  { type: "video", src: "scrapbook/4.mp4" },
-  { type: "image", src: "scrapbook/5.jpg" } // ✅ LAST PAGE IMAGE
-];
+    { type: "image", src: "./scrapbook/1.jpg" },
+    { type: "image", src: "./scrapbook/2.jpg" },
+    { type: "image", src: "./scrapbook/3.jpg" },
+    { type: "video", src: "./scrapbook/4.mp4" },
+    { type: "image", src: "./scrapbook/5.jpg" }
   ];
 
   const texts = [
-    "",
-    "Some people don’t enter life loudly… they slowly become important. That’s how this started — quietly, naturally.",
-    "Not every friendship gives peace… but this one did. There was always comfort, even without trying.",
-    "Some moments don’t feel big then… but later they stay. Small things became meaningful memories.",
-    "Some memories don’t fade… they stay quietly within, no matter how time changes things.",
-    "Maybe this was never meant to be loud… but it became something meaningful."
+    "There are some people who don’t try to become important… yet somehow they just are. You became that without even realizing it.",
+
+    "Our conversations were never planned, never perfect… but they always felt real. And that’s rare.",
+
+    "Some friendships don’t need constant talking… they just stay, quietly strong in the background.",
+
+    "Maybe this was never meant to be loud or obvious… but somewhere in between, it became something that mattered more than expected.",
+
+    "Not everything needs to be said out loud… some things are just understood. And whatever this is, it’s something I truly value. So maybe this isn’t the end… just something waiting ahead."
   ];
 
-  const container = document.getElementById("pageContent");
 
+  /* ===============================
+     ELEMENT
+  =============================== */
+  const container = document.getElementById("pagesContainer");
+  let index = 0;
+
+
+  /* ===============================
+     RENDER PAGE
+  =============================== */
   function renderPage() {
 
-    if (!container) return;
-
     const page = pages[index];
-
-    if (page.type === "cover") {
-      container.innerHTML = `
-        <div class="page">
-          <div class="front cover">
-            <h2>🎂 Happy Birthday Bhoomika 🎉</h2>
-            <p>Something special just for you 💫</p>
-          </div>
-        </div>
-      `;
-      return;
-    }
-
-    if (page.type === "end") {
-      container.innerHTML = `
-        <div class="page">
-          <div class="front">
-            <div class="left">
-              <img src="scrapbook/image.jpg">
-            </div>
-            <div class="right">
-              <p>Wait for the real gifts 🎁✨</p>
-            </div>
-          </div>
-        </div>
-      `;
-
-      setTimeout(() => {
-        alert("🎁 More surprises are waiting...");
-      }, 800);
-
-      return;
-    }
+    const isLast = index === pages.length - 1;
 
     container.innerHTML = `
-      <div class="page">
-        <div class="front">
+      <div class="book">
 
-          <div class="left">
-            ${
-              page.type === "video"
-              ? `<video src="${page.src}" controls muted></video>`
-              : `<img src="${page.src}" onerror="this.src='image/bhoomika.jpg'">`
-            }
-          </div>
+        <div class="page">
 
-          <div class="right">
-            <p>${texts[index]}</p>
+          <div class="front">
+
+            <div class="left">
+              ${
+                page.type === "video"
+                  ? `<video src="${page.src}" controls autoplay muted loop></video>`
+                  : `<img src="${page.src}?v=${Date.now()}" onerror="this.src='./image/bhoomika.jpg'">`
+              }
+            </div>
+
+            <div class="right">
+              ${
+                isLast
+                  ? `<h2>Wait for the real gifts 🎁✨</h2><p>${texts[index]}</p>`
+                  : `<p>${texts[index]}</p>`
+              }
+            </div>
+
           </div>
 
         </div>
+
       </div>
     `;
   }
 
+
+  /* ===============================
+     NAVIGATION
+  =============================== */
   window.nextPage = function () {
     if (index < pages.length - 1) {
       index++;
-      renderPage();
+      flip();
+      setTimeout(renderPage, 400);
     }
   };
 
   window.prevPage = function () {
     if (index > 0) {
       index--;
-      renderPage();
+      flip(true);
+      setTimeout(renderPage, 400);
     }
   };
 
-  window.goHome = function () {
-    window.location.href = "index.html";
-  };
 
-  /* INITIAL LOAD */
+  /* ===============================
+     FLIP EFFECT
+  =============================== */
+  function flip(reverse = false) {
+    const book = document.querySelector(".book");
+    if (!book) return;
+
+    book.style.transform = reverse
+      ? "rotateY(-180deg)"
+      : "rotateY(180deg)";
+
+    setTimeout(() => {
+      book.style.transform = "rotateY(0deg)";
+    }, 400);
+  }
+
+
+  /* ===============================
+     LOAD FIRST PAGE
+  =============================== */
   renderPage();
 
 });
