@@ -42,7 +42,7 @@ body {
 }
 
 /* =========================
-   ADMIN PANEL
+   ADMIN PANEL (FIXED INPUT ISSUE)
 ========================= */
 #adminPanel {
   position: fixed;
@@ -54,38 +54,33 @@ body {
   padding: 20px;
   box-shadow: 5px 0 20px rgba(0,0,0,0.2);
   transition: 0.4s;
-  z-index: 999;
+  z-index: 2000; /* FIXED */
 }
 
 #adminPanel.open {
   left: 0;
 }
 
-/* =========================
-   PROFILE IMAGE (FIXED)
-========================= */
-#profilePic {
-  width: 180px;
-  height: 180px;
-
-  object-fit: cover;         /* ✅ FIX STRETCH */
-  object-position: center;
-
-  border-radius: 50%;
-  margin-top: 80px;
-
-  border: 5px solid white;
-
-  box-shadow: 
-    0 0 25px rgba(255,77,109,0.6),
-    0 0 60px rgba(255,77,109,0.3);
-
-  animation: float 3s ease-in-out infinite;
+/* INPUT FIX */
+#adminPanel input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
 }
 
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+/* =========================
+   PROFILE IMAGE (FIXED STRETCH)
+========================= */
+#profilePic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-top: 80px;
+  object-fit: cover; /* FIXED */
+  border: 5px solid white;
+  box-shadow: 0 0 25px rgba(255,77,109,0.6);
 }
 
 /* =========================
@@ -106,7 +101,6 @@ h1 {
 
 #bigMessage.show {
   opacity: 1;
-  transform: scale(1.05);
 }
 
 /* =========================
@@ -145,12 +139,11 @@ button {
   background: #ff4d6d;
   color: white;
   cursor: pointer;
-  transition: 0.3s;
+  font-weight: bold;
 }
 
 button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  opacity: 0.9;
 }
 
 /* =========================
@@ -165,59 +158,79 @@ button:hover {
   width: 90%;
   max-width: 900px;
   border-radius: 20px;
-
-  box-shadow: 
-    0 15px 40px rgba(0,0,0,0.2),
-    inset 0 0 10px rgba(255,255,255,0.3);
 }
 
 /* =========================
-   SCRAPBOOK (BOOK STYLE)
+   VIDEO
 ========================= */
-#pagesContainer {
+video {
   width: 100%;
-  max-width: 900px;
-  margin: auto;
+  border-radius: 15px;
 }
 
-/* BOOK SPREAD */
+/* =========================
+   CINEMATIC 3D SCRAPBOOK
+========================= */
+#book {
+  perspective: 2000px;
+}
+
+/* BOOK FRAME */
+#pagesContainer {
+  position: relative;
+  width: 800px;
+  height: 450px;
+  margin: auto;
+  transform-style: preserve-3d;
+}
+
+/* PAGE */
 .spread {
-  display: none;
+  position: absolute;
   width: 100%;
-  height: 420px;
+  height: 100%;
+
+  display: flex;
+
   border-radius: 20px;
   overflow: hidden;
-  margin-bottom: 20px;
 
-  background: white;
-
-  box-shadow: 
-    0 20px 50px rgba(0,0,0,0.3);
-
+  transform-origin: left;
   transform-style: preserve-3d;
-  transition: 0.6s ease;
+
+  transition: transform 1s cubic-bezier(.77,0,.18,1);
+
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
-/* ACTIVE PAGE */
+/* ACTIVE */
 .spread.active {
-  display: flex;
+  z-index: 5;
 }
 
-/* FLIP ANIMATION */
+/* FLIP */
 .spread.flip {
   transform: rotateY(-180deg);
+  z-index: 1;
 }
 
-/* LEFT MEDIA */
+/* LEFT */
 .left {
   width: 50%;
   background: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  backface-visibility: hidden;
 }
 
-/* IMAGE FIX */
+/* RIGHT */
+.right {
+  width: 50%;
+  padding: 25px;
+  background: linear-gradient(135deg,#fff,#ffe6eb);
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+}
+
+/* MEDIA FIX */
 .left img,
 .left video {
   width: 100%;
@@ -225,19 +238,10 @@ button:hover {
   object-fit: cover;
 }
 
-/* RIGHT TEXT */
-.right {
-  width: 50%;
-  padding: 25px;
-  text-align: left;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
+/* TEXT */
 .right h2 {
   color: #ff4d6d;
+  margin-bottom: 10px;
 }
 
 .right p {
@@ -246,8 +250,29 @@ button:hover {
   color: #444;
 }
 
+/* DEPTH */
+.spread::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.2);
+}
+
+/* SHADOW */
+#pagesContainer::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  bottom: -20px;
+  background: rgba(0,0,0,0.3);
+  filter: blur(20px);
+  border-radius: 50%;
+}
+
 /* =========================
-   HEART ANIMATION
+   HEARTS
 ========================= */
 .heart {
   position: fixed;
@@ -276,68 +301,4 @@ button:hover {
 ========================= */
 .hidden {
   display: none;
-}
-/* BOOK PAGE */
-.book-body {
-  margin: 0;
-  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
-  font-family: 'Segoe UI', sans-serif;
-  text-align: center;
-}
-
-.book-title {
-  margin-top: 20px;
-  color: #333;
-}
-
-.book {
-  width: 90%;
-  max-width: 900px;
-  margin: 30px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* PAGE STYLE */
-.page {
-  display: flex;
-  background: white;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-  transition: transform 0.4s;
-}
-
-.page:hover {
-  transform: scale(1.02);
-}
-
-/* LEFT SIDE */
-.left {
-  width: 50%;
-}
-
-.left img,
-.left video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* RIGHT SIDE */
-.right {
-  width: 50%;
-  padding: 20px;
-  text-align: left;
-}
-
-.right h2 {
-  margin-bottom: 10px;
-  color: #ff4d6d;
-}
-
-.right p {
-  line-height: 1.6;
-  color: #444;
 }
