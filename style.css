@@ -260,3 +260,99 @@ button:hover {
   filter: blur(25px);
   border-radius: 50%;
 }
+/* =========================
+   REAL 3D BOOK
+========================= */
+
+.scene {
+  perspective: 3000px;
+}
+
+.book {
+  width: 850px;
+  height: 480px;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+/* STACKED PAGES */
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-origin: left;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+  cursor: pointer;
+}
+
+/* FLIP */
+.page.flipped {
+  transform: rotateY(-180deg);
+}
+
+/* COVER PAGE */
+.cover-page {
+  z-index: 999;
+}
+
+.cover {
+  background: linear-gradient(135deg, #ff4d6d, #ff758f);
+  color: white;
+  font-size: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  height: 100%;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 20px rgba(255,255,255,0.4); }
+  to { box-shadow: 0 0 80px rgba(255,255,255,0.9); }
+}
+
+/* PAGE DESIGN */
+.front {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+}
+
+/* LEFT */
+.left {
+  width: 50%;
+  background: #111;
+}
+
+.left img,
+.left video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* RIGHT */
+.right {
+  width: 50%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.right h2 {
+  color: #ff4d6d;
+  margin-bottom: 10px;
+}
+
+.right p {
+  line-height: 1.8;
+}
