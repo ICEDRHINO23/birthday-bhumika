@@ -8,9 +8,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const bigMessage = document.getElementById("bigMessage");
   const menu = document.getElementById("menu");
   const music = document.getElementById("bgMusic");
+
   const adminBtn = document.getElementById("adminBtn");
   const adminPanel = document.getElementById("adminPanel");
   const loginBtn = document.getElementById("loginBtn");
+
+  const userInput = document.getElementById("user");
+  const passInput = document.getElementById("pass");
+
   const bigTimer = document.getElementById("bigTimer");
 
   /* =========================
@@ -22,7 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
      INTRO
   ========================= */
   setTimeout(() => {
-    document.getElementById("intro")?.remove();
+    const intro = document.getElementById("intro");
+    if (intro) intro.style.display = "none";
   }, 2000);
 
   /* =========================
@@ -33,14 +39,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   loginBtn?.addEventListener("click", () => {
-    const u = document.getElementById("user")?.value.trim();
-    const p = document.getElementById("pass")?.value.trim();
+
+    const u = userInput?.value.trim();
+    const p = passInput?.value.trim();
 
     if (u === "abin" && p === "1234") {
       window.location.href = "admin.html";
     } else {
       alert("Wrong credentials ❌");
     }
+
   });
 
   /* =========================
@@ -70,7 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
      GIFT SYSTEM
   ========================= */
   let unlocked = false;
-  setTimeout(()=> unlocked = true, 2000);
+
+  setTimeout(() => {
+    unlocked = true;
+  }, 2000);
 
   gift?.addEventListener("click", () => {
 
@@ -79,32 +90,32 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    /* OPEN GIFT IMAGE */
+    /* CHANGE IMAGE */
     gift.src = "./image/gift-open.png";
 
-    /* PLAY MUSIC */
+    /* MUSIC */
     if (music) {
       music.volume = 0;
       music.play().catch(()=>{});
 
       let v = 0;
-      let fade = setInterval(()=>{
+      let fade = setInterval(() => {
         v += 0.05;
         music.volume = v;
-        if(v >= 1) clearInterval(fade);
-      },200);
+        if (v >= 1) clearInterval(fade);
+      }, 200);
     }
 
-    /* SHOW MESSAGE */
-    setTimeout(()=>{
+    /* BIG MESSAGE */
+    setTimeout(() => {
       bigMessage?.classList.add("show");
-    },800);
+    }, 800);
 
-    /* SHOW MENU */
-    setTimeout(()=>{
+    /* MENU */
+    setTimeout(() => {
       giftContainer.style.display = "none";
       menu?.classList.remove("hidden");
-    },2200);
+    }, 2200);
 
   });
 
@@ -121,7 +132,7 @@ window.openPage = function(type){
 
   const unlockDate = new Date("2026-05-12T00:00:00+05:30").getTime();
 
-  /* 🔒 VIDEO LOCK */
+  /* VIDEO LOCK */
   if(type === "video"){
 
     if(Date.now() < unlockDate){
@@ -133,7 +144,6 @@ window.openPage = function(type){
     return;
   }
 
-  /* RESET UI */
   menu?.classList.add("hidden");
   book?.classList.add("hidden");
 
@@ -154,7 +164,7 @@ window.goBack = function(){
 
 
 /* =========================
-   SCRAPBOOK (FINAL STABLE)
+   SCRAPBOOK LOAD
 ========================= */
 async function loadScrapbook(){
 
@@ -170,7 +180,7 @@ async function loadScrapbook(){
     );
 
     if(!res.ok){
-      throw new Error("Failed to fetch JSON");
+      throw new Error("JSON load failed");
     }
 
     const data = await res.json();
@@ -182,10 +192,6 @@ async function loadScrapbook(){
       return;
     }
 
-    /* LIMIT TO 5 */
-    const pages = data.slice(0,5);
-
-    /* FRIENDSHIP TEXT */
     const texts = [
       "Some people enter life quietly… but they become part of everything.",
       "This friendship was never loud, but always real and steady.",
@@ -194,7 +200,7 @@ async function loadScrapbook(){
       "Not obvious… but something that always remains."
     ];
 
-    pages.forEach((item,i)=>{
+    data.slice(0,5).forEach((item,i)=>{
 
       const div = document.createElement("div");
       div.className = "spread";
@@ -212,10 +218,9 @@ async function loadScrapbook(){
       `;
 
       container.appendChild(div);
-
     });
 
-    showPage(0);
+    setTimeout(()=> showPage(0), 100);
 
   }catch(err){
     container.innerHTML = "❌ Failed to load scrapbook";
@@ -225,25 +230,31 @@ async function loadScrapbook(){
 
 
 /* =========================
-   PAGE FLIP
+   PAGE FLIP SYSTEM
 ========================= */
 let current = 0;
 
-function showPage(i){
+function showPage(index){
 
   const pages = document.querySelectorAll(".spread");
 
-  pages.forEach((p,index)=>{
-    p.classList.remove("active","flip");
+  pages.forEach((page, i) => {
 
-    if(index < i) p.classList.add("flip");
+    page.classList.remove("active");
+
+    if(i < index){
+      page.classList.add("flip");
+    } else {
+      page.classList.remove("flip");
+    }
+
   });
 
-  if(pages[i]){
-    pages[i].classList.add("active");
+  if(pages[index]){
+    pages[index].classList.add("active");
   }
 
-  current = i;
+  current = index;
 }
 
 function nextPage(){
