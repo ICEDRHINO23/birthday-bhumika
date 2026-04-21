@@ -11,10 +11,6 @@
 <!-- INTRO -->
 <div id="intro">✨ Loading Surprise... ✨</div>
 
-<!-- BACKGROUND -->
-<div id="bgBlur"></div>
-<div id="overlay"></div>
-
 <!-- ADMIN BUTTON -->
 <button id="adminBtn">☰ My Space</button>
 
@@ -32,24 +28,20 @@
 <!-- HEARTS -->
 <div id="hearts"></div>
 
-<!-- MAIN -->
+<!-- MAIN CONTENT -->
 <div id="main">
 
+  <!-- PROFILE IMAGE -->
   <img id="profilePic" src="./image/bhoomika.jpg">
 
   <h1>Happy Birthday Bhoomika 🎂</h1>
 
-  <p>Some people don’t just come into life… they stay, they change everything ❤️</p>
+  <p>
+    Some people don’t just come into life… they stay, they change everything ❤️
+  </p>
 
-  <!-- 🔥 TIMER ALWAYS VISIBLE -->
-  <div id="timerBox">
-    <h2>Countdown 🎂</h2>
-    <div id="bigTimer"></div>
-  </div>
-
-  <!-- GIFT -->
+  <!-- 🎁 GIFT -->
   <div id="giftContainer">
-    <!-- ✅ FIXED IMAGE NAME -->
     <img id="giftImage" src="./image/gift-closed.PNG">
   </div>
 
@@ -58,30 +50,18 @@
     You are one of the best things that ever happened in my life 💖
   </div>
 
-  <!-- TYPING -->
-  <div id="surpriseText" class="hidden">
-    <span id="typedText"></span>
-  </div>
-
-  <!-- MENU (ONLY AFTER GIFT) -->
+  <!-- MENU (HIDDEN INITIALLY) -->
   <div id="menu" class="hidden">
-    <h2>Choose Something 💝</h2>
+    <h2>Open Your Surprise 💝</h2>
 
-    <!-- ❌ REMOVED TIMER BUTTON -->
-    <button onclick="openPage('video')">🎬 Video</button>
-    <button onclick="openPage('book')">📖 Scrapbook</button>
+    <button onclick="openScrapbook()">📖 Open Scrapbook</button>
   </div>
 
 </div>
 
-<!-- VIDEO PAGE -->
-<div id="videoPage" class="hidden">
-  <video controls src="./videos/bhumika.mp4"></video>
-  <button onclick="goBack()">Back</button>
-</div>
-
-<!-- SCRAPBOOK -->
+<!-- 📖 SCRAPBOOK (HIDDEN INITIALLY) -->
 <div id="book" class="hidden">
+
   <div id="pagesContainer"></div>
 
   <div id="controls">
@@ -89,8 +69,10 @@
     <button onclick="nextPage()">➡</button>
     <button onclick="goBack()">Back</button>
   </div>
+
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
