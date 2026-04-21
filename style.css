@@ -223,3 +223,93 @@ button:hover {
   0% { transform: translateY(0); opacity: 1; }
   100% { transform: translateY(-100vh); opacity: 0; }
 }
+/* ===============================
+   CINEMATIC 3D BOOK
+=============================== */
+
+.book-body {
+  background: linear-gradient(135deg, #f8cdda, #f6d365);
+  text-align: center;
+}
+
+.book-title {
+  color: #ff4d6d;
+  margin: 20px;
+}
+
+.scene {
+  perspective: 2000px;
+  display: flex;
+  justify-content: center;
+}
+
+.book {
+  width: 800px;
+  height: 450px;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-origin: left;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+}
+
+.page.flipped {
+  transform: rotateY(-180deg);
+}
+
+.front {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+}
+
+/* LEFT MEDIA */
+.left {
+  width: 50%;
+  background: black;
+}
+
+.left img,
+.left video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* RIGHT TEXT */
+.right {
+  width: 50%;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* CONTROLS */
+.controls {
+  margin-top: 20px;
+}
+
+.controls button {
+  padding: 10px 20px;
+  margin: 10px;
+  background: #ff4d6d;
+  color: white;
+  border: none;
+  border-radius: 10px;
+}
