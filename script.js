@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   /* ===============================
-     INTRO LOADER FIX
+     INTRO LOADER
   =============================== */
   setTimeout(() => {
     const intro = document.getElementById("intro");
@@ -15,9 +15,47 @@ document.addEventListener("DOMContentLoaded", () => {
   const gift = document.getElementById("giftImage");
   const giftContainer = document.getElementById("giftContainer");
   const menu = document.getElementById("menu");
-  const scrapbookSection = document.getElementById("pagesContainer");
+  const book = document.getElementById("book");
   const bigMessage = document.getElementById("bigMessage");
   const music = document.getElementById("bgMusic");
+
+  const adminBtn = document.getElementById("adminBtn");
+  const adminPanel = document.getElementById("adminPanel");
+  const loginBtn = document.getElementById("loginBtn");
+
+  const userInput = document.getElementById("user");
+  const passInput = document.getElementById("pass");
+
+  const container = document.getElementById("pagesContainer");
+
+
+  /* ===============================
+     ADMIN PANEL TOGGLE
+  =============================== */
+  if (adminBtn && adminPanel) {
+    adminBtn.addEventListener("click", () => {
+      adminPanel.classList.toggle("open");
+    });
+  }
+
+
+  /* ===============================
+     LOGIN SYSTEM
+  =============================== */
+  if (loginBtn) {
+    loginBtn.addEventListener("click", () => {
+
+      const user = userInput.value.trim();
+      const pass = passInput.value.trim();
+
+      if (user === "abin" && pass === "1234") {
+        window.location.href = "admin.html";
+      } else {
+        alert("Wrong credentials ❌");
+      }
+
+    });
+  }
 
 
   /* ===============================
@@ -27,20 +65,23 @@ document.addEventListener("DOMContentLoaded", () => {
     { type: "image", src: "scrapbook/1.jpg" },
     { type: "image", src: "scrapbook/2.jpg" },
     { type: "image", src: "scrapbook/3.jpg" },
-    { type: "video", src: "scrapbook/4.mp4" }
+    { type: "image", src: "scrapbook/4.jpg" },
+    { type: "video", src: "scrapbook/5.mp4" }
   ];
 
   const texts = [
     "There are some people who don’t try to become important… yet somehow they just are. You became that without even realizing it.",
 
-    "Our conversations were never planned, never perfect… but they always felt real. And that’s rare.",
+    "Our conversations were never planned, never perfect… but they always felt real. And that’s rare in today’s world.",
 
-    "Some friendships don’t need constant talking… they just stay, quietly strong in the background.",
+    "Some friendships don’t need constant talking… they just stay quietly strong, no matter how much time passes.",
 
-    "Maybe this was never meant to be loud or obvious… but somewhere in between, it became something that mattered more than expected."
+    "You are one of those rare people who made ordinary moments feel special without even trying.",
+
+    "Maybe this was never meant to be loud or obvious… but somewhere in between, it became something that truly mattered."
   ];
 
-  let index = 0;
+  let currentPage = 0;
 
 
   /* ===============================
@@ -48,11 +89,11 @@ document.addEventListener("DOMContentLoaded", () => {
   =============================== */
   function renderPage() {
 
-    if (!scrapbookSection) return;
+    if (!container) return;
 
-    const page = pages[index];
+    const page = pages[currentPage];
 
-    scrapbookSection.innerHTML = `
+    container.innerHTML = `
       <div class="book">
         <div class="page">
 
@@ -65,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
 
           <div class="right">
-            <p>${texts[index]}</p>
+            <p>${texts[currentPage]}</p>
           </div>
 
         </div>
@@ -75,19 +116,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ===============================
-     PAGE NAVIGATION
+     NAVIGATION
   =============================== */
   window.nextPage = function () {
-    if (index < pages.length - 1) {
-      index++;
+    if (currentPage < pages.length - 1) {
+      currentPage++;
       flipAnimation();
       setTimeout(renderPage, 400);
     }
   };
 
   window.prevPage = function () {
-    if (index > 0) {
-      index--;
+    if (currentPage > 0) {
+      currentPage--;
       flipAnimation(true);
       setTimeout(renderPage, 400);
     }
@@ -98,21 +139,43 @@ document.addEventListener("DOMContentLoaded", () => {
      FLIP ANIMATION
   =============================== */
   function flipAnimation(reverse = false) {
-    const book = document.querySelector(".book");
-    if (!book) return;
 
-    book.style.transform = reverse
+    const bookEl = document.querySelector(".book");
+    if (!bookEl) return;
+
+    bookEl.style.transform = reverse
       ? "rotateY(-180deg)"
       : "rotateY(180deg)";
 
     setTimeout(() => {
-      book.style.transform = "rotateY(0deg)";
+      bookEl.style.transform = "rotateY(0deg)";
     }, 400);
   }
 
 
   /* ===============================
-     GIFT CLICK (MAIN FIX 🔥)
+     OPEN SCRAPBOOK
+  =============================== */
+  window.openScrapbook = function () {
+
+    if (menu) menu.classList.add("hidden");
+    if (book) book.classList.remove("hidden");
+
+    renderPage();
+  };
+
+
+  /* ===============================
+     GO BACK
+  =============================== */
+  window.goBack = function () {
+    if (book) book.classList.add("hidden");
+    if (menu) menu.classList.remove("hidden");
+  };
+
+
+  /* ===============================
+     GIFT SYSTEM (MAIN FIX)
   =============================== */
   if (gift) {
 
@@ -130,30 +193,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // show message
       if (bigMessage) {
-        bigMessage.classList.add("show");
+        bigMessage.style.opacity = "1";
       }
 
-      // move to scrapbook
+      // show menu
       setTimeout(() => {
 
         if (giftContainer) giftContainer.style.display = "none";
 
         if (menu) {
           menu.classList.remove("hidden");
-          menu.style.display = "block";
         }
 
-        if (scrapbookSection) {
-          scrapbookSection.style.display = "flex";
-          renderPage(); // 🔥 LOAD SCRAPBOOK AFTER GIFT
-        }
-
-      }, 1200);
+      }, 1500);
 
     });
 
   } else {
     console.log("❌ giftImage not found");
   }
+
+
+  /* ===============================
+     FLOATING HEARTS
+  =============================== */
+  setInterval(() => {
+
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 4000);
+
+  }, 700);
 
 });
