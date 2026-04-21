@@ -1,10 +1,20 @@
 /* =========================
-   GLOBAL
+   GLOBAL (FIXED)
 ========================= */
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  height: 100%;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(135deg, #f8cdda, #f6d365);
+}
+
+/* CENTER EVERYTHING PROPERLY */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
@@ -25,13 +35,18 @@ body {
 }
 
 /* =========================
-   MAIN
+   MAIN (FIXED)
 ========================= */
 #main {
   text-align: center;
-  padding: 20px;
+  padding: 30px;
+  max-width: 600px;
+  width: 100%;
 }
 
+/* =========================
+   TEXT
+========================= */
 h1 {
   color: #ff4d6d;
 }
@@ -41,7 +56,7 @@ p {
 }
 
 /* =========================
-   PROFILE IMAGE FIX
+   PROFILE IMAGE
 ========================= */
 #profilePic {
   width: 200px;
@@ -145,21 +160,19 @@ button:hover {
 }
 
 /* ======================================
-   🔥 FINAL CINEMATIC 3D SCRAPBOOK FIX
+   SCRAPBOOK (UNCHANGED BUT CLEANED)
 ====================================== */
 
 .book-body {
   text-align: center;
 }
 
-/* SCENE */
 .scene {
   perspective: 2500px;
   display: flex;
   justify-content: center;
 }
 
-/* BOOK */
 .book {
   width: 850px;
   height: 480px;
@@ -167,7 +180,6 @@ button:hover {
   transform-style: preserve-3d;
 }
 
-/* PAGE */
 .page {
   position: absolute;
   width: 100%;
@@ -177,12 +189,10 @@ button:hover {
   transition: transform 1s ease;
 }
 
-/* FLIP */
 .page.flipped {
   transform: rotateY(-180deg);
 }
 
-/* FRONT */
 .front {
   display: flex;
   width: 100%;
@@ -193,7 +203,6 @@ button:hover {
   box-shadow: 0 40px 100px rgba(0,0,0,0.5);
 }
 
-/* LEFT MEDIA */
 .left {
   width: 50%;
   display: flex;
@@ -202,7 +211,7 @@ button:hover {
   background: black;
 }
 
-/* 🔥 FIX BLACK ISSUE HERE */
+/* 🔥 FINAL IMAGE FIX */
 .left img,
 .left video {
   width: 100%;
@@ -210,7 +219,6 @@ button:hover {
   object-fit: contain;
 }
 
-/* RIGHT TEXT */
 .right {
   width: 50%;
   padding: 40px;
@@ -225,7 +233,7 @@ button:hover {
   text-align: left;
 }
 
-/* COVER PAGE */
+/* COVER */
 .cover {
   display: flex;
   flex-direction: column;
@@ -247,7 +255,7 @@ button:hover {
   margin-top: 20px;
 }
 
-/* SHADOW UNDER BOOK */
+/* SHADOW */
 .book::after {
   content: "";
   position: absolute;
