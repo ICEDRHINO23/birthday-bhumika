@@ -16,256 +16,221 @@ document.addEventListener("DOMContentLoaded", () => {
   const userInput = document.getElementById("user");
   const passInput = document.getElementById("pass");
 
-  const bigTimer = document.getElementById("bigTimer");
+  const bookPage = document.getElementById("book");
+  const timerPage = document.getElementById("timerPage");
+  const videoPage = document.getElementById("videoPage");
 
-  /* =========================
-     DATE LOCK
-  ========================= */
-  const unlockDate = new Date("2026-05-12T00:00:00+05:30").getTime();
-
-  /* =========================
-     INTRO
-  ========================= */
-  setTimeout(() => {
-    const intro = document.getElementById("intro");
-    if (intro) intro.style.display = "none";
-  }, 2000);
+  const container = document.getElementById("pagesContainer");
 
   /* =========================
      ADMIN PANEL
   ========================= */
-  adminBtn?.addEventListener("click", () => {
-    adminPanel?.classList.toggle("open");
-  });
+  if (adminBtn && adminPanel) {
+    adminBtn.onclick = () => adminPanel.classList.toggle("open");
+  }
 
-  loginBtn?.addEventListener("click", () => {
-
-    const u = userInput?.value.trim();
-    const p = passInput?.value.trim();
-
-    if (u === "abin" && p === "1234") {
-      window.location.href = "admin.html";
-    } else {
-      alert("Wrong credentials ❌");
-    }
-
-  });
+  if (loginBtn) {
+    loginBtn.onclick = () => {
+      if (userInput.value === "abin" && passInput.value === "1234") {
+        window.location.href = "admin.html";
+      } else {
+        alert("Wrong credentials ❌");
+      }
+    };
+  }
 
   /* =========================
-     TIMER (HOME)
-  ========================= */
-  setInterval(() => {
-
-    if (!bigTimer) return;
-
-    let gap = unlockDate - Date.now();
-
-    if (gap <= 0) {
-      bigTimer.innerHTML = "🎉 It's Time 🎂";
-      return;
-    }
-
-    let d = Math.floor(gap/(1000*60*60*24));
-    let h = Math.floor((gap/(1000*60*60))%24);
-    let m = Math.floor((gap/(1000*60))%60);
-    let s = Math.floor((gap/1000)%60);
-
-    bigTimer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
-
-  }, 1000);
-
-  /* =========================
-     GIFT SYSTEM
+     GIFT OPEN
   ========================= */
   let unlocked = false;
 
-  setTimeout(() => {
-    unlocked = true;
-  }, 2000);
+  setTimeout(() => unlocked = true, 2000);
 
-  gift?.addEventListener("click", () => {
+  if (gift) {
+    gift.onclick = () => {
 
-    if (!unlocked) {
-      alert("Wait a second 😄");
-      return;
-    }
+      if (!unlocked) {
+        alert("Wait a moment 😄");
+        return;
+      }
 
-    /* CHANGE IMAGE */
-    gift.src = "./image/gift-open.PNG";
+      gift.src = "image/gift-open.PNG";
 
-    /* MUSIC */
-    if (music) {
-      music.volume = 0;
-      music.play().catch(()=>{});
+      // Music fade in
+      if (music) {
+        music.volume = 0;
+        music.play().catch(() => {});
+        let v = 0;
+        const fade = setInterval(() => {
+          v += 0.05;
+          music.volume = v;
+          if (v >= 1) clearInterval(fade);
+        }, 200);
+      }
 
-      let v = 0;
-      let fade = setInterval(() => {
-        v += 0.05;
-        music.volume = v;
-        if (v >= 1) clearInterval(fade);
-      }, 200);
-    }
+      // Message
+      setTimeout(() => {
+        bigMessage.classList.add("show");
+      }, 800);
 
-    /* BIG MESSAGE */
-    setTimeout(() => {
-      bigMessage?.classList.add("show");
-    }, 800);
-
-    /* MENU */
-    setTimeout(() => {
-      giftContainer.style.display = "none";
-      menu?.classList.remove("hidden");
-    }, 2200);
-
-  });
-
-});
-
-
-/* =========================
-   NAVIGATION
-========================= */
-window.openPage = function(type){
-
-  const menu = document.getElementById("menu");
-  const book = document.getElementById("book");
-
-  const unlockDate = new Date("2026-05-12T00:00:00+05:30").getTime();
-
-  /* VIDEO LOCK */
-  if(type === "video"){
-
-    if(Date.now() < unlockDate){
-      alert("🔒 Video unlocks on May 12 🎂");
-      return;
-    }
-
-    window.location.href = "video.html";
-    return;
+      // Show menu
+      setTimeout(() => {
+        giftContainer.style.display = "none";
+        menu.classList.remove("hidden");
+      }, 2000);
+    };
   }
 
-  menu?.classList.add("hidden");
-  book?.classList.add("hidden");
+  /* =========================
+     NAVIGATION
+  ========================= */
+  window.openPage = (page) => {
 
-  if(type === "book"){
-    book?.classList.remove("hidden");
-    loadScrapbook();
-  }
-};
+    document.getElementById("main").style.display = "none";
+    bookPage.classList.add("hidden");
+    timerPage.classList.add("hidden");
+    videoPage.classList.add("hidden");
 
-
-/* =========================
-   BACK
-========================= */
-window.goBack = function(){
-  document.getElementById("book")?.classList.add("hidden");
-  document.getElementById("menu")?.classList.remove("hidden");
-};
-
-
-/* =========================
-   SCRAPBOOK LOAD
-========================= */
-async function loadScrapbook(){
-
-  const container = document.getElementById("pagesContainer");
-  if(!container) return;
-
-  container.innerHTML = "Loading...";
-
-  try{
-
-    const res = await fetch(
-      "https://raw.githubusercontent.com/ICEDRHINO23/birthday-bhumika/main/data/scrapbook.json"
-    );
-
-    if(!res.ok){
-      throw new Error("JSON load failed");
+    if (page === "book") {
+      bookPage.classList.remove("hidden");
+      renderPage();
     }
 
-    const data = await res.json();
+    if (page === "timer") {
+      timerPage.classList.remove("hidden");
+    }
+
+    if (page === "video") {
+
+      const now = new Date();
+      const unlockDate = new Date("May 12, 2026 00:00:00");
+
+      if (now < unlockDate) {
+        alert("This video unlocks on 12 May 🎂");
+        return;
+      }
+
+      videoPage.classList.remove("hidden");
+    }
+  };
+
+  window.goBack = () => {
+    document.getElementById("main").style.display = "block";
+    bookPage.classList.add("hidden");
+    timerPage.classList.add("hidden");
+    videoPage.classList.add("hidden");
+  };
+
+  /* =========================
+     SCRAPBOOK (FINAL)
+  ========================= */
+
+  const pagesData = [
+    {
+      type: "image",
+      src: "scrapbook/20240429_230322.jpg"
+    },
+    {
+      type: "image",
+      src: "scrapbook/20240906_204953.jpg"
+    },
+    {
+      type: "image",
+      src: "scrapbook/image.jpg"
+    },
+    {
+      type: "video",
+      src: "scrapbook/bhumika.mp4"
+    }
+  ];
+
+  const texts = [
+    "Some people just become important without any announcement… you are one of them.",
+    "We didn’t plan this friendship, but somehow it became something I value a lot.",
+    "It’s rare to find someone who feels easy to talk to… and even easier to miss.",
+    "Maybe it’s not about what we say… but what we never had to say."
+  ];
+
+  let currentPage = 0;
+
+  function renderPage() {
+
+    if (!container) return;
 
     container.innerHTML = "";
 
-    if(!data.length){
-      container.innerHTML = "<h2>No memories yet 💔</h2>";
-      return;
-    }
+    const page = pagesData[currentPage];
 
-    const texts = [
-      "Some people enter life quietly… but they become part of everything.",
-      "This friendship was never loud, but always real and steady.",
-      "Memories were never planned… they just stayed longer than expected.",
-      "Some bonds don’t need explanation… they just exist.",
-      "Not obvious… but something that always remains."
-    ];
+    const left = document.createElement("div");
+    const right = document.createElement("div");
 
-    data.slice(0,5).forEach((item,i)=>{
+    left.className = "page left";
+    right.className = "page right";
 
-      const div = document.createElement("div");
-      div.className = "spread";
-
-      const media = item.type === "video"
-        ? `<video src="${item.src}" controls></video>`
-        : `<img src="${item.src}" alt="memory">`;
-
-      div.innerHTML = `
-        <div class="left">${media}</div>
-        <div class="right">
-          <h2>Memory ${i+1}</h2>
-          <p>${texts[i]}</p>
-        </div>
-      `;
-
-      container.appendChild(div);
-    });
-
-    setTimeout(()=> showPage(0), 100);
-
-  }catch(err){
-    container.innerHTML = "❌ Failed to load scrapbook";
-    console.error(err);
-  }
-}
-
-
-/* =========================
-   PAGE FLIP SYSTEM
-========================= */
-let current = 0;
-
-function showPage(index){
-
-  const pages = document.querySelectorAll(".spread");
-
-  pages.forEach((page, i) => {
-
-    page.classList.remove("active");
-
-    if(i < index){
-      page.classList.add("flip");
+    if (page.type === "video") {
+      left.innerHTML = `<video controls src="${page.src}"></video>`;
     } else {
-      page.classList.remove("flip");
+      left.innerHTML = `<img src="${page.src}" alt="memory">`;
     }
 
-  });
+    right.innerHTML = `<p>${texts[currentPage]}</p>`;
 
-  if(pages[index]){
-    pages[index].classList.add("active");
+    container.appendChild(left);
+    container.appendChild(right);
   }
 
-  current = index;
-}
+  window.nextPage = () => {
+    if (currentPage < pagesData.length - 1) {
+      currentPage++;
+      renderPage();
+    }
+  };
 
-function nextPage(){
-  const pages = document.querySelectorAll(".spread");
-  if(current < pages.length - 1){
-    showPage(current + 1);
-  }
-}
+  window.prevPage = () => {
+    if (currentPage > 0) {
+      currentPage--;
+      renderPage();
+    }
+  };
 
-function prevPage(){
-  if(current > 0){
-    showPage(current - 1);
+  /* =========================
+     TIMER
+  ========================= */
+
+  const timer = document.getElementById("bigTimer");
+
+  if (timer) {
+    setInterval(() => {
+      const target = new Date("May 12, 2026 00:00:00");
+      const now = new Date();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        timer.innerHTML = "🎉 It's Time!";
+        return;
+      }
+
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+
+      timer.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+    }, 1000);
   }
-}
+
+  /* =========================
+     HEART ANIMATION
+  ========================= */
+
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "💖";
+    h.style.left = Math.random() * 100 + "vw";
+
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 4000);
+  }, 600);
+
+});
