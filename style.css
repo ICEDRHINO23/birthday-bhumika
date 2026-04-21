@@ -55,7 +55,7 @@ p {
 }
 
 /* =========================
-   PROFILE IMAGE
+   PROFILE
 ========================= */
 #profilePic {
   width: 200px;
@@ -67,43 +67,8 @@ p {
 }
 
 /* =========================
-   GAME
+   BUTTONS
 ========================= */
-#gameBox {
-  margin-top: 20px;
-}
-
-/* =========================
-   GIFT
-========================= */
-#giftContainer {
-  margin-top: 20px;
-}
-
-#giftImage {
-  width: 150px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-#giftImage:hover {
-  transform: scale(1.1);
-}
-
-/* =========================
-   FUN
-========================= */
-#funSection {
-  margin-top: 20px;
-}
-
-/* =========================
-   MENU
-========================= */
-.hidden {
-  display: none;
-}
-
 button {
   padding: 10px 20px;
   margin: 10px;
@@ -117,6 +82,10 @@ button {
 
 button:hover {
   transform: scale(1.1);
+}
+
+.hidden {
+  display: none;
 }
 
 /* =========================
@@ -159,7 +128,7 @@ button:hover {
 }
 
 /* ======================================
-   SCRAPBOOK
+   🔥 CINEMATIC 3D BOOK (FINAL FIX)
 ====================================== */
 
 .book-body {
@@ -167,11 +136,10 @@ button:hover {
 }
 
 .scene {
-  perspective: 2500px;
-  display: flex;
-  justify-content: center;
+  perspective: 3000px;
 }
 
+/* BOOK */
 .book {
   width: 850px;
   height: 480px;
@@ -179,6 +147,7 @@ button:hover {
   transform-style: preserve-3d;
 }
 
+/* PAGES */
 .page {
   position: absolute;
   width: 100%;
@@ -186,8 +155,44 @@ button:hover {
   transform-origin: left;
   transform-style: preserve-3d;
   transition: transform 1s ease;
+  backface-visibility: hidden;   /* 🔥 FIX */
 }
 
+/* FLIP */
+.page.flipped {
+  transform: rotateY(-180deg);
+}
+
+/* COVER */
+.cover-page {
+  z-index: 999;
+  backface-visibility: hidden;
+}
+
+.cover {
+  width: 100%;
+  height: 100%;
+
+  background: linear-gradient(135deg, #ff4d6d, #ff758f);
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 20px;
+  text-align: center;
+
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 20px rgba(255,255,255,0.4); }
+  to { box-shadow: 0 0 80px rgba(255,255,255,0.9); }
+}
+
+/* PAGE FRONT */
 .front {
   display: flex;
   width: 100%;
@@ -198,49 +203,46 @@ button:hover {
   box-shadow: 0 40px 100px rgba(0,0,0,0.5);
 }
 
-/* LEFT IMAGE */
+/* LEFT MEDIA */
 .left {
   width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #111;
+  background: black;
 }
 
+/* 🔥 IMAGE FIX (MOST IMPORTANT) */
 .left img,
 .left video {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 🔥 FIXED */
+  object-fit: contain;   /* ✅ NO CROP */
+  background: black;
 }
 
-/* RIGHT TEXT (🔥 MAIN FIX) */
+/* RIGHT TEXT */
 .right {
   width: 50%;
   padding: 40px;
 
   display: flex;
-  flex-direction: column;     /* ✅ FIX */
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-start;    /* ✅ FIX */
+  align-items: flex-start;
 
   text-align: left;
 }
 
-/* TITLE FIX */
 .right h2 {
   font-size: 28px;
-  margin-bottom: 15px;
-  line-height: 1.4;
-  white-space: normal;   /* ✅ FIX */
+  margin-bottom: 10px;
   color: #ff4d6d;
 }
 
-/* PARAGRAPH */
 .right p {
   font-size: 18px;
   line-height: 1.8;
-  text-align: left;
 }
 
 /* CONTROLS */
@@ -259,100 +261,4 @@ button:hover {
   background: rgba(0,0,0,0.3);
   filter: blur(25px);
   border-radius: 50%;
-}
-/* =========================
-   REAL 3D BOOK
-========================= */
-
-.scene {
-  perspective: 3000px;
-}
-
-.book {
-  width: 850px;
-  height: 480px;
-  position: relative;
-  transform-style: preserve-3d;
-}
-
-/* STACKED PAGES */
-.page {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform-origin: left;
-  transform-style: preserve-3d;
-  transition: transform 1s ease;
-  cursor: pointer;
-}
-
-/* FLIP */
-.page.flipped {
-  transform: rotateY(-180deg);
-}
-
-/* COVER PAGE */
-.cover-page {
-  z-index: 999;
-}
-
-.cover {
-  background: linear-gradient(135deg, #ff4d6d, #ff758f);
-  color: white;
-  font-size: 28px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  height: 100%;
-  animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-  from { box-shadow: 0 0 20px rgba(255,255,255,0.4); }
-  to { box-shadow: 0 0 80px rgba(255,255,255,0.9); }
-}
-
-/* PAGE DESIGN */
-.front {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  background: white;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-}
-
-/* LEFT */
-.left {
-  width: 50%;
-  background: #111;
-}
-
-.left img,
-.left video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* RIGHT */
-.right {
-  width: 50%;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.right h2 {
-  color: #ff4d6d;
-  margin-bottom: 10px;
-}
-
-.right p {
-  line-height: 1.8;
 }
