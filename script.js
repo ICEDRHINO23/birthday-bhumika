@@ -1,19 +1,45 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const container = document.getElementById("pagesContainer");
-  const cover = document.getElementById("cover");
-  const music = document.getElementById("scrapMusic");
+  /* ===============================
+     🔥 FORCE REMOVE LOADING (FIX)
+  =============================== */
+  const intro = document.getElementById("intro");
 
-  let current = 0;
+  if (intro) {
+    setTimeout(() => {
+      intro.style.opacity = "0";
+      setTimeout(() => {
+        intro.style.display = "none";
+      }, 500);
+    }, 1200);
+  }
 
-  /* =========================
+  /* ===============================
+     ELEMENTS SAFE LOAD
+  =============================== */
+  const tapBtn = document.getElementById("tapBtn");
+  const tapCountText = document.getElementById("tapCount");
+
+  const gameBox = document.getElementById("gameBox");
+  const giftContainer = document.getElementById("giftContainer");
+  const giftImage = document.getElementById("giftImage");
+
+  const funSection = document.getElementById("funSection");
+  const funText = document.getElementById("funText");
+
+  const menu = document.getElementById("menu");
+  const music = document.getElementById("bgMusic");
+
+  let count = 0;
+
+  /* ===============================
      🎵 SAFE MUSIC START
-  ========================= */
+  =============================== */
   function startMusic() {
     if (music && music.paused) {
 
       music.volume = 0;
-      music.play().catch(() => {});
+      music.play().catch(()=>{});
 
       let v = 0;
       const fade = setInterval(() => {
@@ -24,150 +50,208 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* =========================
-     📂 DATA (FINAL)
-  ========================= */
-  const pages = [
-    { type: "image", src: "./scrapbook/1.jpg" },
-    { type: "image", src: "./scrapbook/2.jpg" },
-    { type: "image", src: "./scrapbook/3.jpg" },
+  /* 🔥 START MUSIC ON FIRST CLICK */
+  document.body.addEventListener("click", startMusic, { once: true });
 
-    { type: "video", src: "./scrapbook/4.mp4" },
-    { type: "video", src: "./scrapbook/5.mp4" },
-    { type: "video", src: "./scrapbook/6.mp4" },
+  /* ===============================
+     GAME (SAFE)
+  =============================== */
+  if (tapBtn) {
+    tapBtn.addEventListener("click", () => {
 
-    { type: "image", src: "./scrapbook/7.jpg" }
-  ];
+      count++;
+      if (tapCountText) {
+        tapCountText.innerText = `Tapped: ${count}/5`;
+      }
 
-  const texts = [
-    "There are people who enter quietly… but slowly become part of everything. You became that comfort without even trying.",
-
-    "Our conversations were never planned… but they always felt real. And in a world full of noise, that meant everything.",
-
-    "Some friendships don’t need daily talks… they stay strong silently. And that’s exactly what makes them special.",
-
-    "And then came moments like this… simple, real, and full of happiness. Somehow, this day started feeling more special.",
-
-    "I still remember this… the way your smile just appeared without effort. That happiness… it stayed longer than the moment itself.",
-
-    "It was never about the gift… it was about that genuine happiness in your eyes. And honestly, that made everything worth it.",
-
-    "Not everything needs words… some things are just felt. And whatever this is… it’s something I truly value.\n\nWait for the real gifts 🎁✨"
-  ];
-
-  /* =========================
-     🧱 CREATE PAGES
-  ========================= */
-  if (!container) {
-    console.error("pagesContainer not found");
-    return;
+      if (count >= 5) {
+        gameBox?.classList.add("hidden");
+        giftContainer?.classList.remove("hidden");
+      }
+    });
   }
 
-  pages.forEach((p, i) => {
+  /* ===============================
+     GIFT (SAFE)
+  =============================== */
+  if (giftImage) {
+    giftImage.addEventListener("click", () => {
 
-    const page = document.createElement("div");
-    page.className = "page";
+      giftImage.src = "./image/gift-open.PNG";
 
-    /* 🔥 PERFECT STACK ORDER */
-    page.style.zIndex = pages.length - i;
+      setTimeout(() => {
+        giftContainer?.classList.add("hidden");
+        funSection?.classList.remove("hidden");
 
-    page.innerHTML = `
-      <div class="front">
+        if (funText) {
+          funText.innerText = getFunnyMessage();
+        }
+      }, 800);
+    });
+  }
 
-        <div class="left">
-          ${
-            p.type === "video"
-              ? `<video src="${p.src}" muted loop controls playsinline></video>`
-              : `<img src="${p.src}" onerror="this.src='./image/bhoomika.jpg'"/>`
-          }
-        </div>
-
-        <div class="right">
-          ${
-            i === pages.length - 1
-              ? `<h2>Wait for the real gifts 🎁✨</h2><p>${texts[i]}</p>`
-              : `<p>${texts[i]}</p>`
-          }
-        </div>
-
-      </div>
-
-      <div class="back"></div>
-    `;
-
-    container.appendChild(page);
-  });
-
-  /* 🔥 IMPORTANT: ONLY INNER PAGES */
-  const allPages = document.querySelectorAll("#pagesContainer .page");
-
-  /* =========================
-     📖 OPEN COVER
-  ========================= */
-  cover.addEventListener("click", () => {
-
-    cover.classList.add("flipped");
-
-    /* 🔥 MOVE COVER BEHIND AFTER FLIP */
-    setTimeout(() => {
-      cover.style.zIndex = 0;
-    }, 800);
-
-    startMusic();
-  });
-
-  /* =========================
-     ➡ NEXT PAGE
-  ========================= */
-  window.nextPage = function () {
-
-    if (current < allPages.length) {
-
-      const page = allPages[current];
-
-      page.classList.add("flipped");
-
-      /* 🎥 AUTO PLAY VIDEO WHEN PAGE OPENS */
-      const video = page.querySelector("video");
-      if (video) {
-        video.play().catch(() => {});
-      }
-
-      current++;
-      startMusic();
-    }
+  /* ===============================
+     FUN
+  =============================== */
+  window.continueAfterFun = function () {
+    funSection?.classList.add("hidden");
+    menu?.classList.remove("hidden");
   };
 
-  /* =========================
-     ⬅ PREVIOUS PAGE
-  ========================= */
-  window.prevPage = function () {
+  function getFunnyMessage() {
+    const messages = [
+      "You really thought gift will open so easily? 😂",
+      "Patience level: zero detected 🤭",
+      "Still waiting? Good things take time 😌",
+      "Okay okay… now real surprise coming 😄"
+    ];
+    return messages[Math.floor(Math.random() * messages.length)];
+  }
 
-    if (current > 0) {
+  /* ===============================
+     NAVIGATION
+  =============================== */
+  window.openScrapbook = function () {
+    window.location.href = "scrapbook.html";
+  };
 
-      current--;
+  window.openVideo = function () {
+    const now = new Date();
+    const unlockDate = new Date(2026, 4, 12, 0, 0, 0);
 
-      const page = allPages[current];
-
-      page.classList.remove("flipped");
-
-      /* 🎥 PAUSE VIDEO WHEN GO BACK */
-      const video = page.querySelector("video");
-      if (video) {
-        video.pause();
-      }
-
+    if (now >= unlockDate) {
+      window.location.href = "video.html";
     } else {
-      cover.classList.remove("flipped");
-      cover.style.zIndex = 9999;
+      alert("⏳ This video will unlock on Birthday 🎂");
     }
   };
 
-  /* =========================
-     🔙 GO HOME
-  ========================= */
-  window.goHome = function () {
-    window.location.href = "index.html";
+});document.addEventListener("DOMContentLoaded", () => {
+
+  /* ===============================
+     🔥 FORCE REMOVE LOADING (FIX)
+  =============================== */
+  const intro = document.getElementById("intro");
+
+  if (intro) {
+    setTimeout(() => {
+      intro.style.opacity = "0";
+      setTimeout(() => {
+        intro.style.display = "none";
+      }, 500);
+    }, 1200);
+  }
+
+  /* ===============================
+     ELEMENTS SAFE LOAD
+  =============================== */
+  const tapBtn = document.getElementById("tapBtn");
+  const tapCountText = document.getElementById("tapCount");
+
+  const gameBox = document.getElementById("gameBox");
+  const giftContainer = document.getElementById("giftContainer");
+  const giftImage = document.getElementById("giftImage");
+
+  const funSection = document.getElementById("funSection");
+  const funText = document.getElementById("funText");
+
+  const menu = document.getElementById("menu");
+  const music = document.getElementById("bgMusic");
+
+  let count = 0;
+
+  /* ===============================
+     🎵 SAFE MUSIC START
+  =============================== */
+  function startMusic() {
+    if (music && music.paused) {
+
+      music.volume = 0;
+      music.play().catch(()=>{});
+
+      let v = 0;
+      const fade = setInterval(() => {
+        v += 0.05;
+        music.volume = v;
+        if (v >= 0.6) clearInterval(fade);
+      }, 200);
+    }
+  }
+
+  /* 🔥 START MUSIC ON FIRST CLICK */
+  document.body.addEventListener("click", startMusic, { once: true });
+
+  /* ===============================
+     GAME (SAFE)
+  =============================== */
+  if (tapBtn) {
+    tapBtn.addEventListener("click", () => {
+
+      count++;
+      if (tapCountText) {
+        tapCountText.innerText = `Tapped: ${count}/5`;
+      }
+
+      if (count >= 5) {
+        gameBox?.classList.add("hidden");
+        giftContainer?.classList.remove("hidden");
+      }
+    });
+  }
+
+  /* ===============================
+     GIFT (SAFE)
+  =============================== */
+  if (giftImage) {
+    giftImage.addEventListener("click", () => {
+
+      giftImage.src = "./image/gift-open.PNG";
+
+      setTimeout(() => {
+        giftContainer?.classList.add("hidden");
+        funSection?.classList.remove("hidden");
+
+        if (funText) {
+          funText.innerText = getFunnyMessage();
+        }
+      }, 800);
+    });
+  }
+
+  /* ===============================
+     FUN
+  =============================== */
+  window.continueAfterFun = function () {
+    funSection?.classList.add("hidden");
+    menu?.classList.remove("hidden");
+  };
+
+  function getFunnyMessage() {
+    const messages = [
+      "You really thought gift will open so easily? 😂",
+      "Patience level: zero detected 🤭",
+      "Still waiting? Good things take time 😌",
+      "Okay okay… now real surprise coming 😄"
+    ];
+    return messages[Math.floor(Math.random() * messages.length)];
+  }
+
+  /* ===============================
+     NAVIGATION
+  =============================== */
+  window.openScrapbook = function () {
+    window.location.href = "scrapbook.html";
+  };
+
+  window.openVideo = function () {
+    const now = new Date();
+    const unlockDate = new Date(2026, 4, 12, 0, 0, 0);
+
+    if (now >= unlockDate) {
+      window.location.href = "video.html";
+    } else {
+      alert("⏳ This video will unlock on Birthday 🎂");
+    }
   };
 
 });
