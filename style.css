@@ -90,7 +90,7 @@ button:hover {
 
 /* STACK FIX */
 #pagesContainer .page {
-  z-index: 1;
+  z-index: auto;
 }
 
 /* =========================
@@ -251,4 +251,9 @@ button:hover {
   z-index: 9999;
 
   transition: opacity 0.5s ease;
+}
+/* FIX: move cover behind after flip */
+.cover-page.flipped {
+  transform: rotateY(-180deg);
+  z-index: 0 !important;
 }
