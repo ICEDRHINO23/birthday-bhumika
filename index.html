@@ -1,54 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Happy Birthday Bhoomika 🎂</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Happy Birthday Bhoomika 🎂</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- LOADING -->
-<div id="intro">✨ Loading Surprise... ✨</div>
+  <!-- 🔥 LOADING -->
+  <div id="intro">✨ Loading Surprise... ✨</div>
 
-<audio id="bgMusic" src="./audio/music.mp3" loop></audio>
+  <!-- 🎵 MUSIC (ONLY ONE AUDIO) -->
+  <audio id="bgMusic" src="./audio/music.mp3" loop></audio>
 
-<div id="main">
+  <div id="main">
 
-  <img id="profilePic" src="./image/bhoomika.jpg">
+    <img id="profilePic" src="./image/bhoomika.jpg">
 
-  <h1>Happy Birthday Bhoomika 🎂</h1>
+    <h1>Happy Birthday Bhoomika 🎂</h1>
 
-  <p>Some people don’t just come into life… they stay ❤️</p>
+    <p>Some people don’t just come into life… they stay ❤️</p>
 
-  <!-- GAME -->
-  <div id="gameBox">
-    <h3>🎯 Tap 5 times to unlock surprise</h3>
-    <button id="tapBtn">Tap Me</button>
-    <p id="tapCount"></p>
+    <!-- 🎯 GAME -->
+    <div id="gameBox">
+      <h3>Tap 5 times to unlock surprise</h3>
+      <button id="tapBtn">Tap Me</button>
+      <p id="tapCount"></p>
+    </div>
+
+    <!-- 🎁 GIFT -->
+    <div id="giftContainer" class="hidden">
+      <img id="giftImage" src="./image/gift-closed.PNG">
+    </div>
+
+    <!-- 😂 FUN -->
+    <div id="funSection" class="hidden">
+      <h2>Wait wait 😂</h2>
+      <p id="funText"></p>
+      <button onclick="continueAfterFun()">Continue 👉</button>
+    </div>
+
+    <!-- 📖 MENU -->
+    <div id="menu" class="hidden">
+      <h2>Now open your real surprise 💝</h2>
+      <button onclick="openScrapbook()">📖 Open Scrapbook</button>
+    </div>
+
   </div>
 
-  <!-- GIFT -->
-  <div id="giftContainer" class="hidden">
-    <img id="giftImage" src="./image/gift-closed.PNG">
-  </div>
+  <script src="script.js"></script>
 
-  <!-- FUN -->
-  <div id="funSection" class="hidden">
-    <h2>Wait wait 😂</h2>
-    <p id="funText"></p>
-    <button onclick="continueAfterFun()">Continue 👉</button>
-  </div>
-
-  <!-- MENU -->
-  <div id="menu" class="hidden">
-    <h2>Now open your real surprise 💝</h2>
-    <button onclick="openScrapbook()">📖 Open Scrapbook</button>
-    <button onclick="openVideo()">🎥 Special Video</button>
-  </div>
-
-</div>
-
-<script src="script.js"></script>
 </body>
 </html>
