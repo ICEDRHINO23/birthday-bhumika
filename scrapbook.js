@@ -115,7 +115,7 @@ Sometimes…
 that’s all something needs to be real.`,
 
 `And today…
-is not just another birthday.
+is not just another birthday comming.
 It’s a reminder…
 
 that some people
@@ -272,7 +272,7 @@ you will always be one of those people.
         they stay.
 
         And they make everything feel better. 💖
-        "wait for more"
+        "wait for more"/n
       </p>
 
       <button onclick="goHome()" style="margin-top:20px;">
