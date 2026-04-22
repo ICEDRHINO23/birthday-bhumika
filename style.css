@@ -173,8 +173,13 @@ body {
   inset: 0;
   background: black;
   color: white;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
+  font-size: 26px;
   z-index: 9999;
+
+  transition: opacity 0.5s ease;
 }
