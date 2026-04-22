@@ -5,14 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
   =============================== */
   const intro = document.getElementById("intro");
 
-  if (intro) {
-    setTimeout(() => {
+  setTimeout(() => {
+    if (intro) {
       intro.style.opacity = "0";
       setTimeout(() => {
         intro.style.display = "none";
       }, 500);
-    }, 1200);
-  }
+    }
+  }, 1200);
 
   /* ===============================
      ELEMENTS
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let count = 0;
 
   /* ===============================
-     🎵 MUSIC (SAFE START)
+     🎵 MUSIC
   =============================== */
   function startMusic() {
     if (music && music.paused) {
@@ -55,47 +55,37 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ===============================
      GAME
   =============================== */
-  if (tapBtn) {
-    tapBtn.addEventListener("click", () => {
+  tapBtn.addEventListener("click", () => {
 
-      count++;
+    count++;
+    tapCountText.innerText = `Tapped: ${count}/5`;
 
-      if (tapCountText) {
-        tapCountText.innerText = `Tapped: ${count}/5`;
-      }
-
-      if (count >= 5) {
-        gameBox.classList.add("hidden");
-        giftContainer.classList.remove("hidden");
-      }
-    });
-  }
+    if (count >= 5) {
+      gameBox.style.display = "none";
+      giftContainer.style.display = "block";
+    }
+  });
 
   /* ===============================
      GIFT
   =============================== */
-  if (giftImage) {
-    giftImage.addEventListener("click", () => {
+  giftImage.addEventListener("click", () => {
 
-      giftImage.src = "./image/gift-open.PNG";
+    giftImage.src = "./image/gift-open.PNG";
 
-      setTimeout(() => {
-        giftContainer.classList.add("hidden");
-        funSection.classList.remove("hidden");
-
-        if (funText) {
-          funText.innerText = getFunnyMessage();
-        }
-      }, 800);
-    });
-  }
+    setTimeout(() => {
+      giftContainer.style.display = "none";
+      funSection.style.display = "block";
+      funText.innerText = getFunnyMessage();
+    }, 800);
+  });
 
   /* ===============================
      FUN
   =============================== */
   window.continueAfterFun = function () {
-    funSection.classList.add("hidden");
-    menu.classList.remove("hidden");
+    funSection.style.display = "none";
+    menu.style.display = "block";
   };
 
   function getFunnyMessage() {
@@ -117,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.openVideo = function () {
     const now = new Date();
-    const unlockDate = new Date(2026, 4, 12, 0, 0, 0);
+    const unlockDate = new Date(2026, 4, 12);
 
     if (now >= unlockDate) {
       window.location.href = "video.html";
