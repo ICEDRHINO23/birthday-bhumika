@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }, 1200);
 
+
   /* ===============================
      ELEMENTS
   =============================== */
@@ -34,25 +35,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let count = 0;
 
+
   /* ===============================
-     🎵 MUSIC (FADE-IN)
+     🎵 MUSIC (SAFE AUTOPLAY)
   =============================== */
   function startMusic() {
     if (music && music.paused) {
 
       music.volume = 0;
-      music.play().catch(()=>{});
+
+      music.play().catch(() => {});
 
       let v = 0;
       const fade = setInterval(() => {
         v += 0.05;
         music.volume = v;
+
         if (v >= 0.6) clearInterval(fade);
       }, 200);
     }
   }
 
+  /* Start music on first user interaction */
   document.body.addEventListener("click", startMusic, { once: true });
+
 
   /* ===============================
      🎯 TAP GAME
@@ -63,15 +69,18 @@ document.addEventListener("DOMContentLoaded", () => {
       count++;
 
       if (tapCountText) {
-        tapCountText.innerText = `Tapped: ${count}/5`;
+        tapCountText.innerText = `Tapped: ${Math.min(count, 5)}/5`;
       }
 
-      if (count >= 5) {
+      /* Unlock gift */
+      if (count === 5) {
         gameBox.style.display = "none";
-        giftContainer.style.display = "block";
+        giftContainer.style.display = "flex";
       }
+
     });
   }
+
 
   /* ===============================
      🎁 GIFT OPEN (PREMIUM)
@@ -79,20 +88,34 @@ document.addEventListener("DOMContentLoaded", () => {
   if (giftImage) {
     giftImage.addEventListener("click", () => {
 
-      /* 💓 HEARTBEAT */
+      /* 💓 HEARTBEAT SOUND */
       if (heartbeat) {
         heartbeat.currentTime = 0;
-        heartbeat.play().catch(()=>{});
+        heartbeat.volume = 1;
+        heartbeat.play().catch(() => {});
       }
 
-      /* 🎁 POP EFFECT */
+      /* 🎁 POP ANIMATION */
       giftImage.classList.add("gift-pop");
 
+      /* 🎁 CHANGE IMAGE */
       setTimeout(() => {
         giftImage.src = "./image/gift-open.PNG";
         createSparkles();
       }, 400);
 
+      /* 🎵 LOWER MUSIC FOR DRAMA */
+      if (music) {
+        let v = music.volume;
+        const reduce = setInterval(() => {
+          v -= 0.05;
+          music.volume = v;
+
+          if (v <= 0.2) clearInterval(reduce);
+        }, 200);
+      }
+
+      /* ✨ SHOW FUN SECTION */
       setTimeout(() => {
         giftContainer.style.display = "none";
         funSection.style.display = "block";
@@ -103,8 +126,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+
   /* ===============================
-     ✨ SPARKLES
+     ✨ SPARKLE EFFECT
   =============================== */
   function createSparkles() {
 
@@ -122,10 +146,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+
   /* ===============================
      ✍️ TYPING EFFECT
   =============================== */
   function typeText(element, text) {
+
+    if (!element) return;
 
     element.innerHTML = "";
     element.classList.add("typing");
@@ -145,6 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 30);
   }
 
+
   /* ===============================
      😂 FUN MESSAGES
   =============================== */
@@ -155,19 +183,22 @@ document.addEventListener("DOMContentLoaded", () => {
       "Still waiting? Good things take time 😌",
       "Okay okay… now real surprise coming 😄"
     ];
+
     return messages[Math.floor(Math.random() * messages.length)];
   }
 
+
   /* ===============================
-     👉 CONTINUE
+     👉 CONTINUE BUTTON
   =============================== */
   window.continueAfterFun = function () {
     funSection.style.display = "none";
     menu.style.display = "block";
   };
 
+
   /* ===============================
-     📖 OPEN SCRAPBOOK (SMOOTH)
+     📖 OPEN SCRAPBOOK (SMOOTH FADE)
   =============================== */
   window.openScrapbook = function () {
 
@@ -179,13 +210,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 800);
   };
 
+
   /* ===============================
-     🎥 OPEN VIDEO (LOCKED)
+     🎥 LOCKED VIDEO
   =============================== */
   window.openVideo = function () {
 
     const now = new Date();
-    const unlockDate = new Date(2026, 4, 12);
+    const unlockDate = new Date(2026, 4, 12); // May 12
 
     if (now >= unlockDate) {
       window.location.href = "video.html";
