@@ -1,41 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ===============================
-     LOADING SCREEN
-  =============================== */
-  setTimeout(() => {
-    const intro = document.getElementById("intro");
-    if (intro) intro.style.display = "none";
-  }, 1200);
+  const container = document.getElementById("pagesContainer");
+  const cover = document.getElementById("cover");
+  const music = document.getElementById("scrapMusic");
 
-  /* ===============================
-     ELEMENTS
-  =============================== */
-  const tapBtn = document.getElementById("tapBtn");
-  const tapCountText = document.getElementById("tapCount");
+  let current = 0;
 
-  const gameBox = document.getElementById("gameBox");
-  const giftContainer = document.getElementById("giftContainer");
-  const giftImage = document.getElementById("giftImage");
-
-  const funSection = document.getElementById("funSection");
-  const funText = document.getElementById("funText");
-
-  const menu = document.getElementById("menu");
-  const music = document.getElementById("bgMusic");
-
-  let count = 0;
-
-  /* ===============================
-     🎵 GLOBAL MUSIC START (FIXED)
-  =============================== */
+  /* =========================
+     🎵 SAFE MUSIC START
+  ========================= */
   function startMusic() {
     if (music && music.paused) {
 
       music.volume = 0;
       music.play().catch(()=>{});
 
-      /* smooth fade-in */
       let v = 0;
       const fade = setInterval(() => {
         v += 0.05;
@@ -45,71 +24,120 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* 🔥 START MUSIC ON FIRST CLICK ANYWHERE */
-  document.body.addEventListener("click", startMusic, { once: true });
+  /* =========================
+     📂 DATA (MATCHES YOUR FOLDER)
+  ========================= */
+  const pages = [
+    { type: "image", src: "./scrapbook/1.jpg" },
+    { type: "image", src: "./scrapbook/2.jpg" },
+    { type: "image", src: "./scrapbook/3.jpg" },
 
-  /* ===============================
-     GAME
-  =============================== */
-  tapBtn.addEventListener("click", () => {
+    { type: "video", src: "./scrapbook/4.mp4" },
+    { type: "video", src: "./scrapbook/5.mp4" },
+    { type: "video", src: "./scrapbook/6.mp4" },
 
-    count++;
-    tapCountText.innerText = `Tapped: ${count}/5`;
+    { type: "image", src: "./scrapbook/7.jpg" }
+  ];
 
-    if (count >= 5) {
-      gameBox.classList.add("hidden");
-      giftContainer.classList.remove("hidden");
-    }
-  });
+  const texts = [
 
-  /* ===============================
-     GIFT
-  =============================== */
-  giftImage.addEventListener("click", () => {
+    "There are people who enter quietly… but slowly become part of everything. You became that comfort without even trying.",
 
-    giftImage.src = "./image/gift-open.PNG";
+    "Our conversations were never planned… but they always felt real. And in a world full of noise, that meant everything.",
 
-    setTimeout(() => {
-      giftContainer.classList.add("hidden");
-      funSection.classList.remove("hidden");
-      funText.innerText = getFunnyMessage();
-    }, 800);
-  });
+    "Some friendships don’t need daily talks… they stay strong silently. And that’s exactly what makes them special.",
 
-  /* ===============================
-     FUN
-  =============================== */
-  window.continueAfterFun = function () {
-    funSection.classList.add("hidden");
-    menu.classList.remove("hidden");
-  };
+    "And then came moments like this… simple, real, and full of happiness. Somehow, this day started feeling more special.",
 
-  function getFunnyMessage() {
-    const messages = [
-      "You really thought gift will open so easily? 😂",
-      "Patience level: zero detected 🤭",
-      "Still waiting? Good things take time 😌",
-      "Okay okay… now real surprise coming 😄"
-    ];
-    return messages[Math.floor(Math.random() * messages.length)];
+    "I still remember this… the way your smile just appeared without effort. That happiness… it stayed longer than the moment itself.",
+
+    "It was never about the gift… it was about that genuine happiness in your eyes. And honestly, that made everything worth it.",
+
+    "Not everything needs words… some things are just felt. And whatever this is… it’s something I truly value.\n\nWait for the real gifts 🎁✨"
+  ];
+
+  /* =========================
+     🧱 CREATE PAGES
+  ========================= */
+  if (!container) {
+    console.error("pagesContainer not found");
+    return;
   }
 
-  /* ===============================
-     NAVIGATION
-  =============================== */
-  window.openScrapbook = function () {
-    window.location.href = "scrapbook.html";
+  pages.forEach((p, i) => {
+
+    const page = document.createElement("div");
+    page.className = "page";
+
+    /* STACK ORDER */
+    page.style.zIndex = pages.length - i;
+
+    page.innerHTML = `
+      <div class="front">
+
+        <div class="left">
+          ${
+            p.type === "video"
+              ? `<video src="${p.src}" autoplay muted loop controls playsinline></video>`
+              : `<img src="${p.src}" onerror="this.src='./image/bhoomika.jpg'"/>`
+          }
+        </div>
+
+        <div class="right">
+          ${
+            i === pages.length - 1
+              ? `<h2>Wait for the real gifts 🎁✨</h2><p>${texts[i]}</p>`
+              : `<p>${texts[i]}</p>`
+          }
+        </div>
+
+      </div>
+
+      <div class="back"></div>
+    `;
+
+    container.appendChild(page);
+  });
+
+  /* 🔥 ONLY SELECT REAL PAGES */
+  const allPages = document.querySelectorAll("#pagesContainer .page");
+
+  /* =========================
+     📖 OPEN BOOK
+  ========================= */
+  cover.addEventListener("click", () => {
+    cover.classList.add("flipped");
+    startMusic();
+  });
+
+  /* =========================
+     ➡ NEXT PAGE
+  ========================= */
+  window.nextPage = function () {
+    if (current < allPages.length) {
+      allPages[current].classList.add("flipped");
+      current++;
+      startMusic();
+    }
   };
 
-  window.openVideo = function () {
-    const now = new Date();
-    const unlockDate = new Date(2026, 4, 12, 0, 0, 0); // May 12, 2026
-
-    if (now >= unlockDate) {
-      window.location.href = "video.html";
+  /* =========================
+     ⬅ PREVIOUS PAGE
+  ========================= */
+  window.prevPage = function () {
+    if (current > 0) {
+      current--;
+      allPages[current].classList.remove("flipped");
     } else {
-      alert("⏳ This video will unlock on Birthday 🎂");
+      cover.classList.remove("flipped");
     }
+  };
+
+  /* =========================
+     🔙 GO BACK
+  ========================= */
+  window.goHome = function () {
+    window.location.href = "index.html";
   };
 
 });
