@@ -74,3 +74,40 @@ button {
   font-size: 28px;
   transition: 0.5s;
 }
+/* 🎁 GIFT POP ANIMATION */
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.gift-pop {
+  animation: pop 0.6s ease;
+}
+
+/* ✨ SPARKLES */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: gold;
+  border-radius: 50%;
+  animation: sparkleAnim 1s ease-out forwards;
+}
+
+@keyframes sparkleAnim {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-80px); }
+}
+
+/* ✍️ TYPING EFFECT */
+.typing {
+  border-right: 2px solid #ff4d6d;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
