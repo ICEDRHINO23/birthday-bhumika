@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setTimeout(() => {
     if (intro) {
-      intro.style.opacity = "0";
       intro.style.transition = "opacity 0.6s ease";
+      intro.style.opacity = "0";
 
       setTimeout(() => {
         intro.style.display = "none";
@@ -36,11 +36,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const heartbeat = document.getElementById("heartbeat");
 
   let count = 0;
-  let giftOpened = false; // 🔥 prevent double click
+  let giftOpened = false;
 
 
   /* ===============================
-     🎵 MUSIC (SAFE START)
+     🎵 MUSIC (SAFE AUTOPLAY)
   =============================== */
   function startMusic() {
     if (music && music.paused) {
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (giftImage) {
     giftImage.addEventListener("click", () => {
 
-      if (giftOpened) return; // 🔥 prevent repeat
+      if (giftOpened) return;
       giftOpened = true;
 
       /* 💓 HEARTBEAT */
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
         heartbeat.play().catch(()=>{});
       }
 
-      /* 🎬 DARKEN BACKGROUND */
+      /* 🎬 DIM BACKGROUND */
       document.body.style.transition = "filter 0.5s ease";
       document.body.style.filter = "brightness(0.85)";
 
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         createSparkles(giftImage);
       }, 400);
 
-      /* 🎵 MUSIC LOWER */
+      /* 🎵 LOWER MUSIC */
       if (music) {
         let v = music.volume;
 
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 200);
       }
 
-      /* ✨ NEXT SCREEN */
+      /* NEXT */
       setTimeout(() => {
         giftContainer.style.display = "none";
         funSection.style.display = "block";
@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ===============================
-     ✨ SPARKLES (CENTERED)
+     ✨ SPARKLES (CENTERED ON GIFT)
   =============================== */
   function createSparkles(target) {
 
@@ -204,7 +204,6 @@ document.addEventListener("DOMContentLoaded", () => {
     funSection.style.display = "none";
     menu.style.display = "block";
 
-    /* restore brightness */
     document.body.style.filter = "brightness(1)";
   };
 
