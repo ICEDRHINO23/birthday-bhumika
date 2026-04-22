@@ -27,16 +27,34 @@ document.addEventListener("DOMContentLoaded", () => {
   let count = 0;
 
   /* ===============================
+     🎵 GLOBAL MUSIC START (FIXED)
+  =============================== */
+  function startMusic() {
+    if (music && music.paused) {
+
+      music.volume = 0;
+      music.play().catch(()=>{});
+
+      /* smooth fade-in */
+      let v = 0;
+      const fade = setInterval(() => {
+        v += 0.05;
+        music.volume = v;
+        if (v >= 0.6) clearInterval(fade);
+      }, 200);
+    }
+  }
+
+  /* 🔥 START MUSIC ON FIRST CLICK ANYWHERE */
+  document.body.addEventListener("click", startMusic, { once: true });
+
+  /* ===============================
      GAME
   =============================== */
   tapBtn.addEventListener("click", () => {
 
     count++;
     tapCountText.innerText = `Tapped: ${count}/5`;
-
-    if (count === 1) {
-      music.play().catch(()=>{});
-    }
 
     if (count >= 5) {
       gameBox.classList.add("hidden");
@@ -85,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.openVideo = function () {
     const now = new Date();
-    const unlockDate = new Date("2026-05-12T00:00:00");
+    const unlockDate = new Date(2026, 4, 12, 0, 0, 0); // May 12, 2026
 
     if (now >= unlockDate) {
       window.location.href = "video.html";
