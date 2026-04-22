@@ -7,22 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
   let current = 0;
 
   /* =========================
-     MUSIC
+     MUSIC (USER CLICK FIX)
   ========================= */
-  function startMusic() {
+  document.addEventListener("click", () => {
     if (music && music.paused) {
-
-      music.volume = 0;
+      music.volume = 0.6;
       music.play().catch(()=>{});
-
-      let v = 0;
-      const fade = setInterval(() => {
-        v += 0.05;
-        music.volume = v;
-        if (v >= 0.6) clearInterval(fade);
-      }, 200);
     }
-  }
+  }, { once: true });
 
   /* =========================
      DATA
@@ -63,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ${
             p.type === "video"
               ? `<video src="${p.src}" muted loop controls></video>`
-              : `<img src="${p.src}" onerror="this.src='./image/bhoomika.jpg'">`
+              : `<img src="${p.src}">`
           }
         </div>
 
@@ -82,12 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const allPages = document.querySelectorAll("#pagesContainer .page");
 
   /* =========================
-     COVER FIX
+     COVER
   ========================= */
   cover.addEventListener("click", () => {
 
     cover.classList.add("flipped");
-    startMusic();
 
     setTimeout(() => {
       cover.style.zIndex = "0";
@@ -103,7 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (current < allPages.length) {
 
       const page = allPages[current];
-
       page.classList.add("flipped");
 
       const video = page.querySelector("video");
