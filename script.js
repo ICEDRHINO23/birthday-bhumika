@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ===============================
-     🔥 LOADING SCREEN (SMOOTH)
-  =============================== */
+  /* LOADING */
   const intro = document.getElementById("intro");
 
   setTimeout(() => {
@@ -16,10 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }, 1200);
 
-
-  /* ===============================
-     ELEMENTS
-  =============================== */
+  /* ELEMENTS */
   const tapBtn = document.getElementById("tapBtn");
   const tapCountText = document.getElementById("tapCount");
 
@@ -33,18 +28,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const menu = document.getElementById("menu");
 
   const music = document.getElementById("bgMusic");
-  const heartbeat = document.getElementById("heartbeat");
 
   let count = 0;
   let giftOpened = false;
 
-
-  /* ===============================
-     🎵 MUSIC (SAFE AUTOPLAY)
-  =============================== */
+  /* MUSIC */
   function startMusic() {
     if (music && music.paused) {
-
       music.volume = 0;
       music.play().catch(()=>{});
 
@@ -52,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const fade = setInterval(() => {
         v += 0.05;
         music.volume = v;
-
         if (v >= 0.6) clearInterval(fade);
       }, 200);
     }
@@ -60,131 +49,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.body.addEventListener("click", startMusic, { once: true });
 
+  /* GAME */
+  tapBtn.addEventListener("click", () => {
+    count++;
+    tapCountText.innerText = `Tapped: ${Math.min(count,5)}/5`;
 
-  /* ===============================
-     🎯 TAP GAME
-  =============================== */
-  if (tapBtn) {
-    tapBtn.addEventListener("click", () => {
-
-      count++;
-
-      if (tapCountText) {
-        tapCountText.innerText = `Tapped: ${Math.min(count, 5)}/5`;
-      }
-
-      if (count === 5) {
-        gameBox.style.display = "none";
-        giftContainer.style.display = "flex";
-      }
-
-    });
-  }
-
-
-  /* ===============================
-     🎁 GIFT OPEN (CINEMATIC)
-  =============================== */
-  if (giftImage) {
-    giftImage.addEventListener("click", () => {
-
-      if (giftOpened) return;
-      giftOpened = true;
-
-      /* 💓 HEARTBEAT */
-      if (heartbeat) {
-        heartbeat.currentTime = 0;
-        heartbeat.volume = 1;
-        heartbeat.play().catch(()=>{});
-      }
-
-      /* 🎬 DIM BACKGROUND */
-      document.body.style.transition = "filter 0.5s ease";
-      document.body.style.filter = "brightness(0.85)";
-
-      /* 🎁 POP */
-      giftImage.classList.add("gift-pop");
-
-      setTimeout(() => {
-        giftImage.src = "./image/gift-open.PNG";
-        createSparkles(giftImage);
-      }, 400);
-
-      /* 🎵 LOWER MUSIC */
-      if (music) {
-        let v = music.volume;
-
-        const reduce = setInterval(() => {
-          v -= 0.05;
-          music.volume = v;
-
-          if (v <= 0.2) clearInterval(reduce);
-        }, 200);
-      }
-
-      /* NEXT */
-      setTimeout(() => {
-        giftContainer.style.display = "none";
-        funSection.style.display = "block";
-
-        typeText(funText, getFunnyMessage());
-      }, 1300);
-
-    });
-  }
-
-
-  /* ===============================
-     ✨ SPARKLES (CENTERED ON GIFT)
-  =============================== */
-  function createSparkles(target) {
-
-    const rect = target.getBoundingClientRect();
-
-    for (let i = 0; i < 25; i++) {
-
-      const s = document.createElement("div");
-      s.className = "sparkle";
-
-      s.style.left = rect.left + rect.width / 2 + "px";
-      s.style.top = rect.top + rect.height / 2 + "px";
-
-      document.body.appendChild(s);
-
-      setTimeout(() => s.remove(), 1000);
+    if (count === 5) {
+      gameBox.classList.add("hidden");
+      giftContainer.classList.remove("hidden");
     }
-  }
+  });
 
+  /* GIFT */
+  giftImage.addEventListener("click", () => {
 
-  /* ===============================
-     ✍️ TYPING EFFECT
-  =============================== */
-  function typeText(element, text) {
+    if (giftOpened) return;
+    giftOpened = true;
 
-    if (!element) return;
+    giftImage.classList.add("gift-pop");
 
-    element.innerHTML = "";
-    element.classList.add("typing");
+    setTimeout(() => {
+      giftImage.src = "./image/gift-open.PNG";
+    }, 400);
 
+    setTimeout(() => {
+      giftContainer.classList.add("hidden");
+      funSection.classList.remove("hidden");
+
+      typeText(funText, getFunnyMessage());
+    }, 1200);
+  });
+
+  function typeText(el, text) {
+    el.innerHTML = "";
     let i = 0;
 
     const interval = setInterval(() => {
-
-      element.innerHTML += text.charAt(i);
+      el.innerHTML += text.charAt(i);
       i++;
-
-      if (i >= text.length) {
-        clearInterval(interval);
-        element.classList.remove("typing");
-      }
-
+      if (i >= text.length) clearInterval(interval);
     }, 30);
   }
 
-
-  /* ===============================
-     😂 FUN TEXT
-  =============================== */
   function getFunnyMessage() {
     const messages = [
       "You really thought gift will open so easily? 😂",
@@ -192,49 +98,20 @@ document.addEventListener("DOMContentLoaded", () => {
       "Still waiting? Good things take time 😌",
       "Okay okay… now real surprise coming 😄"
     ];
-
     return messages[Math.floor(Math.random() * messages.length)];
   }
 
-
-  /* ===============================
-     👉 CONTINUE
-  =============================== */
   window.continueAfterFun = function () {
-    funSection.style.display = "none";
-    menu.style.display = "block";
-
-    document.body.style.filter = "brightness(1)";
+    funSection.classList.add("hidden");
+    menu.classList.remove("hidden");
   };
 
-
-  /* ===============================
-     📖 OPEN SCRAPBOOK
-  =============================== */
   window.openScrapbook = function () {
-
-    document.body.style.transition = "opacity 0.8s ease";
-    document.body.style.opacity = "0";
-
-    setTimeout(() => {
-      window.location.href = "scrapbook.html";
-    }, 800);
+    window.location.href = "scrapbook.html";
   };
 
-
-  /* ===============================
-     🎥 LOCKED VIDEO
-  =============================== */
   window.openVideo = function () {
-
-    const now = new Date();
-    const unlockDate = new Date(2026, 4, 12);
-
-    if (now >= unlockDate) {
-      window.location.href = "video.html";
-    } else {
-      alert("⏳ This video will unlock on Birthday 🎂");
-    }
+    alert("⏳ Unlocks on Birthday 🎂");
   };
 
 });
