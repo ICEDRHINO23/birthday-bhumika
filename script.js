@@ -1,12 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+  /* =========================
+     🔥 LOADING SCREEN
+  ========================= */
   const intro = document.getElementById("intro");
 
   setTimeout(() => {
-    intro.style.opacity = "0";
-    setTimeout(() => intro.style.display = "none", 500);
+    if (intro) {
+      intro.style.opacity = "0";
+      setTimeout(() => intro.style.display = "none", 500);
+    }
   }, 1200);
 
+  /* =========================
+     ELEMENTS
+  ========================= */
   const tapBtn = document.getElementById("tapBtn");
   const tapCountText = document.getElementById("tapCount");
 
@@ -19,57 +27,97 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const menu = document.getElementById("menu");
 
-  const music = document.getElementById("bgMusic");
+  const bgMusic = document.getElementById("bgMusic");
+  const bdaySong = document.getElementById("bdaySong"); // 🎂 bds.mp3
 
   let count = 0;
 
-  /* 🎵 MUSIC */
+  /* =========================
+     🎵 BACKGROUND MUSIC (SAFE)
+  ========================= */
   document.body.addEventListener("click", () => {
-    if (music && music.paused) {
-      music.play().catch(()=>{});
+    if (bgMusic && bgMusic.paused) {
+      bgMusic.volume = 0.4;
+      bgMusic.play().catch(()=>{});
     }
   }, { once: true });
 
-  /* 🎯 TAP GAME */
-  tapBtn.addEventListener("click", () => {
+  /* =========================
+     🎯 TAP GAME
+  ========================= */
+  if (tapBtn) {
+    tapBtn.addEventListener("click", () => {
 
-    count++;
+      count++;
+      tapCountText.innerText = `Tapped: ${count}/5`;
 
-    tapCountText.innerText = `Tapped: ${count}/5`;
+      if (count >= 5) {
 
-    if (count >= 5) {
-      gameBox.classList.add("hidden");
-      giftContainer.classList.remove("hidden");
-    }
-  });
+        gameBox.classList.add("hidden");
+        giftContainer.classList.remove("hidden");
 
-  /* 🎁 GIFT CLICK */
-  giftImage.addEventListener("click", () => {
+        /* 🎂 PLAY BIRTHDAY SONG */
+        if (bdaySong) {
+          bdaySong.currentTime = 0;
 
-    giftImage.src = "./image/gift-open.PNG";
+          /* 🔥 Fade-in effect */
+          bdaySong.volume = 0;
+          bdaySong.play().catch(()=>{});
 
-    setTimeout(() => {
-      giftContainer.classList.add("hidden");
-      funSection.classList.remove("hidden");
+          let v = 0;
+          const fade = setInterval(() => {
+            v += 0.05;
+            bdaySong.volume = v;
+            if (v >= 0.8) clearInterval(fade);
+          }, 200);
+        }
+      }
+    });
+  }
 
-      funText.innerText = "Okay okay… now the real surprise 😄";
-    }, 800);
-  });
+  /* =========================
+     🎁 GIFT CLICK
+  ========================= */
+  if (giftImage) {
+    giftImage.addEventListener("click", () => {
 
-  /* 👉 CONTINUE */
+      giftImage.src = "./image/gift-open.png";
+
+      setTimeout(() => {
+        giftContainer.classList.add("hidden");
+        funSection.classList.remove("hidden");
+
+        funText.innerText = "Okay okay… now the real surprise 😄";
+      }, 800);
+    });
+  }
+
+  /* =========================
+     👉 CONTINUE
+  ========================= */
   window.continueAfterFun = function () {
+
     funSection.classList.add("hidden");
     menu.classList.remove("hidden");
+
+    /* 🔇 STOP BIRTHDAY SONG */
+    if (bdaySong) {
+      bdaySong.pause();
+    }
   };
 
-  /* 📖 SCRAPBOOK */
+  /* =========================
+     📖 OPEN SCRAPBOOK
+  ========================= */
   window.openScrapbook = function () {
     window.location.href = "scrapbook.html";
   };
 
-  /* 🎥 VIDEO LOCK */
+  /* =========================
+     🎥 VIDEO LOCK
+  ========================= */
   window.openVideo = function () {
-    alert("⏳ Unlocks on birthday 🎂");
+    alert("⏳ This will unlock on Birthday 🎂");
   };
 
 });
