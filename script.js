@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           let v = 0;
           const fade = setInterval(() => {
-            v += 0.05;
+            v += 0.10;
             bdaySong.volume = v;
             if (v >= 0.8) clearInterval(fade);
           }, 200);
