@@ -1,5 +1,5 @@
 /* =========================
-   GLOBAL
+   RESET + GLOBAL
 ========================= */
 * {
   box-sizing: border-box;
@@ -9,37 +9,29 @@ body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(135deg, #f8cdda, #f6d365);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
 }
 
 /* =========================
-   MAIN CONTAINER
+   MAIN PAGE
 ========================= */
 #main {
   text-align: center;
   max-width: 600px;
   width: 100%;
+  margin: auto;
   padding: 20px;
 }
 
-/* =========================
-   PROFILE IMAGE (FIX CROP)
-========================= */
+/* PROFILE */
 #profilePic {
   width: 200px;
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
-  object-position: top; /* 🔥 FIXES CROPPING ISSUE */
+  object-position: top;
 }
 
-/* =========================
-   TEXT
-========================= */
+/* TEXT */
 h1 {
   color: #222;
 }
@@ -49,9 +41,7 @@ p {
   line-height: 1.5;
 }
 
-/* =========================
-   BUTTONS
-========================= */
+/* BUTTON */
 button {
   padding: 10px 20px;
   margin: 10px;
@@ -60,22 +50,20 @@ button {
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
   color: white;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: 0.3s;
 }
 
 button:hover {
   transform: scale(1.05);
 }
 
-/* =========================
-   HIDDEN STATE (CRITICAL)
-========================= */
+/* HIDDEN */
 .hidden {
   display: none !important;
 }
 
 /* =========================
-   SECTIONS LAYOUT
+   SECTIONS
 ========================= */
 #gameBox,
 #giftContainer,
@@ -86,33 +74,26 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
-/* =========================
-   TAP COUNT
-========================= */
+/* TAP COUNT */
 #tapCount {
   font-weight: bold;
-  margin-top: 10px;
 }
 
-/* =========================
-   GIFT
-========================= */
+/* GIFT */
 #giftImage {
   width: 220px;
   max-width: 80%;
   cursor: pointer;
-
-  transition: transform 0.4s ease;
+  transition: transform 0.4s;
 }
 
 #giftImage:hover {
   transform: scale(1.05);
 }
 
-/* 🎁 POP ANIMATION */
+/* POP */
 .gift-pop {
   animation: pop 0.4s ease;
 }
@@ -124,35 +105,11 @@ button:hover {
 }
 
 /* =========================
-   FUN SECTION
-========================= */
-#funSection h2 {
-  color: #ff4d6d;
-}
-
-#funText {
-  max-width: 400px;
-  line-height: 1.6;
-  font-size: 16px;
-}
-
-/* =========================
-   MENU
-========================= */
-#menu button {
-  min-width: 160px;
-}
-
-/* =========================
-   LOADING SCREEN
+   LOADING
 ========================= */
 #intro {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
+  inset: 0;
   background: black;
   color: white;
 
@@ -165,7 +122,7 @@ button:hover {
 }
 
 /* =========================
-   OPTIONAL: SPARKLES
+   SPARKLES
 ========================= */
 .sparkle {
   position: fixed;
@@ -173,34 +130,29 @@ button:hover {
   height: 6px;
   background: white;
   border-radius: 50%;
-  pointer-events: none;
   animation: sparkleAnim 1s ease-out forwards;
 }
 
 @keyframes sparkleAnim {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-80px) scale(0.5);
-  }
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: translateY(-80px) scale(0.5); }
 }
-/* =========================
-   BOOK LAYOUT FIX
-========================= */
+
+/* ======================================
+   🔥 SCRAPBOOK SYSTEM (FINAL FIXED)
+====================================== */
+
+/* CENTER BOOK */
 .book-body {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  overflow: hidden;
 }
 
 /* SCENE */
 .scene {
-  perspective: 2500px;
+  perspective: 3000px;
 }
 
 /* BOOK */
@@ -211,9 +163,7 @@ button:hover {
   transform-style: preserve-3d;
 }
 
-/* =========================
-   PAGE SYSTEM
-========================= */
+/* PAGE */
 .page {
   position: absolute;
   width: 100%;
@@ -226,18 +176,18 @@ button:hover {
   backface-visibility: hidden;
 }
 
-/* STACK FIX */
+/* 🔥 STACK FIX */
 #pagesContainer .page {
-  z-index: 1;
+  z-index: 1 !important;
 }
 
 /* COVER */
 .cover-page {
-  z-index: 999;
+  z-index: 9999;
   cursor: pointer;
 }
 
-/* 🔥 FIX FIRST PAGE ISSUE */
+/* 🔥 CRITICAL FIX */
 .cover-page.flipped {
   transform: rotateY(-180deg);
   z-index: 0 !important;
@@ -248,9 +198,7 @@ button:hover {
   transform: rotateY(-180deg);
 }
 
-/* =========================
-   FRONT / BACK
-========================= */
+/* FRONT / BACK */
 .front,
 .back {
   position: absolute;
@@ -265,14 +213,12 @@ button:hover {
   border-radius: 20px;
 }
 
-/* =========================
-   FRONT DESIGN
-========================= */
+/* FRONT */
 .front {
   display: flex;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
 }
 
 /* INNER PAGES */
@@ -280,9 +226,7 @@ button:hover {
   background: white;
 }
 
-/* =========================
-   COVER DESIGN
-========================= */
+/* COVER DESIGN */
 .cover-page .front {
   background: linear-gradient(135deg, #ff4d6d, #ff9a9e);
   color: white;
@@ -291,13 +235,9 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  text-align: center;
 }
 
-/* =========================
-   LEFT MEDIA (FIX CROP)
-========================= */
+/* LEFT MEDIA */
 .left {
   width: 50%;
   display: flex;
@@ -306,21 +246,18 @@ button:hover {
   background: black;
 }
 
-/* 🔥 FIX IMAGE ISSUE */
+/* 🔥 IMAGE FIX (NO CROP ISSUE) */
 .left img,
 .left video {
   width: 100%;
   height: 100%;
-  object-fit: contain;   /* IMPORTANT */
+  object-fit: contain;
 }
 
-/* =========================
-   RIGHT TEXT
-========================= */
+/* RIGHT TEXT */
 .right {
   width: 50%;
   padding: 40px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -331,12 +268,25 @@ button:hover {
   line-height: 1.7;
 }
 
-/* =========================
-   CONTROLS
-========================= */
+/* CONTROLS */
 .controls {
   position: fixed;
   bottom: 20px;
   width: 100%;
   text-align: center;
+}
+
+/* =========================
+   OPTIONAL DEPTH EFFECT
+========================= */
+.book::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 10%;
+  width: 80%;
+  height: 25px;
+  background: rgba(0,0,0,0.3);
+  filter: blur(20px);
+  border-radius: 50%;
 }
