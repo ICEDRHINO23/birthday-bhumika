@@ -23,13 +23,18 @@ body {
   padding: 40px;
 }
 
+/* 🔥 PROFILE IMAGE FIX */
 #profilePic {
   width: 200px;
   height: 200px;
-  border-radius: 60%;
+  border-radius: 50%;
   object-fit: cover;
+
+  /* move image slightly down */
+  object-position: center 30%;
 }
 
+/* BUTTON */
 button {
   padding: 10px 20px;
   margin: 10px;
@@ -45,30 +50,37 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* HIDDEN FIX */
+/* HIDDEN */
 .hidden {
   display: none !important;
 }
 
 /* =========================
-   BOOK PAGE (SCRAPBOOK)
+   SCRAPBOOK PAGE
 ========================= */
 .book-body {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  overflow: hidden; /* 🔥 prevent scroll */
 }
 
 /* SCENE */
 .scene {
   perspective: 2500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* BOOK */
+/* 🔥 RESPONSIVE BOOK (FIT SCREEN) */
 .book {
-  width: 900px;
-  height: 520px;
+  width: 90vw;
+  max-width: 850px;
+  height: 80vh;
+  max-height: 520px;
+
   position: relative;
   transform-style: preserve-3d;
 }
@@ -88,7 +100,7 @@ button:hover {
   backface-visibility: hidden;
 }
 
-/* STACK FIX */
+/* 🔥 DO NOT OVERRIDE JS STACK */
 #pagesContainer .page {
   z-index: auto;
 }
@@ -97,11 +109,11 @@ button:hover {
    COVER
 ========================= */
 .cover-page {
-  z-index: 9999;
+  z-index: 999;
   cursor: pointer;
 }
 
-/* 🔥 FIX FIRST PAGE ISSUE */
+/* 🔥 CRITICAL FIX */
 .cover-page.flipped {
   transform: rotateY(-180deg);
   z-index: 0 !important;
@@ -128,10 +140,10 @@ button:hover {
   backface-visibility: hidden;
 }
 
-/* 🔥 CRITICAL FIX (WHITE PANEL REMOVED) */
+/* 🔥 REMOVE WHITE PANEL */
 .back {
   transform: rotateY(180deg);
-  background: transparent; /* IMPORTANT */
+  background: transparent;
 }
 
 /* FRONT */
@@ -142,7 +154,7 @@ button:hover {
   box-shadow: 0 40px 100px rgba(0,0,0,0.5);
 }
 
-/* INNER PAGE WHITE */
+/* INNER PAGES */
 #pagesContainer .front {
   background: white;
 }
@@ -158,7 +170,6 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
 
   text-align: center;
 }
@@ -175,7 +186,7 @@ button:hover {
   align-items: center;
 }
 
-/* 🔥 IMAGE CROPPING FIX */
+/* 🔥 IMAGE FIX */
 .left img,
 .left video {
   width: 100%;
@@ -221,12 +232,12 @@ button:hover {
 .book::after {
   content: "";
   position: absolute;
-  bottom: -25px;
+  bottom: -20px;
   left: 10%;
   width: 80%;
-  height: 30px;
+  height: 25px;
   background: rgba(0,0,0,0.3);
-  filter: blur(25px);
+  filter: blur(20px);
   border-radius: 50%;
 }
 
@@ -235,11 +246,7 @@ button:hover {
 ========================= */
 #intro {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
+  inset: 0;
   background: black;
   color: white;
 
@@ -251,9 +258,4 @@ button:hover {
   z-index: 9999;
 
   transition: opacity 0.5s ease;
-}
-/* FIX: move cover behind after flip */
-.cover-page.flipped {
-  transform: rotateY(-180deg);
-  z-index: 0 !important;
 }
