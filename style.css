@@ -242,3 +242,6 @@ button:hover {
 
   z-index: 9999;
 }
+.cover-page {
+  pointer-events: auto;
+}
