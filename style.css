@@ -275,3 +275,6 @@ button:hover {
 
   transition: opacity 0.5s ease;
 }
+.right p {
+  white-space: pre-line;   /* 🔥 THIS FIXES TEXT BREAKS */
+}
