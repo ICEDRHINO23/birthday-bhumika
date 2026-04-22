@@ -16,9 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { once: true });
 
   /* =========================
-     💖 TEXT
+     💖 EXPANDED TEXT
   ========================= */
   const texts = [
+
 `There are people who enter our life quietly…
 without any noise, without any announcement.
 
@@ -165,7 +166,7 @@ you will always be one of those people.
         <div class="left">
           ${
             p.type === "video"
-              ? `<video class="scrapVideo" muted loop playsinline preload="auto">
+              ? `<video class="scrapVideo" muted playsinline preload="auto">
                    <source src="${p.src}" type="video/mp4">
                  </video>`
               : `<img src="${p.src}" loading="lazy">`
@@ -197,7 +198,7 @@ you will always be one of those people.
   }
 
   /* =========================
-     ➡ NEXT PAGE (VIDEO PLAY FIX)
+     ➡ NEXT PAGE (VIDEO FIXED)
   ========================= */
   window.nextPage = function () {
 
@@ -218,11 +219,16 @@ you will always be one of those people.
           video.muted = true;
 
           video.play().catch(err => {
-            console.log("Video blocked:", err);
+
+            /* fallback if blocked */
+            document.body.addEventListener("click", () => {
+              video.play().catch(()=>{});
+            }, { once: true });
+
           });
         }
 
-      }, 400);
+      }, 500);
 
       current++;
 
