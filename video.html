@@ -1,68 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>For You 🎬</title>
+<meta charset="UTF-8">
+<title>For You 🎬</title>
 
-  <style>
-    body {
-      margin: 0;
-      background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: Arial;
-      flex-direction: column;
-    }
+<style>
+body {
+  margin: 0;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: Arial;
+}
 
-    h2 {
-      color: white;
-      margin-bottom: 10px;
-    }
+/* =========================
+   TITLE
+========================= */
+h2 {
+  color: white;
+  margin-bottom: 10px;
+}
 
-    video {
-      width: 90%;
-      max-width: 900px;
-      border-radius: 15px;
-      box-shadow: 0 0 40px rgba(255,77,109,0.5);
-    }
+/* =========================
+   VIDEO WRAPPER
+========================= */
+.video-wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  height: 70vh;
 
-    .video-buttons {
-      margin-top: 15px;
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    button {
-      margin: 5px;
-      padding: 10px 18px;
-      border-radius: 10px;
-      border: none;
-      background: #ff4d6d;
-      color: white;
-      cursor: pointer;
-      font-size: 15px;
-      transition: 0.3s;
-    }
+  overflow: hidden;
+  border-radius: 15px;
+}
 
-    button:hover {
-      transform: scale(1.05);
-    }
-  </style>
+/* =========================
+   BLUR BACKGROUND VIDEO
+========================= */
+.video-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  filter: blur(30px);
+  transform: scale(1.2);
+  opacity: 0.6;
+}
+
+/* =========================
+   MAIN VIDEO
+========================= */
+#player {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+  z-index: 2;
+
+  border-radius: 15px;
+  box-shadow: 0 0 40px rgba(255,77,109,0.5);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.video-buttons {
+  margin-top: 15px;
+}
+
+button {
+  margin: 5px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+</style>
+
 </head>
 
 <body>
 
 <h2>🎬 Special Moments</h2>
 
-<!-- 🎥 VIDEO PLAYER -->
-<video id="player" controls playsinline></video>
+<!-- 🎥 VIDEO SECTION -->
+<div class="video-wrapper">
 
-<!-- 🔘 VIDEO SELECT BUTTONS -->
+  <!-- 🔥 BLUR BACKGROUND -->
+  <video id="bgVideo" class="video-bg" muted loop></video>
+
+  <!-- 🎬 MAIN PLAYER -->
+  <video id="player" controls playsinline></video>
+
+</div>
+
+<!-- 🔘 VIDEO BUTTONS -->
 <div class="video-buttons">
-  <button onclick="playVideo(0)">GIFT 1 💖</button>
-  <button onclick="playVideo(1)">GIFT 2 ✨</button>
-  <button onclick="playVideo(2)">GIFT 3 🎉</button>
-  <button onclick="playVideo(3)">GIFT 4 💫</button>
+  <button onclick="playVideo(0)">Memory 1 💖</button>
+  <button onclick="playVideo(1)">Memory 2 ✨</button>
+  <button onclick="playVideo(2)">Memory 3 🎉</button>
+  <button onclick="playVideo(3)">Memory 4 💫</button>
 </div>
 
 <!-- 🔙 BACK -->
@@ -71,7 +125,7 @@
 <script>
 
 /* =========================
-   🎬 VIDEO LIST
+   VIDEO LIST
 ========================= */
 const videos = [
   "./videos/video1.mp4",
@@ -82,34 +136,60 @@ const videos = [
 
 let currentVideo = 0;
 
+const player = document.getElementById("player");
+const bgVideo = document.getElementById("bgVideo");
+
 /* =========================
-   ▶ PLAY VIDEO
+   PLAY VIDEO
 ========================= */
 function playVideo(index) {
 
-  const player = document.getElementById("player");
-
   currentVideo = index;
+
   player.src = videos[index];
   player.load();
 
-  player.play().catch(err => {
-    console.log("Playback blocked:", err);
-  });
+  player.play().catch(()=>{});
 }
 
 /* =========================
-   🔥 AUTO LOAD FIRST VIDEO
+   AUTO ADJUST (REELS STYLE)
 ========================= */
-window.addEventListener("DOMContentLoaded", () => {
-  playVideo(0);
+player.addEventListener("loadedmetadata", () => {
+
+  const ratio = player.videoWidth / player.videoHeight;
+
+  if (ratio < 1) {
+    /* 📱 PORTRAIT */
+
+    player.style.height = "100%";
+    player.style.width = "auto";
+
+    bgVideo.src = player.src;
+    bgVideo.play().catch(()=>{});
+
+  } else {
+    /* 🖥 LANDSCAPE */
+
+    player.style.width = "100%";
+    player.style.height = "auto";
+
+    bgVideo.pause();
+    bgVideo.src = "";
+  }
+
 });
 
 /* =========================
-   ⏭ AUTO NEXT VIDEO
+   AUTO LOAD FIRST
 ========================= */
-const player = document.getElementById("player");
+window.onload = () => {
+  playVideo(0);
+};
 
+/* =========================
+   AUTO NEXT
+========================= */
 player.addEventListener("ended", () => {
 
   currentVideo++;
@@ -117,32 +197,14 @@ player.addEventListener("ended", () => {
   if (currentVideo < videos.length) {
     playVideo(currentVideo);
   } else {
-    currentVideo = 0; // 🔁 restart playlist
+    currentVideo = 0;
     playVideo(currentVideo);
   }
 
 });
 
 /* =========================
-   ⌨️ KEY CONTROLS
-========================= */
-document.addEventListener("keydown", (e) => {
-
-  if (e.key === "ArrowRight") {
-    currentVideo = (currentVideo + 1) % videos.length;
-    playVideo(currentVideo);
-  }
-
-  if (e.key === "ArrowLeft") {
-    currentVideo =
-      (currentVideo - 1 + videos.length) % videos.length;
-    playVideo(currentVideo);
-  }
-
-});
-
-/* =========================
-   🔙 BACK
+   BACK
 ========================= */
 function goBack() {
   window.location.href = "index.html";
