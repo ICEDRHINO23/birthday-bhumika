@@ -3,7 +3,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("pagesContainer");
   const cover = document.getElementById("cover");
 
+  /* 🎵 MUSIC */
+  const music = document.getElementById("scrapMusic");
+
   let current = 0;
+
+  /* =========================
+     SAFE MUSIC START
+  ========================= */
+  function startMusic() {
+    if (music && music.paused) {
+      music.volume = 0;
+
+      music.play().catch(()=>{});
+
+      /* smooth fade-in */
+      let v = 0;
+      const fade = setInterval(() => {
+        v += 0.05;
+        music.volume = v;
+        if (v >= 0.6) clearInterval(fade);
+      }, 200);
+    }
+  }
 
   /* =========================
      DATA
@@ -36,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const page = document.createElement("div");
     page.className = "page";
 
-    /* 🔥 IMPORTANT FIX */
     page.style.zIndex = pages.length - i;
 
     page.innerHTML = `
@@ -73,6 +94,9 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================= */
   cover.addEventListener("click", () => {
     cover.classList.add("flipped");
+
+    /* 🎵 START MUSIC ON FIRST INTERACTION */
+    startMusic();
   });
 
   /* =========================
@@ -82,6 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (current < allPages.length) {
       allPages[current].classList.add("flipped");
       current++;
+
+      startMusic();
     }
   };
 
