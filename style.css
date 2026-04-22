@@ -224,6 +224,69 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       alert("⏳ This video will unlock on Birthday 🎂");
     }
-  };
+  };/* =========================
+   CENTER SECTIONS (FIX)
+========================= */
+#giftContainer,
+#funSection,
+#menu {
+  display: none;
+  text-align: center;
+  margin-top: 40px;
+  width: 100%;
+}
+
+/* center everything properly */
+#giftContainer,
+#funSection,
+#menu,
+#gameBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* spacing fix */
+#funSection,
+#menu {
+  gap: 15px;
+}
+
+/* text styling */
+#funText {
+  font-size: 18px;
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+/* buttons alignment */
+#menu button {
+  display: inline-block;
+}
+
+/* =========================
+   GIFT IMAGE FIX
+========================= */
+#giftImage {
+  width: 220px;
+  max-width: 80%;
+  cursor: pointer;
+}
+
+/* =========================
+   FIX PAGE HEIGHT
+========================= */
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#main {
+  width: 100%;
+  max-width: 600px;
+}
 
 });
