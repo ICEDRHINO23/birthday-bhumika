@@ -18,16 +18,6 @@ body {
 }
 
 /* =========================
-   MAIN
-========================= */
-#main {
-  text-align: center;
-  padding: 30px;
-  max-width: 600px;
-  width: 100%;
-}
-
-/* =========================
    TEXT
 ========================= */
 h1 {
@@ -36,17 +26,6 @@ h1 {
 
 p {
   font-size: 18px;
-}
-
-/* =========================
-   PROFILE
-========================= */
-#profilePic {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: top;
 }
 
 /* =========================
@@ -67,7 +46,7 @@ button {
 }
 
 /* ======================================
-   🔥 3D BOOK
+   🔥 3D BOOK SYSTEM
 ====================================== */
 
 .book-body {
@@ -93,13 +72,15 @@ button {
   position: absolute;
   width: 100%;
   height: 100%;
+
   transform-origin: left;
   transform-style: preserve-3d;
   transition: transform 1s ease;
+
   backface-visibility: hidden;
 }
 
-/* STACK */
+/* STACK ORDER */
 #pagesContainer .page {
   z-index: 1;
 }
@@ -107,11 +88,18 @@ button {
 /* COVER ALWAYS TOP */
 .cover-page {
   z-index: 9999;
+  transition: transform 1s ease, z-index 0.5s;
 }
 
-/* FLIP */
+/* 🔥 FLIP */
 .page.flipped {
   transform: rotateY(-180deg);
+}
+
+/* 🔥 CRITICAL FIX (FIRST PAGE ISSUE) */
+.cover-page.flipped {
+  transform: rotateY(-180deg);
+  z-index: 0 !important;
 }
 
 /* =========================
@@ -122,8 +110,10 @@ button {
   position: absolute;
   width: 100%;
   height: 100%;
+
   top: 0;
   left: 0;
+
   backface-visibility: hidden;
 }
 
@@ -134,7 +124,7 @@ button {
 }
 
 /* =========================
-   PAGE DESIGN (DEFAULT WHITE)
+   PAGE DESIGN
 ========================= */
 .front {
   display: flex;
@@ -143,16 +133,16 @@ button {
   box-shadow: 0 40px 100px rgba(0,0,0,0.5);
 }
 
-/* ONLY INNER PAGES WHITE */
+/* INNER PAGES WHITE */
 #pagesContainer .front {
   background: white;
 }
 
 /* =========================
-   💖 COVER PAGE (FINAL FIX)
+   💖 COVER PAGE DESIGN
 ========================= */
 .cover-page .front {
-  background: linear-gradient(135deg, #ff4d6d, #ff9a9e) !important;
+  background: linear-gradient(135deg, #ff4d6d, #ff9a9e);
   color: white;
 
   display: flex;
@@ -165,7 +155,6 @@ button {
   box-shadow: 0 0 60px rgba(255, 105, 180, 0.6);
 }
 
-/* COVER TEXT */
 .cover-page h2 {
   font-size: 34px;
   margin-bottom: 10px;
@@ -242,7 +231,7 @@ button {
 }
 
 /* =========================
-   INTRO
+   INTRO SCREEN
 ========================= */
 #intro {
   position: fixed;
@@ -259,6 +248,7 @@ button {
 
   font-size: 28px;
   z-index: 9999;
+
   animation: fadeIn 1s ease;
 }
 
