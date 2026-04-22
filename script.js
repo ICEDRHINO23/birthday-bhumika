@@ -1,87 +1,75 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  try {
+  const intro = document.getElementById("intro");
 
-    const intro = document.getElementById("intro");
-    const tapBtn = document.getElementById("tapBtn");
-    const tapCountText = document.getElementById("tapCount");
+  setTimeout(() => {
+    intro.style.opacity = "0";
+    setTimeout(() => intro.style.display = "none", 500);
+  }, 1200);
 
-    const gameBox = document.getElementById("gameBox");
-    const giftContainer = document.getElementById("giftContainer");
-    const giftImage = document.getElementById("giftImage");
+  const tapBtn = document.getElementById("tapBtn");
+  const tapCountText = document.getElementById("tapCount");
 
-    const funSection = document.getElementById("funSection");
-    const funText = document.getElementById("funText");
+  const gameBox = document.getElementById("gameBox");
+  const giftContainer = document.getElementById("giftContainer");
+  const giftImage = document.getElementById("giftImage");
 
-    const menu = document.getElementById("menu");
+  const funSection = document.getElementById("funSection");
+  const funText = document.getElementById("funText");
 
-    const music = document.getElementById("bgMusic");
+  const menu = document.getElementById("menu");
 
-    let count = 0;
+  const music = document.getElementById("bgMusic");
 
-    /* 🔥 REMOVE LOADING ALWAYS */
+  let count = 0;
+
+  /* 🎵 MUSIC */
+  document.body.addEventListener("click", () => {
+    if (music && music.paused) {
+      music.play().catch(()=>{});
+    }
+  }, { once: true });
+
+  /* 🎯 TAP GAME */
+  tapBtn.addEventListener("click", () => {
+
+    count++;
+
+    tapCountText.innerText = `Tapped: ${count}/5`;
+
+    if (count >= 5) {
+      gameBox.classList.add("hidden");
+      giftContainer.classList.remove("hidden");
+    }
+  });
+
+  /* 🎁 GIFT CLICK */
+  giftImage.addEventListener("click", () => {
+
+    giftImage.src = "./image/gift-open.png";
+
     setTimeout(() => {
-      if (intro) intro.style.display = "none";
-    }, 1200);
+      giftContainer.classList.add("hidden");
+      funSection.classList.remove("hidden");
 
-    /* 🎵 MUSIC */
-    document.body.addEventListener("click", () => {
-      if (music && music.paused) {
-        music.play().catch(()=>{});
-      }
-    }, { once: true });
+      funText.innerText = "Okay okay… now the real surprise 😄";
+    }, 800);
+  });
 
-    /* 🎯 TAP GAME */
-    if (tapBtn) {
-      tapBtn.addEventListener("click", () => {
+  /* 👉 CONTINUE */
+  window.continueAfterFun = function () {
+    funSection.classList.add("hidden");
+    menu.classList.remove("hidden");
+  };
 
-        count++;
-        tapCountText.innerText = `Tapped: ${count}/5`;
+  /* 📖 SCRAPBOOK */
+  window.openScrapbook = function () {
+    window.location.href = "scrapbook.html";
+  };
 
-        if (count >= 5) {
-          gameBox.style.display = "none";
-          giftContainer.style.display = "block";
-        }
-      });
-    }
-
-    /* 🎁 GIFT CLICK */
-    if (giftImage) {
-      giftImage.addEventListener("click", () => {
-
-        giftImage.src = "./image/gift-open.PNG";
-
-        setTimeout(() => {
-          giftContainer.style.display = "none";
-          funSection.style.display = "block";
-          funText.innerText = "Okay okay… now real surprise 😄";
-        }, 800);
-      });
-    }
-
-    /* 👉 CONTINUE */
-    window.continueAfterFun = function () {
-      funSection.style.display = "none";
-      menu.style.display = "block";
-    };
-
-    /* 📖 OPEN SCRAPBOOK */
-    window.openScrapbook = function () {
-      window.location.href = "scrapbook.html";
-    };
-
-    /* 🎥 VIDEO LOCK */
-    window.openVideo = function () {
-      alert("⏳ This will unlock on Birthday 🎂");
-    };
-
-  } catch (e) {
-
-    console.error("Script error:", e);
-
-    /* 🔥 FAILSAFE */
-    const intro = document.getElementById("intro");
-    if (intro) intro.style.display = "none";
-  }
+  /* 🎥 VIDEO LOCK */
+  window.openVideo = function () {
+    alert("⏳ Unlocks on birthday 🎂");
+  };
 
 });
