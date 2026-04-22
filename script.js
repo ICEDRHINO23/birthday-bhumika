@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* 🎁 GIFT CLICK */
   giftImage.addEventListener("click", () => {
 
-    giftImage.src = "./image/gift-open.png";
+    giftImage.src = "./image/gift-open.PNG";
 
     setTimeout(() => {
       giftContainer.classList.add("hidden");
