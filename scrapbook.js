@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       music.play().catch(()=>{});
 
-      /* smooth fade-in */
       let v = 0;
       const fade = setInterval(() => {
         v += 0.05;
@@ -28,26 +27,45 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     DATA
+     DATA (FINAL STRUCTURE)
   ========================= */
   const pages = [
     { type: "image", src: "./scrapbook/1.jpg" },
     { type: "image", src: "./scrapbook/2.jpg" },
     { type: "image", src: "./scrapbook/3.jpg" },
+
+    /* 🎥 VIDEO 1 */
     { type: "video", src: "./scrapbook/4.mp4" },
-    { type: "image", src: "./scrapbook/5.jpg" }
+
+    /* 🎥 VIDEO 2 */
+    { type: "video", src: "./scrapbook/5.mp4" },
+
+    /* 🎥 VIDEO 3 */
+    { type: "video", src: "./scrapbook/6.mp4" },
+
+    /* 🎁 FINAL PAGE */
+    { type: "image", src: "./scrapbook/7.jpg" }
   ];
 
   const texts = [
+
     "There are people who enter quietly… but slowly become part of everything. You became that comfort without even trying.",
 
     "Our conversations were never planned… but they always felt real. And in a world full of noise, that meant everything.",
 
     "Some friendships don’t need daily talks… they stay strong silently. And that’s exactly what makes them special.",
 
-    "We never gave this a name… but somewhere between laughs and random talks, it became something meaningful.",
+    /* 🎥 VIDEO 1 */
+    "And then came moments like this… simple, real, and full of happiness. Somehow, this day started feeling more special.",
 
-    "Not everything needs words… some things are just felt. And whatever this is, it’s something I truly value. Maybe this isn’t the end… just something waiting ahead."
+    /* 🎥 VIDEO 2 */
+    "I still remember this… the way your smile just appeared without effort. That happiness… it stayed longer than the moment itself.",
+
+    /* 🎥 VIDEO 3 */
+    "It was never about the gift… it was about that genuine happiness in your eyes. And honestly, that made everything worth it.",
+
+    /* 🎁 FINAL */
+    "Not everything needs words… some things are just felt. And whatever this is… it’s something I truly value.\n\nWait for the real gifts 🎁✨"
   ];
 
   /* =========================
@@ -58,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const page = document.createElement("div");
     page.className = "page";
 
+    /* STACK ORDER */
     page.style.zIndex = pages.length - i;
 
     page.innerHTML = `
@@ -66,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="left">
           ${
             p.type === "video"
-              ? `<video src="${p.src}" autoplay muted loop controls></video>`
+              ? `<video src="${p.src}" autoplay muted loop controls playsinline></video>`
               : `<img src="${p.src}" />`
           }
         </div>
@@ -87,15 +106,14 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(page);
   });
 
-  const allPages = document.querySelectorAll(".page");
+  /* 🔥 SELECT ONLY REAL PAGES (NOT COVER) */
+  const allPages = document.querySelectorAll("#pagesContainer .page");
 
   /* =========================
-     COVER CLICK (OPEN BOOK)
+     COVER CLICK
   ========================= */
   cover.addEventListener("click", () => {
     cover.classList.add("flipped");
-
-    /* 🎵 START MUSIC ON FIRST INTERACTION */
     startMusic();
   });
 
@@ -124,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* =========================
-     BACK TO HOME
+     BACK HOME
   ========================= */
   window.goHome = function () {
     window.location.href = "index.html";
