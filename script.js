@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   /* ===============================
-     🔥 LOADING FIX
+     🔥 LOADING SCREEN FIX
   =============================== */
   const intro = document.getElementById("intro");
 
@@ -28,12 +28,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const funText = document.getElementById("funText");
 
   const menu = document.getElementById("menu");
+
   const music = document.getElementById("bgMusic");
+  const heartbeat = document.getElementById("heartbeat");
 
   let count = 0;
 
   /* ===============================
-     🎵 MUSIC
+     🎵 MUSIC (FADE-IN)
   =============================== */
   function startMusic() {
     if (music && music.paused) {
@@ -53,41 +55,99 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("click", startMusic, { once: true });
 
   /* ===============================
-     GAME
+     🎯 TAP GAME
   =============================== */
-  tapBtn.addEventListener("click", () => {
+  if (tapBtn) {
+    tapBtn.addEventListener("click", () => {
 
-    count++;
-    tapCountText.innerText = `Tapped: ${count}/5`;
+      count++;
 
-    if (count >= 5) {
-      gameBox.style.display = "none";
-      giftContainer.style.display = "block";
+      if (tapCountText) {
+        tapCountText.innerText = `Tapped: ${count}/5`;
+      }
+
+      if (count >= 5) {
+        gameBox.style.display = "none";
+        giftContainer.style.display = "block";
+      }
+    });
+  }
+
+  /* ===============================
+     🎁 GIFT OPEN (PREMIUM)
+  =============================== */
+  if (giftImage) {
+    giftImage.addEventListener("click", () => {
+
+      /* 💓 HEARTBEAT */
+      if (heartbeat) {
+        heartbeat.currentTime = 0;
+        heartbeat.play().catch(()=>{});
+      }
+
+      /* 🎁 POP EFFECT */
+      giftImage.classList.add("gift-pop");
+
+      setTimeout(() => {
+        giftImage.src = "./image/gift-open.PNG";
+        createSparkles();
+      }, 400);
+
+      setTimeout(() => {
+        giftContainer.style.display = "none";
+        funSection.style.display = "block";
+
+        typeText(funText, getFunnyMessage());
+      }, 1200);
+
+    });
+  }
+
+  /* ===============================
+     ✨ SPARKLES
+  =============================== */
+  function createSparkles() {
+
+    for (let i = 0; i < 25; i++) {
+
+      const s = document.createElement("div");
+      s.className = "sparkle";
+
+      s.style.left = Math.random() * window.innerWidth + "px";
+      s.style.top = (window.innerHeight / 2) + "px";
+
+      document.body.appendChild(s);
+
+      setTimeout(() => s.remove(), 1000);
     }
-  });
+  }
 
   /* ===============================
-     GIFT
+     ✍️ TYPING EFFECT
   =============================== */
-  giftImage.addEventListener("click", () => {
+  function typeText(element, text) {
 
-    giftImage.src = "./image/gift-open.PNG";
+    element.innerHTML = "";
+    element.classList.add("typing");
 
-    setTimeout(() => {
-      giftContainer.style.display = "none";
-      funSection.style.display = "block";
-      funText.innerText = getFunnyMessage();
-    }, 800);
-  });
+    let i = 0;
+
+    const interval = setInterval(() => {
+
+      element.innerHTML += text.charAt(i);
+      i++;
+
+      if (i >= text.length) {
+        clearInterval(interval);
+        element.classList.remove("typing");
+      }
+
+    }, 30);
+  }
 
   /* ===============================
-     FUN
+     😂 FUN MESSAGES
   =============================== */
-  window.continueAfterFun = function () {
-    funSection.style.display = "none";
-    menu.style.display = "block";
-  };
-
   function getFunnyMessage() {
     const messages = [
       "You really thought gift will open so easily? 😂",
@@ -99,13 +159,31 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ===============================
-     NAVIGATION
+     👉 CONTINUE
   =============================== */
-  window.openScrapbook = function () {
-    window.location.href = "scrapbook.html";
+  window.continueAfterFun = function () {
+    funSection.style.display = "none";
+    menu.style.display = "block";
   };
 
+  /* ===============================
+     📖 OPEN SCRAPBOOK (SMOOTH)
+  =============================== */
+  window.openScrapbook = function () {
+
+    document.body.style.transition = "opacity 0.8s";
+    document.body.style.opacity = "0";
+
+    setTimeout(() => {
+      window.location.href = "scrapbook.html";
+    }, 800);
+  };
+
+  /* ===============================
+     🎥 OPEN VIDEO (LOCKED)
+  =============================== */
   window.openVideo = function () {
+
     const now = new Date();
     const unlockDate = new Date(2026, 4, 12);
 
