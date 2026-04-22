@@ -8,59 +8,12 @@
 }
 
 /* =========================
-   BODY (INDEX BG)
+   BODY
 ========================= */
 body {
   font-family: 'Segoe UI', sans-serif;
-
-  /* 🎉 BACKGROUND IMAGE */
   background: url("./image/bdbg.jpg") no-repeat center center fixed;
   background-size: cover;
-}
-
-/* =========================
-   INDEX PAGE
-========================= */
-#main {
-  text-align: center;
-  padding: 40px;
-
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(6px);
-  border-radius: 20px;
-}
-
-#profilePic {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center 30%;
-}
-
-/* =========================
-   BUTTON
-========================= */
-button {
-  padding: 10px 20px;
-  margin: 10px;
-  border-radius: 10px;
-  border: none;
-  background: linear-gradient(45deg, #ff4d6d, #ff758f);
-  color: white;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: scale(1.05);
-}
-
-/* =========================
-   HIDDEN
-========================= */
-.hidden {
-  display: none !important;
 }
 
 /* =========================
@@ -72,26 +25,19 @@ button:hover {
   align-items: center;
   height: 100vh;
 
-  /* override background */
   background: linear-gradient(135deg, #f8cdda, #f6d365);
-}
-
-/* =========================
-   SCENE
-========================= */
-.scene {
-  perspective: 2500px;
 }
 
 /* =========================
    BOOK
 ========================= */
+.scene { perspective: 2500px; }
+
 .book {
   width: 90vw;
   max-width: 950px;
   height: 80vh;
   max-height: 540px;
-
   position: relative;
   transform-style: preserve-3d;
 }
@@ -103,12 +49,9 @@ button:hover {
   position: absolute;
   width: 100%;
   height: 100%;
-
   transform-origin: left;
   transform-style: preserve-3d;
   transition: transform 1s ease;
-
-  backface-visibility: hidden;
 }
 
 /* =========================
@@ -134,33 +77,27 @@ button:hover {
 /* =========================
    FRONT / BACK
 ========================= */
-.front,
-.back {
+.front, .back {
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-
   backface-visibility: hidden;
 }
 
 .back {
   transform: rotateY(180deg);
-  background: transparent;
 }
 
 /* =========================
-   FRONT COMMON
+   FRONT DESIGN
 ========================= */
 .front {
   display: flex;
-  border-radius: 25px;
+  border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 40px 100px rgba(0,0,0,0.5);
 }
 
-/* INNER PAGES */
 #pagesContainer .front {
   background: white;
 }
@@ -171,28 +108,11 @@ button:hover {
 .cover-page .front {
   background: linear-gradient(135deg, #ff4d6d, #ff9a9e);
   color: white;
-
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  flex-direction: column;
   text-align: center;
-
-  animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-  from { box-shadow: 0 0 30px rgba(255,105,180,0.4); }
-  to { box-shadow: 0 0 90px rgba(255,105,180,0.9); }
-}
-
-.cover-page h2 {
-  font-size: 36px;
-}
-
-.cover-page p {
-  font-size: 18px;
 }
 
 /* =========================
@@ -201,50 +121,38 @@ button:hover {
 .left {
   width: 50%;
   background: black;
-
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* 🔥 PERFECT FIT */
+/* 🔥 PERFECT FIT (NO ZOOM) */
 .left img,
 .left video {
   width: 100%;
   height: 100%;
-
-  object-fit: cover;       /* fills nicely */
+  object-fit: contain;
   object-position: center;
-
   background: black;
 }
 
 /* =========================
-   RIGHT TEXT (FINAL FIX)
+   RIGHT TEXT
 ========================= */
 .right {
   width: 50%;
-  padding: 35px;
-
+  padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   overflow: hidden;
 }
 
-/* 🔥 TEXT FIT CONTROL */
 .right p {
   font-size: clamp(15px, 1.2vw, 18px);
   line-height: 1.6;
   color: #333;
-
   white-space: pre-line;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 16;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 /* =========================
@@ -257,41 +165,16 @@ button:hover {
   text-align: center;
 }
 
-.controls button {
-  margin: 0 8px;
-}
-
-/* =========================
-   SHADOW
-========================= */
-.book::after {
-  content: "";
-  position: absolute;
-  bottom: -25px;
-  left: 10%;
-  width: 80%;
-  height: 30px;
-  background: rgba(0,0,0,0.3);
-  filter: blur(25px);
-  border-radius: 50%;
-}
-
 /* =========================
    LOADING
 ========================= */
 #intro {
   position: fixed;
   inset: 0;
-
   background: black;
   color: white;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
-  font-size: 26px;
   z-index: 9999;
-
-  transition: opacity 0.5s ease;
 }
