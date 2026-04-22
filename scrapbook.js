@@ -115,9 +115,7 @@ Sometimes…
 that’s all something needs to be real.`,
 
 `And today…
-
 is not just another birthday.
-
 It’s a reminder…
 
 that some people
@@ -126,13 +124,10 @@ but leave a mark that never fades.
 
 Not because of what they did,
 but because of how they made us feel.
-
 And no matter where life goes from here…
 
 some people always remain special.
-
 And you…
-
 you will always be one of those people.
 
 💖 Happy Birthday 💖`
