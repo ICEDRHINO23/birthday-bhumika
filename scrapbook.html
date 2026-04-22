@@ -8,26 +8,24 @@
 
 <body class="book-body">
 
-<h1 class="book-title"> Story 📖</h1>
+<h1 class="book-title">Our Story 📖</h1>
 
 <div class="scene">
   <div class="book" id="book">
 
-    <!-- 🔥 COVER PAGE (FIXED) -->
+    <!-- ✅ COVER PAGE -->
     <div class="page cover-page" id="cover">
 
-      <!-- FRONT -->
       <div class="front cover">
         <h2>Happy Birthday 🎂</h2>
         <p>Tap to open your story 💖</p>
       </div>
 
-      <!-- BACK (VERY IMPORTANT) -->
       <div class="back cover-back"></div>
 
     </div>
 
-    <!-- DYNAMIC PAGES -->
+    <!-- ✅ VERY IMPORTANT: MUST EXIST -->
     <div id="pagesContainer"></div>
 
   </div>
@@ -39,7 +37,11 @@
   <button onclick="goHome()">Back</button>
 </div>
 
-<script src="scrapbook.js"></script>
+<!-- ✅ MUSIC -->
 <audio id="scrapMusic" src="./audio/scrapbook.mp3" loop></audio>
+
+<!-- ✅ SCRIPT MUST BE LAST -->
+<script src="scrapbook.js"></script>
+
 </body>
 </html>
