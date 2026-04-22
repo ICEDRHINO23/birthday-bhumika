@@ -4,28 +4,23 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(135deg, #f8cdda, #f6d365);
 }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
 /* =========================
-   TEXT
+   INDEX PAGE (NORMAL FLOW)
 ========================= */
-h1 {
-  color: #ff4d6d;
+#main {
+  text-align: center;
+  padding: 40px;
 }
 
-p {
-  font-size: 18px;
+#profilePic {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 /* =========================
@@ -47,19 +42,20 @@ button:hover {
 }
 
 /* =========================
-   BOOK BASE
+   🔥 SCRAPBOOK ONLY
 ========================= */
 .book-body {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
+/* BOOK SYSTEM */
 .scene {
   perspective: 3000px;
 }
 
-/* =========================
-   BOOK
-========================= */
 .book {
   width: 850px;
   height: 480px;
@@ -67,58 +63,42 @@ button:hover {
   transform-style: preserve-3d;
 }
 
-/* =========================
-   PAGE SYSTEM
-========================= */
+/* PAGE */
 .page {
   position: absolute;
   width: 100%;
   height: 100%;
-
   transform-origin: left;
   transform-style: preserve-3d;
   transition: transform 1s ease;
-
   backface-visibility: hidden;
 }
 
-/* STACK FIX */
 #pagesContainer .page {
   z-index: 2;
 }
 
-/* =========================
-   COVER
-========================= */
+/* COVER */
 .cover-page {
   z-index: 9999;
   transition: transform 1s ease, z-index 0.5s ease;
 }
 
-/* 🔥 CRITICAL FIX */
 .cover-page.flipped {
   transform: rotateY(-180deg);
   z-index: 0 !important;
 }
 
-/* =========================
-   FLIP
-========================= */
+/* FLIP */
 .page.flipped {
   transform: rotateY(-180deg);
 }
 
-/* =========================
-   FRONT / BACK
-========================= */
-.front,
-.back {
+/* FRONT / BACK */
+.front, .back {
   position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-
   backface-visibility: hidden;
 }
 
@@ -128,9 +108,7 @@ button:hover {
   border-radius: 20px;
 }
 
-/* =========================
-   PAGE DESIGN
-========================= */
+/* FRONT */
 .front {
   display: flex;
   border-radius: 20px;
@@ -138,114 +116,44 @@ button:hover {
   box-shadow: 0 40px 100px rgba(0,0,0,0.5);
 }
 
-/* INNER PAGES */
 #pagesContainer .front {
   background: white;
 }
 
-/* =========================
-   💖 COVER PAGE (CINEMATIC)
-========================= */
+/* COVER DESIGN */
 .cover-page .front {
   background: linear-gradient(135deg, #ff4d6d, #ff9a9e);
   color: white;
-
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  flex-direction: column;
   text-align: center;
-
-  box-shadow: 0 0 80px rgba(255, 105, 180, 0.8);
-  animation: glow 2s infinite alternate;
 }
 
-@keyframes glow {
-  from { box-shadow: 0 0 30px rgba(255, 105, 180, 0.4); }
-  to { box-shadow: 0 0 90px rgba(255, 105, 180, 0.9); }
-}
-
-.cover-page h2 {
-  font-size: 34px;
-  margin-bottom: 10px;
-}
-
-.cover-page p {
-  font-size: 18px;
-  opacity: 0.95;
-}
-
-/* =========================
-   LEFT MEDIA
-========================= */
+/* LEFT MEDIA */
 .left {
   width: 50%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   background: black;
 }
 
-/* 🔥 PERFECT FIT */
 .left img,
 .left video {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition: transform 0.5s ease;
 }
 
-/* slight cinematic zoom */
-.left video:hover,
-.left img:hover {
-  transform: scale(1.03);
-}
-
-/* =========================
-   RIGHT TEXT
-========================= */
+/* RIGHT TEXT */
 .right {
   width: 50%;
   padding: 40px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-}
-
-.right h2 {
-  color: #ff4d6d;
-  margin-bottom: 10px;
-  font-size: 26px;
-}
-
-.right p {
-  line-height: 1.8;
-  font-size: 18px;
-}
-
-/* =========================
-   CONTROLS
-========================= */
-.controls {
-  margin-top: 20px;
-}
-
-/* =========================
-   SHADOW (DEPTH)
-========================= */
-.book::after {
-  content: "";
-  position: absolute;
-  bottom: -25px;
-  left: 10%;
-  width: 80%;
-  height: 30px;
-  background: rgba(0,0,0,0.3);
-  filter: blur(25px);
-  border-radius: 50%;
 }
 
 /* =========================
@@ -259,18 +167,8 @@ button:hover {
   height: 100%;
   background: black;
   color: white;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
-  font-size: 28px;
   z-index: 9999;
-
-  animation: fadeIn 1s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
