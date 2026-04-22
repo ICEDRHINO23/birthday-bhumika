@@ -18,8 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      💖 TEXT
   ========================= */
- const texts = [
-
+  const texts = [
 `There are people who enter our life quietly…
 without any noise, without any announcement.
 
@@ -136,7 +135,7 @@ And you…
 you will always be one of those people.
 
 💖 Happy Birthday 💖`
-];
+  ];
 
   /* =========================
      📂 MEDIA
