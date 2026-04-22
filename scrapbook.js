@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   /* ===============================
-     🔥 FIX LOADING SCREEN (IMPORTANT)
+     🔥 FIX LOADING SCREEN
   =============================== */
   const intro = document.getElementById("intro");
 
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let current = 0;
 
     /* =========================
-       🎵 MUSIC
+       🎵 MUSIC CONTROL
     ========================= */
     function startMusic() {
       if (music && music.paused) {
@@ -57,11 +57,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const texts = [
       "There are people who enter quietly… but slowly become part of everything. You became that comfort without even trying.",
+
       "Our conversations were never planned… but they always felt real. And in a world full of noise, that meant everything.",
+
       "Some friendships don’t need daily talks… they stay strong silently. And that’s exactly what makes them special.",
+
       "And then came moments like this… simple, real, and full of happiness. Somehow, this day started feeling more special.",
+
       "I still remember this… the way your smile just appeared without effort. That happiness… it stayed longer than the moment itself.",
+
       "It was never about the gift… it was about that genuine happiness in your eyes. And honestly, that made everything worth it.",
+
       "Not everything needs words… some things are just felt. And whatever this is… it’s something I truly value.\n\nWait for the real gifts 🎁✨"
     ];
 
@@ -77,6 +83,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const page = document.createElement("div");
       page.className = "page";
+
+      /* 🔥 STACK ORDER FIX */
       page.style.zIndex = pages.length - i;
 
       page.innerHTML = `
@@ -85,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="left">
             ${
               p.type === "video"
-                ? `<video src="${p.src}" autoplay muted loop controls playsinline></video>`
+                ? `<video src="${p.src}" muted loop controls playsinline></video>`
                 : `<img src="${p.src}" onerror="this.src='./image/bhoomika.jpg'">`
             }
           </div>
@@ -106,43 +114,74 @@ document.addEventListener("DOMContentLoaded", () => {
       container.appendChild(page);
     });
 
+    /* 🔥 SELECT ONLY INNER PAGES */
     const allPages = document.querySelectorAll("#pagesContainer .page");
 
     /* =========================
-       📖 COVER
+       📖 COVER CLICK FIX
     ========================= */
     if (cover) {
       cover.addEventListener("click", () => {
+
         cover.classList.add("flipped");
         startMusic();
+
+        /* 🔥 CRITICAL FIX */
+        setTimeout(() => {
+          cover.style.zIndex = "0";
+          cover.style.pointerEvents = "none";
+        }, 1000);
       });
     }
 
     /* =========================
-       ➡ NEXT
+       ➡ NEXT PAGE
     ========================= */
     window.nextPage = function () {
+
       if (current < allPages.length) {
-        allPages[current].classList.add("flipped");
+
+        const page = allPages[current];
+
+        page.classList.add("flipped");
+
+        /* 🎥 PLAY VIDEO IF EXISTS */
+        const video = page.querySelector("video");
+        if (video) video.play().catch(()=>{});
+
         current++;
         startMusic();
       }
     };
 
     /* =========================
-       ⬅ PREVIOUS
+       ⬅ PREVIOUS PAGE
     ========================= */
     window.prevPage = function () {
+
       if (current > 0) {
+
         current--;
-        allPages[current].classList.remove("flipped");
+
+        const page = allPages[current];
+        page.classList.remove("flipped");
+
+        /* 🎥 PAUSE VIDEO */
+        const video = page.querySelector("video");
+        if (video) video.pause();
+
       } else if (cover) {
+
         cover.classList.remove("flipped");
+
+        /* 🔥 RESTORE COVER */
+        cover.style.zIndex = "9999";
+        cover.style.pointerEvents = "auto";
       }
     };
 
     /* =========================
-       🔙 BACK
+       🔙 GO BACK
     ========================= */
     window.goHome = function () {
       window.location.href = "index.html";
@@ -151,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
   } catch (e) {
     console.error("Script error:", e);
 
-    /* 🔥 FAILSAFE: REMOVE LOADING */
+    /* FAILSAFE */
     if (intro) intro.style.display = "none";
   }
 
