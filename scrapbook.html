@@ -3,15 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Our Scrapbook 📖</title>
-<link rel="stylesheet" href="style.css">
+
+<!-- ✅ IMPORTANT: ensure correct path -->
+<link rel="stylesheet" href="./style.css">
+
 </head>
 
 <body class="book-body">
 
+<!-- 🔥 SCENE -->
 <div class="scene">
   <div class="book">
 
-    <!-- COVER -->
+    <!-- 💖 COVER PAGE -->
     <div class="page cover-page" id="cover">
       <div class="front">
         <h2>Our Story 📖</h2>
@@ -21,20 +25,26 @@
       <div class="back"></div>
     </div>
 
-    <!-- PAGES -->
+    <!-- 📄 DYNAMIC PAGES -->
     <div id="pagesContainer"></div>
 
   </div>
 </div>
 
+<!-- 🎮 CONTROLS -->
 <div class="controls">
   <button onclick="prevPage()">⬅ Prev</button>
   <button onclick="nextPage()">Next ➡</button>
   <button onclick="goHome()">🏠 Home</button>
 </div>
 
-<audio id="scrapMusic" src="./audio/scrapbook.mp3" loop></audio>
+<!-- 🎵 MUSIC -->
+<audio id="scrapMusic" loop preload="auto">
+  <source src="./audio/scrapbook.mp3" type="audio/mpeg">
+</audio>
 
-<script src="scrapbook.js"></script>
+<!-- ✅ SCRIPT -->
+<script src="./scrapbook.js"></script>
+
 </body>
 </html>
