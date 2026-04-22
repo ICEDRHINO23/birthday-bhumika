@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let current = 0;
 
   /* =========================
-     🎵 MUSIC (SAFE START)
+     🎵 MUSIC START
   ========================= */
   document.addEventListener("click", () => {
     if (music && music.paused) {
@@ -16,68 +16,127 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { once: true });
 
   /* =========================
-     💖 EXPANDED TEXT
+     💖 TEXT
   ========================= */
-  const texts = [
+ const texts = [
 
 `There are people who enter our life quietly…
 without any noise, without any announcement.
 
-At first, they feel like just another part of the day.
+At first, they feel like just another part of the day,
+just another conversation,
+just another moment.
 
 But slowly… without even realizing,
 they become a part of everything.
 
-You became that comfort.`,
+You became that comfort.
+That calm presence that just feels right.
 
-`We never planned our conversations.
+And somehow…
+things started feeling a little better,
+just because you were there.`,
+
+`We never planned anything…
 
 Nothing was forced,
 nothing was expected.
 
-Yet every moment felt real.
+Yet every time we spoke,
+it felt real.
 
-And that’s what made it special.`,
+No pressure,
+no pretending,
+no need to be anything else.
 
-`Some connections don’t need constant talking.
+And in a world where most things don’t last,
+you became something that stayed.
 
-They don’t need effort.
+And that…
+means more than words can explain.`,
 
-They just stay…
-naturally.`,
+`Some connections don’t need effort.
+
+They don’t need constant talking,
+or daily reminders.
+
+They just exist…
+quietly,
+naturally,
+effortlessly.
+
+Strong enough to stay,
+even in silence.
+
+And honestly,
+that’s what makes them rare.`,
 
 `Then came moments like these…
 
 Simple,
 unplanned,
-but unforgettable.
+almost ordinary.
 
-Because of how they felt.`,
+Nothing big,
+nothing dramatic.
+
+But somehow,
+they turned into memories.
+
+Because it was never about what we did…
+
+it was about how it felt.`,
 
 `I still remember that smile…
 
-Not perfect,
-but real.
+Not because it was perfect,
+but because it was real.
 
-And that kind of happiness stays.`,
+That kind of happiness
+doesn’t just fade away.
+
+It stays.
+
+Quietly,
+somewhere inside,
+long after the moment has passed.`,
 
 `Maybe this was never about anything big…
 
-Just real moments
-that meant something.`,
+No labels,
+no expectations,
+no definitions.
+
+Just a connection
+that happened naturally,
+and stayed effortlessly.
+
+Sometimes…
+that’s all something needs to be real.`,
 
 `And today…
 
-is not just a birthday.
+is not just another birthday.
 
 It’s a reminder…
 
 that some people
-make life better
-just by being there.
+walk into our lives quietly,
+but leave a mark that never fades.
+
+Not because of what they did,
+but because of how they made us feel.
+
+And no matter where life goes from here…
+
+some people always remain special.
+
+And you…
+
+you will always be one of those people.
 
 💖 Happy Birthday 💖`
-  ];
+];
 
   /* =========================
      📂 MEDIA
@@ -107,7 +166,7 @@ just by being there.
         <div class="left">
           ${
             p.type === "video"
-              ? `<video muted loop playsinline preload="auto">
+              ? `<video class="scrapVideo" muted loop playsinline preload="auto">
                    <source src="${p.src}" type="video/mp4">
                  </video>`
               : `<img src="${p.src}" loading="lazy">`
@@ -127,11 +186,10 @@ just by being there.
     container.appendChild(page);
   });
 
-  /* 🔥 ONLY REAL PAGES */
   const allPages = document.querySelectorAll("#pagesContainer .page");
 
   /* =========================
-     📖 COVER
+     📖 COVER OPEN
   ========================= */
   if (cover) {
     cover.addEventListener("click", () => {
@@ -140,7 +198,7 @@ just by being there.
   }
 
   /* =========================
-     ➡ NEXT PAGE
+     ➡ NEXT PAGE (VIDEO PLAY FIX)
   ========================= */
   window.nextPage = function () {
 
@@ -148,17 +206,27 @@ just by being there.
 
       const page = allPages[current];
 
-      /* 🎥 PLAY VIDEO SAFELY */
-      const video = page.querySelector("video");
-      if (video) {
-        video.currentTime = 0;
-        video.play().catch(()=>{});
-      }
-
+      /* FLIP FIRST */
       page.classList.add("flipped");
+
+      /* PLAY VIDEO AFTER FLIP */
+      setTimeout(() => {
+
+        const video = page.querySelector("video");
+
+        if (video) {
+          video.currentTime = 0;
+          video.muted = true;
+
+          video.play().catch(err => {
+            console.log("Video blocked:", err);
+          });
+        }
+
+      }, 400);
+
       current++;
 
-      /* 🎉 END TRIGGER */
       if (current === allPages.length) {
         setTimeout(showEnding, 800);
       }
@@ -177,7 +245,6 @@ just by being there.
       const page = allPages[current];
       page.classList.remove("flipped");
 
-      /* ⏸️ PAUSE VIDEO */
       const video = page.querySelector("video");
       if (video) video.pause();
     }
