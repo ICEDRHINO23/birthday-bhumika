@@ -339,3 +339,17 @@ button:hover {
   object-fit: cover;              /* fills nicely */
   object-position: center 30%;    /* 🔥 adjust face */
 }
+/*=========================================
+MAKING VIDEOs
+============================================*/
+video {
+  width: 90%;
+  max-width: 900px;
+  height: auto;              /* 🔥 important */
+
+  object-fit: contain;       /* 🔥 prevents zoom */
+  background: black;
+
+  border-radius: 15px;
+  box-shadow: 0 0 40px rgba(255,77,109,0.5);
+}
