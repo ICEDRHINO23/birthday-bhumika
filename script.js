@@ -1,16 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   /* ===============================
-     🔥 LOADING SCREEN FIX
+     🔥 LOADING SCREEN (SMOOTH)
   =============================== */
   const intro = document.getElementById("intro");
 
   setTimeout(() => {
     if (intro) {
       intro.style.opacity = "0";
+      intro.style.transition = "opacity 0.6s ease";
+
       setTimeout(() => {
         intro.style.display = "none";
-      }, 500);
+      }, 600);
     }
   }, 1200);
 
@@ -34,17 +36,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const heartbeat = document.getElementById("heartbeat");
 
   let count = 0;
+  let giftOpened = false; // 🔥 prevent double click
 
 
   /* ===============================
-     🎵 MUSIC (SAFE AUTOPLAY)
+     🎵 MUSIC (SAFE START)
   =============================== */
   function startMusic() {
     if (music && music.paused) {
 
       music.volume = 0;
-
-      music.play().catch(() => {});
+      music.play().catch(()=>{});
 
       let v = 0;
       const fade = setInterval(() => {
@@ -56,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* Start music on first user interaction */
   document.body.addEventListener("click", startMusic, { once: true });
 
 
@@ -72,7 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
         tapCountText.innerText = `Tapped: ${Math.min(count, 5)}/5`;
       }
 
-      /* Unlock gift */
       if (count === 5) {
         gameBox.style.display = "none";
         giftContainer.style.display = "flex";
@@ -83,30 +83,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ===============================
-     🎁 GIFT OPEN (PREMIUM)
+     🎁 GIFT OPEN (CINEMATIC)
   =============================== */
   if (giftImage) {
     giftImage.addEventListener("click", () => {
 
-      /* 💓 HEARTBEAT SOUND */
+      if (giftOpened) return; // 🔥 prevent repeat
+      giftOpened = true;
+
+      /* 💓 HEARTBEAT */
       if (heartbeat) {
         heartbeat.currentTime = 0;
         heartbeat.volume = 1;
-        heartbeat.play().catch(() => {});
+        heartbeat.play().catch(()=>{});
       }
 
-      /* 🎁 POP ANIMATION */
+      /* 🎬 DARKEN BACKGROUND */
+      document.body.style.transition = "filter 0.5s ease";
+      document.body.style.filter = "brightness(0.85)";
+
+      /* 🎁 POP */
       giftImage.classList.add("gift-pop");
 
-      /* 🎁 CHANGE IMAGE */
       setTimeout(() => {
         giftImage.src = "./image/gift-open.PNG";
-        createSparkles();
+        createSparkles(giftImage);
       }, 400);
 
-      /* 🎵 LOWER MUSIC FOR DRAMA */
+      /* 🎵 MUSIC LOWER */
       if (music) {
         let v = music.volume;
+
         const reduce = setInterval(() => {
           v -= 0.05;
           music.volume = v;
@@ -115,30 +122,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 200);
       }
 
-      /* ✨ SHOW FUN SECTION */
+      /* ✨ NEXT SCREEN */
       setTimeout(() => {
         giftContainer.style.display = "none";
         funSection.style.display = "block";
 
         typeText(funText, getFunnyMessage());
-      }, 1200);
+      }, 1300);
 
     });
   }
 
 
   /* ===============================
-     ✨ SPARKLE EFFECT
+     ✨ SPARKLES (CENTERED)
   =============================== */
-  function createSparkles() {
+  function createSparkles(target) {
+
+    const rect = target.getBoundingClientRect();
 
     for (let i = 0; i < 25; i++) {
 
       const s = document.createElement("div");
       s.className = "sparkle";
 
-      s.style.left = Math.random() * window.innerWidth + "px";
-      s.style.top = (window.innerHeight / 2) + "px";
+      s.style.left = rect.left + rect.width / 2 + "px";
+      s.style.top = rect.top + rect.height / 2 + "px";
 
       document.body.appendChild(s);
 
@@ -174,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ===============================
-     😂 FUN MESSAGES
+     😂 FUN TEXT
   =============================== */
   function getFunnyMessage() {
     const messages = [
@@ -189,20 +198,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* ===============================
-     👉 CONTINUE BUTTON
+     👉 CONTINUE
   =============================== */
   window.continueAfterFun = function () {
     funSection.style.display = "none";
     menu.style.display = "block";
+
+    /* restore brightness */
+    document.body.style.filter = "brightness(1)";
   };
 
 
   /* ===============================
-     📖 OPEN SCRAPBOOK (SMOOTH FADE)
+     📖 OPEN SCRAPBOOK
   =============================== */
   window.openScrapbook = function () {
 
-    document.body.style.transition = "opacity 0.8s";
+    document.body.style.transition = "opacity 0.8s ease";
     document.body.style.opacity = "0";
 
     setTimeout(() => {
@@ -217,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.openVideo = function () {
 
     const now = new Date();
-    const unlockDate = new Date(2026, 4, 12); // May 12
+    const unlockDate = new Date(2026, 4, 12);
 
     if (now >= unlockDate) {
       window.location.href = "video.html";
