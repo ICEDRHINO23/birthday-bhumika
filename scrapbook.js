@@ -6,42 +6,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let current = 0;
 
-  /* =========================
-     MUSIC (USER CLICK FIX)
-  ========================= */
-  document.addEventListener("click", () => {
+  /* 🎵 MUSIC */
+  function startMusic() {
     if (music && music.paused) {
-      music.volume = 0.6;
+      music.volume = 0;
       music.play().catch(()=>{});
-    }
-  }, { once: true });
 
-  /* =========================
-     DATA
-  ========================= */
+      let v = 0;
+      const fade = setInterval(() => {
+        v += 0.05;
+        music.volume = v;
+        if (v >= 0.6) clearInterval(fade);
+      }, 200);
+    }
+  }
+
+  /* 📂 PAGES */
   const pages = [
     { type: "image", src: "./scrapbook/1.jpg" },
     { type: "image", src: "./scrapbook/2.jpg" },
     { type: "image", src: "./scrapbook/3.jpg" },
     { type: "video", src: "./scrapbook/4.mp4" },
     { type: "video", src: "./scrapbook/5.mp4" },
-    { type: "video", src: "./scrapbook/6.mp4" },
-    { type: "image", src: "./scrapbook/7.jpg" }
+    { type: "image", src: "./scrapbook/6.jpg" }
   ];
 
+  /* 💖 EXPANDED EMOTIONAL TEXT */
   const texts = [
-    "You came quietly… but became everything.",
-    "Our random talks became my favorite moments.",
-    "Some bonds don’t need effort… they just exist.",
-    "This day… it started feeling special because of you.",
-    "That smile… I still remember it clearly.",
-    "It was never about the gift… it was you.",
-    "Whatever this is… I truly value it 💖"
+    "Some people enter our life quietly… without any noise. But slowly, without even realizing, they become a part of everything. You became that comfort, that peace, that presence I didn’t even know I needed.",
+
+    "We never planned conversations… never forced anything. Yet somehow, every moment we shared felt real. In a world full of temporary people, you became something permanent.",
+
+    "Not every friendship needs constant talking. Some connections just stay strong silently. And honestly… that’s what makes this one so special.",
+
+    "Then came moments like this… small, simple, but filled with happiness. Days that didn’t seem important before… suddenly became unforgettable.",
+
+    "Your smile… it’s something I still remember clearly. Not because it was perfect, but because it was real. And that kind of happiness stays longer than the moment itself.",
+
+    "And maybe this is what matters… not big words, not big gestures… just real moments, real smiles, and a connection that feels effortless.",
+
+    "So today isn’t just about a birthday… it’s about celebrating someone who unknowingly made life a little better, a little lighter, and a lot more meaningful.\n\nHappy Birthday 💖"
   ];
 
-  /* =========================
-     CREATE PAGES
-  ========================= */
+  /* 🧱 CREATE */
   pages.forEach((p, i) => {
 
     const page = document.createElement("div");
@@ -50,19 +57,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     page.innerHTML = `
       <div class="front">
-
         <div class="left">
           ${
             p.type === "video"
-              ? `<video src="${p.src}" muted loop controls></video>`
+              ? `<video src="${p.src}" autoplay muted loop></video>`
               : `<img src="${p.src}">`
           }
         </div>
 
         <div class="right">
+          ${ i === pages.length - 1 ? `<h2>For You 💖</h2>` : "" }
           <p>${texts[i]}</p>
         </div>
-
       </div>
 
       <div class="back"></div>
@@ -73,67 +79,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const allPages = document.querySelectorAll("#pagesContainer .page");
 
-  /* =========================
-     COVER
-  ========================= */
+  /* 📖 COVER */
   cover.addEventListener("click", () => {
-
     cover.classList.add("flipped");
-
-    setTimeout(() => {
-      cover.style.zIndex = "0";
-      cover.style.pointerEvents = "none";
-    }, 900);
+    startMusic();
   });
 
-  /* =========================
-     NEXT
-  ========================= */
+  /* ➡ NEXT */
   window.nextPage = function () {
-
     if (current < allPages.length) {
-
-      const page = allPages[current];
-      page.classList.add("flipped");
-
-      const video = page.querySelector("video");
-      if (video) video.play().catch(()=>{});
-
+      allPages[current].classList.add("flipped");
       current++;
+
+      if (current === allPages.length) {
+        setTimeout(showEnding, 1200);
+      }
     }
   };
 
-  /* =========================
-     PREV
-  ========================= */
+  /* ⬅ PREV */
   window.prevPage = function () {
-
     if (current > 0) {
-
       current--;
-
-      const page = allPages[current];
-      page.classList.remove("flipped");
-
-      const video = page.querySelector("video");
-      if (video) video.pause();
-
-    } else {
-
-      cover.classList.remove("flipped");
-
-      setTimeout(() => {
-        cover.style.zIndex = "9999";
-        cover.style.pointerEvents = "auto";
-      }, 300);
+      allPages[current].classList.remove("flipped");
     }
   };
 
-  /* =========================
-     HOME
-  ========================= */
+  /* 🏠 HOME */
   window.goHome = function () {
     window.location.href = "index.html";
   };
+
+  /* 💖 FINAL ENDING */
+  function showEnding() {
+    const end = document.createElement("div");
+    end.style.position = "fixed";
+    end.style.inset = "0";
+    end.style.background = "rgba(0,0,0,0.9)";
+    end.style.color = "white";
+    end.style.display = "flex";
+    end.style.justifyContent = "center";
+    end.style.alignItems = "center";
+    end.style.textAlign = "center";
+    end.style.fontSize = "28px";
+    end.style.padding = "40px";
+    end.style.zIndex = "9999";
+    end.innerHTML = "No matter where life goes… some people always stay special. 💖";
+
+    document.body.appendChild(end);
+  }
 
 });
