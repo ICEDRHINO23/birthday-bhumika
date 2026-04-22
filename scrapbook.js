@@ -127,7 +127,8 @@ but because of how they made us feel.
 And no matter where life goes from here…
 
 some people always remain special.
-And you…
+
+            And you…
 you will always be one of those people.
 
 💖 Happy Birthday 💖`
@@ -161,7 +162,7 @@ you will always be one of those people.
         <div class="left">
           ${
             p.type === "video"
-              ? `<video class="scrapVideo" muted playsinline preload="auto">
+              ? `<video class="scrapVideo" muted playsinline controls preload="auto">
                    <source src="${p.src}" type="video/mp4">
                  </video>`
               : `<img src="${p.src}" loading="lazy">`
@@ -193,7 +194,7 @@ you will always be one of those people.
   }
 
   /* =========================
-     ➡ NEXT PAGE (VIDEO FIXED)
+     ➡ NEXT PAGE (VIDEO PLAY)
   ========================= */
   window.nextPage = function () {
 
@@ -213,13 +214,10 @@ you will always be one of those people.
           video.currentTime = 0;
           video.muted = true;
 
-          video.play().catch(err => {
-
-            /* fallback if blocked */
+          video.play().catch(() => {
             document.body.addEventListener("click", () => {
               video.play().catch(()=>{});
             }, { once: true });
-
           });
         }
 
@@ -274,6 +272,7 @@ you will always be one of those people.
         they stay.
 
         And they make everything feel better. 💖
+        "wait for more"
       </p>
 
       <button onclick="goHome()" style="margin-top:20px;">
