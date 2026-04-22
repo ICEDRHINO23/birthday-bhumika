@@ -12,7 +12,10 @@
 ========================= */
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #f8cdda, #f6d365);
+
+  /* 🎉 YOUR BG IMAGE */
+  background: url("./image/bdbg.jpg") no-repeat center center fixed;
+  background-size: cover;
 }
 
 /* =========================
