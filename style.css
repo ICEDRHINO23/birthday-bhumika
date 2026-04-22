@@ -30,6 +30,7 @@ body {
   object-fit: cover;
 }
 
+/* BUTTON */
 button {
   padding: 10px 20px;
   margin: 10px;
@@ -146,7 +147,7 @@ button:hover {
 }
 
 /* =========================
-   COVER DESIGN (FIXED)
+   COVER DESIGN
 ========================= */
 .cover-page .front {
   background: linear-gradient(135deg, #ff4d6d, #ff9a9e);
@@ -177,7 +178,7 @@ button:hover {
 }
 
 /* =========================
-   LEFT MEDIA (FIXED ALIGNMENT)
+   LEFT MEDIA
 ========================= */
 .left {
   width: 50%;
@@ -194,13 +195,11 @@ button:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-
-  /* 🔥 IMPORTANT: FACE FIX */
   object-position: center 30%;
 }
 
 /* =========================
-   RIGHT TEXT (EXPANDED)
+   RIGHT TEXT (FINAL FIX)
 ========================= */
 .right {
   width: 50%;
@@ -222,6 +221,9 @@ button:hover {
   font-size: 20px;
   line-height: 2;
   color: #333;
+
+  white-space: pre-line;   /* 🔥 CRITICAL FIX */
+  letter-spacing: 0.3px;   /* small polish */
 }
 
 /* =========================
@@ -274,7 +276,4 @@ button:hover {
   z-index: 9999;
 
   transition: opacity 0.5s ease;
-}
-.right p {
-  white-space: pre-line;   /* 🔥 THIS FIXES TEXT BREAKS */
 }
