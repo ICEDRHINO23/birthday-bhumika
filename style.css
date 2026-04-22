@@ -305,3 +305,29 @@ button:hover {
 
   transition: opacity 0.5s ease;
 }
+/* =========================
+   🎁 GIFT IMAGE SIZE FIX
+========================= */
+#giftContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+#giftImage {
+  width: 160px;          /* 🔥 reduce size */
+  max-width: 60%;        /* responsive */
+  height: auto;
+
+  object-fit: contain;
+
+  border-radius: 15px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+
+  transition: transform 0.4s ease;
+}
+
+#giftImage:hover {
+  transform: scale(1.05);
+}
