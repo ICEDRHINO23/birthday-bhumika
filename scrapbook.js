@@ -272,7 +272,7 @@ you will always be one of those people.
         they stay.
 
         And they make everything feel better. 💖
-        /nwait for more
+        wait for more
       </p>
 
       <button onclick="goHome()" style="margin-top:20px;">
