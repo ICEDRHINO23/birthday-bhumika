@@ -23,8 +23,12 @@
       box-shadow: 0 0 40px rgba(255,77,109,0.5);
     }
 
+    .video-buttons {
+      margin-top: 15px;
+    }
+
     button {
-      margin-top: 20px;
+      margin: 5px;
       padding: 10px 20px;
       border-radius: 10px;
       border: none;
@@ -33,21 +37,73 @@
       cursor: pointer;
       font-size: 16px;
     }
+
+    button:hover {
+      transform: scale(1.05);
+    }
   </style>
 </head>
 
 <body>
 
-<video controls autoplay>
-  <source src="./videos/bhumika.mp4" type="video/mp4">
-</video>
+<h2 style="color:white;">🎬 Special Moments</h2>
+
+<!-- 🎥 MAIN PLAYER -->
+<video id="player" controls playsinline></video>
+
+<!-- 🔘 VIDEO BUTTONS -->
+<div class="video-buttons">
+  <button onclick="playVideo(0)">Memory 1 💖</button>
+  <button onclick="playVideo(1)">Memory 2 ✨</button>
+  <button onclick="playVideo(2)">Memory 3 🎉</button>
+  <button onclick="playVideo(3)">Memory 4 💫</button>
+</div>
 
 <button onclick="goBack()">⬅ Back</button>
 
 <script>
+
+/* 🎬 VIDEO LIST */
+const videos = [
+  "./videos/video1.mp4",
+  "./videos/video2.mp4",
+  "./videos/video3.mp4",
+  "./videos/video4.mp4"
+];
+
+let currentVideo = 0;
+
+/* ▶ PLAY VIDEO */
+function playVideo(index) {
+  const player = document.getElementById("player");
+
+  currentVideo = index;
+  player.src = videos[index];
+
+  player.play().catch(()=>{});
+}
+
+/* 🔥 AUTO LOAD FIRST VIDEO */
+window.onload = () => {
+  playVideo(0);
+};
+
+/* ⏭ AUTO NEXT VIDEO */
+document.getElementById("player").addEventListener("ended", () => {
+
+  currentVideo++;
+
+  if (currentVideo < videos.length) {
+    playVideo(currentVideo);
+  }
+
+});
+
+/* 🔙 BACK */
 function goBack(){
   window.location.href = "index.html";
 }
+
 </script>
 
 </body>
