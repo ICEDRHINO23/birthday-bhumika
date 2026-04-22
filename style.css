@@ -1,163 +1,229 @@
-/* =========================
-   GLOBAL
-========================= */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #f8cdda, #f6d365);
-  text-align: center;
-}
+document.addEventListener("DOMContentLoaded", () => {
 
-/* =========================
-   MAIN
-========================= */
-#main {
-  padding: 40px;
-}
+  /* ===============================
+     🔥 LOADING SCREEN FIX
+  =============================== */
+  const intro = document.getElementById("intro");
 
-#profilePic {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+  setTimeout(() => {
+    if (intro) {
+      intro.style.opacity = "0";
+      setTimeout(() => {
+        intro.style.display = "none";
+      }, 500);
+    }
+  }, 1200);
 
-/* =========================
-   BUTTON
-========================= */
-button {
-  padding: 10px 20px;
-  margin: 10px;
-  border-radius: 10px;
-  border: none;
-  background: linear-gradient(45deg, #ff4d6d, #ff758f);
-  color: white;
-  cursor: pointer;
-}
 
-/* =========================
-   🔥 FORCE HIDE (IMPORTANT FIX)
-========================= */
-#giftContainer,
-#funSection,
-#menu {
-  display: none;
-}
+  /* ===============================
+     ELEMENTS
+  =============================== */
+  const tapBtn = document.getElementById("tapBtn");
+  const tapCountText = document.getElementById("tapCount");
 
-/* =========================
-   GIFT
-========================= */
-#giftContainer {
-  margin-top: 30px;
-}
+  const gameBox = document.getElementById("gameBox");
+  const giftContainer = document.getElementById("giftContainer");
+  const giftImage = document.getElementById("giftImage");
 
-#giftImage {
-  width: 220px;
-  border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-  cursor: pointer;
-}
+  const funSection = document.getElementById("funSection");
+  const funText = document.getElementById("funText");
 
-/* =========================
-   INTRO
-========================= */
-#intro {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: black;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  font-size: 28px;
-  transition: 0.5s;
-}
-/* 🎁 GIFT POP ANIMATION */
-@keyframes pop {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
-}
+  const menu = document.getElementById("menu");
 
-.gift-pop {
-  animation: pop 0.6s ease;
-}
+  const music = document.getElementById("bgMusic");
+  const heartbeat = document.getElementById("heartbeat");
 
-/* ✨ SPARKLES */
-.sparkle {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: gold;
-  border-radius: 50%;
-  animation: sparkleAnim 1s ease-out forwards;
-}
+  let count = 0;
 
-@keyframes sparkleAnim {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-80px); }
-}
 
-/* ✍️ TYPING EFFECT */
-.typing {
-  border-right: 2px solid #ff4d6d;
-  white-space: nowrap;
-  overflow: hidden;
-  animation: blink 0.8s infinite;
-}
+  /* ===============================
+     🎵 MUSIC (SAFE AUTOPLAY)
+  =============================== */
+  function startMusic() {
+    if (music && music.paused) {
 
-@keyframes blink {
-  50% { border-color: transparent; }
-}
-/* 🔒 FORCE HIDDEN INIT STATE */
-#giftContainer,
-#funSection,
-#menu {
-  display: none;
-}
+      music.volume = 0;
 
-/* 🎁 POP EFFECT */
-.gift-pop {
-  animation: pop 0.4s ease;
-}
+      music.play().catch(() => {});
 
-@keyframes pop {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
+      let v = 0;
+      const fade = setInterval(() => {
+        v += 0.05;
+        music.volume = v;
 
-/* ✨ SPARKLES */
-.sparkle {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  background: gold;
-  border-radius: 50%;
-  pointer-events: none;
-  animation: sparkleAnim 1s ease forwards;
-}
-
-@keyframes sparkleAnim {
-  0% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+        if (v >= 0.6) clearInterval(fade);
+      }, 200);
+    }
   }
-  100% {
-    opacity: 0;
-    transform: translateY(-100px) scale(0);
+
+  /* Start music on first user interaction */
+  document.body.addEventListener("click", startMusic, { once: true });
+
+
+  /* ===============================
+     🎯 TAP GAME
+  =============================== */
+  if (tapBtn) {
+    tapBtn.addEventListener("click", () => {
+
+      count++;
+
+      if (tapCountText) {
+        tapCountText.innerText = `Tapped: ${Math.min(count, 5)}/5`;
+      }
+
+      /* Unlock gift */
+      if (count === 5) {
+        gameBox.style.display = "none";
+        giftContainer.style.display = "flex";
+      }
+
+    });
   }
-}
 
-/* ✍️ TYPING CURSOR */
-.typing::after {
-  content: "|";
-  animation: blink 1s infinite;
-}
 
-@keyframes blink {
-  0%, 50%, 100% { opacity: 1; }
-  25%, 75% { opacity: 0; }
-}
+  /* ===============================
+     🎁 GIFT OPEN (PREMIUM)
+  =============================== */
+  if (giftImage) {
+    giftImage.addEventListener("click", () => {
+
+      /* 💓 HEARTBEAT SOUND */
+      if (heartbeat) {
+        heartbeat.currentTime = 0;
+        heartbeat.volume = 1;
+        heartbeat.play().catch(() => {});
+      }
+
+      /* 🎁 POP ANIMATION */
+      giftImage.classList.add("gift-pop");
+
+      /* 🎁 CHANGE IMAGE */
+      setTimeout(() => {
+        giftImage.src = "./image/gift-open.PNG";
+        createSparkles();
+      }, 400);
+
+      /* 🎵 LOWER MUSIC FOR DRAMA */
+      if (music) {
+        let v = music.volume;
+        const reduce = setInterval(() => {
+          v -= 0.05;
+          music.volume = v;
+
+          if (v <= 0.2) clearInterval(reduce);
+        }, 200);
+      }
+
+      /* ✨ SHOW FUN SECTION */
+      setTimeout(() => {
+        giftContainer.style.display = "none";
+        funSection.style.display = "block";
+
+        typeText(funText, getFunnyMessage());
+      }, 1200);
+
+    });
+  }
+
+
+  /* ===============================
+     ✨ SPARKLE EFFECT
+  =============================== */
+  function createSparkles() {
+
+    for (let i = 0; i < 25; i++) {
+
+      const s = document.createElement("div");
+      s.className = "sparkle";
+
+      s.style.left = Math.random() * window.innerWidth + "px";
+      s.style.top = (window.innerHeight / 2) + "px";
+
+      document.body.appendChild(s);
+
+      setTimeout(() => s.remove(), 1000);
+    }
+  }
+
+
+  /* ===============================
+     ✍️ TYPING EFFECT
+  =============================== */
+  function typeText(element, text) {
+
+    if (!element) return;
+
+    element.innerHTML = "";
+    element.classList.add("typing");
+
+    let i = 0;
+
+    const interval = setInterval(() => {
+
+      element.innerHTML += text.charAt(i);
+      i++;
+
+      if (i >= text.length) {
+        clearInterval(interval);
+        element.classList.remove("typing");
+      }
+
+    }, 30);
+  }
+
+
+  /* ===============================
+     😂 FUN MESSAGES
+  =============================== */
+  function getFunnyMessage() {
+    const messages = [
+      "You really thought gift will open so easily? 😂",
+      "Patience level: zero detected 🤭",
+      "Still waiting? Good things take time 😌",
+      "Okay okay… now real surprise coming 😄"
+    ];
+
+    return messages[Math.floor(Math.random() * messages.length)];
+  }
+
+
+  /* ===============================
+     👉 CONTINUE BUTTON
+  =============================== */
+  window.continueAfterFun = function () {
+    funSection.style.display = "none";
+    menu.style.display = "block";
+  };
+
+
+  /* ===============================
+     📖 OPEN SCRAPBOOK (SMOOTH FADE)
+  =============================== */
+  window.openScrapbook = function () {
+
+    document.body.style.transition = "opacity 0.8s";
+    document.body.style.opacity = "0";
+
+    setTimeout(() => {
+      window.location.href = "scrapbook.html";
+    }, 800);
+  };
+
+
+  /* ===============================
+     🎥 LOCKED VIDEO
+  =============================== */
+  window.openVideo = function () {
+
+    const now = new Date();
+    const unlockDate = new Date(2026, 4, 12); // May 12
+
+    if (now >= unlockDate) {
+      window.location.href = "video.html";
+    } else {
+      alert("⏳ This video will unlock on Birthday 🎂");
+    }
+  };
+
+});
