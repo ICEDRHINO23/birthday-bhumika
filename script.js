@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (music && music.paused) {
 
       music.volume = 0;
-      music.play().catch(()=>{});
+      music.play().catch(() => {});
 
       let v = 0;
       const fade = setInterval(() => {
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     📂 DATA (MATCHES YOUR FOLDER)
+     📂 DATA (FINAL)
   ========================= */
   const pages = [
     { type: "image", src: "./scrapbook/1.jpg" },
@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   const texts = [
-
     "There are people who enter quietly… but slowly become part of everything. You became that comfort without even trying.",
 
     "Our conversations were never planned… but they always felt real. And in a world full of noise, that meant everything.",
@@ -69,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const page = document.createElement("div");
     page.className = "page";
 
-    /* STACK ORDER */
+    /* 🔥 PERFECT STACK ORDER */
     page.style.zIndex = pages.length - i;
 
     page.innerHTML = `
@@ -78,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="left">
           ${
             p.type === "video"
-              ? `<video src="${p.src}" autoplay muted loop controls playsinline></video>`
+              ? `<video src="${p.src}" muted loop controls playsinline></video>`
               : `<img src="${p.src}" onerror="this.src='./image/bhoomika.jpg'"/>`
           }
         </div>
@@ -99,14 +98,21 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(page);
   });
 
-  /* 🔥 ONLY SELECT REAL PAGES */
+  /* 🔥 IMPORTANT: ONLY INNER PAGES */
   const allPages = document.querySelectorAll("#pagesContainer .page");
 
   /* =========================
-     📖 OPEN BOOK
+     📖 OPEN COVER
   ========================= */
   cover.addEventListener("click", () => {
+
     cover.classList.add("flipped");
+
+    /* 🔥 MOVE COVER BEHIND AFTER FLIP */
+    setTimeout(() => {
+      cover.style.zIndex = 0;
+    }, 800);
+
     startMusic();
   });
 
@@ -114,8 +120,19 @@ document.addEventListener("DOMContentLoaded", () => {
      ➡ NEXT PAGE
   ========================= */
   window.nextPage = function () {
+
     if (current < allPages.length) {
-      allPages[current].classList.add("flipped");
+
+      const page = allPages[current];
+
+      page.classList.add("flipped");
+
+      /* 🎥 AUTO PLAY VIDEO WHEN PAGE OPENS */
+      const video = page.querySelector("video");
+      if (video) {
+        video.play().catch(() => {});
+      }
+
       current++;
       startMusic();
     }
@@ -125,16 +142,29 @@ document.addEventListener("DOMContentLoaded", () => {
      ⬅ PREVIOUS PAGE
   ========================= */
   window.prevPage = function () {
+
     if (current > 0) {
+
       current--;
-      allPages[current].classList.remove("flipped");
+
+      const page = allPages[current];
+
+      page.classList.remove("flipped");
+
+      /* 🎥 PAUSE VIDEO WHEN GO BACK */
+      const video = page.querySelector("video");
+      if (video) {
+        video.pause();
+      }
+
     } else {
       cover.classList.remove("flipped");
+      cover.style.zIndex = 9999;
     }
   };
 
   /* =========================
-     🔙 GO BACK
+     🔙 GO HOME
   ========================= */
   window.goHome = function () {
     window.location.href = "index.html";
