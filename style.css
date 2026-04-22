@@ -8,12 +8,12 @@
 }
 
 /* =========================
-   BODY
+   BODY (INDEX BG)
 ========================= */
 body {
   font-family: 'Segoe UI', sans-serif;
 
-  /* 🎉 YOUR BG IMAGE */
+  /* 🎉 BACKGROUND IMAGE */
   background: url("./image/bdbg.jpg") no-repeat center center fixed;
   background-size: cover;
 }
@@ -24,16 +24,23 @@ body {
 #main {
   text-align: center;
   padding: 40px;
+
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
 }
 
 #profilePic {
   width: 200px;
   height: 200px;
-  border-radius: 60%;
+  border-radius: 50%;
   object-fit: cover;
+  object-position: center 30%;
 }
 
-/* BUTTON */
+/* =========================
+   BUTTON
+========================= */
 button {
   padding: 10px 20px;
   margin: 10px;
@@ -49,7 +56,9 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* HIDDEN */
+/* =========================
+   HIDDEN
+========================= */
 .hidden {
   display: none !important;
 }
@@ -62,14 +71,21 @@ button:hover {
   justify-content: center;
   align-items: center;
   height: 100vh;
+
+  /* override background */
+  background: linear-gradient(135deg, #f8cdda, #f6d365);
 }
 
-/* SCENE */
+/* =========================
+   SCENE
+========================= */
 .scene {
   perspective: 2500px;
 }
 
-/* BOOK */
+/* =========================
+   BOOK
+========================= */
 .book {
   width: 90vw;
   max-width: 950px;
@@ -81,7 +97,7 @@ button:hover {
 }
 
 /* =========================
-   PAGE SYSTEM
+   PAGE
 ========================= */
 .page {
   position: absolute;
@@ -135,7 +151,7 @@ button:hover {
 }
 
 /* =========================
-   COMMON FRONT
+   FRONT COMMON
 ========================= */
 .front {
   display: flex;
@@ -144,7 +160,7 @@ button:hover {
   box-shadow: 0 40px 100px rgba(0,0,0,0.5);
 }
 
-/* INNER PAGES ONLY */
+/* INNER PAGES */
 #pagesContainer .front {
   background: white;
 }
@@ -177,11 +193,10 @@ button:hover {
 
 .cover-page p {
   font-size: 18px;
-  opacity: 0.95;
 }
 
 /* =========================
-   LEFT MEDIA
+   LEFT MEDIA (FIXED)
 ========================= */
 .left {
   width: 50%;
@@ -197,15 +212,15 @@ button:hover {
 .left video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
+
+  object-fit: cover;       /* fills nicely */
+  object-position: center;
+
+  background: black;
 }
 
 /* =========================
    RIGHT TEXT (FINAL FIX)
-========================= */
-/* =========================
-   RIGHT TEXT (FIT PAGE)
 ========================= */
 .right {
   width: 50%;
@@ -215,22 +230,23 @@ button:hover {
   flex-direction: column;
   justify-content: center;
 
-  overflow: hidden; /* 🔥 prevent scroll */
+  overflow: hidden;
 }
 
-/* 🔥 TEXT CONTROL */
+/* 🔥 TEXT FIT CONTROL */
 .right p {
-  font-size: clamp(15px, 1.2vw, 18px); /* auto fit */
+  font-size: clamp(15px, 1.2vw, 18px);
   line-height: 1.6;
-
   color: #333;
+
   white-space: pre-line;
 
   display: -webkit-box;
-  -webkit-line-clamp: 16;   /* 🔥 LIMIT LINES */
+  -webkit-line-clamp: 16;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
 /* =========================
    CONTROLS
 ========================= */
@@ -246,7 +262,7 @@ button:hover {
 }
 
 /* =========================
-   DEPTH SHADOW
+   SHADOW
 ========================= */
 .book::after {
   content: "";
@@ -261,14 +277,11 @@ button:hover {
 }
 
 /* =========================
-   LOADING SCREEN
+   LOADING
 ========================= */
 #intro {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
 
   background: black;
   color: white;
