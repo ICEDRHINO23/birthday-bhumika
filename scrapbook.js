@@ -5,53 +5,51 @@ document.addEventListener("DOMContentLoaded", () => {
   const music = document.getElementById("scrapMusic");
 
   let current = 0;
-  let voicesReady = false;
-  let selectedVoice = null;
 
   /* =========================
-     🎤 LOAD VOICE
-  ========================= */
-  function loadVoices() {
-    const voices = speechSynthesis.getVoices();
-
-    if (voices.length) {
-      selectedVoice = voices.find(v => v.lang.includes("en")) || voices[0];
-      voicesReady = true;
-    }
-  }
-
-  speechSynthesis.onvoiceschanged = loadVoices;
-
-  /* =========================
-     🎵 MUSIC
+     🎵 MUSIC (ON FIRST CLICK)
   ========================= */
   function startMusic() {
     if (music && music.paused) {
-      music.volume = 0;
+      music.volume = 0.5;
       music.play().catch(()=>{});
-
-      let v = 0;
-      const fade = setInterval(() => {
-        v += 0.05;
-        music.volume = v;
-        if (v >= 0.6) clearInterval(fade);
-      }, 200);
     }
   }
+  document.addEventListener("click", startMusic, { once: true });
 
   /* =========================
-     💖 TEXT
+     💖 TEXT (EXPANDED)
   ========================= */
   const texts = [
-`There are people who enter our life quietly… but slowly become everything.`,
-`We never planned anything… but it always felt real.`,
-`Some connections don’t need effort… they just stay.`,
-`Moments like this… simple but unforgettable.`,
-`Your smile… that’s what stayed.`,
-`And maybe… that’s what makes it special.`,
-`Happy Birthday 💖`
+`There are people who enter our life quietly…  
+but slowly become a part of everything.  
+You became that comfort I didn’t even know I needed.`,
+
+`We never planned anything…  
+but every moment felt real.  
+And that’s what made it special.`,
+
+`Some connections don’t need effort…  
+they just stay strong on their own.`,
+
+`Moments like this…  
+simple, but unforgettable.`,
+
+`Your smile…  
+that’s what stayed.`,
+
+`Maybe it was never about anything big…  
+just real moments that meant something.`,
+
+`And today…  
+is just a reminder of that.  
+
+💖 Happy Birthday 💖`
   ];
 
+  /* =========================
+     📂 MEDIA
+  ========================= */
   const pages = [
     { type: "image", src: "./scrapbook/1.jpg" },
     { type: "image", src: "./scrapbook/2.jpg" },
@@ -63,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   /* =========================
-     🧱 CREATE
+     🧱 CREATE PAGES
   ========================= */
   pages.forEach((p, i) => {
 
@@ -73,17 +71,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     page.innerHTML = `
       <div class="front">
+
         <div class="left">
           ${
             p.type === "video"
-              ? `<video src="${p.src}" muted loop></video>`
-              : `<img src="${p.src}">`
+              ? `<video src="${p.src}" muted loop controls></video>`
+              : `<img src="${p.src}" />`
           }
         </div>
 
         <div class="right">
-          <p class="typing-text"></p>
+          <p class="text"></p>
         </div>
+
       </div>
       <div class="back"></div>
     `;
@@ -94,11 +94,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const allPages = document.querySelectorAll("#pagesContainer .page");
 
   /* =========================
-     ✍️ TYPING EFFECT
+     ✍️ TYPING (OPTIONAL)
   ========================= */
-  function typeText(el, text, speed = 35) {
+  function typeText(el, text) {
     el.innerHTML = "";
     let i = 0;
+
+    const speed = 20;
 
     const interval = setInterval(() => {
       el.innerHTML += text.charAt(i);
@@ -108,124 +110,42 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     🎤 VOICE
-  ========================= */
-  function speak(text) {
-    if (!voicesReady) return;
-
-    speechSynthesis.cancel();
-
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.voice = selectedVoice;
-    utter.rate = 0.95;
-    utter.pitch = 1;
-
-    speechSynthesis.speak(utter);
-  }
-
-  /* =========================
-     📖 COVER
+     📖 COVER OPEN
   ========================= */
   cover.addEventListener("click", () => {
     cover.classList.add("flipped");
-    startMusic();
-    startStory();
   });
 
   /* =========================
-     🎬 STORY FLOW
+     ➡ NEXT
   ========================= */
-  function startStory() {
+  window.nextPage = function () {
+    if (current < allPages.length) {
 
-    let i = 0;
+      const page = allPages[current];
+      const textEl = page.querySelector(".text");
 
-    const interval = setInterval(() => {
+      page.classList.add("flipped");
 
-      if (i < allPages.length) {
+      typeText(textEl, texts[current]);
 
-        const page = allPages[i];
-        const textEl = page.querySelector(".typing-text");
-
-        page.classList.add("flipped");
-
-        /* typing */
-        typeText(textEl, texts[i]);
-
-        /* voice */
-        speak(texts[i]);
-
-        i++;
-
-      } else {
-        clearInterval(interval);
-        setTimeout(showEnding, 2000);
-      }
-
-    }, 3500);
-  }
-
-  /* =========================
-     🎉 CONFETTI
-  ========================= */
-  function launchConfetti() {
-    for (let i = 0; i < 60; i++) {
-      const c = document.createElement("div");
-
-      c.style.position = "fixed";
-      c.style.width = "6px";
-      c.style.height = "6px";
-      c.style.background =
-        `hsl(${Math.random()*360},100%,60%)`;
-
-      c.style.top = "-10px";
-      c.style.left = Math.random()*100 + "vw";
-      c.style.zIndex = 9999;
-
-      document.body.appendChild(c);
-
-      const fall = setInterval(() => {
-        let top = parseFloat(c.style.top);
-        c.style.top = top + 5 + "px";
-
-        if (top > window.innerHeight) {
-          clearInterval(fall);
-          c.remove();
-        }
-      }, 30);
+      current++;
     }
-  }
+  };
 
   /* =========================
-     💖 END SCREEN
+     ⬅ PREVIOUS
   ========================= */
-  function showEnding() {
+  window.prevPage = function () {
+    if (current > 0) {
+      current--;
 
-    launchConfetti();
+      const page = allPages[current];
+      page.classList.remove("flipped");
 
-    const end = document.createElement("div");
-
-    end.style.position = "fixed";
-    end.style.inset = "0";
-    end.style.background = "rgba(0,0,0,0.9)";
-    end.style.display = "flex";
-    end.style.flexDirection = "column";
-    end.style.justifyContent = "center";
-    end.style.alignItems = "center";
-    end.style.color = "white";
-    end.style.textAlign = "center";
-    end.style.zIndex = "9999";
-
-    end.innerHTML = `
-      <p style="font-size:26px;max-width:600px;">
-        Some people always stay special 💖
-      </p>
-      <button onclick="goHome()" style="margin-top:20px;">
-        Go Home 💖
-      </button>
-    `;
-
-    document.body.appendChild(end);
-  }
+      page.querySelector(".text").innerHTML = "";
+    }
+  };
 
   /* =========================
      🏠 HOME
