@@ -18,7 +18,7 @@ body {
 }
 
 /* =========================
-   MAIN CARD (INDEX PAGE)
+   MAIN CARD (INDEX)
 ========================= */
 #main {
   text-align: center;
@@ -78,7 +78,7 @@ button:hover {
 }
 
 /* =========================
-   LOADING
+   LOADING SCREEN
 ========================= */
 #intro {
   position: fixed;
@@ -116,7 +116,7 @@ button:hover {
 }
 
 /* =========================
-   VIDEO (GLOBAL FIX)
+   VIDEO GLOBAL
 ========================= */
 video {
   width: 90%;
@@ -130,17 +130,21 @@ video {
 }
 
 /* =========================
-   SCRAPBOOK (UNCHANGED CORE)
+   📖 SCRAPBOOK SYSTEM
 ========================= */
+
 .book-body {
+  background: linear-gradient(135deg, #f8cdda, #f6d365) !important;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #f8cdda, #f6d365);
+  overflow: hidden;
 }
 
-.scene { perspective: 2500px; }
+.scene {
+  perspective: 2500px;
+}
 
 .book {
   width: 90vw;
@@ -155,13 +159,18 @@ video {
   position: absolute;
   width: 100%;
   height: 100%;
+
   transform-origin: left;
   transform-style: preserve-3d;
   transition: transform 1s ease;
+
   backface-visibility: hidden;
+  pointer-events: auto;
 }
 
-.page.flipped { transform: rotateY(-180deg); }
+.page.flipped {
+  transform: rotateY(-180deg);
+}
 
 .cover-page {
   z-index: 9999;
@@ -173,11 +182,14 @@ video {
   z-index: 0 !important;
 }
 
-.front, .back {
+/* FRONT / BACK */
+.front,
+.back {
   position: absolute;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
+  pointer-events: auto;
 }
 
 .back {
@@ -195,10 +207,11 @@ video {
   background: white;
 }
 
-/* LEFT / RIGHT */
+/* LEFT MEDIA */
 .left {
   width: 50%;
   background: black;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -209,11 +222,20 @@ video {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  background: black;
 }
 
+/* FIX VIDEO CLICK */
+.scrapVideo {
+  pointer-events: auto !important;
+  z-index: 10;
+}
+
+/* RIGHT TEXT */
 .right {
   width: 50%;
   padding: 35px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -231,16 +253,16 @@ video {
   white-space: pre-line;
 }
 
-/* =====================================================
-   📸 MEMORY PAGE (FINAL SYSTEM - SCALABLE)
-===================================================== */
+/* =========================
+   📸 MEMORY PAGE
+========================= */
 
 .memory-page {
   background: black;
   min-height: 100vh;
 }
 
-/* Scrollable gallery */
+/* gallery */
 .polaroid-container {
   display: flex;
   flex-wrap: wrap;
@@ -252,7 +274,7 @@ video {
   overflow-y: auto;
 }
 
-/* Polaroid cards */
+/* card */
 .polaroid {
   width: 180px;
   background: white;
@@ -266,17 +288,15 @@ video {
   transition: 0.3s ease;
 }
 
-/* alternate rotation */
 .polaroid:nth-child(even) {
   transform: rotate(4deg);
 }
 
-/* hover effect */
 .polaroid:hover {
-  transform: scale(1.08) rotate(0deg);
+  transform: scale(1.08) rotate(0);
 }
 
-/* images */
+/* image */
 .polaroid img {
   width: 100%;
   height: 160px;
@@ -284,22 +304,22 @@ video {
   border-radius: 5px;
 }
 
-/* title */
+/* titles */
 .title {
   text-align: center;
   margin-top: 20px;
 }
 
-/* navigation */
 .center {
   text-align: center;
   margin: 20px;
 }
 
 /* =========================
-   MOBILE OPTIMIZATION
+   MOBILE
 ========================= */
 @media (max-width: 600px) {
+
   .polaroid {
     width: 140px;
   }
@@ -310,5 +330,9 @@ video {
 
   #main {
     padding: 20px;
+  }
+
+  .book {
+    height: 70vh;
   }
 }
