@@ -32,44 +32,33 @@ candles.forEach(candle => {
 });
 
 /* =========================
-   CAKE CUT
+   ENABLE CUT
 ========================= */
 function enableCut() {
 
-  const cake = document.querySelector(".cake");
+  const cake = document.getElementById("cake");
   canCut = true;
 
   cake.addEventListener("click", () => {
 
     if (!canCut) return;
 
-    cake.classList.add("cut");
-
-launchConfetti();   // 🎉 NEW
+    cake.classList.add("split");
 
     msg.innerText = "🎉 Happy Birthday 🎉";
 
+    launchConfetti();
+
     setTimeout(() => {
       showCard();
-    }, 1200);
+    }, 1500);
 
   }, { once: true });
 }
 
 /* =========================
-   SHOW CARD
+   CONFETTI
 ========================= */
-function showCard() {
-  document.getElementById("cakeSection").classList.add("hidden");
-  document.getElementById("cardSection").classList.remove("hidden");
-}
-
-/* =========================
-   CARD OPEN (FLIP)
-========================= */
-function openCard() {
-  document.querySelector(".card").classList.add("open");
-}
 function launchConfetti() {
 
   const container = document.getElementById("confettiContainer");
@@ -87,4 +76,19 @@ function launchConfetti() {
 
     setTimeout(() => c.remove(), 3000);
   }
+}
+
+/* =========================
+   SHOW CARD
+========================= */
+function showCard() {
+  document.getElementById("cakeSection").classList.add("hidden");
+  document.getElementById("cardSection").classList.remove("hidden");
+}
+
+/* =========================
+   CARD OPEN
+========================= */
+function openCard() {
+  document.querySelector(".card").classList.add("open");
 }
