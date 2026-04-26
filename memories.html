@@ -1,1 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Memories 💖</title>
+<link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+
+<h1 class="title">Our Beautiful Memories 📸</h1>
+
+<div class="polaroid-container">
+
+  <div class="polaroid" style="--r:-10deg;">
+    <img src="./image/img1.jpg">
+    <p>That Smile 😊</p>
+  </div>
+
+  <div class="polaroid" style="--r:8deg;">
+    <img src="./image/img2.jpg">
+    <p>Crazy Moments 😂</p>
+  </div>
+
+  <div class="polaroid" style="--r:-6deg;">
+    <img src="./image/img3.jpg">
+    <p>Forever Us 💕</p>
+  </div>
+
+  <div class="polaroid" style="--r:12deg;">
+    <img src="./image/img4.jpg">
+    <p>Unforgettable ✨</p>
+  </div>
+
+</div>
+
+<div class="center">
+  <button onclick="goNext()">Next 🎂</button>
+</div>
+
+<script src="script.js"></script>
+
+<script>
+function goNext() {
+  document.body.style.opacity = "0";
+  setTimeout(() => {
+    window.location.href = "game.html";
+  }, 300);
+}
+</script>
+
+</body>
+</html>
