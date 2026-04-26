@@ -45,6 +45,8 @@ function enableCut() {
 
     cake.classList.add("cut");
 
+launchConfetti();   // 🎉 NEW
+
     msg.innerText = "🎉 Happy Birthday 🎉";
 
     setTimeout(() => {
