@@ -32,7 +32,7 @@ body {
 }
 
 /* =========================
-   MAIN PAGE
+   MAIN CARD
 ========================= */
 #main {
   text-align: center;
@@ -111,9 +111,7 @@ button:hover {
   backface-visibility: hidden;
 }
 
-.back {
-  transform: rotateY(180deg);
-}
+.back { transform: rotateY(180deg); }
 
 .front {
   display: flex;
@@ -202,68 +200,62 @@ button:hover {
 }
 
 .cake {
-  position: relative;
-  width: 260px;
+  width: 240px;
   height: 180px;
-  perspective: 1000px;
+  margin: 40px auto;
+  position: relative;
+  perspective: 900px;
 }
 
 /* HALVES */
-.cake-half {
+.half {
   position: absolute;
   width: 50%;
   height: 100%;
   top: 0;
-  transition: 0.5s ease;
+  transition: 0.6s ease;
 }
 
-.cake-half.left { left: 0; }
-.cake-half.right { right: 0; }
+.left { left: 0; }
+.right { right: 0; }
 
-/* INNER SLICE */
+/* SLICE */
 .slice {
-  width: 100%;
-  height: 100%;
+  transform: rotateX(10deg);
 }
 
 /* SPLIT */
 .cake.split .left {
-  transform: translateX(-35px) rotateY(-10deg);
+  transform: translateX(-35px) rotateY(-12deg);
 }
 .cake.split .right {
-  transform: translateX(35px) rotateY(10deg);
+  transform: translateX(35px) rotateY(12deg);
 }
 
 /* LAYERS */
 .layer {
-  width: 100%;
   height: 45px;
   border-radius: 12px;
-  margin-bottom: 5px;
-  box-shadow: inset 0 -6px rgba(0,0,0,0.1),
-              0 8px 15px rgba(0,0,0,0.3);
+  margin-bottom: 6px;
+  box-shadow:
+    inset 0 -5px rgba(0,0,0,0.1),
+    0 8px 15px rgba(0,0,0,0.25);
 }
 
-.top {
-  background: linear-gradient(#ff8fa3, #ff758f);
-}
-.middle {
-  background: linear-gradient(#ffc2d1, #ffb3c6);
-}
-.bottom {
-  background: linear-gradient(#ffe5ec, #ffd6e0);
-}
+.top { background: linear-gradient(#ff758f, #ff4d6d); }
+.middle { background: linear-gradient(#ffc2d1, #ffb3c6); }
+.bottom { background: linear-gradient(#ffe5ec, #ffd6e0); }
 
-/* 🍰 CREAM */
+/* CREAM */
 .cream {
   height: 12px;
-  background: linear-gradient(#fff, #ffeef5);
   border-radius: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  background: linear-gradient(#fff, #ffeef5);
 }
 
 /* CUT EDGE */
-.cake-half::after {
+.half::after {
   content: "";
   position: absolute;
   width: 6px;
@@ -271,18 +263,17 @@ button:hover {
   top: 0;
   background: linear-gradient(#fff, #ffd6e0);
   opacity: 0;
-  transition: 0.3s;
 }
 
-.cake-half.left::after { right: 0; }
-.cake-half.right::after { left: 0; }
+.left::after { right: 0; }
+.right::after { left: 0; }
 
-.cake.split .cake-half::after {
+.cake.split .half::after {
   opacity: 1;
 }
 
 /* =========================
-   🕯️ CANDLES
+   CANDLES
 ========================= */
 .candles {
   position: absolute;
@@ -296,7 +287,6 @@ button:hover {
   height: 35px;
   background: #ff4d6d;
   margin: 0 6px;
-  display: inline-block;
   border-radius: 3px;
   position: relative;
 }
@@ -327,20 +317,20 @@ button:hover {
   height: 120px;
   background: linear-gradient(silver, #aaa);
   left: 50%;
-  top: -150px;
-  transform: translateX(-50%) rotate(20deg);
+  top: -140px;
+  transform: translateX(-50%) rotate(25deg);
   opacity: 0;
 }
 
-#knife.animate {
-  animation: knifeCut 0.8s forwards;
+#knife.active {
+  animation: knife 0.8s forwards;
   opacity: 1;
 }
 
-@keyframes knifeCut {
+@keyframes knife {
   to {
     top: 40px;
-    transform: translateX(-50%) rotate(0);
+    transform: translateX(-50%) rotate(0deg);
   }
 }
 
@@ -357,7 +347,7 @@ button:hover {
   position: absolute;
   width: 8px;
   height: 12px;
-  animation: fall 3s linear forwards;
+  animation: fall 2.5s linear forwards;
 }
 
 @keyframes fall {
@@ -405,14 +395,12 @@ button:hover {
   color: black;
   transform: rotateY(180deg);
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.card.open .card-front {
-  transform: rotateY(180deg);
-}
-.card.open .card-inside {
-  transform: rotateY(0deg);
-}
+.card.open .card-front { transform: rotateY(180deg); }
+.card.open .card-inside { transform: rotateY(0deg); }
 
 /* =========================
    MOBILE
