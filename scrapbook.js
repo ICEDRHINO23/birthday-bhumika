@@ -6,81 +6,59 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let current = 0;
 
-  /* 🎵 START MUSIC ON CLICK */
+  /* 🎵 MUSIC */
   document.addEventListener("click", () => {
-    if (music && music.paused) {
-      music.play().catch(()=>{});
-    }
+    if (music.paused) music.play().catch(()=>{});
   }, { once: true });
 
-  /* 💖 TEXT */
-const texts = [
+  /* 💖 TEXT (ROMANTIC + FRIENDLY) */
+  const texts = [
 
 `Some people just walk into your life…
-and suddenly, everything feels a little lighter.
+and suddenly, everything feels a little lighter.`,
 
-Like… even a normal day starts feeling special for no reason.`,
+`We never planned anything…
+but every small moment became special.`,
 
-`We never really planned anything…
-
-No “big moments”, no dramatic stories—
-just random conversations that somehow became my favorite part of the day.`,
-
-`And honestly…
-I still don’t know how it happened 😄
-
-Somewhere between the jokes, the talks, and the silence…
+`Somewhere between jokes and random talks…
 you became important.`,
 
-`You know what’s funny?
-
-The best memories we have…
-are probably the ones we didn’t even try to make.`,
+`The best memories are the ones we never planned.`,
 
 `That smile of yours…
+it stays longer than the moment.`,
 
-It’s dangerous 😌
-Because once you see it, it stays in your mind way longer than it should.`,
+`Ordinary days became unforgettable…
+just because you were there.`,
 
-`There were days that felt ordinary…
-
-but somehow, because you were there,
-they turned into something I never want to forget.`,
-
-`I don’t say this often,
-but I’m really glad you’re in my life.
-
-Not for any big reason…
+`I’m really glad you’re in my life…
 just for being you.`,
 
 `💖 Happy Birthday 💖
 
-I hope you always stay the same—
+Stay the same—
 a little crazy, a little sweet,
-and completely unforgettable.
+and completely unforgettable.`
 
-And yeah…
-keep smiling like that,
-it’s kind of unfair for the rest of us 😄`
+  ];
 
-];
-  /* 📂 MEDIA PATH (IMPORTANT FIX) */
+  /* 📸 PAGES */
   const pages = [
     { type: "image", src: "./scrapbook/1.jpg" },
     { type: "image", src: "./scrapbook/2.jpg" },
     { type: "image", src: "./scrapbook/3.jpg" },
     { type: "video", src: "./scrapbook/4.mp4" },
-    { type: "video", src: "./scrapbook/5.mp4" },
-    { type: "video", src: "./scrapbook/6.mp4" },
-    { type: "image", src: "./scrapbook/7.jpg" }
+    { type: "image", src: "./scrapbook/5.jpg" },
+    { type: "image", src: "./scrapbook/6.jpg" },
+    { type: "image", src: "./scrapbook/7.jpg" },
+    { type: "image", src: "./scrapbook/8.jpg" }
   ];
 
-  /* 🧱 CREATE PAGES */
+  /* CREATE PAGES */
   pages.forEach((p, i) => {
 
     const page = document.createElement("div");
     page.className = "page";
-    page.style.zIndex = pages.length - i;
 
     page.innerHTML = `
       <div class="front">
@@ -88,10 +66,10 @@ it’s kind of unfair for the rest of us 😄`
         <div class="left">
           ${
             p.type === "video"
-              ? `<video class="scrapVideo" controls>
-                   <source src="${p.src}" type="video/mp4">
-                 </video>`
-              : `<img src="${p.src}">`
+            ? `<video controls>
+                 <source src="${p.src}" type="video/mp4">
+               </video>`
+            : `<img src="${p.src}">`
           }
         </div>
 
@@ -110,20 +88,29 @@ it’s kind of unfair for the rest of us 😄`
 
   const allPages = document.querySelectorAll("#pagesContainer .page");
 
-  /* 📖 OPEN COVER */
+  /* ✅ FIX STACK ORDER */
+  allPages.forEach((page, i) => {
+    page.style.zIndex = 1000 - i;
+  });
+
+  /* ✅ COVER CLICK (NO AUTO FLIP) */
   cover.addEventListener("click", () => {
     cover.classList.add("flipped");
   });
 
-  /* ➡ NEXT */
+  /* NEXT PAGE */
   window.nextPage = function () {
     if (current < allPages.length) {
       allPages[current].classList.add("flipped");
       current++;
+
+      if (current === allPages.length) {
+        setTimeout(showEnding, 800);
+      }
     }
   };
 
-  /* ⬅ PREVIOUS */
+  /* PREVIOUS */
   window.prevPage = function () {
     if (current > 0) {
       current--;
@@ -132,6 +119,38 @@ it’s kind of unfair for the rest of us 😄`
   };
 
 });
-window.goHome = function () {
+
+/* 🎉 END SCREEN */
+function showEnding() {
+
+  const end = document.createElement("div");
+
+  end.style.position = "fixed";
+  end.style.inset = "0";
+  end.style.background = "rgba(0,0,0,0.95)";
+  end.style.display = "flex";
+  end.style.flexDirection = "column";
+  end.style.justifyContent = "center";
+  end.style.alignItems = "center";
+  end.style.color = "white";
+  end.style.textAlign = "center";
+  end.style.zIndex = "9999";
+
+  end.innerHTML = `
+    <h2 style="font-size:28px;">💖 Happy Birthday 💖</h2>
+
+    <p style="max-width:600px; font-size:18px; line-height:1.8;">
+      Some people don’t just come into life…
+      they stay, they change everything.
+    </p>
+
+    <button onclick="goHome()">Back to Home</button>
+  `;
+
+  document.body.appendChild(end);
+}
+
+/* HOME */
+function goHome() {
   window.location.href = "index.html";
-};
+}
