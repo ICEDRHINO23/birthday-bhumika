@@ -16,135 +16,48 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { once: true });
 
   /* =========================
-     💖 EXPANDED TEXT
+     💖 TEXT
   ========================= */
   const texts = [
-
 `There are people who enter our life quietly…
 without any noise, without any announcement.
 
-At first, they feel like just another part of the day,
-just another conversation,
-just another moment.
-
-But slowly… without even realizing,
-they become a part of everything.
-
-You became that comfort.
-That calm presence that just feels right.
-
-And somehow…
-things started feeling a little better,
-just because you were there.`,
+At first, they feel like just another moment,
+but slowly… they become everything.`,
 
 `We never planned anything…
 
-Nothing was forced,
-nothing was expected.
-
 Yet every time we spoke,
-it felt real.
-
-No pressure,
-no pretending,
-no need to be anything else.
-
-And in a world where most things don’t last,
-you became something that stayed.
-
-And that…
-means more than words can explain.`,
+it felt real.`,
 
 `Some connections don’t need effort.
 
-They don’t need constant talking,
-or daily reminders.
-
 They just exist…
-quietly,
-naturally,
-effortlessly.
+quietly, naturally.`,
 
-Strong enough to stay,
-even in silence.
+`Moments like these…
+simple but unforgettable.`,
 
-And honestly,
-that’s what makes them rare.`,
+`That smile…
+still stays.`,
 
-`Then came moments like these…
+`No expectations…
+just something real.`,
 
-Simple,
-unplanned,
-almost ordinary.
-
-Nothing big,
-nothing dramatic.
-
-But somehow,
-they turned into memories.
-
-Because it was never about what we did…
-
-it was about how it felt.`,
-
-`I still remember that smile…
-
-Not because it was perfect,
-but because it was real.
-
-That kind of happiness
-doesn’t just fade away.
-
-It stays.
-
-Quietly,
-somewhere inside,
-long after the moment has passed.`,
-
-`Maybe this was never about anything big…
-
-No labels,
-no expectations,
-no definitions.
-
-Just a connection
-that happened naturally,
-and stayed effortlessly.
-
-Sometimes…
-that’s all something needs to be real.`,
-
-`And today…
-is not just another birthday comming.
-It’s a reminder…
-
-that some people
-walk into our lives quietly,
-but leave a mark that never fades.
-
-Not because of what they did,
-but because of how they made us feel.
-And no matter where life goes from here…
-
-some people always remain special.
-
-            And you…
-you will always be one of those people.
-
-💖 Happy Birthday 💖`
+`💖 Happy Birthday 💖`
   ];
 
   /* =========================
-     📂 MEDIA
+     📂 MEDIA (FIXED PATHS)
   ========================= */
   const pages = [
-    { type: "image", src: "./scrapbook/1.jpg" },
-    { type: "image", src: "./scrapbook/2.jpg" },
-    { type: "image", src: "./scrapbook/3.jpg" },
-    { type: "video", src: "./scrapbook/4.mp4" },
-    { type: "video", src: "./scrapbook/5.mp4" },
-    { type: "video", src: "./scrapbook/6.mp4" },
-    { type: "image", src: "./scrapbook/7.jpg" }
+    { type: "image", src: "./1.jpg" },
+    { type: "image", src: "./2.jpg" },
+    { type: "image", src: "./3.jpg" },
+    { type: "video", src: "./4.mp4" },
+    { type: "video", src: "./5.mp4" },
+    { type: "video", src: "./6.mp4" },
+    { type: "image", src: "./7.jpg" }
   ];
 
   /* =========================
@@ -194,33 +107,22 @@ you will always be one of those people.
   }
 
   /* =========================
-     ➡ NEXT PAGE (VIDEO PLAY)
+     ➡ NEXT PAGE
   ========================= */
   window.nextPage = function () {
 
     if (current < allPages.length) {
 
       const page = allPages[current];
-
-      /* FLIP FIRST */
       page.classList.add("flipped");
 
-      /* PLAY VIDEO AFTER FLIP */
       setTimeout(() => {
-
         const video = page.querySelector("video");
-
         if (video) {
           video.currentTime = 0;
           video.muted = true;
-
-          video.play().catch(() => {
-            document.body.addEventListener("click", () => {
-              video.play().catch(()=>{});
-            }, { once: true });
-          });
+          video.play().catch(()=>{});
         }
-
       }, 500);
 
       current++;
@@ -237,9 +139,7 @@ you will always be one of those people.
   window.prevPage = function () {
 
     if (current > 0) {
-
       current--;
-
       const page = allPages[current];
       page.classList.remove("flipped");
 
@@ -269,25 +169,17 @@ you will always be one of those people.
     end.innerHTML = `
       <p style="font-size:26px;max-width:600px;line-height:1.6;">
         Some people don’t just come into life…  
-        they stay.
-
-        And they make everything feel better. 💖
-        wait for more
+        they stay 💖
       </p>
 
-      <button onclick="goHome()" style="margin-top:20px;">
-        Go Home 💖
-      </button>
+      <button onclick="goHome()">Go Home 💖</button>
     `;
 
     document.body.appendChild(end);
   }
 
-  /* =========================
-     🏠 HOME
-  ========================= */
   window.goHome = function () {
-    window.location.href = "index.html";
+    window.location.href = "../index.html";
   };
 
 });
