@@ -68,3 +68,21 @@ function showCard() {
 function openCard() {
   document.querySelector(".card").classList.add("open");
 }
+function launchConfetti() {
+
+  const container = document.getElementById("confettiContainer");
+
+  for (let i = 0; i < 80; i++) {
+
+    const c = document.createElement("div");
+    c.className = "confetti";
+
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.background = `hsl(${Math.random()*360},100%,60%)`;
+    c.style.animationDuration = (Math.random() * 2 + 2) + "s";
+
+    container.appendChild(c);
+
+    setTimeout(() => c.remove(), 3000);
+  }
+}
