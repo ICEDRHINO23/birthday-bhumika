@@ -379,3 +379,14 @@ button:hover {
     width: 250px;
   }
 }
+#videoSection {
+  text-align: center;
+  padding: 20px;
+}
+
+#videoSection video {
+  width: 90%;
+  max-width: 700px;
+  border-radius: 15px;
+  margin-top: 20px;
+}
