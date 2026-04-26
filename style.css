@@ -390,3 +390,115 @@ button:hover {
   border-radius: 15px;
   margin-top: 20px;
 }
+/* 🎂 CAKE */
+.cake {
+  position: relative;
+  width: 200px;
+  margin: 40px auto;
+}
+
+.layer {
+  height: 40px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.top { background: #ff9aa2; }
+.middle { background: #ffb7b2; }
+.bottom { background: #ffdac1; }
+
+/* CANDLES */
+.candles {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.candle {
+  width: 10px;
+  height: 30px;
+  background: pink;
+  display: inline-block;
+  margin: 0 5px;
+  position: relative;
+  cursor: pointer;
+}
+
+/* 🔥 FLAME */
+.candle.lit::after {
+  content: "";
+  width: 8px;
+  height: 12px;
+  background: orange;
+  position: absolute;
+  top: -12px;
+  left: 1px;
+  border-radius: 50%;
+  animation: flicker 0.3s infinite;
+}
+
+@keyframes flicker {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* ✂️ CAKE CUT */
+.cake.cut {
+  transform: rotate(-5deg) scale(0.95);
+  transition: 0.5s;
+}
+
+/* 💌 CARD */
+.card {
+  width: 300px;
+  height: 200px;
+  margin: 40px auto;
+  perspective: 1000px;
+}
+
+.card-front,
+.card-inside {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-front {
+  background: pink;
+  cursor: pointer;
+}
+
+.card-inside {
+  background: white;
+  color: black;
+  transform: rotateY(180deg);
+  display: flex;
+}
+
+.card.open .card-front {
+  transform: rotateY(180deg);
+}
+
+.card.open .card-inside {
+  transform: rotateY(0deg);
+}
+
+/* CARD INSIDE */
+.card-left {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-right {
+  width: 50%;
+  padding: 10px;
+}
