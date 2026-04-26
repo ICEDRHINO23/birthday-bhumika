@@ -3,17 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Scrapbook 📖</title>
-<link rel="stylesheet" href="../style.css">
+
+<link rel="stylesheet" href="style.css">
+
 </head>
 
 <body class="book-body">
 
 <!-- 🎵 SCRAPBOOK MUSIC -->
-<audio id="scrapMusic" src="../audio/scrapbook.mp3" loop preload="auto"></audio>
+<audio id="scrapMusic" src="./audio/scrapbook.mp3" loop preload="auto"></audio>
 
 <div class="scene">
   <div class="book">
 
+    <!-- COVER -->
     <div id="cover" class="page cover-page">
       <div class="front">
         <h1>Our Story 💖</h1>
@@ -22,12 +25,13 @@
       <div class="back"></div>
     </div>
 
+    <!-- PAGES WILL LOAD HERE -->
     <div id="pagesContainer"></div>
 
   </div>
 </div>
 
-<script src="../scrapbook.js"></script>
+<script src="scrapbook.js"></script>
 
 </body>
 </html>
