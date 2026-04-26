@@ -8,7 +8,7 @@
 
 <body class="memory-page">
 
-<!-- NAV -->
+<!-- NAVIGATION -->
 <button class="home-btn" onclick="goHome()">🏠</button>
 <button class="back-btn" onclick="goBack()">⬅</button>
 
@@ -23,28 +23,32 @@
 
     <!-- LEFT HALF -->
     <div class="cake-half left">
+      <div class="slice">
 
-      <div class="layer top"></div>
-      <div class="cream"></div>
+        <div class="layer top"></div>
+        <div class="cream"></div>
 
-      <div class="layer middle"></div>
-      <div class="cream"></div>
+        <div class="layer middle"></div>
+        <div class="cream"></div>
 
-      <div class="layer bottom"></div>
+        <div class="layer bottom"></div>
 
+      </div>
     </div>
 
     <!-- RIGHT HALF -->
     <div class="cake-half right">
+      <div class="slice">
 
-      <div class="layer top"></div>
-      <div class="cream"></div>
+        <div class="layer top"></div>
+        <div class="cream"></div>
 
-      <div class="layer middle"></div>
-      <div class="cream"></div>
+        <div class="layer middle"></div>
+        <div class="cream"></div>
 
-      <div class="layer bottom"></div>
+        <div class="layer bottom"></div>
 
+      </div>
     </div>
 
     <!-- 🕯️ CANDLES -->
@@ -85,6 +89,7 @@
       </div>
 
       <div class="card-right">
+
         <h2>For You 💖</h2>
 
         <p>
@@ -105,6 +110,7 @@
 
         <br>
         <button onclick="goHome()">🏠 Home</button>
+
       </div>
 
     </div>
@@ -124,11 +130,11 @@
 <script src="cake.js"></script>
 
 <script>
-function goBack(){
+function goBack() {
   window.history.back();
 }
 
-function goHome(){
+function goHome() {
   window.location.href = "index.html";
 }
 </script>
