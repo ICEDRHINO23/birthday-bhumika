@@ -1,26 +1,77 @@
-const folders = [
-  "memory1","memory2","memory3","memory4","memory5","memory6",
-  "memory7","memory8","memory9","memory10","memory11","memory12"
+const memoryData = [
+  { name: "Icecream Meetup 🍦", folder: "memory1" },
+  { name: "KFC 1 🍗", folder: "memory2" },
+  { name: "Teaspot ☕", folder: "memory3" },
+  { name: "Mumbai Nightout 🌃", folder: "memory4" },
+  { name: "Tipsy Turtle 🐢", folder: "memory5" },
+  { name: "KFC 2 🍗", folder: "memory6" },
+  { name: "KFC Birthday 🎂", folder: "memory7" },
+  { name: "Birthday Boy 🎉", folder: "memory8" },
+  { name: "Backyard Palms 🌴", folder: "memory9" },
+  { name: "FC Social 🍹", folder: "memory10" },
+  { name: "School Pics 📚", folder: "memory11" }
 ];
 
-const gallery = document.getElementById("gallery");
+const albumContainer = document.getElementById("albums");
 
-// 👉 how many images per folder
-const imagesPerFolder = 10; // change if needed
+/* CREATE BUTTONS */
+memoryData.forEach(mem => {
 
-folders.forEach(folder => {
+  const btn = document.createElement("div");
+  btn.className = "album-btn";
+  btn.innerText = mem.name;
 
-  for (let i = 1; i <= imagesPerFolder; i++) {
+  btn.onclick = () => openAlbum(mem.folder);
 
-    const div = document.createElement("div");
-    div.className = "polaroid";
+  albumContainer.appendChild(btn);
+});
 
-    div.innerHTML = `
-      <img src="./assets/images/${folder}/${i}.jpg">
-      <p>${folder} 💖</p>
-    `;
+/* OPEN VIEWER */
+function openAlbum(folder) {
 
-    gallery.appendChild(div);
+  const viewer = document.createElement("div");
+  viewer.className = "viewer";
+
+  const close = document.createElement("div");
+  close.className = "close-btn";
+  close.innerHTML = "✖";
+  close.onclick = () => viewer.remove();
+
+  const stack = document.createElement("div");
+  stack.className = "stack";
+
+  const caption = document.createElement("div");
+  caption.className = "caption";
+
+  viewer.appendChild(close);
+  viewer.appendChild(stack);
+  viewer.appendChild(caption);
+
+  document.body.appendChild(viewer);
+
+  let index = 1;
+
+  function showImage() {
+
+    stack.innerHTML = "";
+
+    const img = document.createElement("img");
+    img.src = `./assets/images/${folder}/${index}.jpg`;
+
+    caption.innerText = `Memory ${index} 💖`;
+
+    stack.appendChild(img);
   }
 
-});
+  viewer.onclick = () => {
+    index++;
+
+    if (index > 20) {  // adjust max images if needed
+      viewer.remove();
+    } else {
+      showImage();
+    }
+  };
+
+  showImage();
+}
