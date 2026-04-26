@@ -14,23 +14,50 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { once: true });
 
   /* 💖 TEXT */
-  const texts = [
-`Some people enter quietly…
-but become everything.`,
+const texts = [
 
-`We never planned anything…
-yet it felt real.`,
+`There are some people who don’t just enter our lives…
+they slowly become a part of it.
 
-`Some connections don’t need effort.`,
+No noise, no warning…
+just a quiet presence that starts to mean everything.`,
 
-`Moments like these… unforgettable.`,
+`We never really planned anything…
 
-`That smile… stays forever.`,
+No expectations, no big moments—
+yet somehow, every small conversation felt special.`,
 
-`No expectations… just real.`,
+`It’s strange how some memories don’t need grand reasons.
 
-`💖 Happy Birthday 💖`
-  ];
+Just simple days,
+random talks,
+and genuine smiles…`,
+
+`There were moments we didn’t even realize were important…
+
+but today, they feel priceless.`,
+
+`That smile of yours…
+it stayed longer than the moment itself.`,
+
+`Not everything needs a reason,
+not everything needs a definition…
+
+some things are just meant to be felt.`,
+
+`And somewhere between all these memories…
+
+you became someone I never want to lose.`,
+
+`💖 Happy Birthday 💖
+
+I don’t know what the future holds,
+but I know one thing for sure…
+
+some people are not just memories—
+they are feelings that stay forever.`
+
+];
 
   /* 📂 MEDIA PATH (IMPORTANT FIX) */
   const pages = [
