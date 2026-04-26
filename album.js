@@ -1,4 +1,5 @@
 const urlParams = new URLSearchParams(window.location.search);
+
 const folder = urlParams.get("folder");
 const title = urlParams.get("title");
 
@@ -6,36 +7,74 @@ document.getElementById("albumTitle").innerText = title;
 
 const stack = document.getElementById("stack");
 
-let total = 12;
+let maxImages = 12;
+let loadedImages = [];
 
-/* CREATE STACK */
-for (let i = total; i >= 1; i--) {
+/* =========================
+   LOAD IMAGES SAFELY
+========================= */
+for (let i = 1; i <= maxImages; i++) {
 
-  const card = document.createElement("div");
-  card.className = "card";
+  const img = new Image();
 
-  card.style.zIndex = i;
+  img.src = `./assets/images/${folder}/${i}.jpg`;
 
-  card.innerHTML = `
-    <img src="./assets/images/${folder}/${i}.jpg">
-    <p>${title} 💖</p>
-  `;
+  img.onload = () => {
+    loadedImages.push(img.src);
 
-  /* CLICK TO REMOVE */
-  card.onclick = () => {
-
-    card.style.transform = "translateX(200px) rotate(20deg)";
-    card.style.opacity = "0";
-
-    setTimeout(() => {
-      card.remove();
-    }, 300);
+    /* AFTER ALL LOAD ATTEMPTS */
+    if (loadedImages.length === countLoaded()) {
+      renderStack();
+    }
   };
 
-  stack.appendChild(card);
+  img.onerror = () => {
+    /* ignore missing images */
+  };
 }
 
-/* BACK BUTTON */
+/* COUNT EXISTING IMAGES */
+function countLoaded() {
+  return loadedImages.length;
+}
+
+/* =========================
+   RENDER STACK
+========================= */
+function renderStack() {
+
+  /* reverse → last image on top */
+  loadedImages.reverse().forEach((src, index) => {
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.style.zIndex = index + 1;
+
+    card.innerHTML = `
+      <img src="${src}">
+      <p>${title} 💖</p>
+    `;
+
+    /* CLICK TO REMOVE */
+    card.onclick = () => {
+
+      card.style.transform = "translateX(250px) rotate(25deg)";
+      card.style.opacity = "0";
+
+      setTimeout(() => {
+        card.remove();
+      }, 300);
+    };
+
+    stack.appendChild(card);
+  });
+
+}
+
+/* =========================
+   BACK BUTTON
+========================= */
 function goBack() {
   window.history.back();
 }
