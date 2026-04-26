@@ -16,26 +16,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let taps = 0;
 
-  /* =========================
-     LOADING SCREEN
-  ========================= */
+  /* LOADING */
   setTimeout(() => {
     intro.style.opacity = "0";
     setTimeout(() => intro.style.display = "none", 500);
   }, 1500);
 
-  /* =========================
-     MUSIC START
-  ========================= */
+  /* MUSIC START */
   document.addEventListener("click", () => {
     if (music && music.paused) {
       music.play().catch(()=>{});
     }
   }, { once: true });
 
-  /* =========================
-     TAP GAME
-  ========================= */
+  /* TAP GAME */
   tapBtn.addEventListener("click", () => {
 
     taps++;
@@ -48,9 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
-  /* =========================
-     GIFT CLICK
-  ========================= */
+  /* GIFT CLICK */
   giftImage.addEventListener("click", () => {
 
     giftImage.src = "./image/gift-open.PNG";
@@ -63,42 +55,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
-  /* =========================
-     FUN TEXT TYPEWRITER
-  ========================= */
   const messages = [
-    "You  really  thought  it  was  that  easy? 😂",
+    "You really thought it was that easy? 😂",
     "Wait… patience 😌",
-    "Good  things  take  time 💖",
-    "Okay  okay…  now  enjoy 🎉"
+    "Good things take time 💖",
+    "Okay okay… now enjoy 🎉"
   ];
 
   let msgIndex = 0;
 
   function startFunText() {
-
     funText.innerText = "";
     let i = 0;
     const text = messages[msgIndex];
 
     const interval = setInterval(() => {
-
       funText.innerText += text[i];
       i++;
 
       if (i >= text.length) {
         clearInterval(interval);
       }
-
     }, 40);
-
   }
 
-  /* =========================
-     CONTINUE AFTER FUN
-  ========================= */
   window.continueAfterFun = function () {
-
     msgIndex++;
 
     if (msgIndex < messages.length) {
@@ -107,16 +88,12 @@ document.addEventListener("DOMContentLoaded", () => {
       funSection.classList.add("hidden");
       menu.classList.remove("hidden");
     }
-
   };
 
 });
 
-/* =========================
-   PAGE NAVIGATION
-========================= */
+/* PAGE NAVIGATION */
 function goToPage(page) {
-  document.body.style.transition = "opacity 0.3s ease";
   document.body.style.opacity = "0";
 
   setTimeout(() => {
