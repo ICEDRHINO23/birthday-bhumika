@@ -23,8 +23,17 @@ memoryData.forEach(mem => {
 
   /* 👉 OPEN NEW PAGE */
   btn.onclick = () => {
-    window.location.href = `album.html?folder=${mem.folder}&title=${encodeURIComponent(mem.name)}`;
+    window.location.href =
+      `album.html?folder=${mem.folder}&title=${encodeURIComponent(mem.name)}`;
   };
 
   albumContainer.appendChild(btn);
 });
+
+/* HOME BUTTON */
+function goHome() {
+  document.body.style.opacity = "0";
+  setTimeout(() => {
+    window.location.href = "index.html";
+  }, 300);
+}
