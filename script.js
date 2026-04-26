@@ -1,17 +1,13 @@
-/* =========================
-   INITIAL LOAD
-========================= */
 let taps = 0;
 let unlocked = false;
+let giftOpen = false;
 
 window.onload = () => {
 
-  /* LOADING SCREEN */
   setTimeout(() => {
     document.getElementById("intro").style.display = "none";
   }, 2000);
 
-  /* SAFE MUSIC */
   const music = document.getElementById("bgMusic");
 
   document.addEventListener("click", () => {
@@ -22,16 +18,14 @@ window.onload = () => {
   }, { once: true });
 };
 
-/* =========================
-   TAP GAME (FIXED)
-========================= */
+/* TAP GAME */
 const tapBtn = document.getElementById("tapBtn");
 const tapCount = document.getElementById("tapCount");
 const giftContainer = document.getElementById("giftContainer");
 
 tapBtn.onclick = () => {
 
-  if (unlocked) return;   // 🔥 stop after unlock
+  if (unlocked) return;
 
   taps++;
 
@@ -46,30 +40,23 @@ tapBtn.onclick = () => {
   }
 };
 
-/* =========================
-   GIFT OPEN / CLOSE (FIXED)
-========================= */
+/* GIFT TOGGLE */
 const giftImage = document.getElementById("giftImage");
-let giftOpen = false;
 
 giftImage.onclick = () => {
 
   if (!giftOpen) {
-    /* OPEN */
-    giftImage.src = "./assets/images/gift-open.PNG";
+    giftImage.src = "./image/gift-open.PNG";
     document.getElementById("menu").classList.remove("hidden");
     giftOpen = true;
   } else {
-    /* CLOSE */
-    giftImage.src = "./assets/images/gift-closed.PNG";
+    giftImage.src = "./image/gift-closed.PNG";
     document.getElementById("menu").classList.add("hidden");
     giftOpen = false;
   }
 };
 
-/* =========================
-   NAVIGATION
-========================= */
+/* NAVIGATION */
 function openScrapbook() {
   window.location.href = "scrapbook.html";
 }
@@ -78,9 +65,7 @@ function openMemories() {
   window.location.href = "memories.html";
 }
 
-/* =========================
-   VIDEO SYSTEM
-========================= */
+/* VIDEO */
 function openVideo() {
 
   document.getElementById("menu").classList.add("hidden");
