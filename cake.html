@@ -8,135 +8,62 @@
 
 <body class="memory-page">
 
-<!-- NAVIGATION -->
 <button class="home-btn" onclick="goHome()">🏠</button>
 <button class="back-btn" onclick="goBack()">⬅</button>
 
 <h2 style="text-align:center;">🎂 Make a Wish</h2>
 
-<!-- =========================
-     🎂 CAKE SECTION
-========================= -->
 <div id="cakeSection">
 
   <div class="cake" id="cake">
 
-    <!-- LEFT HALF -->
-    <div class="cake-half left">
-      <div class="slice">
-
-        <div class="layer top"></div>
-        <div class="cream"></div>
-
-        <div class="layer middle"></div>
-        <div class="cream"></div>
-
-        <div class="layer bottom"></div>
-
-      </div>
+    <!-- LEFT -->
+    <div class="half left">
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
     </div>
 
-    <!-- RIGHT HALF -->
-    <div class="cake-half right">
-      <div class="slice">
-
-        <div class="layer top"></div>
-        <div class="cream"></div>
-
-        <div class="layer middle"></div>
-        <div class="cream"></div>
-
-        <div class="layer bottom"></div>
-
-      </div>
+    <!-- RIGHT -->
+    <div class="half right">
+      <div class="layer"></div>
+      <div class="layer"></div>
+      <div class="layer"></div>
     </div>
 
-    <!-- 🕯️ CANDLES -->
+    <!-- CANDLES -->
     <div class="candles">
       <div class="candle"></div>
       <div class="candle"></div>
       <div class="candle"></div>
     </div>
 
-    <!-- 🔪 KNIFE -->
+    <!-- KNIFE -->
     <div id="knife"></div>
 
   </div>
 
-  <p id="cakeMsg" style="text-align:center; margin-top:20px;">
-    Tap candles to light them 🕯️
-  </p>
+  <p id="msg">Tap candles to light them 🕯️</p>
 
 </div>
 
-<!-- =========================
-     💌 CARD SECTION
-========================= -->
+<!-- CARD -->
 <div id="cardSection" class="hidden">
-
   <div class="card">
-
-    <!-- FRONT -->
-    <div class="card-front" onclick="openCard()">
-      💌 Tap to Open
-    </div>
-
-    <!-- INSIDE -->
+    <div class="card-front" onclick="openCard()">💌 Tap</div>
     <div class="card-inside">
-
-      <div class="card-left">
-        💖
-      </div>
-
-      <div class="card-right">
-
-        <h2>For You 💖</h2>
-
-        <p>
-          Some people don’t come into life loudly…<br><br>
-
-          they come quietly and change everything,
-          without even trying.<br><br>
-
-          You are one of those rare people—
-          calm, real, and beautifully yourself.<br><br>
-
-          I hope life always stays kind to you,
-          and you always find happiness
-          in your own peaceful way.<br><br>
-
-          💖 Happy Birthday 💖
-        </p>
-
-        <br>
-        <button onclick="goHome()">🏠 Home</button>
-
-      </div>
-
+      <p>💖 Happy Birthday 💖</p>
     </div>
-
   </div>
-
 </div>
 
-<!-- =========================
-     🎉 CONFETTI
-========================= -->
 <div id="confettiContainer"></div>
 
-<!-- =========================
-     JS
-========================= -->
 <script src="cake.js"></script>
 
 <script>
-function goBack() {
-  window.history.back();
-}
-
-function goHome() {
-  window.location.href = "index.html";
-}
+function goHome(){ window.location.href="index.html"; }
+function goBack(){ window.history.back(); }
 </script>
 
 </body>
