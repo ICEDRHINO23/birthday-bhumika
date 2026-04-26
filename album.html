@@ -1,20 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Memory Album</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Memory Album</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="memory-page">
 
-<h2 id="albumTitle" class="title"></h2>
+  <!-- NAV BUTTONS -->
+  <button class="back-btn" onclick="goBack()">⬅</button>
+  <button class="home-btn" onclick="goHome()">🏠</button>
 
-<div id="stack" class="card-stack"></div>
+  <!-- TITLE -->
+  <h2 id="albumTitle" class="title"></h2>
 
-<button onclick="goBack()">⬅ Back</button>
+  <!-- STACK CONTAINER -->
+  <div id="stack" class="card-stack"></div>
 
-<script src="album.js"></script>
+  <!-- SCRIPT -->
+  <script src="album.js"></script>
+
+  <!-- NAV FUNCTIONS -->
+  <script>
+    function goBack() {
+      document.body.style.opacity = "0";
+      setTimeout(() => {
+        window.history.back();
+      }, 300);
+    }
+
+    function goHome() {
+      document.body.style.opacity = "0";
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 300);
+    }
+  </script>
 
 </body>
 </html>
