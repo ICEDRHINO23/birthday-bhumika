@@ -15,7 +15,6 @@ body {
   background: url("./image/bdbg.jpg") no-repeat center center fixed;
   background-size: cover;
   color: white;
-  transition: 0.3s;
 }
 
 /* =========================
@@ -25,7 +24,6 @@ body {
   position: fixed;
   inset: 0;
   background: black;
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,7 +32,7 @@ body {
 }
 
 /* =========================
-   INDEX CARD
+   MAIN PAGE
 ========================= */
 #main {
   text-align: center;
@@ -45,7 +43,6 @@ body {
   width: 90%;
   max-width: 600px;
   margin: 50px auto;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
 #profilePic {
@@ -67,7 +64,6 @@ button {
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
   color: white;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 button:hover {
@@ -79,20 +75,7 @@ button:hover {
 }
 
 /* =========================
-   GIFT
-========================= */
-#giftContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-#giftImage {
-  width: 150px;
-}
-
-/* =========================
-   📖 SCRAPBOOK
+   SCRAPBOOK
 ========================= */
 .book-body {
   background: linear-gradient(135deg, #f8cdda, #f6d365);
@@ -100,11 +83,6 @@ button:hover {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  overflow: hidden;
-}
-
-.scene {
-  perspective: 2000px;
 }
 
 .book {
@@ -120,20 +98,13 @@ button:hover {
   transform-origin: left;
   transition: transform 1s ease;
   transform-style: preserve-3d;
-  z-index: 1;
-}
-
-.cover-page {
-  z-index: 9999;
-  cursor: pointer;
 }
 
 .page.flipped {
   transform: rotateY(-180deg);
 }
 
-.front,
-.back {
+.front, .back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -151,17 +122,6 @@ button:hover {
   overflow: hidden;
 }
 
-.cover-front {
-  background: linear-gradient(135deg, #ff4d6d, #ff9a9e);
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  font-size: 24px;
-}
-
-/* LEFT MEDIA */
 .left {
   width: 50%;
   background: black;
@@ -170,115 +130,44 @@ button:hover {
   align-items: center;
 }
 
-.left img,
-.left video {
+.left img, .left video {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-/* VIDEO FIX */
-.scrap-video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* RIGHT TEXT */
 .right {
   width: 50%;
   padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  color: black;
 }
 
 .right p {
   font-size: 20px;
   line-height: 1.8;
-  color: #222;
-}
-
-.right h2 {
-  font-size: 28px;
-  color: #ff4d6d;
-}
-
-/* CONTROLS */
-.controls {
-  position: fixed;
-  bottom: 20px;
-  width: 100%;
-  text-align: center;
 }
 
 /* =========================
-   📸 MEMORY PAGE
+   MEMORY PAGE
 ========================= */
 .memory-page {
   background: black;
   min-height: 100vh;
 }
 
-.title {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 28px;
-}
-
-/* NAV BUTTONS */
-.home-btn {
+.home-btn, .back-btn {
   position: fixed;
   top: 20px;
-  left: 20px;
   padding: 10px 15px;
   border-radius: 50px;
-  background: linear-gradient(45deg, #ff4d6d, #ff758f);
-  z-index: 9999;
+  z-index: 999;
 }
 
-.back-btn {
-  position: fixed;
-  top: 20px;
-  left: 80px;
-  padding: 10px 15px;
-  border-radius: 50px;
-  background: linear-gradient(45deg, #444, #666);
-  color: white;
-  z-index: 9999;
-}
-
-.home-btn:hover,
-.back-btn:hover {
-  transform: scale(1.1);
-}
-
-/* ALBUM BUTTONS */
-.album-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 40px;
-}
-
-.album-btn {
-  padding: 15px 25px;
-  border-radius: 20px;
-  background: linear-gradient(45deg, #ff4d6d, #ff758f);
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-.album-btn:hover {
-  transform: scale(1.1);
-}
+.home-btn { left: 20px; }
+.back-btn { left: 80px; }
 
 /* =========================
-   📸 POLAROID GRID (FIXED)
+   POLAROID
 ========================= */
 .polaroid-container {
   display: flex;
@@ -294,418 +183,114 @@ button:hover {
   color: black;
   padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
-  transition: 0.3s;
 }
 
 .polaroid img {
   width: 100%;
   height: 160px;
-  object-fit: contain;   /* 🔥 FIX */
-  background: #f2f2f2;
-  border-radius: 5px;
-}
-
-.polaroid p {
-  text-align: center;
-  margin-top: 8px;
-  font-size: 14px;
-}
-
-.polaroid:hover {
-  transform: scale(1.08);
+  object-fit: contain;
 }
 
 /* =========================
-   STACK PAGE (ALBUM)
-========================= */
-.card-stack {
-  position: relative;
-  width: 300px;
-  height: 400px;
-  margin: 40px auto;
-}
-
-.card {
-  position: absolute;
-  width: 100%;
-  background: white;
-  color: black;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0 20px 45px rgba(0,0,0,0.6);
-  transition: 0.4s;
-  cursor: pointer;
-}
-
-.card img {
-  width: 100%;
-  height: 300px;
-  object-fit: contain;   /* 🔥 FIX */
-  background: #f2f2f2;
-}
-
-.card p {
-  text-align: center;
-}
-
-.card:nth-child(odd) {
-  transform: rotate(-3deg);
-}
-
-.card:nth-child(even) {
-  transform: rotate(3deg);
-}
-
-/* =========================
-   MOBILE
-========================= */
-@media (max-width: 600px) {
-
-  #main {
-    padding: 20px;
-  }
-
-  .book {
-    width: 95%;
-    height: 400px;
-  }
-
-  .right p {
-    font-size: 16px;
-  }
-
-  .card-stack {
-    width: 250px;
-  }
-}
-#videoSection {
-  text-align: center;
-  padding: 20px;
-}
-
-#videoSection video {
-  width: 90%;
-  max-width: 700px;
-  border-radius: 15px;
-  margin-top: 20px;
-}
-/* 🎂 CAKE */
-.cake {
-  position: relative;
-  width: 200px;
-  margin: 40px auto;
-}
-
-.layer {
-  height: 40px;
-  border-radius: 10px;
-  margin-bottom: 5px;
-}
-
-.top { background: #ff9aa2; }
-.middle { background: #ffb7b2; }
-.bottom { background: #ffdac1; }
-
-/* CANDLES */
-.candles {
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.candle {
-  width: 10px;
-  height: 30px;
-  background: pink;
-  display: inline-block;
-  margin: 0 5px;
-  position: relative;
-  cursor: pointer;
-}
-
-/* 🔥 FLAME */
-.candle.lit::after {
-  content: "";
-  width: 8px;
-  height: 12px;
-  background: orange;
-  position: absolute;
-  top: -12px;
-  left: 1px;
-  border-radius: 50%;
-  animation: flicker 0.3s infinite;
-}
-
-@keyframes flicker {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
-/* ✂️ CAKE CUT */
-.cake.cut {
-  transform: rotate(-5deg) scale(0.95);
-  transition: 0.5s;
-}
-
-/* 💌 CARD */
-.card {
-  width: 300px;
-  height: 200px;
-  margin: 40px auto;
-  perspective: 1000px;
-}
-
-.card-front,
-.card-inside {
-  position: absolute;
-  width: 300px;
-  height: 200px;
-  backface-visibility: hidden;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.card-front {
-  background: pink;
-  cursor: pointer;
-}
-
-.card-inside {
-  background: white;
-  color: black;
-  transform: rotateY(180deg);
-  display: flex;
-}
-
-.card.open .card-front {
-  transform: rotateY(180deg);
-}
-
-.card.open .card-inside {
-  transform: rotateY(0deg);
-}
-
-/* CARD INSIDE */
-.card-left {
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.card-right {
-  width: 50%;
-  padding: 10px;
-}
-/* =========================
-   🎂 CAKE (FIXED SIZE + CENTER)
+   🎂 REALISTIC CAKE
 ========================= */
 #cakeSection {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   margin-top: 40px;
 }
 
 .cake {
   position: relative;
   width: 260px;
-  margin-top: 30px;
-  cursor: pointer;
+  height: 180px;
+  perspective: 1000px;
+}
+
+/* HALVES */
+.cake-half {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  transition: 0.5s ease;
+}
+
+.cake-half.left { left: 0; }
+.cake-half.right { right: 0; }
+
+/* INNER SLICE */
+.slice {
+  width: 100%;
+  height: 100%;
+}
+
+/* SPLIT */
+.cake.split .left {
+  transform: translateX(-35px) rotateY(-10deg);
+}
+.cake.split .right {
+  transform: translateX(35px) rotateY(10deg);
 }
 
 /* LAYERS */
 .layer {
-  height: 50px;
+  width: 100%;
+  height: 45px;
   border-radius: 12px;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
+  box-shadow: inset 0 -6px rgba(0,0,0,0.1),
+              0 8px 15px rgba(0,0,0,0.3);
 }
 
-.top { background: #ff8fa3; }
-.middle { background: #ffc2d1; }
-.bottom { background: #ffe5ec; }
+.top {
+  background: linear-gradient(#ff8fa3, #ff758f);
+}
+.middle {
+  background: linear-gradient(#ffc2d1, #ffb3c6);
+}
+.bottom {
+  background: linear-gradient(#ffe5ec, #ffd6e0);
+}
+
+/* 🍰 CREAM */
+.cream {
+  height: 12px;
+  background: linear-gradient(#fff, #ffeef5);
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+/* CUT EDGE */
+.cake-half::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 100%;
+  top: 0;
+  background: linear-gradient(#fff, #ffd6e0);
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.cake-half.left::after { right: 0; }
+.cake-half.right::after { left: 0; }
+
+.cake.split .cake-half::after {
+  opacity: 1;
+}
 
 /* =========================
-   🕯️ CANDLES (PROPER POSITION)
+   🕯️ CANDLES
 ========================= */
 .candles {
   position: absolute;
-  top: -35px;
+  top: -40px;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.candle {
-  width: 12px;
-  height: 35px;
-  background: #ff4d6d;
-  margin: 0 6px;
-  display: inline-block;
-  border-radius: 3px;
-  position: relative;
-}
-
-/* FLAME */
-.candle.lit::after {
-  content: "";
-  width: 10px;
-  height: 14px;
-  background: orange;
-  position: absolute;
-  top: -14px;
-  left: 1px;
-  border-radius: 50%;
-  animation: flame 0.3s infinite alternate;
-}
-
-@keyframes flame {
-  from { transform: scale(1); opacity: 0.9; }
-  to { transform: scale(1.2); opacity: 1; }
-}
-
-/* CUT EFFECT */
-.cake.cut {
-  transform: rotate(-5deg) scale(0.95);
-  transition: 0.4s;
-}
-
-/* =========================
-   💌 CARD (CENTER + CLEAN FLIP)
-========================= */
-#cardSection {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
-}
-
-/* CARD CONTAINER */
-.card {
-  width: 320px;
-  height: 220px;
-  position: relative;
-  perspective: 1000px;
-}
-
-/* FRONT + INSIDE */
-.card-front,
-.card-inside {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-  backface-visibility: hidden;
-  transition: 0.6s;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-/* FRONT */
-.card-front {
-  background: linear-gradient(45deg, #ff758f, #ff4d6d);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-/* INSIDE */
-.card-inside {
-  background: white;
-  color: black;
-  transform: rotateY(180deg);
-  display: flex;
-}
-
-/* FLIP EFFECT */
-.card.open .card-front {
-  transform: rotateY(180deg);
-}
-
-.card.open .card-inside {
-  transform: rotateY(0deg);
-}
-
-/* LEFT SIDE */
-.card-left {
-  width: 40%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-}
-
-/* RIGHT SIDE */
-.card-right {
-  width: 60%;
-  padding: 15px;
-}
-
-.card-right p {
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-/* =========================
-   📱 MOBILE FIX
-========================= */
-@media (max-width: 600px) {
-
-  .cake {
-    width: 200px;
-  }
-
-  .layer {
-    height: 40px;
-  }
-
-  .card {
-    width: 90%;
-    height: auto;
-  }
-
-  .card-inside {
-    flex-direction: column;
-  }
-
-  .card-left,
-  .card-right {
-    width: 100%;
-  }
-}
-/* =========================
-   🎂 3D CAKE LOOK
-========================= */
-.cake {
-  position: relative;
-  width: 260px;
-  margin: 40px auto;
-  transform: perspective(800px) rotateX(10deg);
-}
-
-/* LAYERS WITH DEPTH */
-.layer {
-  height: 50px;
-  border-radius: 12px;
-  margin-bottom: 6px;
-  box-shadow: inset 0 -6px rgba(0,0,0,0.1),
-              0 6px 10px rgba(0,0,0,0.3);
-}
-
-.top { background: #ff8fa3; }
-.middle { background: #ffc2d1; }
-.bottom { background: #ffe5ec; }
-
-/* =========================
-   🔥 REAL FLAME GLOW
-========================= */
 .candle {
   width: 12px;
   height: 35px;
@@ -720,26 +305,43 @@ button:hover {
   content: "";
   width: 10px;
   height: 16px;
-  background: radial-gradient(circle, yellow 0%, orange 70%, transparent 100%);
+  background: radial-gradient(circle, yellow, orange);
   position: absolute;
   top: -16px;
   left: 1px;
   border-radius: 50%;
-  animation: flameGlow 0.3s infinite alternate;
-  box-shadow: 0 0 12px orange, 0 0 20px yellow;
+  animation: flame 0.3s infinite alternate;
 }
 
-@keyframes flameGlow {
-  from { transform: scale(1); opacity: 0.8; }
-  to { transform: scale(1.2); opacity: 1; }
+@keyframes flame {
+  from { transform: scale(1); }
+  to { transform: scale(1.2); }
 }
 
 /* =========================
-   ✂️ CUT IMPACT
+   🔪 KNIFE
 ========================= */
-.cake.cut {
-  transform: perspective(800px) rotateX(10deg) scale(0.95) rotate(-4deg);
-  transition: 0.4s;
+#knife {
+  position: absolute;
+  width: 6px;
+  height: 120px;
+  background: linear-gradient(silver, #aaa);
+  left: 50%;
+  top: -150px;
+  transform: translateX(-50%) rotate(20deg);
+  opacity: 0;
+}
+
+#knife.animate {
+  animation: knifeCut 0.8s forwards;
+  opacity: 1;
+}
+
+@keyframes knifeCut {
+  to {
+    top: 40px;
+    transform: translateX(-50%) rotate(0);
+  }
 }
 
 /* =========================
@@ -749,130 +351,82 @@ button:hover {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  overflow: hidden;
-  z-index: 9999;
 }
 
 .confetti {
   position: absolute;
   width: 8px;
   height: 12px;
-  background: red;
   animation: fall 3s linear forwards;
 }
 
 @keyframes fall {
-  0% {
-    transform: translateY(-100px) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
+  to {
     transform: translateY(100vh) rotate(360deg);
     opacity: 0;
   }
 }
+
 /* =========================
-   🎂 SPLIT CAKE SYSTEM
+   💌 CARD
 ========================= */
-.cake {
+#cardSection {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.card {
+  width: 320px;
+  height: 220px;
+  perspective: 1000px;
   position: relative;
-  width: 260px;
-  margin: 40px auto;
-  transform: perspective(800px) rotateX(10deg);
 }
 
-/* HALVES */
-.cake-half {
+.card-front, .card-inside {
   position: absolute;
-  width: 50%;
-  top: 0;
-  transition: 0.6s ease;
-}
-
-/* LEFT SIDE */
-.cake-half.left {
-  left: 0;
-}
-
-/* RIGHT SIDE */
-.cake-half.right {
-  right: 0;
-}
-
-/* SPLIT ANIMATION */
-.cake.split .left {
-  transform: translateX(-25px) rotate(-2deg);
-}
-
-.cake.split .right {
-  transform: translateX(25px) rotate(2deg);
-}
-
-/* LAYERS */
-.layer {
-  height: 50px;
-  border-radius: 12px;
-  margin-bottom: 6px;
-  box-shadow: inset 0 -6px rgba(0,0,0,0.1),
-              0 6px 10px rgba(0,0,0,0.3);
-}
-
-/* COLORS */
-.top { background: #ff8fa3; }
-.middle { background: #ffc2d1; }
-.bottom { background: #ffe5ec; }
-
-/* CUT LINE (OPTIONAL) */
-.cake::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 2px;
+  width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.1);
+  border-radius: 15px;
+  backface-visibility: hidden;
+  transition: 0.6s;
 }
+
+.card-front {
+  background: linear-gradient(45deg, #ff758f, #ff4d6d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.card-inside {
+  background: white;
+  color: black;
+  transform: rotateY(180deg);
+  display: flex;
+}
+
+.card.open .card-front {
+  transform: rotateY(180deg);
+}
+.card.open .card-inside {
+  transform: rotateY(0deg);
+}
+
 /* =========================
-   🔪 KNIFE
+   MOBILE
 ========================= */
-#knife {
-  position: absolute;
-  width: 6px;
-  height: 120px;
-  background: linear-gradient(to bottom, silver, #aaa);
-  left: 50%;
-  top: -150px;
-  transform: translateX(-50%) rotate(20deg);
-  border-radius: 3px;
-  z-index: 10;
-  opacity: 0;
-}
+@media (max-width: 600px) {
+  .cake { width: 200px; }
+  .layer { height: 40px; }
 
-/* HANDLE */
-#knife::after {
-  content: "";
-  position: absolute;
-  bottom: -20px;
-  left: -5px;
-  width: 16px;
-  height: 20px;
-  background: #333;
-  border-radius: 4px;
-}
-
-/* CUT ANIMATION */
-#knife.animate {
-  animation: knifeCut 0.8s ease forwards;
-  opacity: 1;
-}
-
-@keyframes knifeCut {
-  0% {
-    top: -150px;
-    transform: translateX(-50%) rotate(20deg);
+  .card {
+    width: 90%;
+    height: auto;
   }
-  100% {
-    top: 40px;
-    transform: translateX(-50%) rotate(0deg);
+
+  .card-inside {
+    flex-direction: column;
   }
 }
