@@ -12,35 +12,70 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { once: true });
 
   /* 💖 TEXT (ROMANTIC + FRIENDLY) */
-  const texts = [
+const texts = [
 
-`Some people just walk into your life…
-and suddenly, everything feels a little lighter.`,
+`Some people don’t enter your life loudly…
 
-`We never planned anything…
-but every small moment became special.`,
+They come quietly,
+without trying to be noticed.
 
-`Somewhere between jokes and random talks…
-you became important.`,
+And somehow,
+they become the most peaceful part of your day.`,
 
-`The best memories are the ones we never planned.`,
+`We never really planned anything…
+
+No big moments, no dramatic stories—
+just simple conversations,
+small silences,
+and a comfort that slowly grew.`,
+
+`You don’t say much,
+but somehow, you say enough.
+
+In your quiet way,
+you make things feel safe…
+and that means more than words ever could.`,
+
+`There were moments we didn’t even realise were important…
+
+just sitting, talking, or even not talking at all—
+but now, those moments feel special.`,
+
+`You know what I like the most?
+
+The way you are…
+calm, real, and completely yourself.
+
+No pretending, no noise—
+just genuine.`,
 
 `That smile of yours…
-it stays longer than the moment.`,
 
-`Ordinary days became unforgettable…
-just because you were there.`,
+It’s not loud,
+it’s not for everyone—
+but when it appears,
+it feels… real.`,
 
-`I’m really glad you’re in my life…
-just for being you.`,
+`Not everyone understands silence…
+
+but with you,
+even silence feels comfortable,
+like it doesn’t need to be filled.`,
 
 `💖 Happy Birthday 💖
 
-Stay the same—
-a little crazy, a little sweet,
-and completely unforgettable.`
+I hope life always stays kind to you…
 
-  ];
+I hope you always find your calm,
+your space,
+and your quiet happiness.
+
+And even if you don’t say much…
+
+just know—
+you matter more than you think.`
+
+];
 
   /* 📸 PAGES */
   const pages = [
@@ -48,8 +83,8 @@ and completely unforgettable.`
     { type: "image", src: "./scrapbook/2.jpg" },
     { type: "image", src: "./scrapbook/3.jpg" },
     { type: "video", src: "./scrapbook/4.mp4" },
-    { type: "image", src: "./scrapbook/5.jpg" },
-    { type: "image", src: "./scrapbook/6.jpg" },
+    { type: "image", src: "./scrapbook/5.mp4" },
+    { type: "image", src: "./scrapbook/6.mp4" },
     { type: "image", src: "./scrapbook/7.jpg" },
     { type: "image", src: "./scrapbook/8.jpg" }
   ];
