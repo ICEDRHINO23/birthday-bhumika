@@ -336,3 +336,29 @@ video {
     height: 70vh;
   }
 }
+
+/* COVER DESIGN FIX */
+.cover-front {
+  background: linear-gradient(135deg, #ff4d6d, #ff9a9e);
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  font-size: 20px;
+}
+
+/* NAV CONTROLS */
+.controls {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.controls button {
+  margin: 5px;
+}
