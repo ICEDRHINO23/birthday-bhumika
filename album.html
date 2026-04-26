@@ -2,197 +2,83 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Memory Stack</title>
+<title>Memory Album</title>
 
-<style>
+<link rel="stylesheet" href="style.css">
 
-/* =========================
-   ROOT
-========================= */
-:root {
-  --primary: #ff4d6d;
-  --secondary: #ff758f;
-}
-
-/* =========================
-   BODY
-========================= */
-body {
-  margin: 0;
-  background: black;
-  font-family: 'Segoe UI', sans-serif;
-  color: white;
-}
-
-/* =========================
-   NAV BUTTONS
-========================= */
-.home-btn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background: linear-gradient(45deg, var(--primary), var(--secondary));
-  border-radius: 50px;
-  padding: 10px 15px;
-  cursor: pointer;
-}
-
-.back-btn {
-  position: fixed;
-  top: 20px;
-  left: 80px;
-  background: #444;
-  border-radius: 50px;
-  padding: 10px 15px;
-  cursor: pointer;
-}
-
-/* =========================
-   TITLE
-========================= */
-.title {
-  text-align: center;
-  margin-top: 80px;
-  font-size: 28px;
-}
-
-/* =========================
-   STACK CONTAINER
-========================= */
-.card-stack {
-  position: relative;
-  width: 320px;
-  height: 400px;
-  margin: 80px auto;
-}
-
-/* =========================
-   STACK CARD
-========================= */
-.stack-card {
-  position: absolute;
-  width: 100%;
-  background: white;
-  color: black;
-  padding: 10px;
-  border-radius: 12px;
-  box-shadow: 0 20px 45px rgba(0,0,0,0.6);
-  transition: 0.4s ease;
-  cursor: pointer;
-}
-
-/* IMAGE */
-.stack-card img {
-  width: 100%;
-  height: 280px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-/* TEXT */
-.stack-card p {
-  text-align: center;
-  margin-top: 8px;
-  font-size: 14px;
-}
-
-/* =========================
-   SCATTER POSITIONS
-========================= */
-.stack-card:nth-child(1) {
-  transform: rotate(-6deg) translateX(-20px);
-  z-index: 3;
-}
-
-.stack-card:nth-child(2) {
-  transform: rotate(4deg) translateX(20px);
-  z-index: 2;
-}
-
-.stack-card:nth-child(3) {
-  transform: rotate(-2deg) translateX(-10px);
-  z-index: 1;
-}
-
-/* =========================
-   HOVER EFFECT
-========================= */
-.stack-card:hover {
-  transform: scale(1.05) rotate(0deg) translateY(-10px);
-  z-index: 10;
-}
-
-/* =========================
-   CLICK ANIMATION
-========================= */
-.stack-card.active {
-  transform: scale(1.1) rotate(0deg) translateY(-20px);
-  z-index: 20;
-}
-
-/* =========================
-   MOBILE
-========================= */
-@media (max-width: 600px) {
-  .card-stack {
-    width: 260px;
-    height: 350px;
-  }
-
-  .stack-card img {
-    height: 220px;
-  }
-}
-
-</style>
 </head>
 
-<body>
+<body class="memory-page">
 
-<!-- NAV -->
-<div class="home-btn">🏠</div>
-<div class="back-btn">⬅</div>
+<!-- 🔙 NAV BUTTONS -->
+<button class="home-btn" onclick="goHome()">🏠</button>
+<button class="back-btn" onclick="goBack()">⬅</button>
 
-<h2 class="title">📸 Icecream Meetup</h2>
+<!-- 📌 TITLE -->
+<h2 class="title" id="albumTitle">Memory</h2>
 
-<!-- STACK -->
-<div class="card-stack">
+<!-- 📸 STACK CONTAINER -->
+<div class="card-stack" id="cardStack"></div>
 
-  <div class="stack-card">
-    <img src="https://picsum.photos/400/300?1">
-    <p>Memory 1</p>
-  </div>
-
-  <div class="stack-card">
-    <img src="https://picsum.photos/400/300?2">
-    <p>Memory 2</p>
-  </div>
-
-  <div class="stack-card">
-    <img src="https://picsum.photos/400/300?3">
-    <p>Memory 3</p>
-  </div>
-
-</div>
 
 <script>
 
 /* =========================
-   CARD CLICK INTERACTION
+   GET URL DATA
 ========================= */
-const cards = document.querySelectorAll('.stack-card');
+const params = new URLSearchParams(window.location.search);
+const folder = params.get("folder") || "memory1";
+const title = params.get("title") || "Memories";
+
+/* SET TITLE */
+document.getElementById("albumTitle").innerText = decodeURIComponent(title);
+
+/* =========================
+   IMAGE LOADER
+========================= */
+const cardStack = document.getElementById("cardStack");
+
+/* 👉 CHANGE COUNT IF NEEDED */
+const totalImages = 3;
+
+/* LOAD IMAGES */
+for (let i = 1; i <= totalImages; i++) {
+
+  const card = document.createElement("div");
+  card.className = "stack-card";
+
+  card.innerHTML = `
+    <img src="./image/${folder}/${i}.jpg" alt="memory">
+    <p>Memory ${i}</p>
+  `;
+
+  cardStack.appendChild(card);
+}
+
+/* =========================
+   CARD INTERACTION
+========================= */
+const cards = document.querySelectorAll(".stack-card");
 
 cards.forEach(card => {
-  card.addEventListener('click', () => {
+  card.addEventListener("click", () => {
 
-    // remove previous active
-    cards.forEach(c => c.classList.remove('active'));
-
-    // activate clicked
-    card.classList.add('active');
+    cards.forEach(c => c.classList.remove("active"));
+    card.classList.add("active");
 
   });
 });
+
+/* =========================
+   NAVIGATION
+========================= */
+function goHome() {
+  window.location.href = "index.html";
+}
+
+function goBack() {
+  window.history.back();
+}
 
 </script>
 
