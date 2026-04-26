@@ -452,3 +452,46 @@ button:hover {
     transform: translateX(-50%) rotate(0deg);
   }
 }
+/* =========================
+   🍰 CREAM LAYER
+========================= */
+.cream {
+  width: 100%;
+  height: 12px;
+  background: linear-gradient(to right, #fff, #ffe9f0);
+  border-radius: 10px;
+  margin-bottom: 5px;
+
+  box-shadow:
+    inset 0 -2px rgba(0,0,0,0.1),
+    0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* =========================
+   🍰 CUT FACE (VISIBLE WHEN SPLIT)
+========================= */
+.cake-half::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(#fff, #ffd6e0);
+  opacity: 0;
+  transition: 0.4s;
+}
+
+/* LEFT FACE */
+.cake-half.left::after {
+  right: 0;
+}
+
+/* RIGHT FACE */
+.cake-half.right::after {
+  left: 0;
+}
+
+/* SHOW INSIDE WHEN CUT */
+.cake.split .cake-half::after {
+  opacity: 1;
+}
