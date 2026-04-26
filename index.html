@@ -11,19 +11,18 @@
 <!-- LOADING -->
 <div id="intro">✨ Loading Surprise... ✨</div>
 
-<!-- 🎵 BACKGROUND MUSIC -->
-<audio id="bgMusic" src="./audio/bds.mp3" loop></audio>
+<!-- MUSIC -->
+<audio id="bgMusic" src="./assets/audio/bds.mp3" loop></audio>
 
 <div id="main">
 
-  <!-- PROFILE -->
-  <img id="profilePic" src="./image/bhoomika.jpg">
+  <img id="profilePic" src="./assets/images/bhoomika.jpg">
 
   <h1>Happy Birthday Bhoomika 🎂</h1>
 
-  <p>Some people don’t just come into life… they stay, they change everything ❤️</p>
+  <p>Some people don’t just come into life… they stay ❤️</p>
 
-  <!-- TAP GAME -->
+  <!-- GAME -->
   <div id="gameBox">
     <h3>🎯 Tap 5 times to unlock surprise</h3>
     <button id="tapBtn">Tap Me</button>
@@ -32,36 +31,27 @@
 
   <!-- GIFT -->
   <div id="giftContainer" class="hidden">
-    <img id="giftImage" src="./image/gift-closed.PNG">
+    <img id="giftImage" src="./assets/images/gift-closed.PNG">
   </div>
 
-  <!-- FUN SECTION -->
-  <div id="funSection" class="hidden">
-    <h2>Wait wait 😂</h2>
-    <p id="funText"></p>
-    <button onclick="continueAfterFun()">Continue 👉</button>
-  </div>
-
-  <!-- MENU (UPDATED & FIXED) -->
+  <!-- MENU -->
   <div id="menu" class="hidden">
-    <h2>Now open your real surprise 💝</h2>
+    <h2>Open your surprise 💝</h2>
+    <button onclick="openScrapbook()">📖 Scrapbook</button>
+    <button onclick="openMemories()">📸 Memories</button>
+    <button onclick="openVideo()">🎥 Special Video</button>
+  </div>
 
-    <button onclick="goToPage('memories.html')">
-      📸 Memories
-    </button>
+  <!-- VIDEO SECTION -->
+  <div id="videoSection" class="hidden">
+    <h2>💖 A Special Surprise 💖</h2>
 
-    <button onclick="goToPage('scrapbook.html')">
-      📖 Scrapbook
-    </button>
+    <video id="specialVideo" controls>
+      <source src="./assets/videos/special.mp4" type="video/mp4">
+    </video>
 
-    <button onclick="goToPage('game.html')">
-      🎂 Cake Game
-    </button>
-
-    <button onclick="goToPage('gift.html')">
-      🎁 Open Gift
-    </button>
-
+    <br>
+    <button onclick="closeVideo()">⬅ Back</button>
   </div>
 
 </div>
