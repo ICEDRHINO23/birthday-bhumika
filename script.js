@@ -1,102 +1,92 @@
-document.addEventListener("DOMContentLoaded", () => {
+/* =========================
+   INITIAL LOAD
+========================= */
+let taps = 0;
 
-  const intro = document.getElementById("intro");
-  const tapBtn = document.getElementById("tapBtn");
-  const tapCount = document.getElementById("tapCount");
-  const gameBox = document.getElementById("gameBox");
+window.onload = () => {
 
-  const giftContainer = document.getElementById("giftContainer");
-  const giftImage = document.getElementById("giftImage");
+  /* LOADING SCREEN */
+  setTimeout(() => {
+    document.getElementById("intro").style.display = "none";
+  }, 2000);
 
-  const funSection = document.getElementById("funSection");
-  const funText = document.getElementById("funText");
-
-  const menu = document.getElementById("menu");
+  /* TRY PLAY MUSIC (SAFE) */
   const music = document.getElementById("bgMusic");
 
-  let taps = 0;
-
-  /* LOADING */
-  setTimeout(() => {
-    intro.style.opacity = "0";
-    setTimeout(() => intro.style.display = "none", 500);
-  }, 1500);
-
-  /* MUSIC START */
   document.addEventListener("click", () => {
-    if (music && music.paused) {
+    if (music.paused) {
+      music.volume = 0.4;
       music.play().catch(()=>{});
     }
   }, { once: true });
+};
 
-  /* TAP GAME */
-  tapBtn.addEventListener("click", () => {
+/* =========================
+   TAP GAME
+========================= */
+const tapBtn = document.getElementById("tapBtn");
+const tapCount = document.getElementById("tapCount");
+const gift = document.getElementById("giftContainer");
 
-    taps++;
-    tapCount.innerText = `Taps: ${taps}/5`;
+tapBtn.onclick = () => {
+  taps++;
+  tapCount.innerText = `Taps: ${taps}`;
 
-    if (taps >= 5) {
-      gameBox.classList.add("hidden");
-      giftContainer.classList.remove("hidden");
-    }
-
-  });
-
-  /* GIFT CLICK */
-  giftImage.addEventListener("click", () => {
-
-    giftImage.src = "./image/gift-open.PNG";
-
-    setTimeout(() => {
-      giftContainer.classList.add("hidden");
-      funSection.classList.remove("hidden");
-      startFunText();
-    }, 1000);
-
-  });
-
-  const messages = [
-    "You... really.... thought... it... was... that... easy? 😂",
-    "Wait… patience 😌",
-    "Good.. things... take... time 💖",
-    "Okay... okay… now... enjoy 🎉"
-  ];
-
-  let msgIndex = 0;
-
-  function startFunText() {
-    funText.innerText = "";
-    let i = 0;
-    const text = messages[msgIndex];
-
-    const interval = setInterval(() => {
-      funText.innerText += text[i];
-      i++;
-
-      if (i >= text.length) {
-        clearInterval(interval);
-      }
-    }, 40);
+  if (taps >= 5) {
+    gift.classList.remove("hidden");
   }
+};
 
-  window.continueAfterFun = function () {
-    msgIndex++;
+/* =========================
+   GIFT CLICK → OPEN MENU
+========================= */
+const giftImage = document.getElementById("giftImage");
 
-    if (msgIndex < messages.length) {
-      startFunText();
-    } else {
-      funSection.classList.add("hidden");
-      menu.classList.remove("hidden");
-    }
-  };
+giftImage.onclick = () => {
+  giftImage.src = "./assets/images/gift-open.PNG"; // optional
+  document.getElementById("menu").classList.remove("hidden");
+};
 
-});
+/* =========================
+   NAVIGATION
+========================= */
+function openScrapbook() {
+  window.location.href = "scrapbook.html";
+}
 
-/* PAGE NAVIGATION */
-function goToPage(page) {
-  document.body.style.opacity = "0";
+function openMemories() {
+  window.location.href = "memories.html";
+}
 
-  setTimeout(() => {
-    window.location.href = page;
-  }, 300);
+/* =========================
+   SPECIAL VIDEO
+========================= */
+function openVideo() {
+
+  document.getElementById("menu").classList.add("hidden");
+  document.getElementById("videoSection").classList.remove("hidden");
+
+  const video = document.getElementById("specialVideo");
+
+  /* STOP OTHER AUDIO */
+  const music = document.getElementById("bgMusic");
+  if (music) music.pause();
+
+  video.currentTime = 0;
+  video.play().catch(()=>{});
+}
+
+function closeVideo() {
+
+  const video = document.getElementById("specialVideo");
+
+  video.pause();
+  video.currentTime = 0;
+
+  document.getElementById("videoSection").classList.add("hidden");
+  document.getElementById("menu").classList.remove("hidden");
+
+  /* RESUME MUSIC */
+  const music = document.getElementById("bgMusic");
+  if (music) music.play().catch(()=>{});
 }
