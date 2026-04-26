@@ -8,7 +8,7 @@
 }
 
 /* =========================
-   BODY
+   BODY (DEFAULT)
 ========================= */
 body {
   font-family: 'Segoe UI', sans-serif;
@@ -19,12 +19,13 @@ body {
 }
 
 /* =========================
-   LOADING
+   LOADING SCREEN
 ========================= */
 #intro {
   position: fixed;
   inset: 0;
   background: black;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,7 +34,7 @@ body {
 }
 
 /* =========================
-   MAIN CARD
+   MAIN CARD (INDEX)
 ========================= */
 #main {
   text-align: center;
@@ -43,10 +44,12 @@ body {
   border-radius: 20px;
   width: 90%;
   max-width: 600px;
-  margin: 50px auto;
+  margin: auto;
+  margin-top: 50px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
+/* PROFILE IMAGE */
 #profilePic {
   width: 200px;
   height: 200px;
@@ -73,19 +76,40 @@ button:hover {
   transform: scale(1.05);
 }
 
+/* HIDDEN */
 .hidden {
   display: none !important;
 }
 
 /* =========================
-   SCRAPBOOK
+   GIFT IMAGE
 ========================= */
+#giftContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#giftImage {
+  width: 150px;
+  cursor: pointer;
+}
+
+/* =========================
+   📖 SCRAPBOOK (BOOK SYSTEM)
+========================= */
+
 .book-body {
   background: linear-gradient(135deg, #f8cdda, #f6d365);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  overflow: hidden;
+}
+
+.scene {
+  perspective: 2000px;
 }
 
 .book {
@@ -94,6 +118,7 @@ button:hover {
   position: relative;
 }
 
+/* 🔥 IMPORTANT FIX */
 .page {
   position: absolute;
   width: 100%;
@@ -101,20 +126,31 @@ button:hover {
   transform-origin: left;
   transition: transform 1s ease;
   transform-style: preserve-3d;
+  z-index: 1; /* default */
 }
 
+/* 🔥 COVER FIX */
+.cover-page {
+  z-index: 9999;
+  cursor: pointer;
+}
+
+/* FLIP */
 .page.flipped {
   transform: rotateY(-180deg);
 }
 
-.front, .back {
+.front,
+.back {
   position: absolute;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
 }
 
-.back { transform: rotateY(180deg); }
+.back {
+  transform: rotateY(180deg);
+}
 
 .front {
   display: flex;
@@ -123,6 +159,18 @@ button:hover {
   overflow: hidden;
 }
 
+/* COVER */
+.cover-front {
+  background: linear-gradient(135deg, #ff4d6d, #ff9a9e);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 22px;
+}
+
+/* LEFT MEDIA */
 .left {
   width: 50%;
   background: black;
@@ -131,294 +179,142 @@ button:hover {
   align-items: center;
 }
 
-.left img, .left video {
+.left img,
+.left video {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
+/* 🔥 TEXT EXPANSION FIX */
 .right {
   width: 50%;
   padding: 40px;
-  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .right p {
   font-size: 20px;
   line-height: 1.8;
+  color: #222;
+}
+
+.right h2 {
+  font-size: 28px;
+  color: #ff4d6d;
+  margin-bottom: 10px;
+}
+
+/* CONTROLS */
+.controls {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
 }
 
 /* =========================
-   MEMORY PAGE
+   📸 MEMORY PAGE
 ========================= */
 .memory-page {
   background: black;
   min-height: 100vh;
 }
 
-.home-btn, .back-btn {
+.title {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* HOME BUTTON */
+.home-btn {
   position: fixed;
   top: 20px;
-  padding: 10px 15px;
+  left: 20px;
+  background: linear-gradient(45deg, #ff4d6d, #ff758f);
   border-radius: 50px;
-  z-index: 999;
-}
-
-.home-btn { left: 20px; }
-.back-btn { left: 80px; }
-
-/* =========================
-   POLAROID
-========================= */
-.polaroid-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
-  padding: 30px;
-}
-
-.polaroid {
-  width: 180px;
-  background: white;
-  color: black;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-.polaroid img {
-  width: 100%;
-  height: 160px;
-  object-fit: contain;
-  background: #f2f2f2;
-}
-
-/* =========================
-   🎂 REALISTIC CAKE SYSTEM
-========================= */
-#cakeSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 40px;
-}
-
-.cake {
-  position: relative;
-  width: 240px;
-  height: 180px;
-  margin: 40px auto;
-  perspective: 900px;
-}
-
-/* HALVES */
-.cake-half {
-  position: absolute;
-  width: 50%;
-  height: 100%;
-  top: 0;
-  transition: 0.6s ease;
-}
-
-.cake-half.left { left: 0; }
-.cake-half.right { right: 0; }
-
-/* INNER */
-.slice {
-  transform: rotateX(10deg);
-}
-
-/* SPLIT */
-.cake.split .left {
-  transform: translateX(-35px) rotateY(-12deg);
-}
-.cake.split .right {
-  transform: translateX(35px) rotateY(12deg);
-}
-
-/* LAYERS */
-.layer {
-  height: 45px;
-  border-radius: 12px;
-  margin-bottom: 6px;
-  box-shadow:
-    inset 0 -5px rgba(0,0,0,0.1),
-    0 8px 15px rgba(0,0,0,0.25);
-}
-
-.top { background: linear-gradient(#ff758f, #ff4d6d); }
-.middle { background: linear-gradient(#ffc2d1, #ffb3c6); }
-.bottom { background: linear-gradient(#ffe5ec, #ffd6e0); }
-
-/* CREAM */
-.cream {
-  height: 12px;
-  border-radius: 10px;
-  margin-bottom: 6px;
-  background: linear-gradient(#fff, #ffeef5);
-}
-
-/* CUT FACE */
-.cake-half::after {
-  content: "";
-  position: absolute;
-  width: 6px;
-  height: 100%;
-  top: 0;
-  background: linear-gradient(#fff, #ffd6e0);
-  opacity: 0;
-}
-
-.cake-half.left::after { right: 0; }
-.cake-half.right::after { left: 0; }
-
-.cake.split .cake-half::after {
-  opacity: 1;
-}
-
-/* =========================
-   CANDLES
-========================= */
-.candles {
-  position: absolute;
-  top: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.candle {
-  width: 12px;
-  height: 35px;
-  background: #ff4d6d;
-  margin: 0 6px;
-  border-radius: 3px;
-  position: relative;
-}
-
-.candle.lit::after {
-  content: "";
-  width: 10px;
-  height: 16px;
-  background: radial-gradient(circle, yellow, orange);
-  position: absolute;
-  top: -16px;
-  left: 1px;
-  border-radius: 50%;
-  animation: flame 0.3s infinite alternate;
-}
-
-@keyframes flame {
-  from { transform: scale(1); }
-  to { transform: scale(1.2); }
-}
-
-/* =========================
-   🔪 KNIFE
-========================= */
-#knife {
-  position: absolute;
-  width: 6px;
-  height: 120px;
-  background: linear-gradient(silver, #aaa);
-  left: 50%;
-  top: -140px;
-  transform: translateX(-50%) rotate(25deg);
-  opacity: 0;
-}
-
-#knife.animate {
-  animation: knife 0.8s forwards;
-  opacity: 1;
-}
-
-@keyframes knife {
-  to {
-    top: 40px;
-    transform: translateX(-50%) rotate(0deg);
-  }
-}
-
-/* =========================
-   🎉 CONFETTI
-========================= */
-#confettiContainer {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-}
-
-.confetti {
-  position: absolute;
-  width: 8px;
-  height: 12px;
-  animation: fall 2.5s linear forwards;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(100vh) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-/* =========================
-   💌 CARD
-========================= */
-#cardSection {
-  display: flex;
-  justify-content: center;
-  margin-top: 60px;
-}
-
-.card {
-  width: 320px;
-  height: 220px;
-  perspective: 1000px;
-  position: relative;
-}
-
-.card-front, .card-inside {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-  backface-visibility: hidden;
-  transition: 0.6s;
-}
-
-.card-front {
-  background: linear-gradient(45deg, #ff758f, #ff4d6d);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 10px 15px;
+  z-index: 9999;
   cursor: pointer;
 }
 
-.card-inside {
-  background: white;
-  color: black;
-  transform: rotateY(180deg);
+/* ALBUM BUTTONS */
+.album-container {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 20px;
+  padding: 40px;
 }
 
-.card.open .card-front { transform: rotateY(180deg); }
-.card.open .card-inside { transform: rotateY(0deg); }
+.album-btn {
+  padding: 15px 25px;
+  border-radius: 20px;
+  background: linear-gradient(45deg, #ff4d6d, #ff758f);
+  cursor: pointer;
+}
+
+/* =========================
+   STACK PAGE (ALBUM)
+========================= */
+.card-stack {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  margin: 40px auto;
+}
+
+.card {
+  position: absolute;
+  width: 100%;
+  background: white;
+  color: black;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.6);
+  transition: 0.4s;
+  cursor: pointer;
+}
+
+.card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.card p {
+  text-align: center;
+}
+
+.card:nth-child(odd) {
+  transform: rotate(-3deg);
+}
+
+.card:nth-child(even) {
+  transform: rotate(3deg);
+}
 
 /* =========================
    MOBILE
 ========================= */
 @media (max-width: 600px) {
-  .cake { width: 200px; }
-  .layer { height: 40px; }
 
-  .card {
-    width: 90%;
-    height: auto;
+  #main {
+    padding: 20px;
   }
 
-  .card-inside {
-    flex-direction: column;
+  .book {
+    width: 95%;
+    height: 400px;
+  }
+
+  .right p {
+    font-size: 16px;
+  }
+
+  .card-stack {
+    width: 250px;
   }
 }
