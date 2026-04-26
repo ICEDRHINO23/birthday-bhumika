@@ -3,18 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Scrapbook 📖</title>
-
-<!-- IMPORTANT: go one level up -->
 <link rel="stylesheet" href="../style.css">
-
 </head>
 
 <body class="book-body">
 
+<!-- 🎵 SCRAPBOOK MUSIC -->
+<audio id="scrapMusic" src="../audio/scrapbook.mp3" loop preload="auto"></audio>
+
 <div class="scene">
   <div class="book">
 
-    <!-- COVER (REQUIRED FOR JS) -->
     <div id="cover" class="page cover-page">
       <div class="front">
         <h1>Our Story 💖</h1>
@@ -23,16 +22,11 @@
       <div class="back"></div>
     </div>
 
-    <!-- 🔥 THIS IS CRITICAL (JS injects pages here) -->
     <div id="pagesContainer"></div>
 
   </div>
 </div>
 
-<!-- OPTIONAL MUSIC (JS expects it) -->
-<audio id="scrapMusic" src="../assets/audio/bds.mp3" loop></audio>
-
-<!-- IMPORTANT: correct JS file -->
 <script src="../scrapbook.js"></script>
 
 </body>
