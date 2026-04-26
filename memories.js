@@ -1,26 +1,14 @@
-// CONFIG: Your folders
-const memoryFolders = [
-  "memory1",
-  "memory2",
-  "memory3",
-  "memory4",
-  "memory5",
-  "memory6",
-  "memory7",
-  "memory8",
-  "memory9",
-  "memory10",
-  "memory11",
-  "memory12"
+const folders = [
+  "memory1","memory2","memory3","memory4","memory5","memory6",
+  "memory7","memory8","memory9","memory10","memory11","memory12"
 ];
-
-// Images per folder (adjust if needed)
-const imagesPerFolder = 10;
 
 const gallery = document.getElementById("gallery");
 
-// Generate memories
-memoryFolders.forEach(folder => {
+// 👉 how many images per folder
+const imagesPerFolder = 10; // change if needed
+
+folders.forEach(folder => {
 
   for (let i = 1; i <= imagesPerFolder; i++) {
 
