@@ -12,7 +12,7 @@
 <div id="intro">✨ Loading Surprise... ✨</div>
 
 <!-- MUSIC -->
-<audio id="bgMusic" src="./audio/bds.mp3" loop></audio>
+<audio id="bgMusic" src="./assets/audio/bds.mp3" loop></audio>
 
 <div id="main">
 
@@ -21,7 +21,7 @@
 
   <h1>Happy Birthday Bhoomika 🎂</h1>
 
-  <p>Some people don’t just come into life… they stay, they change everything ❤️</p>
+  <p>Some people don’t just come into life… they stay ❤️</p>
 
   <!-- TAP GAME -->
   <div id="gameBox">
@@ -35,7 +35,7 @@
     <img id="giftImage" src="./image/gift-closed.PNG">
   </div>
 
-  <!-- FUN SECTION -->
+  <!-- FUN -->
   <div id="funSection" class="hidden">
     <h2>Wait wait 😂</h2>
     <p id="funText"></p>
@@ -47,7 +47,11 @@
     <h2>Now open your real surprise 💝</h2>
 
     <button onclick="goToPage('memories.html')">
-      📸 Memories Scrapbook
+      📸 Memories
+    </button>
+
+    <button onclick="goToPage('scrapbook/scrapbook.html')">
+      📖 Scrapbook
     </button>
 
     <button onclick="goToPage('game.html')">
@@ -63,18 +67,6 @@
 </div>
 
 <script src="script.js"></script>
-
-<!-- NEW: NAVIGATION + SMOOTH TRANSITION -->
-<script>
-function goToPage(page) {
-  document.body.style.transition = "opacity 0.3s ease";
-  document.body.style.opacity = "0";
-
-  setTimeout(() => {
-    window.location.href = page;
-  }, 300);
-}
-</script>
 
 </body>
 </html>
