@@ -8,7 +8,7 @@
 }
 
 /* =========================
-   BODY
+   BODY (DEFAULT)
 ========================= */
 body {
   font-family: 'Segoe UI', sans-serif;
@@ -19,18 +19,48 @@ body {
 }
 
 /* =========================
+   LOADING SCREEN
+========================= */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: black;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 26px;
+  z-index: 9999;
+}
+
+/* =========================
    MAIN CARD (INDEX)
 ========================= */
 #main {
   text-align: center;
   padding: 40px;
+
   background: rgba(255,255,255,0.15);
   backdrop-filter: blur(10px);
   border-radius: 20px;
+
   width: 90%;
   max-width: 600px;
   margin: auto;
   margin-top: 50px;
+
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+/* PROFILE IMAGE */
+#profilePic {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid white;
 }
 
 /* =========================
@@ -38,10 +68,13 @@ body {
 ========================= */
 button {
   padding: 10px 20px;
+  margin: 10px;
   border-radius: 10px;
   border: none;
+
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
   color: white;
+
   cursor: pointer;
   transition: 0.3s;
 }
@@ -50,50 +83,150 @@ button:hover {
   transform: scale(1.05);
 }
 
+/* HIDDEN */
+.hidden {
+  display: none !important;
+}
+
 /* =========================
-   MEMORY PAGE
+   GIFT IMAGE
+========================= */
+#giftContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#giftImage {
+  width: 150px;
+  cursor: pointer;
+}
+
+/* =========================
+   📖 SCRAPBOOK (BOOK SYSTEM)
+========================= */
+
+.book-body {
+  background: linear-gradient(135deg, #f8cdda, #f6d365);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.scene {
+  perspective: 2000px;
+}
+
+.book {
+  width: 900px;
+  height: 500px;
+  position: relative;
+}
+
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  transform-origin: left;
+  transition: transform 1s ease;
+  transform-style: preserve-3d;
+}
+
+.page.flipped {
+  transform: rotateY(-180deg);
+}
+
+.front,
+.back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+.front {
+  display: flex;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* COVER */
+.cover-front {
+  background: linear-gradient(135deg, #ff4d6d, #ff9a9e);
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* LEFT MEDIA */
+.left {
+  width: 50%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left img,
+.left video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* RIGHT TEXT */
+.right {
+  width: 50%;
+  padding: 20px;
+  color: black;
+}
+
+/* CONTROLS */
+.controls {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+/* =========================
+   📸 MEMORY PAGE
 ========================= */
 .memory-page {
   background: black;
   min-height: 100vh;
 }
 
-/* =========================
-   TITLE
-========================= */
 .title {
   text-align: center;
   margin-top: 20px;
 }
 
-/* =========================
-   🏠 HOME BUTTON (NEW)
-========================= */
+/* HOME BUTTON */
 .home-btn {
   position: fixed;
   top: 20px;
   left: 20px;
 
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
-  color: white;
-
-  border: none;
-  padding: 10px 14px;
   border-radius: 50px;
-
-  cursor: pointer;
+  padding: 10px 15px;
   z-index: 9999;
-
-  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+  cursor: pointer;
 }
 
-.home-btn:hover {
-  transform: scale(1.1);
-}
-
-/* =========================
-   ALBUM BUTTONS
-========================= */
+/* ALBUM BUTTONS */
 .album-container {
   display: flex;
   flex-wrap: wrap;
@@ -107,79 +240,10 @@ button:hover {
   border-radius: 20px;
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
   cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-.album-btn:hover {
-  transform: scale(1.1);
 }
 
 /* =========================
-   POLAROID GRID (OLD VIEW)
-========================= */
-.polaroid-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  padding: 30px;
-}
-
-.polaroid {
-  width: 180px;
-  background: white;
-  color: black;
-  padding: 10px;
-  border-radius: 8px;
-
-  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
-
-  transform: rotate(-3deg);
-  transition: 0.3s;
-}
-
-.polaroid:nth-child(even) {
-  transform: rotate(3deg);
-}
-
-.polaroid:hover {
-  transform: scale(1.1) rotate(0deg);
-}
-
-.polaroid img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 5px;
-}
-
-.polaroid p {
-  text-align: center;
-  margin-top: 8px;
-  font-size: 14px;
-}
-
-/* =========================
-   VIEWER FIX (DISABLED CLICK MODE)
-========================= */
-.viewer {
-  overflow-y: auto;
-  padding-top: 40px;
-  cursor: default;
-}
-
-/* CLOSE BUTTON */
-.close-btn {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  font-size: 28px;
-  cursor: pointer;
-}
-
-/* =========================
-   STACK PAGE (album.html)
+   STACK PAGE (ALBUM)
 ========================= */
 .card-stack {
   position: relative;
@@ -188,7 +252,6 @@ button:hover {
   margin: 40px auto;
 }
 
-/* CARD */
 .card {
   position: absolute;
   width: 100%;
@@ -198,26 +261,20 @@ button:hover {
   border-radius: 10px;
 
   box-shadow: 0 20px 45px rgba(0,0,0,0.6);
-
   transition: 0.4s;
   cursor: pointer;
 }
 
-/* IMAGE */
 .card img {
   width: 100%;
   height: 300px;
   object-fit: cover;
-  border-radius: 8px;
 }
 
-/* TEXT */
 .card p {
   text-align: center;
-  margin-top: 8px;
 }
 
-/* STACK ROTATION */
 .card:nth-child(odd) {
   transform: rotate(-3deg);
 }
@@ -231,20 +288,16 @@ button:hover {
 ========================= */
 @media (max-width: 600px) {
 
-  .polaroid {
-    width: 140px;
+  #main {
+    padding: 20px;
   }
 
-  .polaroid img {
-    height: 120px;
+  .book {
+    width: 95%;
+    height: 400px;
   }
 
   .card-stack {
-    width: 260px;
-    height: 360px;
-  }
-
-  .card img {
-    height: 250px;
+    width: 250px;
   }
 }
