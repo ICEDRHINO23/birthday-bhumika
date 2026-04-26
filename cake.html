@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cake Surprise 🎂</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="memory-page">
+
+<!-- NAV -->
+<button class="back-btn" onclick="goBack()">⬅</button>
+<button class="home-btn" onclick="goHome()">🏠</button>
+
+<h2 style="text-align:center;">🎂 Make a Wish</h2>
+
+<!-- CAKE -->
+<div id="cakeSection">
+
+  <div class="cake">
+
+    <div class="layer top"></div>
+    <div class="layer middle"></div>
+    <div class="layer bottom"></div>
+
+    <div class="candles">
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+    </div>
+
+  </div>
+
+  <p id="cakeMsg" style="text-align:center;">
+    Tap candles to light them 🕯️
+  </p>
+
+</div>
+
+<!-- 💌 CARD -->
+<div id="cardSection" class="hidden">
+
+  <div class="card">
+
+    <div class="card-front" onclick="openCard()">
+      💌 Tap to Open
+    </div>
+
+    <div class="card-inside">
+
+      <div class="card-left">
+        💖
+      </div>
+
+      <div class="card-right">
+        <h2>For You 💖</h2>
+
+        <p>
+          Some people don’t come into life loudly…<br><br>
+          they come quietly and change everything.<br><br>
+
+          You are one of those rare people—
+          calm, real, and beautifully yourself.<br><br>
+
+          💖 Happy Birthday 💖
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script src="cake.js"></script>
+
+<script>
+function goBack(){ window.history.back(); }
+function goHome(){ window.location.href="index.html"; }
+</script>
+
+</body>
+</html>
