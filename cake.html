@@ -1,34 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Cake Surprise 🎂</title>
-<link rel="stylesheet" href="style.css">
-</head>
-
-<body class="memory-page">
-
-<button class="home-btn" onclick="goHome()">🏠</button>
-<button class="back-btn" onclick="goBack()">⬅</button>
-
-<h2 style="text-align:center;">🎂 Make a Wish</h2>
-
 <div id="cakeSection">
 
   <div class="cake" id="cake">
 
-    <!-- LEFT -->
+    <!-- LEFT HALF -->
     <div class="half left">
-      <div class="layer"></div>
-      <div class="layer"></div>
-      <div class="layer"></div>
+      <div class="slice">
+
+        <div class="layer top"></div>
+        <div class="cream"></div>
+
+        <div class="layer middle"></div>
+        <div class="cream"></div>
+
+        <div class="layer bottom"></div>
+
+      </div>
     </div>
 
-    <!-- RIGHT -->
+    <!-- RIGHT HALF -->
     <div class="half right">
-      <div class="layer"></div>
-      <div class="layer"></div>
-      <div class="layer"></div>
+      <div class="slice">
+
+        <div class="layer top"></div>
+        <div class="cream"></div>
+
+        <div class="layer middle"></div>
+        <div class="cream"></div>
+
+        <div class="layer bottom"></div>
+
+      </div>
     </div>
 
     <!-- CANDLES -->
@@ -46,25 +47,3 @@
   <p id="msg">Tap candles to light them 🕯️</p>
 
 </div>
-
-<!-- CARD -->
-<div id="cardSection" class="hidden">
-  <div class="card">
-    <div class="card-front" onclick="openCard()">💌 Tap</div>
-    <div class="card-inside">
-      <p>💖 Happy Birthday 💖</p>
-    </div>
-  </div>
-</div>
-
-<div id="confettiContainer"></div>
-
-<script src="cake.js"></script>
-
-<script>
-function goHome(){ window.location.href="index.html"; }
-function goBack(){ window.history.back(); }
-</script>
-
-</body>
-</html>
