@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Scrapbook 📖</title>
+
+<!-- IMPORTANT: go one level up -->
 <link rel="stylesheet" href="../style.css">
+
 </head>
 
 <body class="book-body">
@@ -11,8 +14,8 @@
 <div class="scene">
   <div class="book">
 
-    <!-- COVER -->
-    <div class="page cover-page">
+    <!-- COVER (REQUIRED FOR JS) -->
+    <div id="cover" class="page cover-page">
       <div class="front">
         <h1>Our Story 💖</h1>
         <p>Click to open</p>
@@ -20,52 +23,17 @@
       <div class="back"></div>
     </div>
 
-    <!-- IMAGE PAGE -->
-    <div class="page">
-      <div class="front">
-        <div class="left">
-          <img src="./1.jpg">
-        </div>
-        <div class="right">
-          <h2>Memory 1</h2>
-          <p>Beautiful moment 💕</p>
-        </div>
-      </div>
-      <div class="back"></div>
-    </div>
-
-    <!-- IMAGE PAGE -->
-    <div class="page">
-      <div class="front">
-        <div class="left">
-          <img src="./2.jpg">
-        </div>
-        <div class="right">
-          <h2>Memory 2</h2>
-          <p>Special day ✨</p>
-        </div>
-      </div>
-      <div class="back"></div>
-    </div>
-
-    <!-- VIDEO PAGE -->
-    <div class="page">
-      <div class="front">
-        <div class="left">
-          <video src="./4.mp4" controls></video>
-        </div>
-        <div class="right">
-          <h2>Video Memory 🎥</h2>
-          <p>Captured moments ❤️</p>
-        </div>
-      </div>
-      <div class="back"></div>
-    </div>
+    <!-- 🔥 THIS IS CRITICAL (JS injects pages here) -->
+    <div id="pagesContainer"></div>
 
   </div>
 </div>
 
-<script src="../script.js"></script>
+<!-- OPTIONAL MUSIC (JS expects it) -->
+<audio id="scrapMusic" src="../assets/audio/bds.mp3" loop></audio>
+
+<!-- IMPORTANT: correct JS file -->
+<script src="../scrapbook.js"></script>
 
 </body>
 </html>
