@@ -5,15 +5,21 @@ let litCount = 0;
 let canCut = false;
 
 /* =========================
-   CANDLE LIGHTING
+   ELEMENTS
 ========================= */
 const candles = document.querySelectorAll(".candle");
 const msg = document.getElementById("cakeMsg");
+const cake = document.getElementById("cake");
+const knife = document.getElementById("knife");
 
+/* =========================
+   🕯️ CANDLE LIGHTING
+========================= */
 candles.forEach(candle => {
 
   candle.addEventListener("click", () => {
 
+    // prevent double lighting
     if (candle.classList.contains("lit")) return;
 
     candle.classList.add("lit");
@@ -24,7 +30,7 @@ candles.forEach(candle => {
     }
 
     if (litCount === candles.length) {
-      msg.innerText = "✨ Make a wish… now cut the cake 🎂";
+      msg.innerText = "✨ Make a wish… now tap the cake 🎂";
       enableCut();
     }
   });
@@ -32,23 +38,35 @@ candles.forEach(candle => {
 });
 
 /* =========================
-   ENABLE CUT
+   🔪 ENABLE CUT (KNIFE FLOW)
 ========================= */
 function enableCut() {
 
-  const cake = document.getElementById("cake");
   canCut = true;
 
   cake.addEventListener("click", () => {
 
     if (!canCut) return;
 
-    cake.classList.add("split");
+    canCut = false; // prevent repeat
 
-    msg.innerText = "🎉 Happy Birthday 🎉";
+    // start knife animation
+    knife.classList.add("animate");
 
-    launchConfetti();
+    msg.innerText = "Cutting the cake... 🎂";
 
+    /* SPLIT AFTER KNIFE REACHES */
+    setTimeout(() => {
+
+      cake.classList.add("split");
+
+      msg.innerText = "🎉 Happy Birthday 🎉";
+
+      launchConfetti();
+
+    }, 700);
+
+    /* SHOW CARD AFTER EFFECT */
     setTimeout(() => {
       showCard();
     }, 1500);
@@ -57,7 +75,7 @@ function enableCut() {
 }
 
 /* =========================
-   CONFETTI
+   🎉 CONFETTI
 ========================= */
 function launchConfetti() {
 
@@ -79,15 +97,16 @@ function launchConfetti() {
 }
 
 /* =========================
-   SHOW CARD
+   💌 SHOW CARD
 ========================= */
 function showCard() {
+
   document.getElementById("cakeSection").classList.add("hidden");
   document.getElementById("cardSection").classList.remove("hidden");
 }
 
 /* =========================
-   CARD OPEN
+   💌 CARD FLIP
 ========================= */
 function openCard() {
   document.querySelector(".card").classList.add("open");
