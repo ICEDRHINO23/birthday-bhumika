@@ -26,19 +26,25 @@ memoryData.forEach(mem => {
   albumContainer.appendChild(btn);
 });
 
-/* OPEN VIEWER */
+/* OPEN ALBUM VIEWER */
 function openAlbum(folder) {
 
   const viewer = document.createElement("div");
   viewer.className = "viewer";
 
   const close = document.createElement("div");
-  close.className = "close-btn";
   close.innerHTML = "✖";
+  close.style.position = "absolute";
+  close.style.top = "20px";
+  close.style.right = "20px";
+  close.style.color = "white";
+  close.style.fontSize = "24px";
+  close.style.cursor = "pointer";
+
   close.onclick = () => viewer.remove();
 
   const stack = document.createElement("div");
-  stack.className = "stack";
+  stack.style.position = "relative";
 
   const caption = document.createElement("div");
   caption.className = "caption";
@@ -58,15 +64,19 @@ function openAlbum(folder) {
     const img = document.createElement("img");
     img.src = `./assets/images/${folder}/${index}.jpg`;
 
-    caption.innerText = `Memory ${index} 💖`;
+    img.style.width = "300px";
+    img.style.borderRadius = "10px";
+    img.style.boxShadow = "0 15px 30px rgba(0,0,0,0.6)";
 
     stack.appendChild(img);
+
+    caption.innerText = `Memory ${index} 💖`;
   }
 
   viewer.onclick = () => {
     index++;
 
-    if (index > 20) {  // adjust max images if needed
+    if (index > 20) {
       viewer.remove();
     } else {
       showImage();
