@@ -130,9 +130,8 @@ function closeVideo() {
   if (music) music.play().catch(()=>{});
 }
 /* 🎂 CAKE SYSTEM */
-function openCake() {
-  document.getElementById("menu").classList.add("hidden");
-  document.getElementById("cakeSection").classList.remove("hidden");
+function openCakePage() {
+  window.location.href = "cake.html";
 }
 
 let lit = 0;
