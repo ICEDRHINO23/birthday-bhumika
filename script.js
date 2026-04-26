@@ -56,10 +56,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const messages = [
-    "You really thought it was that easy? 😂",
+    "You... really.... thought... it... was... that... easy? 😂",
     "Wait… patience 😌",
-    "Good things take time 💖",
-    "Okay okay… now enjoy 🎉"
+    "Good.. things... take... time 💖",
+    "Okay... okay… now... enjoy 🎉"
   ];
 
   let msgIndex = 0;
