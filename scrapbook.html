@@ -2,49 +2,98 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Our Scrapbook 📖</title>
-
-<!-- ✅ IMPORTANT: ensure correct path -->
-<link rel="stylesheet" href="./style.css">
-
+<title>Scrapbook 📖</title>
+<link rel="stylesheet" href="../style.css">
 </head>
 
 <body class="book-body">
 
-<!-- 🔥 SCENE -->
 <div class="scene">
   <div class="book">
 
-    <!-- 💖 COVER PAGE -->
-    <div class="page cover-page" id="cover">
+    <!-- COVER -->
+    <div class="page cover-page">
       <div class="front">
-        <h2>The Story 📖</h2>
-        <p>Happy Birthday Bhumika 🎂</p>
-        <p>Tap to open your story 💖</p>
+        <h1>Our Story 💖</h1>
+        <p>Click to open</p>
       </div>
       <div class="back"></div>
     </div>
 
-    <!-- 📄 DYNAMIC PAGES -->
-    <div id="pagesContainer"></div>
+    <!-- PAGE 1 (IMAGE) -->
+    <div class="page">
+      <div class="front">
+        <div class="left">
+          <img src="./1.jpg">
+        </div>
+        <div class="right">
+          <h2>Memory 1</h2>
+          <p>Beautiful moment 💕</p>
+        </div>
+      </div>
+      <div class="back"></div>
+    </div>
+
+    <!-- PAGE 2 (IMAGE) -->
+    <div class="page">
+      <div class="front">
+        <div class="left">
+          <img src="./2.jpg">
+        </div>
+        <div class="right">
+          <h2>Memory 2</h2>
+          <p>Special day ✨</p>
+        </div>
+      </div>
+      <div class="back"></div>
+    </div>
+
+    <!-- PAGE 3 (VIDEO) -->
+    <div class="page">
+      <div class="front">
+        <div class="left">
+          <video src="./4.mp4" controls></video>
+        </div>
+        <div class="right">
+          <h2>Video Memory 🎥</h2>
+          <p>Captured moments ❤️</p>
+        </div>
+      </div>
+      <div class="back"></div>
+    </div>
+
+    <!-- PAGE 4 (VIDEO) -->
+    <div class="page">
+      <div class="front">
+        <div class="left">
+          <video src="./5.mp4" controls></video>
+        </div>
+        <div class="right">
+          <h2>Fun Times 😂</h2>
+          <p>Best memories ever</p>
+        </div>
+      </div>
+      <div class="back"></div>
+    </div>
+
+    <!-- PAGE 5 (IMAGE) -->
+    <div class="page">
+      <div class="front">
+        <div class="left">
+          <img src="./7.jpg">
+        </div>
+        <div class="right">
+          <h2>Last Memory 💖</h2>
+          <p>Forever special ✨</p>
+        </div>
+      </div>
+      <div class="back"></div>
+    </div>
 
   </div>
 </div>
 
-<!-- 🎮 CONTROLS -->
-<div class="controls">
-  <button onclick="prevPage()">⬅ Prev</button>
-  <button onclick="nextPage()">Next ➡</button>
-  <button onclick="goHome()">🏠 Home</button>
-</div>
-
-<!-- 🎵 MUSIC -->
-<audio id="scrapMusic" loop preload="auto">
-  <source src="./audio/scrapbook.mp3" type="audio/mpeg">
-</audio>
-
-<!-- ✅ SCRIPT -->
-<script src="./scrapbook.js"></script>
+<script src="../script.js"></script>
 
 </body>
 </html>
