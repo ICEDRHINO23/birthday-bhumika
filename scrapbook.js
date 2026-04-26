@@ -16,49 +16,54 @@ document.addEventListener("DOMContentLoaded", () => {
   /* 💖 TEXT */
 const texts = [
 
-`There are some people who don’t just enter our lives…
-they slowly become a part of it.
+`Some people just walk into your life…
+and suddenly, everything feels a little lighter.
 
-No noise, no warning…
-just a quiet presence that starts to mean everything.`,
+Like… even a normal day starts feeling special for no reason.`,
 
 `We never really planned anything…
 
-No expectations, no big moments—
-yet somehow, every small conversation felt special.`,
+No “big moments”, no dramatic stories—
+just random conversations that somehow became my favorite part of the day.`,
 
-`It’s strange how some memories don’t need grand reasons.
+`And honestly…
+I still don’t know how it happened 😄
 
-Just simple days,
-random talks,
-and genuine smiles…`,
+Somewhere between the jokes, the talks, and the silence…
+you became important.`,
 
-`There were moments we didn’t even realize were important…
+`You know what’s funny?
 
-but today, they feel priceless.`,
+The best memories we have…
+are probably the ones we didn’t even try to make.`,
 
 `That smile of yours…
-it stayed longer than the moment itself.`,
 
-`Not everything needs a reason,
-not everything needs a definition…
+It’s dangerous 😌
+Because once you see it, it stays in your mind way longer than it should.`,
 
-some things are just meant to be felt.`,
+`There were days that felt ordinary…
 
-`And somewhere between all these memories…
+but somehow, because you were there,
+they turned into something I never want to forget.`,
 
-you became someone I never want to lose.`,
+`I don’t say this often,
+but I’m really glad you’re in my life.
+
+Not for any big reason…
+just for being you.`,
 
 `💖 Happy Birthday 💖
 
-I don’t know what the future holds,
-but I know one thing for sure…
+I hope you always stay the same—
+a little crazy, a little sweet,
+and completely unforgettable.
 
-some people are not just memories—
-they are feelings that stay forever.`
+And yeah…
+keep smiling like that,
+it’s kind of unfair for the rest of us 😄`
 
 ];
-
   /* 📂 MEDIA PATH (IMPORTANT FIX) */
   const pages = [
     { type: "image", src: "./scrapbook/1.jpg" },
