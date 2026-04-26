@@ -10,11 +10,11 @@ window.onload = () => {
     document.getElementById("intro").style.display = "none";
   }, 2000);
 
-  /* TRY PLAY MUSIC (SAFE) */
+  /* SAFE MUSIC START */
   const music = document.getElementById("bgMusic");
 
   document.addEventListener("click", () => {
-    if (music.paused) {
+    if (music && music.paused) {
       music.volume = 0.4;
       music.play().catch(()=>{});
     }
@@ -38,12 +38,12 @@ tapBtn.onclick = () => {
 };
 
 /* =========================
-   GIFT CLICK → OPEN MENU
+   GIFT CLICK
 ========================= */
 const giftImage = document.getElementById("giftImage");
 
 giftImage.onclick = () => {
-  giftImage.src = "./assets/images/gift-open.PNG"; // optional
+  giftImage.src = "./assets/images/gift-open.PNG"; // optional visual
   document.getElementById("menu").classList.remove("hidden");
 };
 
@@ -59,7 +59,7 @@ function openMemories() {
 }
 
 /* =========================
-   SPECIAL VIDEO
+   VIDEO SYSTEM (FIXED)
 ========================= */
 function openVideo() {
 
@@ -67,9 +67,9 @@ function openVideo() {
   document.getElementById("videoSection").classList.remove("hidden");
 
   const video = document.getElementById("specialVideo");
-
-  /* STOP OTHER AUDIO */
   const music = document.getElementById("bgMusic");
+
+  /* Pause background music */
   if (music) music.pause();
 
   video.currentTime = 0;
@@ -79,6 +79,7 @@ function openVideo() {
 function closeVideo() {
 
   const video = document.getElementById("specialVideo");
+  const music = document.getElementById("bgMusic");
 
   video.pause();
   video.currentTime = 0;
@@ -86,7 +87,6 @@ function closeVideo() {
   document.getElementById("videoSection").classList.add("hidden");
   document.getElementById("menu").classList.remove("hidden");
 
-  /* RESUME MUSIC */
-  const music = document.getElementById("bgMusic");
+  /* Resume music */
   if (music) music.play().catch(()=>{});
 }
