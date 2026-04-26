@@ -6,85 +6,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let current = 0;
 
-  /* 🎵 MUSIC */
+  /* 🎵 MUSIC START ON CLICK */
   document.addEventListener("click", () => {
     if (music.paused) music.play().catch(()=>{});
   }, { once: true });
 
-  /* 💖 TEXT (ROMANTIC + FRIENDLY) */
-const texts = [
+  /* 💖 TEXT (INTROVERT STYLE) */
+  const texts = [
 
 `Some people don’t enter your life loudly…
+they come quietly,
+and become the calmest part of your day.`,
 
-They come quietly,
-without trying to be noticed.
+`We never planned anything…
+yet every small moment started meaning more.`,
 
-And somehow,
-they become the most peaceful part of your day.`,
+`You don’t say much…
+but somehow, you say enough.`,
 
-`We never really planned anything…
-
-No big moments, no dramatic stories—
-just simple conversations,
-small silences,
-and a comfort that slowly grew.`,
-
-`You don’t say much,
-but somehow, you say enough.
-
-In your quiet way,
-you make things feel safe…
-and that means more than words ever could.`,
-
-`There were moments we didn’t even realise were important…
-
-just sitting, talking, or even not talking at all—
-but now, those moments feel special.`,
-
-`You know what I like the most?
-
-The way you are…
-calm, real, and completely yourself.
-
-No pretending, no noise—
-just genuine.`,
-
-`That smile of yours…
-
-It’s not loud,
-it’s not for everyone—
-but when it appears,
-it feels… real.`,
+`Some memories don’t need noise…
+just being there is enough.`,
 
 `Not everyone understands silence…
+but with you, it feels comfortable.`,
 
-but with you,
-even silence feels comfortable,
-like it doesn’t need to be filled.`,
+`That smile of yours…
+it’s rare, and that’s what makes it special.`,
+
+`I’m really glad you’re in my life…
+just for being you.`,
 
 `💖 Happy Birthday 💖
 
-I hope life always stays kind to you…
-
-I hope you always find your calm,
+I hope you always find your peace,
 your space,
 and your quiet happiness.
 
-And even if you don’t say much…
+You matter more than you think.`
 
-just know—
-you matter more than you think.`
+  ];
 
-];
-
-  /* 📸 PAGES */
+  /* 📸 MEDIA */
   const pages = [
     { type: "image", src: "./scrapbook/1.jpg" },
     { type: "image", src: "./scrapbook/2.jpg" },
     { type: "image", src: "./scrapbook/3.jpg" },
     { type: "video", src: "./scrapbook/4.mp4" },
-    { type: "image", src: "./scrapbook/5.mp4" },
-    { type: "image", src: "./scrapbook/6.mp4" },
+    { type: "video", src: "./scrapbook/5.mp4" },
+    { type: "video", src: "./scrapbook/6.mp4" },
     { type: "image", src: "./scrapbook/7.jpg" },
     { type: "image", src: "./scrapbook/8.jpg" }
   ];
@@ -101,9 +70,11 @@ you matter more than you think.`
         <div class="left">
           ${
             p.type === "video"
-            ? `<video controls>
-                 <source src="${p.src}" type="video/mp4">
-               </video>`
+            ? `
+              <video class="scrap-video" muted playsinline controls preload="auto">
+                <source src="${p.src}" type="video/mp4">
+              </video>
+            `
             : `<img src="${p.src}">`
           }
         </div>
@@ -123,33 +94,56 @@ you matter more than you think.`
 
   const allPages = document.querySelectorAll("#pagesContainer .page");
 
-  /* ✅ FIX STACK ORDER */
+  /* ✅ STACK ORDER FIX */
   allPages.forEach((page, i) => {
     page.style.zIndex = 1000 - i;
   });
 
-  /* ✅ COVER CLICK (NO AUTO FLIP) */
+  /* ✅ COVER CLICK */
   cover.addEventListener("click", () => {
     cover.classList.add("flipped");
   });
 
-  /* NEXT PAGE */
+  /* ▶ NEXT PAGE */
   window.nextPage = function () {
+
     if (current < allPages.length) {
+
+      /* ⏸ pause all videos */
+      document.querySelectorAll("video").forEach(v => v.pause());
+
       allPages[current].classList.add("flipped");
       current++;
 
+      /* ▶ play current video if exists */
+      const video = allPages[current]?.querySelector("video");
+
+      if (video) {
+        video.load();
+        video.play().catch(()=>{});
+      }
+
+      /* 🎉 END */
       if (current === allPages.length) {
         setTimeout(showEnding, 800);
       }
     }
   };
 
-  /* PREVIOUS */
+  /* ◀ PREVIOUS */
   window.prevPage = function () {
+
     if (current > 0) {
+
       current--;
       allPages[current].classList.remove("flipped");
+
+      /* ▶ play video again if exists */
+      const video = allPages[current]?.querySelector("video");
+
+      if (video) {
+        video.play().catch(()=>{});
+      }
     }
   };
 
