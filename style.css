@@ -32,7 +32,7 @@ body {
 }
 
 /* =========================
-   INDEX CARD
+   MAIN CARD
 ========================= */
 #main {
   text-align: center;
@@ -43,7 +43,6 @@ body {
   width: 90%;
   max-width: 600px;
   margin: 50px auto;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
 #profilePic {
@@ -65,7 +64,6 @@ button {
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
   color: white;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 button:hover {
@@ -74,19 +72,6 @@ button:hover {
 
 .hidden {
   display: none !important;
-}
-
-/* =========================
-   GIFT
-========================= */
-#giftContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-#giftImage {
-  width: 150px;
 }
 
 /* =========================
@@ -126,9 +111,7 @@ button:hover {
   backface-visibility: hidden;
 }
 
-.back {
-  transform: rotateY(180deg);
-}
+.back { transform: rotateY(180deg); }
 
 .front {
   display: flex;
@@ -155,12 +138,12 @@ button:hover {
 .right {
   width: 50%;
   padding: 40px;
+  color: black;
 }
 
 .right p {
   font-size: 20px;
   line-height: 1.8;
-  color: #222;
 }
 
 /* =========================
@@ -206,11 +189,10 @@ button:hover {
   width: 100%;
   height: 160px;
   object-fit: contain;
-  background: #f2f2f2;
 }
 
 /* =========================
-   🎂 FINAL CAKE
+   🎂 FIXED CAKE
 ========================= */
 #cakeSection {
   display: flex;
@@ -222,48 +204,75 @@ button:hover {
 .cake {
   position: relative;
   width: 260px;
-  height: 160px;
-  margin-top: 40px;
-  transform: perspective(900px) rotateX(12deg);
+  height: 190px;
+  margin: 40px auto;
+  perspective: 900px;
 }
 
-.cake-half {
+/* HALVES */
+.half {
   position: absolute;
   width: 50%;
+  height: 100%;
   top: 0;
+  transition: 0.6s ease;
 }
 
-.cake-half.left { left: 0; }
-.cake-half.right { right: 0; }
+.left { left: 0; }
+.right { right: 0; }
 
+/* INNER STACK */
+.slice {
+  transform: rotateX(12deg);
+}
+
+/* SPLIT */
 .cake.split .left {
-  transform: translateX(-25px) rotate(-2deg);
+  transform: translateX(-40px) rotateY(-12deg);
 }
-
 .cake.split .right {
-  transform: translateX(25px) rotate(2deg);
+  transform: translateX(40px) rotateY(12deg);
 }
 
+/* LAYERS */
 .layer {
   width: 100%;
   height: 50px;
   border-radius: 12px;
-  margin-bottom: 5px;
-  box-shadow: inset 0 -6px rgba(0,0,0,0.1),
-              0 6px 10px rgba(0,0,0,0.3);
+  margin-bottom: 6px;
+  box-shadow:
+    inset 0 -6px rgba(0,0,0,0.12),
+    0 8px 15px rgba(0,0,0,0.25);
 }
 
-.top { background: #ff8fa3; }
-.middle { background: #ffc2d1; }
-.bottom { background: #ffe5ec; }
+.top { background: linear-gradient(#ff758f, #ff4d6d); }
+.middle { background: linear-gradient(#ffc2d1, #ffb3c6); }
+.bottom { background: linear-gradient(#ffe5ec, #ffd6e0); }
 
-.cake::before {
+/* CREAM */
+.cream {
+  height: 12px;
+  background: linear-gradient(#fff, #ffeef5);
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+
+/* CUT FACE */
+.half::after {
   content: "";
   position: absolute;
-  left: 50%;
-  width: 2px;
+  width: 6px;
   height: 100%;
-  background: rgba(0,0,0,0.2);
+  top: 0;
+  background: linear-gradient(#fff, #ffd6e0);
+  opacity: 0;
+}
+
+.left::after { right: 0; }
+.right::after { left: 0; }
+
+.cake.split .half::after {
+  opacity: 1;
 }
 
 /* =========================
@@ -271,7 +280,7 @@ button:hover {
 ========================= */
 .candles {
   position: absolute;
-  top: -35px;
+  top: -40px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -283,6 +292,7 @@ button:hover {
   margin: 0 6px;
   display: inline-block;
   border-radius: 3px;
+  position: relative;
 }
 
 .candle.lit::after {
@@ -300,6 +310,33 @@ button:hover {
 @keyframes flame {
   from { transform: scale(1); }
   to { transform: scale(1.2); }
+}
+
+/* =========================
+   🔪 KNIFE
+========================= */
+#knife {
+  position: absolute;
+  width: 6px;
+  height: 120px;
+  background: linear-gradient(to bottom, silver, #aaa);
+  left: 50%;
+  top: -150px;
+  transform: translateX(-50%) rotate(20deg);
+  border-radius: 3px;
+  opacity: 0;
+}
+
+#knife.animate {
+  animation: knifeCut 0.8s ease forwards;
+  opacity: 1;
+}
+
+@keyframes knifeCut {
+  to {
+    top: 40px;
+    transform: translateX(-50%) rotate(0deg);
+  }
 }
 
 /* =========================
@@ -326,7 +363,7 @@ button:hover {
 }
 
 /* =========================
-   💌 CARD
+   CARD
 ========================= */
 #cardSection {
   display: flex;
@@ -372,126 +409,4 @@ button:hover {
 
 .card.open .card-inside {
   transform: rotateY(0deg);
-}
-
-.card-left {
-  width: 40%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 40px;
-}
-
-.card-right {
-  width: 60%;
-  padding: 15px;
-}
-
-/* =========================
-   MOBILE
-========================= */
-@media (max-width: 600px) {
-  .cake { width: 200px; }
-  .layer { height: 40px; }
-
-  .card {
-    width: 90%;
-    height: auto;
-  }
-
-  .card-inside {
-    flex-direction: column;
-  }
-
-  .card-left,
-  .card-right {
-    width: 100%;
-  }
-}
-/* =========================
-   🔪 KNIFE
-========================= */
-#knife {
-  position: absolute;
-  width: 6px;
-  height: 120px;
-  background: linear-gradient(to bottom, silver, #aaa);
-  left: 50%;
-  top: -150px;
-  transform: translateX(-50%) rotate(20deg);
-  border-radius: 3px;
-  z-index: 10;
-  opacity: 0;
-}
-
-/* HANDLE */
-#knife::after {
-  content: "";
-  position: absolute;
-  bottom: -20px;
-  left: -5px;
-  width: 16px;
-  height: 20px;
-  background: #333;
-  border-radius: 4px;
-}
-
-/* CUT ANIMATION */
-#knife.animate {
-  animation: knifeCut 0.8s ease forwards;
-  opacity: 1;
-}
-
-@keyframes knifeCut {
-  0% {
-    top: -150px;
-    transform: translateX(-50%) rotate(20deg);
-  }
-  100% {
-    top: 40px;
-    transform: translateX(-50%) rotate(0deg);
-  }
-}
-/* =========================
-   🍰 CREAM LAYER
-========================= */
-.cream {
-  width: 100%;
-  height: 12px;
-  background: linear-gradient(to right, #fff, #ffe9f0);
-  border-radius: 10px;
-  margin-bottom: 5px;
-
-  box-shadow:
-    inset 0 -2px rgba(0,0,0,0.1),
-    0 2px 4px rgba(0,0,0,0.2);
-}
-
-/* =========================
-   🍰 CUT FACE (VISIBLE WHEN SPLIT)
-========================= */
-.cake-half::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 6px;
-  height: 100%;
-  background: linear-gradient(#fff, #ffd6e0);
-  opacity: 0;
-  transition: 0.4s;
-}
-
-/* LEFT FACE */
-.cake-half.left::after {
-  right: 0;
-}
-
-/* RIGHT FACE */
-.cake-half.right::after {
-  left: 0;
-}
-
-/* SHOW INSIDE WHEN CUT */
-.cake.split .cake-half::after {
-  opacity: 1;
 }
