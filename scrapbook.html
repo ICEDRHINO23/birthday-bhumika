@@ -10,25 +10,32 @@
 
 <body class="book-body">
 
-<!-- 🎵 SCRAPBOOK MUSIC -->
+<!-- 🎵 MUSIC -->
 <audio id="scrapMusic" src="./audio/scrapbook.mp3" loop preload="auto"></audio>
 
 <div class="scene">
   <div class="book">
 
-    <!-- COVER -->
+    <!-- ✅ COVER FIXED -->
     <div id="cover" class="page cover-page">
-      <div class="front">
+      <div class="front cover-front">
         <h1>Our Story 💖</h1>
         <p>Click to open</p>
       </div>
       <div class="back"></div>
     </div>
 
-    <!-- PAGES WILL LOAD HERE -->
+    <!-- PAGES -->
     <div id="pagesContainer"></div>
 
   </div>
+</div>
+
+<!-- ✅ NAV BUTTONS -->
+<div class="controls">
+  <button onclick="prevPage()">⬅ Prev</button>
+  <button onclick="nextPage()">Next ➡</button>
+  <button onclick="goHome()">🏠 Home</button>
 </div>
 
 <script src="scrapbook.js"></script>
