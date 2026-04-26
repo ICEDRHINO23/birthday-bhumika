@@ -832,3 +832,47 @@ button:hover {
   height: 100%;
   background: rgba(0,0,0,0.1);
 }
+/* =========================
+   🔪 KNIFE
+========================= */
+#knife {
+  position: absolute;
+  width: 6px;
+  height: 120px;
+  background: linear-gradient(to bottom, silver, #aaa);
+  left: 50%;
+  top: -150px;
+  transform: translateX(-50%) rotate(20deg);
+  border-radius: 3px;
+  z-index: 10;
+  opacity: 0;
+}
+
+/* HANDLE */
+#knife::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: -5px;
+  width: 16px;
+  height: 20px;
+  background: #333;
+  border-radius: 4px;
+}
+
+/* CUT ANIMATION */
+#knife.animate {
+  animation: knifeCut 0.8s ease forwards;
+  opacity: 1;
+}
+
+@keyframes knifeCut {
+  0% {
+    top: -150px;
+    transform: translateX(-50%) rotate(20deg);
+  }
+  100% {
+    top: 40px;
+    transform: translateX(-50%) rotate(0deg);
+  }
+}
