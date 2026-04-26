@@ -8,10 +8,10 @@
 
 <body>
 
-<!-- LOADING -->
+<!-- LOADING SCREEN -->
 <div id="intro">✨ Loading Surprise... ✨</div>
 
-<!-- MUSIC -->
+<!-- BACKGROUND MUSIC -->
 <audio id="bgMusic" src="./audio/bds.mp3" loop></audio>
 
 <div id="main">
@@ -29,7 +29,7 @@
     <p id="tapCount"></p>
   </div>
 
-  <!-- GIFT -->
+  <!-- GIFT BOX -->
   <div id="giftContainer" class="hidden">
     <img id="giftImage" src="./image/gift-closed.PNG">
   </div>
@@ -37,21 +37,26 @@
   <!-- MENU -->
   <div id="menu" class="hidden">
     <h2>Open your surprise 💝</h2>
+
     <button onclick="openScrapbook()">📖 Scrapbook</button>
     <button onclick="openMemories()">📸 Memories</button>
-    <button onclick="openVideo()">🎥 Special Video</button>
+
+    <!-- VIDEO BUTTON (LOCKED SYSTEM) -->
+    <button id="videoBtn" onclick="openVideo()">🎥 Special Video</button>
   </div>
 
-  <!-- VIDEO -->
+  <!-- VIDEO SECTION -->
   <div id="videoSection" class="hidden">
+
     <h2>💖 A Special Surprise 💖</h2>
 
     <video id="specialVideo" controls>
       <source src="./videos/special.mp4" type="video/mp4">
     </video>
 
-    <br>
+    <br><br>
     <button onclick="closeVideo()">⬅ Back</button>
+
   </div>
 
 </div>
