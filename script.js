@@ -2,6 +2,7 @@
    INITIAL LOAD
 ========================= */
 let taps = 0;
+let unlocked = false;
 
 window.onload = () => {
 
@@ -10,7 +11,7 @@ window.onload = () => {
     document.getElementById("intro").style.display = "none";
   }, 2000);
 
-  /* SAFE MUSIC START */
+  /* SAFE MUSIC */
   const music = document.getElementById("bgMusic");
 
   document.addEventListener("click", () => {
@@ -22,29 +23,48 @@ window.onload = () => {
 };
 
 /* =========================
-   TAP GAME
+   TAP GAME (FIXED)
 ========================= */
 const tapBtn = document.getElementById("tapBtn");
 const tapCount = document.getElementById("tapCount");
-const gift = document.getElementById("giftContainer");
+const giftContainer = document.getElementById("giftContainer");
 
 tapBtn.onclick = () => {
+
+  if (unlocked) return;   // 🔥 stop after unlock
+
   taps++;
-  tapCount.innerText = `Taps: ${taps}`;
 
   if (taps >= 5) {
-    gift.classList.remove("hidden");
+    taps = 5;
+    unlocked = true;
+
+    tapCount.innerText = "Unlocked 🎉";
+    giftContainer.classList.remove("hidden");
+  } else {
+    tapCount.innerText = `Taps: ${taps}`;
   }
 };
 
 /* =========================
-   GIFT CLICK
+   GIFT OPEN / CLOSE (FIXED)
 ========================= */
 const giftImage = document.getElementById("giftImage");
+let giftOpen = false;
 
 giftImage.onclick = () => {
-  giftImage.src = "./assets/images/gift-open.PNG"; // optional visual
-  document.getElementById("menu").classList.remove("hidden");
+
+  if (!giftOpen) {
+    /* OPEN */
+    giftImage.src = "./assets/images/gift-open.PNG";
+    document.getElementById("menu").classList.remove("hidden");
+    giftOpen = true;
+  } else {
+    /* CLOSE */
+    giftImage.src = "./assets/images/gift-closed.PNG";
+    document.getElementById("menu").classList.add("hidden");
+    giftOpen = false;
+  }
 };
 
 /* =========================
@@ -59,7 +79,7 @@ function openMemories() {
 }
 
 /* =========================
-   VIDEO SYSTEM (FIXED)
+   VIDEO SYSTEM
 ========================= */
 function openVideo() {
 
@@ -69,7 +89,6 @@ function openVideo() {
   const video = document.getElementById("specialVideo");
   const music = document.getElementById("bgMusic");
 
-  /* Pause background music */
   if (music) music.pause();
 
   video.currentTime = 0;
@@ -87,6 +106,5 @@ function closeVideo() {
   document.getElementById("videoSection").classList.add("hidden");
   document.getElementById("menu").classList.remove("hidden");
 
-  /* Resume music */
   if (music) music.play().catch(()=>{});
 }
