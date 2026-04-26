@@ -129,3 +129,55 @@ function closeVideo() {
 
   if (music) music.play().catch(()=>{});
 }
+/* 🎂 CAKE SYSTEM */
+function openCake() {
+  document.getElementById("menu").classList.add("hidden");
+  document.getElementById("cakeSection").classList.remove("hidden");
+}
+
+let lit = 0;
+
+document.querySelectorAll(".candle").forEach(c => {
+  c.onclick = () => {
+
+    if (c.classList.contains("lit")) return;
+
+    c.classList.add("lit");
+    lit++;
+
+    if (lit === 3) {
+      document.getElementById("cakeMsg").innerText =
+        "✨ Now cut the cake 🎂";
+
+      enableCut();
+    }
+  };
+});
+
+/* ✂️ CUT */
+function enableCut() {
+  const cake = document.querySelector(".cake");
+
+  cake.onclick = () => {
+    cake.classList.add("cut");
+
+    setTimeout(() => {
+      openCard();
+    }, 1000);
+  };
+}
+
+/* 💌 CARD */
+function openCard() {
+  document.getElementById("cakeSection").classList.add("hidden");
+  document.getElementById("cardSection").classList.remove("hidden");
+}
+
+function openCard() {
+  document.querySelector(".card").classList.add("open");
+}
+
+function goBackToMenu() {
+  document.getElementById("cardSection").classList.add("hidden");
+  document.getElementById("menu").classList.remove("hidden");
+}
