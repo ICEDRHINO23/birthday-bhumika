@@ -362,3 +362,46 @@ video {
 .controls button {
   margin: 5px;
 }
+.album-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px;
+}
+
+.album-btn {
+  padding: 15px 25px;
+  border-radius: 20px;
+  background: linear-gradient(45deg, #ff4d6d, #ff758f);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.album-btn:hover {
+  transform: scale(1.1);
+}
+
+/* viewer */
+.viewer {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.stack img {
+  position: absolute;
+  width: 300px;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+.caption {
+  color: white;
+  margin-top: 20px;
+}
