@@ -15,10 +15,11 @@ body {
   background: url("./image/bdbg.jpg") no-repeat center center fixed;
   background-size: cover;
   color: white;
+  transition: 0.3s;
 }
 
 /* =========================
-   MAIN CARD
+   MAIN CARD (INDEX)
 ========================= */
 #main {
   text-align: center;
@@ -42,6 +43,11 @@ button {
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
   color: white;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
 }
 
 /* =========================
@@ -52,9 +58,37 @@ button {
   min-height: 100vh;
 }
 
+/* =========================
+   TITLE
+========================= */
 .title {
   text-align: center;
   margin-top: 20px;
+}
+
+/* =========================
+   🏠 HOME BUTTON (NEW)
+========================= */
+.home-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+
+  background: linear-gradient(45deg, #ff4d6d, #ff758f);
+  color: white;
+
+  border: none;
+  padding: 10px 14px;
+  border-radius: 50px;
+
+  cursor: pointer;
+  z-index: 9999;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+.home-btn:hover {
+  transform: scale(1.1);
 }
 
 /* =========================
@@ -74,6 +108,7 @@ button {
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
   cursor: pointer;
   font-weight: bold;
+  transition: 0.3s;
 }
 
 .album-btn:hover {
@@ -81,7 +116,7 @@ button {
 }
 
 /* =========================
-   POLAROID GRID
+   POLAROID GRID (OLD VIEW)
 ========================= */
 .polaroid-container {
   display: flex;
@@ -91,7 +126,6 @@ button {
   padding: 30px;
 }
 
-/* POLAROID CARD */
 .polaroid {
   width: 180px;
   background: white;
@@ -101,12 +135,10 @@ button {
 
   box-shadow: 0 12px 30px rgba(0,0,0,0.6);
 
-  /* RANDOM LOOK */
   transform: rotate(-3deg);
   transition: 0.3s;
 }
 
-/* ALTERNATE ROTATION */
 .polaroid:nth-child(even) {
   transform: rotate(3deg);
 }
@@ -115,7 +147,6 @@ button {
   transform: scale(1.1) rotate(0deg);
 }
 
-/* IMAGE */
 .polaroid img {
   width: 100%;
   height: 160px;
@@ -123,7 +154,6 @@ button {
   border-radius: 5px;
 }
 
-/* TEXT */
 .polaroid p {
   text-align: center;
   margin-top: 8px;
@@ -131,12 +161,12 @@ button {
 }
 
 /* =========================
-   VIEWER FIX (IMPORTANT)
+   VIEWER FIX (DISABLED CLICK MODE)
 ========================= */
 .viewer {
-  overflow-y: auto;   /* allow scrolling */
+  overflow-y: auto;
   padding-top: 40px;
-  cursor: default;    /* ❌ disable slideshow click */
+  cursor: default;
 }
 
 /* CLOSE BUTTON */
@@ -149,19 +179,8 @@ button {
 }
 
 /* =========================
-   MOBILE
+   STACK PAGE (album.html)
 ========================= */
-@media (max-width: 600px) {
-  .polaroid {
-    width: 140px;
-  }
-
-  .polaroid img {
-    height: 120px;
-  }
-}
-
-/* STACK CONTAINER */
 .card-stack {
   position: relative;
   width: 300px;
@@ -178,7 +197,7 @@ button {
   padding: 10px;
   border-radius: 10px;
 
-  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.6);
 
   transition: 0.4s;
   cursor: pointer;
@@ -198,11 +217,34 @@ button {
   margin-top: 8px;
 }
 
-/* RANDOM ROTATION */
+/* STACK ROTATION */
 .card:nth-child(odd) {
   transform: rotate(-3deg);
 }
 
 .card:nth-child(even) {
   transform: rotate(3deg);
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 600px) {
+
+  .polaroid {
+    width: 140px;
+  }
+
+  .polaroid img {
+    height: 120px;
+  }
+
+  .card-stack {
+    width: 260px;
+    height: 360px;
+  }
+
+  .card img {
+    height: 250px;
+  }
 }
