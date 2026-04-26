@@ -16,13 +16,14 @@
 
 <div id="main">
 
+  <!-- PROFILE -->
   <img id="profilePic" src="./image/bhoomika.jpg">
 
   <h1>Happy Birthday Bhoomika 🎂</h1>
 
   <p>Some people don’t just come into life… they stay, they change everything ❤️</p>
 
-  <!-- GAME -->
+  <!-- TAP GAME -->
   <div id="gameBox">
     <h3>🎯 Tap 5 times to unlock surprise</h3>
     <button id="tapBtn">Tap Me</button>
@@ -34,23 +35,46 @@
     <img id="giftImage" src="./image/gift-closed.PNG">
   </div>
 
-  <!-- FUN -->
+  <!-- FUN SECTION -->
   <div id="funSection" class="hidden">
     <h2>Wait wait 😂</h2>
     <p id="funText"></p>
     <button onclick="continueAfterFun()">Continue 👉</button>
   </div>
 
-  <!-- MENU -->
+  <!-- MENU (UPDATED) -->
   <div id="menu" class="hidden">
     <h2>Now open your real surprise 💝</h2>
-    <button onclick="openScrapbook()">📖 Open Scrapbook</button>
-    <button onclick="openVideo()">🎥 Special Video</button>
+
+    <button onclick="goToPage('memories.html')">
+      📸 Memories Scrapbook
+    </button>
+
+    <button onclick="goToPage('game.html')">
+      🎂 Cake Game
+    </button>
+
+    <button onclick="goToPage('gift.html')">
+      🎁 Open Gift
+    </button>
+
   </div>
 
 </div>
 
 <script src="script.js"></script>
+
+<!-- NEW: NAVIGATION + SMOOTH TRANSITION -->
+<script>
+function goToPage(page) {
+  document.body.style.transition = "opacity 0.3s ease";
+  document.body.style.opacity = "0";
+
+  setTimeout(() => {
+    window.location.href = page;
+  }, 300);
+}
+</script>
 
 </body>
 </html>
