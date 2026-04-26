@@ -14,14 +14,13 @@ const memoryData = [
 
 const albumContainer = document.getElementById("albums");
 
-/* CREATE BUTTONS */
+/* CREATE ALBUM BUTTONS */
 memoryData.forEach(mem => {
 
   const btn = document.createElement("div");
   btn.className = "album-btn";
   btn.innerText = mem.name;
 
-  /* 👉 OPEN NEW PAGE */
   btn.onclick = () => {
     window.location.href =
       `album.html?folder=${mem.folder}&title=${encodeURIComponent(mem.name)}`;
@@ -30,17 +29,18 @@ memoryData.forEach(mem => {
   albumContainer.appendChild(btn);
 });
 
-/* HOME BUTTON */
+/* BACK */
+function goBack() {
+  document.body.style.opacity = "0";
+  setTimeout(() => {
+    window.history.back();
+  }, 300);
+}
+
+/* HOME */
 function goHome() {
   document.body.style.opacity = "0";
   setTimeout(() => {
     window.location.href = "index.html";
   }, 300);
-}
-function goBack() {
-  window.history.back();
-}
-
-function goHome() {
-  window.location.href = "index.html";
 }
