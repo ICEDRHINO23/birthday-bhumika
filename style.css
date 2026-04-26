@@ -15,6 +15,7 @@ body {
   background: url("./image/bdbg.jpg") no-repeat center center fixed;
   background-size: cover;
   color: white;
+  transition: 0.3s;
 }
 
 /* =========================
@@ -43,6 +44,7 @@ body {
   width: 90%;
   max-width: 600px;
   margin: 50px auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
 #profilePic {
@@ -64,6 +66,7 @@ button {
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
   color: white;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 button:hover {
@@ -187,10 +190,11 @@ button:hover {
   width: 100%;
   height: 160px;
   object-fit: contain;
+  background: #f2f2f2;
 }
 
 /* =========================
-   🎂 REALISTIC CAKE
+   🎂 REALISTIC CAKE SYSTEM
 ========================= */
 #cakeSection {
   display: flex;
@@ -200,15 +204,15 @@ button:hover {
 }
 
 .cake {
+  position: relative;
   width: 240px;
   height: 180px;
   margin: 40px auto;
-  position: relative;
   perspective: 900px;
 }
 
 /* HALVES */
-.half {
+.cake-half {
   position: absolute;
   width: 50%;
   height: 100%;
@@ -216,10 +220,10 @@ button:hover {
   transition: 0.6s ease;
 }
 
-.left { left: 0; }
-.right { right: 0; }
+.cake-half.left { left: 0; }
+.cake-half.right { right: 0; }
 
-/* SLICE */
+/* INNER */
 .slice {
   transform: rotateX(10deg);
 }
@@ -254,8 +258,8 @@ button:hover {
   background: linear-gradient(#fff, #ffeef5);
 }
 
-/* CUT EDGE */
-.half::after {
+/* CUT FACE */
+.cake-half::after {
   content: "";
   position: absolute;
   width: 6px;
@@ -265,10 +269,10 @@ button:hover {
   opacity: 0;
 }
 
-.left::after { right: 0; }
-.right::after { left: 0; }
+.cake-half.left::after { right: 0; }
+.cake-half.right::after { left: 0; }
 
-.cake.split .half::after {
+.cake.split .cake-half::after {
   opacity: 1;
 }
 
@@ -322,7 +326,7 @@ button:hover {
   opacity: 0;
 }
 
-#knife.active {
+#knife.animate {
   animation: knife 0.8s forwards;
   opacity: 1;
 }
