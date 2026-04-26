@@ -100,3 +100,6 @@ yet it felt real.`,
   };
 
 });
+window.goHome = function () {
+  window.location.href = "index.html";
+};
