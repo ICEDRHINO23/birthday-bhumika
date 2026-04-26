@@ -8,15 +8,15 @@
 
 <body>
 
-<!-- LOADING SCREEN -->
+<!-- LOADING -->
 <div id="intro">✨ Loading Surprise... ✨</div>
 
-<!-- BACKGROUND MUSIC -->
+<!-- MUSIC -->
 <audio id="bgMusic" src="./audio/bds.mp3" loop></audio>
 
 <div id="main">
 
-  <!-- PROFILE IMAGE -->
+  <!-- PROFILE -->
   <img id="profilePic" src="./image/bhoomika.jpg">
 
   <h1>Happy Birthday Bhoomika 🎂</h1>
@@ -29,7 +29,7 @@
     <p id="tapCount"></p>
   </div>
 
-  <!-- GIFT BOX -->
+  <!-- GIFT -->
   <div id="giftContainer" class="hidden">
     <img id="giftImage" src="./image/gift-closed.PNG">
   </div>
@@ -40,14 +40,14 @@
 
     <button onclick="openScrapbook()">📖 Scrapbook</button>
     <button onclick="openMemories()">📸 Memories</button>
-
-    <!-- VIDEO BUTTON (LOCKED SYSTEM) -->
     <button id="videoBtn" onclick="openVideo()">🎥 Special Video</button>
+
+    <!-- NEW -->
+    <button onclick="openCake()">🎂 Cake Surprise</button>
   </div>
 
-  <!-- VIDEO SECTION -->
+  <!-- VIDEO -->
   <div id="videoSection" class="hidden">
-
     <h2>💖 A Special Surprise 💖</h2>
 
     <video id="specialVideo" controls>
@@ -56,6 +56,70 @@
 
     <br><br>
     <button onclick="closeVideo()">⬅ Back</button>
+  </div>
+
+  <!-- 🎂 CAKE (ANIMATED) -->
+  <div id="cakeSection" class="hidden">
+
+    <h2>🎂 Make a Wish</h2>
+
+    <div class="cake">
+
+      <div class="layer top"></div>
+      <div class="layer middle"></div>
+      <div class="layer bottom"></div>
+
+      <div class="candles">
+        <div class="candle"></div>
+        <div class="candle"></div>
+        <div class="candle"></div>
+      </div>
+
+    </div>
+
+    <p id="cakeMsg">Tap candles to light them 🕯️</p>
+
+  </div>
+
+  <!-- 💌 CARD -->
+  <div id="cardSection" class="hidden">
+
+    <div class="card">
+
+      <!-- FRONT -->
+      <div class="card-front" onclick="openCard()">
+        💌 Tap to Open
+      </div>
+
+      <!-- INSIDE -->
+      <div class="card-inside">
+
+        <div class="card-left">
+          💖
+        </div>
+
+        <div class="card-right">
+          <h2>For You 💖</h2>
+
+          <p>
+            Some people don’t come into life loudly…<br><br>
+            they come quietly and change everything without trying.<br><br>
+
+            You are one of those rare people—
+            calm, real, and beautifully yourself.<br><br>
+
+            I hope life always stays kind to you,
+            and you always find happiness in your own peaceful way.<br><br>
+
+            💖 Happy Birthday 💖
+          </p>
+
+          <button onclick="goBackToMenu()">⬅ Back</button>
+        </div>
+
+      </div>
+
+    </div>
 
   </div>
 
