@@ -1,46 +1,74 @@
-let lit = 0;
+/* =========================
+   STATE
+========================= */
+let litCount = 0;
+let cutDone = false;
 
-/* 🕯️ LIGHT CANDLES */
-document.querySelectorAll(".candle").forEach(c => {
+/* =========================
+   WAIT FOR DOM
+========================= */
+document.addEventListener("DOMContentLoaded", () => {
 
-  c.onclick = () => {
+  const candles = document.querySelectorAll(".candle");
+  const msg = document.getElementById("cakeMsg");
 
-    if (c.classList.contains("lit")) return;
+  /* 🕯️ LIGHT CANDLES */
+  candles.forEach(candle => {
 
-    c.classList.add("lit");
-    lit++;
+    candle.addEventListener("click", () => {
 
-    if (lit === 3) {
-      document.getElementById("cakeMsg").innerText =
-        "✨ Now cut the cake 🎂";
-    }
-  };
+      if (candle.classList.contains("lit")) return;
+
+      candle.classList.add("lit");
+      litCount++;
+
+      /* 🔥 ALL LIT */
+      if (litCount === candles.length) {
+        msg.innerText = "✨ Now cut the cake 🎂";
+      }
+
+    });
+
+  });
 
 });
 
-/* 🔪 CUT CAKE */
+/* =========================
+   CUT CAKE
+========================= */
 function cutCake() {
 
-  if (lit < 3) {
-    alert("Light all candles first 🕯️");
-    return;
-  }
+  if (cutDone) return;
 
   const cake = document.getElementById("cake");
   const knife = document.getElementById("knife");
+  const msg = document.getElementById("cakeMsg");
 
+  /* ❌ NOT READY */
+  if (litCount < 3) {
+    msg.innerText = "🕯️ Light all candles first!";
+    return;
+  }
+
+  cutDone = true;
+
+  /* 🎂 ANIMATION */
   cake.classList.add("split");
   knife.classList.add("animate");
 
+  /* 🎉 CONFETTI */
   launchConfetti();
 
+  /* 💖 FINAL SCREEN */
   setTimeout(() => {
     document.getElementById("cakeSection").classList.add("hidden");
     document.getElementById("finalScreen").classList.remove("hidden");
   }, 1500);
 }
 
-/* 🎉 CONFETTI */
+/* =========================
+   CONFETTI SYSTEM
+========================= */
 function launchConfetti() {
 
   for (let i = 0; i < 60; i++) {
@@ -49,6 +77,9 @@ function launchConfetti() {
     conf.className = "confetti";
 
     conf.style.left = Math.random() * window.innerWidth + "px";
+    conf.style.top = "-20px";
+
+    /* 🎨 RANDOM COLORS */
     conf.style.background =
       `hsl(${Math.random() * 360}, 100%, 60%)`;
 
@@ -58,7 +89,9 @@ function launchConfetti() {
   }
 }
 
-/* 🏠 HOME */
+/* =========================
+   HOME BUTTON
+========================= */
 function goHome() {
   window.location.href = "index.html";
 }
