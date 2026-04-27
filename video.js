@@ -2,10 +2,10 @@
    🎬 VIDEO LIST
 ========================= */
 const videos = [
-  "./videos/video1.mp4",
-  "./videos/video2.mp4",
-  "./videos/video3.mp4",
-  "./videos/video4.mp4"
+  "videos/video1.mp4",
+  "videos/video2.mp4",
+  "videos/video3.mp4",
+  "videos/video4.mp4"
 ];
 
 let currentVideo = 0;
@@ -23,9 +23,11 @@ function playVideo(index) {
   player.src = videos[index];
   player.load();
 
-  player.play().catch(err => {
-    console.log("Playback blocked:", err);
+  player.play().catch(() => {
+    console.log("Autoplay blocked");
   });
+
+  updateActiveButton();
 }
 
 /* =========================
@@ -36,28 +38,28 @@ document.addEventListener("DOMContentLoaded", () => {
   player = document.getElementById("player");
 
   if (!player) {
-    console.error("Video element not found!");
+    console.error("❌ Video element not found!");
     return;
   }
 
-  /* ▶ LOAD FIRST VIDEO */
   playVideo(0);
 
-  /* ⏭ AUTO NEXT VIDEO */
+  /* AUTO NEXT */
   player.addEventListener("ended", () => {
-
-    currentVideo++;
-
-    if (currentVideo < videos.length) {
-      playVideo(currentVideo);
-    } else {
-      currentVideo = 0; // 🔁 restart playlist
-      playVideo(currentVideo);
-    }
-
+    currentVideo = (currentVideo + 1) % videos.length;
+    playVideo(currentVideo);
   });
 
 });
+
+/* =========================
+   🎯 BUTTON HIGHLIGHT
+========================= */
+function updateActiveButton() {
+  document.querySelectorAll(".video-btn").forEach((btn, i) => {
+    btn.classList.toggle("active", i === currentVideo);
+  });
+}
 
 /* =========================
    ⌨️ KEYBOARD CONTROL
@@ -67,20 +69,17 @@ document.addEventListener("keydown", (e) => {
   if (!player) return;
 
   if (e.key === "ArrowRight") {
-    currentVideo = (currentVideo + 1) % videos.length;
-    playVideo(currentVideo);
+    playVideo((currentVideo + 1) % videos.length);
   }
 
   if (e.key === "ArrowLeft") {
-    currentVideo =
-      (currentVideo - 1 + videos.length) % videos.length;
-    playVideo(currentVideo);
+    playVideo((currentVideo - 1 + videos.length) % videos.length);
   }
 
 });
 
 /* =========================
-   🔙 BACK BUTTON
+   🔙 BACK
 ========================= */
 function goBack() {
   window.location.href = "index.html";
