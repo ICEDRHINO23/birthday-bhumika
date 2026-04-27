@@ -1,46 +1,65 @@
-const memoryData = [
-  { name: "Icecream Meetup 🍦", folder: "memory1" },
-  { name: "KFC 1 🍗", folder: "memory2" },
-  { name: "Teaspot ☕", folder: "memory3" },
-  { name: "Mumbai Nightout 🌃", folder: "memory4" },
-  { name: "Tipsy Turtle 🐢", folder: "memory5" },
-  { name: "KFC 2 🍗", folder: "memory6" },
-  { name: "KFC Birthday 🎂", folder: "memory7" },
-  { name: "Birthday Boy 🎉", folder: "memory8" },
-  { name: "Backyard Palms 🌴", folder: "memory9" },
-  { name: "FC Social 🍹", folder: "memory10" },
-  { name: "School Pics 📚", folder: "memory11" }
-];
+const viewer = document.getElementById("viewer");
+const stack = document.getElementById("polaroidStack");
 
-const albumContainer = document.getElementById("albums");
+let currentIndex = 0;
+let images = [];
 
-/* CREATE ALBUM BUTTONS */
-memoryData.forEach(mem => {
+/* OPEN MEMORY */
+function openMemory(folder) {
 
-  const btn = document.createElement("div");
-  btn.className = "album-btn";
-  btn.innerText = mem.name;
+  viewer.classList.remove("hidden");
+  stack.innerHTML = "";
+  currentIndex = 0;
 
-  btn.onclick = () => {
-    window.location.href =
-      `album.html?folder=${mem.folder}&title=${encodeURIComponent(mem.name)}`;
-  };
+  images = [];
 
-  albumContainer.appendChild(btn);
-});
+  let i = 1;
 
-/* BACK */
-function goBack() {
-  document.body.style.opacity = "0";
-  setTimeout(() => {
-    window.history.back();
-  }, 300);
+  function loadNext() {
+    const img = new Image();
+    img.src = `assets/images/${folder}/${i}.jpg`;
+
+    img.onload = () => {
+      images.push(img.src);
+      i++;
+      loadNext();
+    };
+
+    img.onerror = () => {
+      showNextImage();
+    };
+  }
+
+  loadNext();
 }
 
-/* HOME */
+/* SHOW NEXT IMAGE */
+function showNextImage() {
+
+  if (currentIndex >= images.length) return;
+
+  const card = document.createElement("div");
+  card.className = "polaroid-card";
+
+  card.innerHTML = `
+    <img src="${images[currentIndex]}">
+  `;
+
+  card.onclick = () => {
+    currentIndex++;
+    showNextImage();
+  };
+
+  stack.appendChild(card);
+}
+
+/* CLOSE */
+function closeViewer() {
+  viewer.classList.add("hidden");
+  stack.innerHTML = "";
+}
+
+/* NAV */
 function goHome() {
-  document.body.style.opacity = "0";
-  setTimeout(() => {
-    window.location.href = "index.html";
-  }, 300);
+  window.location.href = "index.html";
 }
