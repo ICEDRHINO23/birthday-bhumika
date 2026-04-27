@@ -327,3 +327,28 @@ button:hover {
   }
 
 }
+/* =========================
+   SCRAPBOOK COVER
+========================= */
+.cover-page .front {
+  background: linear-gradient(135deg, #ff758f, #ff4d6d);
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  padding: 20px;
+}
+
+.cover-page h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.cover-page p {
+  font-size: 16px;
+  opacity: 0.9;
+}
