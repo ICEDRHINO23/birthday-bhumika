@@ -4,14 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const cover = document.getElementById("cover");
   const music = document.getElementById("scrapMusic");
 
-  let current = 0;
+  let current = -1; // ✅ FIX: start before first page
 
-  /* 🎵 MUSIC START ON CLICK */
+  /* 🎵 MUSIC */
   document.addEventListener("click", () => {
     if (music.paused) music.play().catch(()=>{});
   }, { once: true });
 
-  /* 💖 TEXT (INTROVERT STYLE) */
+  /* 💖 TEXT */
 const texts = [
 
 `Some people don’t enter your life loudly…
@@ -116,16 +116,16 @@ and you always will.`
 
 ];
 
-  /* 📸 MEDIA */
+  /* 📸 MEDIA (✅ FIXED PATHS) */
   const pages = [
-    { type: "image", src: "./scrapbook/1.jpg" },
-    { type: "image", src: "./scrapbook/2.jpg" },
-    { type: "image", src: "./scrapbook/3.jpg" },
-    { type: "video", src: "./scrapbook/4.mp4" },
-    { type: "video", src: "./scrapbook/5.mp4" },
-    { type: "video", src: "./scrapbook/6.mp4" },
-    { type: "image", src: "./scrapbook/7.jpg" },
-    { type: "image", src: "./scrapbook/8.jpg" }
+    { type: "image", src: "scrapbook/1.jpg" },
+    { type: "image", src: "scrapbook/2.jpg" },
+    { type: "image", src: "scrapbook/3.jpg" },
+    { type: "video", src: "scrapbook/4.mp4" },
+    { type: "video", src: "scrapbook/5.mp4" },
+    { type: "video", src: "scrapbook/6.mp4" },
+    { type: "image", src: "scrapbook/7.jpg" },
+    { type: "image", src: "scrapbook/8.jpg" }
   ];
 
   /* CREATE PAGES */
@@ -136,15 +136,12 @@ and you always will.`
 
     page.innerHTML = `
       <div class="front">
-
         <div class="left">
           ${
             p.type === "video"
-            ? `
-              <video class="scrap-video" muted playsinline controls preload="auto">
-                <source src="${p.src}" type="video/mp4">
-              </video>
-            `
+            ? `<video class="scrap-video" muted playsinline preload="auto">
+                 <source src="${p.src}" type="video/mp4">
+               </video>`
             : `<img src="${p.src}">`
           }
         </div>
@@ -153,7 +150,6 @@ and you always will.`
           ${ i === pages.length - 1 ? `<h2>For You 💖</h2>` : "" }
           <p>${texts[i]}</p>
         </div>
-
       </div>
 
       <div class="back"></div>
@@ -164,43 +160,41 @@ and you always will.`
 
   const allPages = document.querySelectorAll("#pagesContainer .page");
 
-  /* ✅ STACK ORDER FIX */
+  /* STACK FIX */
   allPages.forEach((page, i) => {
     page.style.zIndex = 1000 - i;
   });
 
-  /* ✅ COVER CLICK */
+  /* COVER CLICK */
   cover.addEventListener("click", () => {
     cover.classList.add("flipped");
+    current = 0; // ✅ FIX
   });
 
-  /* ▶ NEXT PAGE */
+  /* NEXT */
   window.nextPage = function () {
 
     if (current < allPages.length) {
 
-      /* ⏸ pause all videos */
       document.querySelectorAll("video").forEach(v => v.pause());
 
       allPages[current].classList.add("flipped");
       current++;
 
-      /* ▶ play current video if exists */
       const video = allPages[current]?.querySelector("video");
 
       if (video) {
-        video.load();
+        video.currentTime = 0;
         video.play().catch(()=>{});
       }
 
-      /* 🎉 END */
       if (current === allPages.length) {
         setTimeout(showEnding, 800);
       }
     }
   };
 
-  /* ◀ PREVIOUS */
+  /* PREV */
   window.prevPage = function () {
 
     if (current > 0) {
@@ -208,7 +202,6 @@ and you always will.`
       current--;
       allPages[current].classList.remove("flipped");
 
-      /* ▶ play video again if exists */
       const video = allPages[current]?.querySelector("video");
 
       if (video) {
@@ -219,7 +212,7 @@ and you always will.`
 
 });
 
-/* 🎉 END SCREEN */
+/* END SCREEN */
 function showEnding() {
 
   const end = document.createElement("div");
@@ -236,20 +229,14 @@ function showEnding() {
   end.style.zIndex = "9999";
 
   end.innerHTML = `
-    <h2 style="font-size:28px;">💖 Happy Birthday 💖</h2>
-
-    <p style="max-width:600px; font-size:18px; line-height:1.8;">
-      Some people don’t just come into life…
-      they stay, they change everything.
-    </p>
-
+    <h2>💖 Happy Birthday 💖</h2>
+    <p>Some people don’t just come into life… they stay.</p>
     <button onclick="goHome()">Back to Home</button>
   `;
 
   document.body.appendChild(end);
 }
 
-/* HOME */
 function goHome() {
   window.location.href = "index.html";
 }
