@@ -410,3 +410,141 @@ button:hover {
 .card.open .card-inside {
   transform: rotateY(0deg);
 }
+/* =========================
+   🎂 ISOLATED CAKE FIX (SAFE)
+========================= */
+
+/* prevent conflict with scrapbook .left/.right */
+.cake .left,
+.cake .right {
+  all: unset;
+}
+
+/* re-define only inside cake */
+.cake .left,
+.cake .right {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  transition: 0.6s ease;
+}
+
+.cake .left { left: 0; }
+.cake .right { right: 0; }
+
+/* base */
+.cake {
+  position: relative;
+  width: 260px;
+  height: 190px;
+  margin: 40px auto;
+  perspective: 900px;
+}
+
+/* inner */
+.cake .slice {
+  transform: rotateX(12deg);
+}
+
+/* split */
+.cake.split .left {
+  transform: translateX(-40px) rotateY(-12deg);
+}
+.cake.split .right {
+  transform: translateX(40px) rotateY(12deg);
+}
+
+/* layers */
+.cake .layer {
+  width: 100%;
+  height: 50px;
+  border-radius: 12px;
+  margin-bottom: 6px;
+  box-shadow:
+    inset 0 -6px rgba(0,0,0,0.12),
+    0 8px 15px rgba(0,0,0,0.25);
+}
+
+.cake .top { background: linear-gradient(#ff758f, #ff4d6d); }
+.cake .middle { background: linear-gradient(#ffc2d1, #ffb3c6); }
+.cake .bottom { background: linear-gradient(#ffe5ec, #ffd6e0); }
+
+/* cream */
+.cake .cream {
+  height: 12px;
+  background: linear-gradient(#fff, #ffeef5);
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+
+/* cut edge */
+.cake .left::after,
+.cake .right::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 100%;
+  top: 0;
+  background: linear-gradient(#fff, #ffd6e0);
+  opacity: 0;
+}
+
+.cake.split .left::after,
+.cake.split .right::after {
+  opacity: 1;
+}
+
+/* candles */
+.cake .candles {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.cake .candle {
+  width: 12px;
+  height: 35px;
+  background: #ff4d6d;
+  margin: 0 6px;
+  display: inline-block;
+  border-radius: 3px;
+  position: relative;
+}
+
+.cake .candle.lit::after {
+  content: "";
+  width: 10px;
+  height: 16px;
+  background: radial-gradient(circle, yellow, orange);
+  position: absolute;
+  top: -16px;
+  left: 1px;
+  border-radius: 50%;
+  animation: flame 0.3s infinite alternate;
+}
+
+/* knife */
+#knife {
+  position: absolute;
+  width: 6px;
+  height: 120px;
+  background: linear-gradient(silver, #aaa);
+  left: 50%;
+  top: -150px;
+  transform: translateX(-50%) rotate(20deg);
+  opacity: 0;
+}
+
+#knife.animate {
+  animation: knifeCut 0.8s forwards;
+  opacity: 1;
+}
+
+@keyframes knifeCut {
+  to {
+    top: 40px;
+    transform: translateX(-50%) rotate(0deg);
+  }
+}
