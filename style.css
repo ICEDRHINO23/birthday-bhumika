@@ -18,7 +18,7 @@ body {
 }
 
 /* =========================
-   LOADING
+   LOADER
 ========================= */
 #intro {
   position: fixed;
@@ -45,6 +45,7 @@ body {
   margin: 50px auto;
 }
 
+/* PROFILE */
 #profilePic {
   width: 200px;
   height: 200px;
@@ -96,6 +97,47 @@ button:hover {
 }
 
 /* =========================
+   CARD (BIRTHDAY)
+========================= */
+.card {
+  width: 300px;
+  height: 200px;
+  margin: 20px auto;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.card-front, .card-inside {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  backface-visibility: hidden;
+  transition: 0.6s;
+}
+
+.card-front {
+  background: linear-gradient(45deg, #ff758f, #ff4d6d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-inside {
+  background: white;
+  color: black;
+  transform: rotateY(180deg);
+}
+
+.card.open .card-front {
+  transform: rotateY(180deg);
+}
+
+.card.open .card-inside {
+  transform: rotateY(0deg);
+}
+
+/* =========================
    MEMORY PAGE
 ========================= */
 .memory-page {
@@ -103,54 +145,16 @@ button:hover {
   min-height: 100vh;
 }
 
-.home-btn, .back-btn {
-  position: fixed;
-  top: 20px;
-  padding: 10px 15px;
-  border-radius: 50px;
-  z-index: 999;
-}
-
-.home-btn { left: 20px; }
-.back-btn { left: 80px; }
-
-.title {
-  text-align: center;
-  margin-top: 60px;
-}
-
-/* =========================
-   MEMORY BUTTON GRID
-========================= */
 .memory-buttons {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   padding: 20px;
 }
 
 /* =========================
-   VIEWER
-========================= */
-.viewer {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.95);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.close-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-
-/* =========================
-   POLAROID STACK (UPDATED)
+   POLAROID STACK
 ========================= */
 #polaroidStack {
   position: relative;
@@ -163,15 +167,11 @@ button:hover {
   position: absolute;
   width: 220px;
   background: white;
-  padding: 10px;
+  padding: 10px 10px 25px;
   border-radius: 6px;
-
   box-shadow: 0 10px 25px rgba(0,0,0,0.7);
-
-  transition: all 0.4s ease;
+  transition: 0.4s ease;
   cursor: pointer;
-
-  transform-origin: center bottom;
 }
 
 .polaroid-card img {
@@ -182,7 +182,7 @@ button:hover {
 }
 
 .polaroid-card.active {
-  transform: translateY(-25px) scale(1.05) !important;
+  transform: translateY(-20px) scale(1.05) !important;
   z-index: 999;
 }
 
@@ -191,211 +191,10 @@ button:hover {
 ========================= */
 .book-body {
   background: linear-gradient(135deg, #f8cdda, #f6d365);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.book {
-  width: 900px;
-  height: 500px;
-  position: relative;
-}
-
-.page {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform-origin: left;
-  transition: transform 1s ease;
-  transform-style: preserve-3d;
-}
-
-.page.flipped {
-  transform: rotateY(-180deg);
-}
-
-.front, .back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-}
-
-.back {
-  transform: rotateY(180deg);
-}
-
-.front {
-  display: flex;
-  background: white;
-  border-radius: 20px;
-}
-
-.left {
-  width: 50%;
-  background: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .left img, .left video {
   width: 100%;
   height: 100%;
   object-fit: contain;
-}
-
-.right {
-  width: 50%;
-  padding: 40px;
-  color: black;
-}
-
-/* =========================
-   CAKE SECTION (FIXED FINAL)
-========================= */
-#cakeSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 80vh;
-}
-
-.cake {
-  width: 320px;
-  height: 260px;
-  display: flex;
-  position: relative;
-}
-
-/* FIXED */
-.cake-half {
-  width: 50%;
-  height: 100%;
-  position: relative;
-}
-
-/* SLICE */
-.slice {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100%;
-  width: 100%;
-}
-
-/* LAYERS */
-.layer {
-  width: 100%;
-  height: 50px;
-  border-radius: 12px;
-  margin-bottom: 6px;
-}
-
-.top {
-  background: linear-gradient(#ff758f, #ff4d6d);
-}
-
-.middle {
-  background: linear-gradient(#ffc2d1, #ff8fab);
-}
-
-.bottom {
-  background: linear-gradient(#ffe5ec, #ffc2d1);
-}
-
-/* CREAM */
-.cream {
-  height: 12px;
-  background: white;
-  border-radius: 10px;
-  margin-bottom: 6px;
-}
-
-/* CANDLES */
-.candles {
-  position: absolute;
-  top: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.candle {
-  width: 12px;
-  height: 40px;
-  background: #ff4d6d;
-  margin: 0 5px;
-}
-
-/* FLAME */
-.candle.lit::after {
-  content: "";
-  position: absolute;
-  width: 10px;
-  height: 14px;
-  background: radial-gradient(circle, yellow, orange);
-  top: -16px;
-  left: 1px;
-  border-radius: 50%;
-}
-
-/* SPLIT */
-.cake.split .left {
-  transform: translateX(-40px);
-}
-
-.cake.split .right {
-  transform: translateX(40px);
-}
-
-/* KNIFE */
-#knife {
-  position: absolute;
-  width: 6px;
-  height: 120px;
-  background: silver;
-  left: 50%;
-  top: -150px;
-  transform: translateX(-50%);
-}
-
-#knife.animate {
-  top: 40px;
-}
-
-/* CONFETTI */
-.confetti {
-  position: fixed;
-  width: 8px;
-  height: 12px;
-  animation: fall 3s linear forwards;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(100vh);
-    opacity: 0;
-  }
-}
-
-/* FINAL SCREEN */
-#finalScreen {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.95);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-/* IMAGE FIT FIX */
-.polaroid-card img {
-  width: 100%;
-  height: 180px;          /* fixed frame height */
-  object-fit: cover;      /* 🔥 IMPORTANT */
-  border-radius: 4px;
-  display: block;
 }
