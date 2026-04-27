@@ -6,7 +6,7 @@ let unlocked = false;
 let giftOpen = false;
 
 /* =========================
-   ON LOAD (SAFE)
+   ON LOAD
 ========================= */
 window.addEventListener("DOMContentLoaded", () => {
 
@@ -26,7 +26,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }, { once: true });
 
-  /* TAP GAME (SAFE INIT) */
+  /* TAP GAME */
   const tapBtn = document.getElementById("tapBtn");
   const tapCount = document.getElementById("tapCount");
   const giftContainer = document.getElementById("giftContainer");
@@ -39,9 +39,7 @@ window.addEventListener("DOMContentLoaded", () => {
       taps++;
 
       if (taps >= 5) {
-        taps = 5;
         unlocked = true;
-
         tapCount.innerText = "Unlocked 🎉";
         giftContainer.classList.remove("hidden");
       } else {
@@ -68,18 +66,6 @@ window.addEventListener("DOMContentLoaded", () => {
     };
   }
 
-  /* VIDEO LOCK */
-  const unlockDate = new Date("2026-05-12T00:00:00");
-  const now = new Date();
-
-  if (now < unlockDate) {
-    const btn = document.getElementById("videoBtn");
-    if (btn) {
-      btn.style.opacity = "0.6";
-      btn.innerText = "🔒 Unlocks on 12 May 2026";
-    }
-  }
-
 });
 
 /* =========================
@@ -93,83 +79,10 @@ function openMemories() {
   window.location.href = "memories.html";
 }
 
-function openCakePage() {
-  window.location.href = "cake.html";
+function openCard() {
+  window.location.href = "card.html";
 }
 
-/* =========================
-   VIDEO SYSTEM
-========================= */
 function openVideo() {
-
-  const unlockDate = new Date("2026-05-12T00:00:00");
-  const now = new Date();
-
-  if (now < unlockDate) {
-    alert("⏳ Unlocks on 12 May 2026 💖");
-    return;
-  }
-
-  document.getElementById("menu")?.classList.add("hidden");
-  document.getElementById("videoSection")?.classList.remove("hidden");
-
-  const video = document.getElementById("specialVideo");
-  const music = document.getElementById("bgMusic");
-
-  if (music) music.pause();
-
-  if (video) {
-    video.currentTime = 0;
-    video.play().catch(()=>{});
-  }
-}
-
-function closeVideo() {
-  const video = document.getElementById("specialVideo");
-  const music = document.getElementById("bgMusic");
-
-  if (video) {
-    video.pause();
-    video.currentTime = 0;
-  }
-
-  document.getElementById("videoSection")?.classList.add("hidden");
-  document.getElementById("menu")?.classList.remove("hidden");
-
-  if (music) music.play().catch(()=>{});
-}
-
-/* =========================
-   CAKE SYSTEM (SAFE)
-========================= */
-function enableCakeSystem() {
-
-  let lit = 0;
-
-  document.querySelectorAll(".candle").forEach(c => {
-    c.onclick = () => {
-
-      if (c.classList.contains("lit")) return;
-
-      c.classList.add("lit");
-      lit++;
-
-      if (lit === 3) {
-        const msg = document.getElementById("cakeMsg");
-        if (msg) msg.innerText = "✨ Now cut the cake 🎂";
-
-        const cake = document.querySelector(".cake");
-
-        if (cake) {
-          cake.onclick = () => {
-            cake.classList.add("cut");
-
-            setTimeout(() => {
-              document.querySelector(".card")?.classList.add("open");
-            }, 1000);
-          };
-        }
-      }
-    };
-  });
+  window.location.href = "video.html";
 }
