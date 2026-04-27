@@ -1,31 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Birthday 🎉</title>
+  <title>Happy Birthday 🎉</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- INTRO LOADING -->
-<div id="intro">
-  Loading Surprise...
-</div>
+<div id="intro">Loading Surprise...</div>
 
-<!-- MAIN CONTENT -->
 <div id="main" class="hidden">
 
   <h1>Happy Birthday 💖</h1>
 
-  <!-- PROFILE IMAGE -->
-  <img id="profilePic" src="image/photo1.jpg">
+  <!-- ✅ FIXED IMAGE PATH -->
+  <img id="profilePic" src="image/bhoomika.jpg">
 
   <br>
 
   <button onclick="goMemory()">Memories</button>
   <button onclick="goAlbum()">Scrapbook</button>
 
-  <!-- 🎂 CAKE SECTION -->
+  <!-- 🎂 CAKE -->
   <div id="cakeSection">
 
     <div class="cake" id="cake">
@@ -50,20 +46,17 @@
         </div>
       </div>
 
-      <!-- CANDLES -->
       <div class="candles">
         <div class="candle lit"></div>
         <div class="candle lit"></div>
         <div class="candle lit"></div>
       </div>
 
-      <!-- KNIFE -->
       <div id="knife"></div>
 
     </div>
 
     <button onclick="cutCake()">Cut Cake 🎂</button>
-
   </div>
 
   <!-- 💌 CARD -->
@@ -84,14 +77,11 @@
 </div>
 
 <script>
-
-// INTRO LOADER
 setTimeout(() => {
   document.getElementById("intro").style.display = "none";
   document.getElementById("main").classList.remove("hidden");
 }, 2000);
 
-// NAVIGATION
 function goMemory() {
   window.location.href = "memories.html";
 }
@@ -100,17 +90,14 @@ function goAlbum() {
   window.location.href = "album.html";
 }
 
-// CAKE CUT
 function cutCake() {
   document.getElementById("cake").classList.add("split");
   document.getElementById("knife").classList.add("animate");
 }
 
-// CARD
 function openCard(card) {
   card.classList.toggle("open");
 }
-
 </script>
 
 </body>
