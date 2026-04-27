@@ -14,52 +14,109 @@ document.addEventListener("DOMContentLoaded", () => {
   }, { once: true });
 
   /* 💖 TEXT CONTENT */
-  const texts = [
+const texts = [
 
 `Some people don’t enter your life loudly…
 
 They don’t try to stand out,
 they don’t try to be noticed—
-but somehow, their presence slowly becomes something you start looking forward to.`,
+but somehow, their presence slowly becomes something you start looking forward to.
+
+And before you even realise it,
+they become the calmest, safest part of your day.`,
 
 `We never really planned anything…
 
+There were no big moments,
+no dramatic stories to tell—
 just simple conversations,
 random talks,
-and those small moments that didn’t seem important…
+and those small moments that didn’t seem important at the time…
+
 but now, they mean everything.`,
 
 `You don’t say much…
 
 and maybe that’s what makes it special.
 
-Silence can speak more honestly than words.`,
+Because in a world where everyone is trying to be heard,
+you remind me that silence can also speak—
+and sometimes, it speaks more honestly than words ever could.`,
 
 `Some memories don’t need noise…
 
-just being there is enough to make them unforgettable.`,
+They don’t need excitement or attention—
+just being there,
+sharing that quiet space,
+is already enough to make them unforgettable.`,
 
+/* 🎥 PAGE 5 — INNOCENT SMILE (EXPANDED) */
 `That smile of yours…
 
-it feels natural,
-real,
-and it stays in my mind much longer than the moment.`,
+It’s not something you show all the time,
+and maybe that’s why it feels so real when it appears.
 
-`Those quiet moments of excitement…
+There’s no effort in it,
+no need to impress anyone—
+it just happens, naturally,
+like a small moment of happiness finding its way out.
 
-they’re small,
-but they feel more beautiful than anything loud.`,
+And somehow,
+it carries a kind of innocence that’s rare to see.
 
-`I’m really glad you’re in my life…
+The kind of smile that doesn’t try to be perfect,
+but still feels perfect in its own way.
 
-for all the small moments that became important.`,
+And the truth is…
+it stays in my mind much longer than the moment it came from.`,
+
+/* 🎥 PAGE 6 — EXCITEMENT (EXPANDED) */
+`And then there are those moments
+when you get excited…
+
+Not in a loud or overwhelming way,
+but in your own quiet, subtle way.
+
+It’s not something everyone would notice—
+but if you really pay attention,
+you can see it.
+
+That small change in your expression,
+those little sparks in your eyes,
+that gentle happiness that doesn’t need words.
+
+It’s almost like your excitement speaks softly,
+but clearly enough for someone who cares to understand.
+
+And honestly,
+those small, genuine moments…
+feel more beautiful than anything loud or exaggerated.`,
+
+`I don’t always say this…
+
+but I’m really glad you’re in my life.
+
+Not because of big reasons,
+not because of anything dramatic—
+but because of all those small, quiet moments
+that slowly became important without even asking for attention.`,
 
 `💖 Happy Birthday 💖
 
-You matter more than you think.`
+I hope life always stays kind to you…
 
-  ];
+I hope you always find your calm,
+your space,
+and the kind of happiness that feels peaceful and real.
 
+And even if you don’t say much,
+even if you don’t always show everything you feel…
+
+just know—
+you matter more than you think,
+and you always will.`
+
+];
   /* 📸 MEDIA */
   const media = [
     "scrapbook/1.jpg",
