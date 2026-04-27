@@ -59,11 +59,17 @@ body {
 #giftBox {
   width: 150px;
   cursor: pointer;
-  transition: 0.3s;
+  animation: float 2s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 #giftBox:hover {
   transform: scale(1.1);
+  filter: drop-shadow(0 0 15px pink);
 }
 
 /* =========================
@@ -77,10 +83,12 @@ button {
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
   color: white;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 button:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(255,100,150,0.8);
 }
 
 .hidden {
@@ -123,7 +131,7 @@ button:hover {
 }
 
 /* =========================
-   VIEWER OVERLAY
+   VIEWER
 ========================= */
 .viewer {
   position: fixed;
@@ -139,11 +147,10 @@ button:hover {
   position: absolute;
   top: 20px;
   right: 20px;
-  font-size: 20px;
 }
 
 /* =========================
-   POLAROID STACK (IMPROVED)
+   POLAROID
 ========================= */
 #polaroidStack {
   position: relative;
@@ -157,12 +164,8 @@ button:hover {
   background: white;
   padding: 10px;
   border-radius: 10px;
-  cursor: pointer;
-
   box-shadow: 0 12px 30px rgba(0,0,0,0.6);
-  transition: all 0.4s ease;
-
-  animation: dropIn 0.4s ease;
+  transition: 0.4s;
 }
 
 .polaroid-card img {
@@ -173,16 +176,6 @@ button:hover {
 .polaroid-card.active {
   transform: translateY(-15px) scale(1.05) !important;
   z-index: 999;
-}
-
-@keyframes dropIn {
-  from {
-    transform: translateY(-60px) scale(0.9);
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 /* =========================
@@ -230,7 +223,6 @@ button:hover {
   display: flex;
   background: white;
   border-radius: 20px;
-  overflow: hidden;
 }
 
 .left {
@@ -253,37 +245,17 @@ button:hover {
   color: black;
 }
 
-/* =========================
-   SCRAPBOOK COVER
-========================= */
+/* COVER */
 .cover-page .front {
   background: linear-gradient(135deg, #ff758f, #ff4d6d);
   color: white;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-/* =========================
-   CAKE CENTER FIX
-========================= */
-#cakeSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 80vh;
+  text-align: center;
 }
 
-/* BIGGER CAKE */
-.cake {
-  width: 320px;   /* 🔥 increased */
-  height: 320px;
-  position: relative;
-  margin-bottom: 20px;
-}
 /* =========================
-   CAKE CENTER + SIZE
+   CAKE SECTION
 ========================= */
 #cakeSection {
   display: flex;
@@ -294,27 +266,65 @@ button:hover {
 }
 
 .cake {
-  width: 320px;
-  height: 320px;
+  width: 300px;
+  height: 250px;
   position: relative;
-  margin-bottom: 20px;
 }
 
-/* =========================
-   CANDLES
-========================= */
+/* HALVES */
+.cake-half {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+}
+
+.cake-half.left { left: 0; }
+.cake-half.right { right: 0; }
+
+/* SLICE */
+.slice {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+/* LAYERS */
+.layer {
+  height: 50px;
+  border-radius: 12px;
+  margin-bottom: 6px;
+}
+
+.top { background: #ff4d6d; }
+.middle { background: #ff8fab; }
+.bottom { background: #ffc2d1; }
+
+.cream {
+  height: 12px;
+  background: white;
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+
+/* CANDLES */
+.candles {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .candle {
   width: 12px;
   height: 40px;
   background: #ff4d6d;
-  margin: 0 5px;
   display: inline-block;
+  margin: 0 5px;
   position: relative;
-  cursor: pointer;
-  border-radius: 3px;
 }
 
-/* 🔥 FLAME */
+/* FLAME */
 .candle.lit::after {
   content: "";
   position: absolute;
@@ -324,28 +334,18 @@ button:hover {
   top: -16px;
   left: 1px;
   border-radius: 50%;
-  animation: flame 0.3s infinite alternate;
 }
 
-@keyframes flame {
-  from { transform: scale(1); }
-  to { transform: scale(1.2); }
-}
-
-/* =========================
-   CAKE SPLIT
-========================= */
+/* SPLIT */
 .cake.split .left {
-  transform: translateX(-40px) rotateY(-12deg);
+  transform: translateX(-40px);
 }
 
 .cake.split .right {
-  transform: translateX(40px) rotateY(12deg);
+  transform: translateX(40px);
 }
 
-/* =========================
-   KNIFE
-========================= */
+/* KNIFE */
 #knife {
   position: absolute;
   width: 6px;
@@ -354,23 +354,13 @@ button:hover {
   left: 50%;
   top: -150px;
   transform: translateX(-50%);
-  opacity: 0;
 }
 
 #knife.animate {
-  animation: cut 0.8s forwards;
+  top: 40px;
 }
 
-@keyframes cut {
-  to {
-    top: 40px;
-    opacity: 1;
-  }
-}
-
-/* =========================
-   CONFETTI
-========================= */
+/* CONFETTI */
 .confetti {
   position: fixed;
   width: 8px;
@@ -380,26 +370,18 @@ button:hover {
 
 @keyframes fall {
   to {
-    transform: translateY(100vh) rotate(360deg);
+    transform: translateY(100vh);
     opacity: 0;
   }
 }
 
-/* =========================
-   FINAL SCREEN
-========================= */
+/* FINAL SCREEN */
 #finalScreen {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.95);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
-  text-align: center;
-}
-
-.hidden {
-  display: none;
+  flex-direction: column;
 }
