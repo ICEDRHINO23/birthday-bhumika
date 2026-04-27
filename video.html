@@ -3,84 +3,27 @@
 <head>
   <title>Special Videos 🎬</title>
   <link rel="stylesheet" href="style.css">
-
-  <style>
-    body {
-      text-align: center;
-      background: black;
-    }
-
-    h2 {
-      margin-top: 20px;
-    }
-
-    .video-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      padding: 20px;
-    }
-
-    .video-card {
-      width: 300px;
-      background: #111;
-      border-radius: 12px;
-      padding: 10px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.7);
-      transition: 0.3s;
-    }
-
-    .video-card:hover {
-      transform: scale(1.05);
-    }
-
-    video {
-      width: 100%;
-      border-radius: 10px;
-    }
-
-    .home-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-    }
-  </style>
 </head>
 
-<body>
+<body style="text-align:center; background:black;">
 
-<button class="home-btn" onclick="goHome()">🏠 Home</button>
+<h2>Special Videos 🎬</h2>
 
-<h2>Special Memories 🎬</h2>
+<!-- 🎥 PLAYER -->
+<video id="player" controls style="width:90%; max-width:600px;"></video>
 
-<div class="video-grid">
-
-  <div class="video-card">
-    <video controls>
-      <source src="videos/video1.mp4" type="video/mp4">
-    </video>
-  </div>
-
-  <div class="video-card">
-    <video controls>
-      <source src="videos/video2.mp4" type="video/mp4">
-    </video>
-  </div>
-
-  <div class="video-card">
-    <video controls>
-      <source src="videos/video3.mp4" type="video/mp4">
-    </video>
-  </div>
-
+<!-- 🎯 VIDEO BUTTONS -->
+<div>
+  <button class="video-btn" onclick="playVideo(0)">Video 1</button>
+  <button class="video-btn" onclick="playVideo(1)">Video 2</button>
+  <button class="video-btn" onclick="playVideo(2)">Video 3</button>
+  <button class="video-btn" onclick="playVideo(3)">Video 4</button>
 </div>
 
-<script>
-function goHome() {
-  window.location.href = "index.html";
-}
-</script>
+<br>
+<button onclick="goBack()">🏠 Home</button>
+
+<script src="video.js"></script>
 
 </body>
 </html>
