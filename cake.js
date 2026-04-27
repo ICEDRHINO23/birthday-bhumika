@@ -18,3 +18,6 @@ function cutCake() {
     setTimeout(() => conf.remove(), 3000);
   }
 }
+function goHome() {
+  window.location.href = "index.html";
+}
