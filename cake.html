@@ -3,16 +3,19 @@
 <head>
   <title>Cake 🎂</title>
   <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 
-<h1>Cut the Cake 🎂</h1>
+<h1 style="text-align:center;">Cut the Cake 🎂</h1>
+<p id="cakeMsg" style="text-align:center;">Tap candles to light them 🕯️</p>
 
 <div id="cakeSection">
 
   <div class="cake" id="cake">
 
+    <!-- LEFT HALF -->
     <div class="cake-half left">
       <div class="slice">
         <div class="layer top"></div>
@@ -23,6 +26,7 @@
       </div>
     </div>
 
+    <!-- RIGHT HALF -->
     <div class="cake-half right">
       <div class="slice">
         <div class="layer top"></div>
@@ -33,6 +37,7 @@
       </div>
     </div>
 
+    <!-- CANDLES -->
     <div class="candles">
       <div class="candle"></div>
       <div class="candle"></div>
@@ -46,6 +51,13 @@
   <button onclick="cutCake()">Cut Cake 🎂</button>
   <button onclick="goHome()">🏠 Home</button>
 
+</div>
+
+<!-- 💖 FINAL MESSAGE -->
+<div id="finalScreen" class="hidden">
+  <h2>💖 Happy Birthday 💖</h2>
+  <p>Wishing you happiness always ✨</p>
+  <button onclick="goHome()">Go Home</button>
 </div>
 
 <script src="cake.js"></script>
