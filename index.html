@@ -1,131 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Happy Birthday Bhoomika 🎂</title>
-<link rel="stylesheet" href="style.css">
+  <title>Birthday Surprise 🎁</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 
-<!-- LOADING -->
-<div id="intro">✨ Loading Surprise... ✨</div>
+  <div class="container">
 
-<!-- MUSIC -->
-<audio id="bgMusic" src="./audio/bds.mp3" loop></audio>
+    <img src="gift.png" class="gift-icon">
 
-<div id="main">
-
-  <!-- PROFILE -->
-  <img id="profilePic" src="./image/bhoomika.jpg">
-
-  <h1>Happy Birthday Bhoomika 🎂</h1>
-  <p>Some people don’t just come into life… they stay ❤️</p>
-
-  <!-- TAP GAME -->
-  <div id="gameBox">
-    <h3>🎯 Tap 5 times to unlock surprise</h3>
-    <button id="tapBtn">Tap Me</button>
-    <p id="tapCount"></p>
-  </div>
-
-  <!-- GIFT -->
-  <div id="giftContainer" class="hidden">
-    <img id="giftImage" src="./image/gift-closed.PNG">
-  </div>
-
-  <!-- MENU -->
-  <div id="menu" class="hidden">
-    <h2>Open your surprise 💝</h2>
-
-    <button onclick="openScrapbook()">📖 Scrapbook</button>
-    <button onclick="openMemories()">📸 Memories</button>
-    <button id="videoBtn" onclick="openVideo()">🎥 Special Video</button>
-
-    <!-- NEW -->
-    <button onclick="openCakePage()">🎂 Cake Surprise</button>
-  </div>
-
-  <!-- VIDEO -->
-  <div id="videoSection" class="hidden">
-    <h2>💖 A Special Surprise 💖</h2>
-
-    <video id="specialVideo" controls>
-      <source src="./videos/special.mp4" type="video/mp4">
-    </video>
-
-    <br><br>
-    <button onclick="closeVideo()">⬅ Back</button>
-  </div>
-
-  <!-- 🎂 CAKE (ANIMATED) -->
-  <div id="cakeSection" class="hidden">
-
-    <h2>🎂 Make a Wish</h2>
-
-    <div class="cake">
-
-      <div class="layer top"></div>
-      <div class="layer middle"></div>
-      <div class="layer bottom"></div>
-
-      <div class="candles">
-        <div class="candle"></div>
-        <div class="candle"></div>
-        <div class="candle"></div>
-      </div>
-
-    </div>
-
-    <p id="cakeMsg">Tap candles to light them 🕯️</p>
-
-  </div>
-
-  <!-- 💌 CARD -->
-  <div id="cardSection" class="hidden">
-
-    <div class="card">
-
-      <!-- FRONT -->
-      <div class="card-front" onclick="openCard()">
-        💌 Tap to Open
-      </div>
-
-      <!-- INSIDE -->
-      <div class="card-inside">
-
-        <div class="card-left">
-          💖
-        </div>
-
-        <div class="card-right">
-          <h2>For You 💖</h2>
-
-          <p>
-            Some people don’t come into life loudly…<br><br>
-            they come quietly and change everything without trying.<br><br>
-
-            You are one of those rare people—
-            calm, real, and beautifully yourself.<br><br>
-
-            I hope life always stays kind to you,
-            and you always find happiness in your own peaceful way.<br><br>
-
-            💖 Happy Birthday 💖
-          </p>
-
-          <button onclick="goBackToMenu()">⬅ Back</button>
-        </div>
-
-      </div>
-
+    <div class="button-group">
+      <button onclick="goToMemory()">Memories</button>
+      <button onclick="goToAlbum()">Scrapbook</button>
     </div>
 
   </div>
 
-</div>
+<script>
+function goToMemory() {
+  window.location.href = "memories.html";
+}
 
-<script src="script.js"></script>
+function goToAlbum() {
+  window.location.href = "album.html";
+}
+</script>
 
 </body>
 </html>
