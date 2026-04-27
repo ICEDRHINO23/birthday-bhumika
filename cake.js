@@ -1,58 +1,20 @@
-let lit = 0;
+function cutCake() {
+  const cake = document.getElementById("cake");
+  const knife = document.getElementById("knife");
 
-const candles = document.querySelectorAll(".candle");
-const cake = document.getElementById("cake");
-const knife = document.getElementById("knife");
-const msg = document.getElementById("msg");
+  cake.classList.add("split");
+  knife.classList.add("animate");
 
-candles.forEach(c => {
-  c.onclick = () => {
+  // 🎉 CONFETTI
+  for (let i = 0; i < 40; i++) {
+    const conf = document.createElement("div");
+    conf.className = "confetti";
 
-    if (c.classList.contains("lit")) return;
+    conf.style.left = Math.random() * window.innerWidth + "px";
+    conf.style.top = "0px";
 
-    c.classList.add("lit");
-    lit++;
+    document.body.appendChild(conf);
 
-    if (lit === 3) {
-      msg.innerText = "Tap cake to cut 🎂";
-      enableCut();
-    }
-  };
-});
-
-function enableCut() {
-
-  cake.onclick = () => {
-
-    knife.classList.add("active");
-
-    setTimeout(() => {
-      cake.classList.add("split");
-      launchConfetti();
-    }, 500);
-
-    setTimeout(() => {
-      document.getElementById("cakeSection").classList.add("hidden");
-      document.getElementById("cardSection").classList.remove("hidden");
-    }, 1200);
-
-  };
-}
-
-function launchConfetti(){
-  const container = document.getElementById("confettiContainer");
-
-  for(let i=0;i<50;i++){
-    const c = document.createElement("div");
-    c.className="confetti";
-    c.style.left = Math.random()*100+"vw";
-    c.style.background=`hsl(${Math.random()*360},100%,50%)`;
-    container.appendChild(c);
-
-    setTimeout(()=>c.remove(),2000);
+    setTimeout(() => conf.remove(), 3000);
   }
-}
-
-function openCard(){
-  document.querySelector(".card").classList.add("open");
 }
