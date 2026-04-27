@@ -3,101 +3,91 @@
 <head>
   <title>Happy Birthday 🎉</title>
   <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 
+<!-- 🔄 INTRO -->
 <div id="intro">Loading Surprise...</div>
 
+<!-- 🎉 MAIN CONTENT -->
 <div id="main" class="hidden">
 
   <h1>Happy Birthday 💖</h1>
 
-  <!-- ✅ FIXED IMAGE PATH -->
-  <img id="profilePic" src="image/bhoomika.jpg">
+  <!-- 🎁 GIFT -->
+  <img id="giftBox" src="image/gift-closed.PNG" onclick="openGift()">
 
-  <br>
+  <!-- 🎉 CONTENT AFTER OPEN -->
+  <div id="content" class="hidden">
 
-  <button onclick="goMemory()">Memories</button>
-  <button onclick="goAlbum()">Scrapbook</button>
+    <!-- PROFILE -->
+    <img id="profilePic" src="image/bhoomika.jpg">
 
-  <!-- 🎂 CAKE -->
-  <div id="cakeSection">
+    <br>
 
-    <div class="cake" id="cake">
+    <!-- NAV BUTTONS -->
+    <button onclick="goMemory()">Memories</button>
+    <button onclick="goAlbum()">Scrapbook</button>
+    <button onclick="goCake()">Cake 🎂</button>
 
-      <div class="cake-half left">
-        <div class="slice">
-          <div class="layer top"></div>
-          <div class="cream"></div>
-          <div class="layer middle"></div>
-          <div class="cream"></div>
-          <div class="layer bottom"></div>
+    <!-- 💌 CARD -->
+    <div id="cardSection">
+      <div class="card" onclick="openCard(this)">
+        <div class="card-front">
+          <h2>Open Me 💌</h2>
+        </div>
+        <div class="card-inside">
+          <p style="padding:20px;">
+            Happy Birthday ❤️  
+            You mean a lot to me 💖
+          </p>
         </div>
       </div>
-
-      <div class="cake-half right">
-        <div class="slice">
-          <div class="layer top"></div>
-          <div class="cream"></div>
-          <div class="layer middle"></div>
-          <div class="cream"></div>
-          <div class="layer bottom"></div>
-        </div>
-      </div>
-
-      <div class="candles">
-        <div class="candle lit"></div>
-        <div class="candle lit"></div>
-        <div class="candle lit"></div>
-      </div>
-
-      <div id="knife"></div>
-
     </div>
 
-    <button onclick="cutCake()">Cut Cake 🎂</button>
-  </div>
-
-  <!-- 💌 CARD -->
-  <div id="cardSection">
-    <div class="card" onclick="openCard(this)">
-      <div class="card-front">
-        <h2>Open Me 💌</h2>
-      </div>
-      <div class="card-inside">
-        <p style="padding:20px;">
-          Happy Birthday ❤️  
-          You mean a lot to me 💖
-        </p>
-      </div>
-    </div>
   </div>
 
 </div>
 
 <script>
+
+/* ⏳ LOADER */
 setTimeout(() => {
   document.getElementById("intro").style.display = "none";
   document.getElementById("main").classList.remove("hidden");
 }, 2000);
 
+/* 🎁 OPEN GIFT */
+function openGift() {
+  const gift = document.getElementById("giftBox");
+
+  gift.src = "image/gift-open.PNG";
+
+  setTimeout(() => {
+    document.getElementById("content").classList.remove("hidden");
+  }, 800);
+}
+
+/* 🔀 NAVIGATION */
 function goMemory() {
   window.location.href = "memories.html";
 }
 
 function goAlbum() {
-  window.location.href = "album.html";
+  window.location.href = "scrapbook.html";
 }
 
-function cutCake() {
-  document.getElementById("cake").classList.add("split");
-  document.getElementById("knife").classList.add("animate");
+function goCake() {
+  window.location.href = "cake.html";
 }
 
+/* 💌 CARD */
 function openCard(card) {
   card.classList.toggle("open");
 }
+
 </script>
 
 </body>
