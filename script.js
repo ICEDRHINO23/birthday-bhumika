@@ -6,16 +6,17 @@ let unlocked = false;
 let giftOpen = false;
 
 /* =========================
-   ON LOAD
+   ON LOAD (SAFE)
 ========================= */
-window.onload = () => {
+window.addEventListener("DOMContentLoaded", () => {
 
-  /* LOADING SCREEN */
+  /* LOADING */
   setTimeout(() => {
-    document.getElementById("intro").style.display = "none";
+    const intro = document.getElementById("intro");
+    if (intro) intro.style.display = "none";
   }, 2000);
 
-  /* MUSIC (USER INTERACTION REQUIRED) */
+  /* MUSIC */
   const music = document.getElementById("bgMusic");
 
   document.addEventListener("click", () => {
@@ -25,7 +26,49 @@ window.onload = () => {
     }
   }, { once: true });
 
-  /* VIDEO LOCK VISUAL */
+  /* TAP GAME (SAFE INIT) */
+  const tapBtn = document.getElementById("tapBtn");
+  const tapCount = document.getElementById("tapCount");
+  const giftContainer = document.getElementById("giftContainer");
+
+  if (tapBtn && tapCount && giftContainer) {
+    tapBtn.onclick = () => {
+
+      if (unlocked) return;
+
+      taps++;
+
+      if (taps >= 5) {
+        taps = 5;
+        unlocked = true;
+
+        tapCount.innerText = "Unlocked 🎉";
+        giftContainer.classList.remove("hidden");
+      } else {
+        tapCount.innerText = `Taps: ${taps}`;
+      }
+    };
+  }
+
+  /* GIFT SYSTEM */
+  const giftImage = document.getElementById("giftImage");
+
+  if (giftImage) {
+    giftImage.onclick = () => {
+
+      if (!giftOpen) {
+        giftImage.src = "image/gift-open.PNG";
+        document.getElementById("menu")?.classList.remove("hidden");
+        giftOpen = true;
+      } else {
+        giftImage.src = "image/gift-closed.PNG";
+        document.getElementById("menu")?.classList.add("hidden");
+        giftOpen = false;
+      }
+    };
+  }
+
+  /* VIDEO LOCK */
   const unlockDate = new Date("2026-05-12T00:00:00");
   const now = new Date();
 
@@ -36,49 +79,8 @@ window.onload = () => {
       btn.innerText = "🔒 Unlocks on 12 May 2026";
     }
   }
-};
 
-/* =========================
-   TAP GAME
-========================= */
-const tapBtn = document.getElementById("tapBtn");
-const tapCount = document.getElementById("tapCount");
-const giftContainer = document.getElementById("giftContainer");
-
-tapBtn.onclick = () => {
-
-  if (unlocked) return;
-
-  taps++;
-
-  if (taps >= 5) {
-    taps = 5;
-    unlocked = true;
-
-    tapCount.innerText = "Unlocked 🎉";
-    giftContainer.classList.remove("hidden");
-  } else {
-    tapCount.innerText = `Taps: ${taps}`;
-  }
-};
-
-/* =========================
-   GIFT TOGGLE
-========================= */
-const giftImage = document.getElementById("giftImage");
-
-giftImage.onclick = () => {
-
-  if (!giftOpen) {
-    giftImage.src = "./image/gift-open.PNG";
-    document.getElementById("menu").classList.remove("hidden");
-    giftOpen = true;
-  } else {
-    giftImage.src = "./image/gift-closed.PNG";
-    document.getElementById("menu").classList.add("hidden");
-    giftOpen = false;
-  }
-};
+});
 
 /* =========================
    NAVIGATION
@@ -91,8 +93,12 @@ function openMemories() {
   window.location.href = "memories.html";
 }
 
+function openCakePage() {
+  window.location.href = "cake.html";
+}
+
 /* =========================
-   VIDEO (LOCKED UNTIL DATE)
+   VIDEO SYSTEM
 ========================= */
 function openVideo() {
 
@@ -100,83 +106,70 @@ function openVideo() {
   const now = new Date();
 
   if (now < unlockDate) {
-    alert("⏳ This special video will unlock on 12 May 2026 💖");
+    alert("⏳ Unlocks on 12 May 2026 💖");
     return;
   }
 
-  document.getElementById("menu").classList.add("hidden");
-  document.getElementById("videoSection").classList.remove("hidden");
+  document.getElementById("menu")?.classList.add("hidden");
+  document.getElementById("videoSection")?.classList.remove("hidden");
 
   const video = document.getElementById("specialVideo");
   const music = document.getElementById("bgMusic");
 
   if (music) music.pause();
 
-  video.currentTime = 0;
-  video.play().catch(()=>{});
+  if (video) {
+    video.currentTime = 0;
+    video.play().catch(()=>{});
+  }
 }
 
 function closeVideo() {
-
   const video = document.getElementById("specialVideo");
   const music = document.getElementById("bgMusic");
 
-  video.pause();
-  video.currentTime = 0;
+  if (video) {
+    video.pause();
+    video.currentTime = 0;
+  }
 
-  document.getElementById("videoSection").classList.add("hidden");
-  document.getElementById("menu").classList.remove("hidden");
+  document.getElementById("videoSection")?.classList.add("hidden");
+  document.getElementById("menu")?.classList.remove("hidden");
 
   if (music) music.play().catch(()=>{});
 }
-/* 🎂 CAKE SYSTEM */
-function openCakePage() {
-  window.location.href = "cake.html";
-}
 
-let lit = 0;
+/* =========================
+   CAKE SYSTEM (SAFE)
+========================= */
+function enableCakeSystem() {
 
-document.querySelectorAll(".candle").forEach(c => {
-  c.onclick = () => {
+  let lit = 0;
 
-    if (c.classList.contains("lit")) return;
+  document.querySelectorAll(".candle").forEach(c => {
+    c.onclick = () => {
 
-    c.classList.add("lit");
-    lit++;
+      if (c.classList.contains("lit")) return;
 
-    if (lit === 3) {
-      document.getElementById("cakeMsg").innerText =
-        "✨ Now cut the cake 🎂";
+      c.classList.add("lit");
+      lit++;
 
-      enableCut();
-    }
-  };
-});
+      if (lit === 3) {
+        const msg = document.getElementById("cakeMsg");
+        if (msg) msg.innerText = "✨ Now cut the cake 🎂";
 
-/* ✂️ CUT */
-function enableCut() {
-  const cake = document.querySelector(".cake");
+        const cake = document.querySelector(".cake");
 
-  cake.onclick = () => {
-    cake.classList.add("cut");
+        if (cake) {
+          cake.onclick = () => {
+            cake.classList.add("cut");
 
-    setTimeout(() => {
-      openCard();
-    }, 1000);
-  };
-}
-
-/* 💌 CARD */
-function openCard() {
-  document.getElementById("cakeSection").classList.add("hidden");
-  document.getElementById("cardSection").classList.remove("hidden");
-}
-
-function openCard() {
-  document.querySelector(".card").classList.add("open");
-}
-
-function goBackToMenu() {
-  document.getElementById("cardSection").classList.add("hidden");
-  document.getElementById("menu").classList.remove("hidden");
+            setTimeout(() => {
+              document.querySelector(".card")?.classList.add("open");
+            }, 1000);
+          };
+        }
+      }
+    };
+  });
 }
