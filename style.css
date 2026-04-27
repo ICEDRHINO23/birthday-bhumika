@@ -368,7 +368,393 @@ button:hover {
   animation: fall 3s linear forwards;
 }
 
+@keyframes fall {/* =========================
+   RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =========================
+   BODY
+========================= */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: url("./image/bdbg.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+}
+
+/* =========================
+   LOADING
+========================= */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  z-index: 9999;
+}
+
+/* =========================
+   MAIN
+========================= */
+#main {
+  text-align: center;
+  padding: 40px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  width: 90%;
+  max-width: 600px;
+  margin: 50px auto;
+}
+
+#profilePic {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid white;
+}
+
+/* =========================
+   GIFT
+========================= */
+#giftBox {
+  width: 150px;
+  cursor: pointer;
+  animation: float 2s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+#giftBox:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 15px pink);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(45deg, #ff4d6d, #ff758f);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(255,100,150,0.8);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* =========================
+   MEMORY PAGE
+========================= */
+.memory-page {
+  background: black;
+  min-height: 100vh;
+}
+
+.home-btn, .back-btn {
+  position: fixed;
+  top: 20px;
+  padding: 10px 15px;
+  border-radius: 50px;
+  z-index: 999;
+}
+
+.home-btn { left: 20px; }
+.back-btn { left: 80px; }
+
+.title {
+  text-align: center;
+  margin-top: 60px;
+}
+
+/* =========================
+   MEMORY BUTTON GRID
+========================= */
+.memory-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px;
+}
+
+/* =========================
+   VIEWER
+========================= */
+.viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+/* =========================
+   POLAROID
+========================= */
+#polaroidStack {
+  position: relative;
+  width: 260px;
+  height: 360px;
+}
+
+.polaroid-card {
+  position: absolute;
+  width: 220px;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  transition: 0.4s;
+}
+
+.polaroid-card img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.polaroid-card.active {
+  transform: translateY(-15px) scale(1.05) !important;
+  z-index: 999;
+}
+
+/* =========================
+   SCRAPBOOK
+========================= */
+.book-body {
+  background: linear-gradient(135deg, #f8cdda, #f6d365);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.book {
+  width: 900px;
+  height: 500px;
+  position: relative;
+}
+
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-origin: left;
+  transition: transform 1s ease;
+  transform-style: preserve-3d;
+}
+
+.page.flipped {
+  transform: rotateY(-180deg);
+}
+
+.front, .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+.front {
+  display: flex;
+  background: white;
+  border-radius: 20px;
+}
+
+.left {
+  width: 50%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left img, .left video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.right {
+  width: 50%;
+  padding: 40px;
+  color: black;
+}
+
+/* =========================
+   CAKE SECTION (FIXED)
+========================= */
+#cakeSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+
+/* 🔥 IMPORTANT FIX */
+.cake {
+  width: 320px;
+  height: 260px;
+  display: flex;
+  position: relative;
+}
+
+/* ✅ FIXED (NO absolute) */
+.cake-half {
+  width: 50%;
+  height: 100%;
+  position: relative;
+}
+
+/* SLICE */
+.slice {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  width: 100%;
+}
+
+/* LAYERS */
+.layer {
+  width: 100%;
+  height: 50px;
+  border-radius: 12px;
+  margin-bottom: 6px;
+}
+
+.top {
+  background: linear-gradient(#ff758f, #ff4d6d);
+}
+
+.middle {
+  background: linear-gradient(#ffc2d1, #ff8fab);
+}
+
+.bottom {
+  background: linear-gradient(#ffe5ec, #ffc2d1);
+}
+
+/* CREAM */
+.cream {
+  height: 12px;
+  background: white;
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+
+/* CANDLES */
+.candles {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.candle {
+  width: 12px;
+  height: 40px;
+  background: #ff4d6d;
+  margin: 0 5px;
+  display: inline-block;
+}
+
+/* FLAME */
+.candle.lit::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 14px;
+  background: radial-gradient(circle, yellow, orange);
+  top: -16px;
+  left: 1px;
+  border-radius: 50%;
+}
+
+/* SPLIT */
+.cake.split .left {
+  transform: translateX(-40px);
+}
+
+.cake.split .right {
+  transform: translateX(40px);
+}
+
+/* KNIFE */
+#knife {
+  position: absolute;
+  width: 6px;
+  height: 120px;
+  background: silver;
+  left: 50%;
+  top: -150px;
+  transform: translateX(-50%);
+}
+
+#knife.animate {
+  top: 40px;
+}
+
+/* CONFETTI */
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 12px;
+  animation: fall 3s linear forwards;
+}
+
 @keyframes fall {
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* FINAL SCREEN */
+#finalScreen {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
   to {
     transform: translateY(100vh);
     opacity: 0;
