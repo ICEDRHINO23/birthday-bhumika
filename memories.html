@@ -7,40 +7,37 @@
 
 <body class="memory-page">
 
-<button class="home-btn" onclick="goHome()">Home</button>
-<button class="back-btn" onclick="goBack()">Back</button>
+<button class="home-btn" onclick="goHome()">🏠</button>
 
-<h1 style="text-align:center; padding-top:60px;">Our Memories 💖</h1>
+<h2 class="title">Our Memories 💖</h2>
 
-<div class="polaroid-container">
+<!-- 🔘 MEMORY BUTTONS -->
+<div class="memory-buttons">
 
-  <!-- ✅ FIXED PATHS -->
-  <div class="polaroid">
-    <img src="assets/images/memory1/1.jpg">
-    <p>Beautiful Moment 💖</p>
-  </div>
-
-  <div class="polaroid">
-    <img src="assets/images/memory2/1.jpg">
-    <p>Best Day Ever 🎉</p>
-  </div>
-
-  <div class="polaroid">
-    <img src="assets/images/memory3/1.jpg">
-    <p>Forever Memory ❤️</p>
-  </div>
+  <button onclick="openMemory('memory1')">Icecream & We Scream</button>
+  <button onclick="openMemory('memory2')">KFC 1</button>
+  <button onclick="openMemory('memory3')">Chai Gossip</button>
+  <button onclick="openMemory('memory4')">Mumbai Crazy Ride</button>
+  <button onclick="openMemory('memory5')">Tipsy Turtle</button>
+  <button onclick="openMemory('memory6')">KFC 2</button>
+  <button onclick="openMemory('memory7')">Bday @ KFC</button>
+  <button onclick="openMemory('memory8')">Bday Boy</button>
+  <button onclick="openMemory('memory9')">Backyard Palms</button>
+  <button onclick="openMemory('memory10')">FC Social</button>
+  <button onclick="openMemory('memory11')">School Days</button>
 
 </div>
 
-<script>
-function goHome() {
-  window.location.href = "index.html";
-}
+<!-- 📸 POLAROID VIEW -->
+<div id="viewer" class="viewer hidden">
 
-function goBack() {
-  window.location.href = "index.html";
-}
-</script>
+  <button class="close-btn" onclick="closeViewer()">❌</button>
+
+  <div id="polaroidStack"></div>
+
+</div>
+
+<script src="memories.js"></script>
 
 </body>
 </html>
