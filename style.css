@@ -430,3 +430,54 @@ button:hover {
     flex-direction: column;
   }
 }
+/* BUTTON GRID */
+.memory-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+}
+
+/* VIEWER OVERLAY */
+.viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.hidden {
+  display: none;
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 20px;
+}
+
+/* STACK */
+#polaroidStack {
+  position: relative;
+}
+
+/* POLAROID */
+.polaroid-card {
+  position: absolute;
+  width: 220px;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  transform: rotate(calc(-10deg + 20deg * random()));
+  cursor: pointer;
+}
+
+.polaroid-card img {
+  width: 100%;
+}
