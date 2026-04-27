@@ -282,3 +282,124 @@ button:hover {
   position: relative;
   margin-bottom: 20px;
 }
+/* =========================
+   CAKE CENTER + SIZE
+========================= */
+#cakeSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+
+.cake {
+  width: 320px;
+  height: 320px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+/* =========================
+   CANDLES
+========================= */
+.candle {
+  width: 12px;
+  height: 40px;
+  background: #ff4d6d;
+  margin: 0 5px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+/* 🔥 FLAME */
+.candle.lit::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 14px;
+  background: radial-gradient(circle, yellow, orange);
+  top: -16px;
+  left: 1px;
+  border-radius: 50%;
+  animation: flame 0.3s infinite alternate;
+}
+
+@keyframes flame {
+  from { transform: scale(1); }
+  to { transform: scale(1.2); }
+}
+
+/* =========================
+   CAKE SPLIT
+========================= */
+.cake.split .left {
+  transform: translateX(-40px) rotateY(-12deg);
+}
+
+.cake.split .right {
+  transform: translateX(40px) rotateY(12deg);
+}
+
+/* =========================
+   KNIFE
+========================= */
+#knife {
+  position: absolute;
+  width: 6px;
+  height: 120px;
+  background: silver;
+  left: 50%;
+  top: -150px;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+#knife.animate {
+  animation: cut 0.8s forwards;
+}
+
+@keyframes cut {
+  to {
+    top: 40px;
+    opacity: 1;
+  }
+}
+
+/* =========================
+   CONFETTI
+========================= */
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 12px;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* =========================
+   FINAL SCREEN
+========================= */
+#finalScreen {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
