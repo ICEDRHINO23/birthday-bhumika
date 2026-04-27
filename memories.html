@@ -5,30 +5,39 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="memory-page">
 
-<div class="memory-container">
+<button class="home-btn" onclick="goHome()">Home</button>
+<button class="back-btn" onclick="goBack()">Back</button>
 
-  <video autoplay muted loop class="bg-video">
-    <source src="video.mp4" type="video/mp4">
-  </video>
+<h1 style="text-align:center; padding-top:60px;">Our Memories 💖</h1>
 
-  <div class="content">
-    <h1>Our Memories 💖</h1>
+<div class="polaroid-container">
 
-    <button onclick="goBack()">Back</button>
-    <button onclick="goNext()">Next</button>
+  <div class="polaroid">
+    <img src="image/photo1.jpg">
+    <p>Beautiful Moment 💖</p>
+  </div>
+
+  <div class="polaroid">
+    <img src="image/photo2.jpg">
+    <p>Best Day Ever 🎉</p>
+  </div>
+
+  <div class="polaroid">
+    <img src="image/photo3.jpg">
+    <p>Forever Memory ❤️</p>
   </div>
 
 </div>
 
 <script>
-function goBack() {
+function goHome() {
   window.location.href = "index.html";
 }
 
-function goNext() {
-  window.location.href = "album.html";
+function goBack() {
+  window.location.href = "index.html";
 }
 </script>
 
