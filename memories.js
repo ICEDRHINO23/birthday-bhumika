@@ -1,18 +1,75 @@
 /* =========================
-   📁 MEMORY LIST
+   📁 MEMORY LIST WITH CAPTIONS
 ========================= */
 const memories = [
-  { folder: "memory1", title: "Icecream & We Scream" },
-  { folder: "memory2", title: "KFC 1" },
-  { folder: "memory3", title: "Chai Gossip" },
-  { folder: "memory4", title: "Mumbai Crazy Ride" },
-  { folder: "memory5", title: "Tipsy Turtle" },
-  { folder: "memory6", title: "KFC 2" },
-  { folder: "memory7", title: "Bday @ KFC" },
-  { folder: "memory8", title: "Bday Boy" },
-  { folder: "memory9", title: "Backyard Palms" },
-  { folder: "memory10", title: "FC Social" },
-  { folder: "memory11", title: "School Days" }
+  {
+    folder: "memory1",
+    title: "Icecream & We Scream",
+    captions: [
+      "🍦 First icecream together",
+      "😂 That silly moment",
+      "💖 You laughing",
+      "✨ Perfect day",
+      "📸 Random click",
+      "❤️ Favorite memory",
+      "😄 Fun time",
+      "💫 Special moment",
+      "🥰 Cute smile",
+      "🌟 Unforgettable",
+      "💭 Just us",
+      "💖 Always special"
+    ]
+  },
+  {
+    folder: "memory2",
+    title: "KFC 1",
+    captions: Array(12).fill("🍗 KFC memories")
+  },
+  {
+    folder: "memory3",
+    title: "Chai Gossip",
+    captions: Array(12).fill("☕ Chai time")
+  },
+  {
+    folder: "memory4",
+    title: "Mumbai Crazy Ride",
+    captions: Array(12).fill("🚗 Crazy ride")
+  },
+  {
+    folder: "memory5",
+    title: "Tipsy Turtle",
+    captions: Array(12).fill("🍹 Fun night")
+  },
+  {
+    folder: "memory6",
+    title: "KFC 2",
+    captions: Array(12).fill("🍗 Again KFC 😄")
+  },
+  {
+    folder: "memory7",
+    title: "Bday @ KFC",
+    captions: Array(12).fill("🎂 Birthday vibes")
+  },
+  {
+    folder: "memory8",
+    title: "Bday Boy",
+    captions: Array(12).fill("🎉 Birthday boy")
+  },
+  {
+    folder: "memory9",
+    title: "Backyard Palms",
+    captions: Array(12).fill("🌴 Chill time")
+  },
+  {
+    folder: "memory10",
+    title: "FC Social",
+    captions: Array(12).fill("🍽️ FC Social")
+  },
+  {
+    folder: "memory11",
+    title: "School Days",
+    captions: Array(12).fill("🏫 Old memories")
+  }
 ];
 
 /* =========================
@@ -43,15 +100,19 @@ function openMemory(folder) {
   stack.innerHTML = "";
   viewer.classList.remove("hidden");
 
-  const totalImages = 12; // 🔥 YOUR CASE
+  const memory = memories.find(m => m.folder === folder);
+  const totalImages = 12;
 
   for (let i = 1; i <= totalImages; i++) {
 
     const card = document.createElement("div");
     card.className = "polaroid-card";
 
+    const captionText = memory.captions[i - 1] || "💖 Memory";
+
     card.innerHTML = `
       <img src="assets/images/${folder}/${i}.jpg" />
+      <p class="caption">${captionText}</p>
     `;
 
     stack.appendChild(card);
@@ -61,34 +122,50 @@ function openMemory(folder) {
 }
 
 /* =========================
-   🧠 STACK LOGIC
+   🧠 STACK LOGIC (FIXED)
 ========================= */
 function setupStack() {
 
-  const cards = document.querySelectorAll(".polaroid-card");
+  const cards = Array.from(document.querySelectorAll(".polaroid-card"));
   let current = 0;
 
-  cards.forEach((card, index) => {
+  /* INITIAL STACK ORDER */
+  cards.forEach((card, i) => {
+    card.style.zIndex = cards.length - i;
+  });
 
-    card.style.zIndex = cards.length - index;
+  cards.forEach((card, index) => {
 
     card.addEventListener("click", () => {
 
       if (index !== current) return;
 
+      /* ANIMATE UP */
       card.classList.add("active");
-      current++;
 
-      if (current >= cards.length) {
-        setTimeout(() => {
-          cards.forEach(c => c.classList.remove("active"));
+      setTimeout(() => {
+
+        /* SEND TO BACK */
+        card.style.zIndex = 0;
+        card.classList.remove("active");
+
+        current++;
+
+        /* RESET STACK */
+        if (current >= cards.length) {
           current = 0;
-        }, 1200);
-      }
+
+          cards.forEach((c, i) => {
+            c.style.zIndex = cards.length - i;
+          });
+        }
+
+      }, 500);
 
     });
 
   });
+
 }
 
 /* =========================
