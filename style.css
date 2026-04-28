@@ -409,3 +409,7 @@ button:hover {
   color: #333;
   font-weight: 500;
 }
+.card-inside img {
+  display: block;
+  margin: 10px auto;
+}
