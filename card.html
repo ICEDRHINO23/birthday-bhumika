@@ -5,24 +5,31 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body style="display:flex;justify-content:center;align-items:center;height:100vh;">
+<body style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;">
 
 <div class="card" onclick="this.classList.toggle('open')">
-  
+
+  <!-- FRONT -->
   <div class="card-front">
     <h2>Open Me 💌</h2>
   </div>
 
+  <!-- INSIDE -->
   <div class="card-inside">
+
+    <!-- 🎂 CAKE IMAGE -->
+    <img src="image/cake.png" style="width:120px;margin-top:10px;">
+
     <p style="padding:20px;">
-      Happy Birthday ❤️ <br><br>
-      You are truly special 💖 <br>
-      May all your wishes come true ✨
+      Happy Birthday ❤️ <br>
+      ALL THE BEST DEAR 💖
     </p>
+
   </div>
 
 </div>
 
+<!-- HOME BUTTON -->
 <button onclick="goHome()" style="position:fixed;top:20px;left:20px;">🏠</button>
 
 <script>
