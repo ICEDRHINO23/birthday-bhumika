@@ -362,3 +362,8 @@ button:hover {
   color: #333;
   font-weight: 500;
 }
+#countdown {
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255,100,150,0.8);
+}
