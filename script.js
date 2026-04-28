@@ -70,3 +70,32 @@ function goVideo() {
 function openCard(card) {
   card.classList.toggle("open");
 }
+/* ⏳ COUNTDOWN TIMER */
+window.addEventListener("DOMContentLoaded", () => {
+
+  const unlockDate = new Date("2026-05-12T00:00:00").getTime();
+  const countdownEl = document.getElementById("countdown");
+  const btn = document.getElementById("videoBtn");
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = unlockDate - now;
+
+    if (distance <= 0) {
+      countdownEl.innerHTML = "🎉 Unlocked!";
+      if (btn) btn.innerText = "Special Video 🎬";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((distance / (1000 * 60)) % 60);
+    const seconds = Math.floor((distance / 1000) % 60);
+
+    countdownEl.innerHTML =
+      `⏳ Unlocks in ${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+});
