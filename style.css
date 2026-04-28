@@ -235,8 +235,16 @@ button:hover {
   transform: translateY(-120px) scale(1.1);
 }
 
+/* FIX POLAROID TEXT */
+.polaroid-card p,
+.polaroid-card .caption {
+  color: #000;
+  text-align: center;
+  font-weight: 500;
+}
+
 /* =========================
-   SCRAPBOOK
+   SCRAPBOOK (FIXED)
 ========================= */
 .book-body {
   display: flex;
@@ -245,52 +253,6 @@ button:hover {
   height: 100vh;
   background: linear-gradient(135deg, #f8cdda, #f6d365);
 }
-
-/* =========================
-   COUNTDOWN (UPDATED)
-========================= */
-#countdown {
-  margin-top: 12px;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-
-  color: #fff;
-  letter-spacing: 1px;
-
-  padding: 8px 14px;
-  border-radius: 12px;
-
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(8px);
-
-  animation: glowPulse 2s infinite ease-in-out;
-}
-
-/* GLOW */
-@keyframes glowPulse {
-  0% { box-shadow: 0 0 10px rgba(255,100,150,0.5); }
-  50% { box-shadow: 0 0 25px rgba(255,100,150,1); transform: scale(1.05); }
-  100% { box-shadow: 0 0 10px rgba(255,100,150,0.5); }
-}
-
-/* TICK EFFECT */
-.time {
-  display: inline-block;
-  animation: tick 1s infinite;
-}
-
-@keyframes tick {
-  0% { opacity: 0.6; }
-  50% { opacity: 1; }
-  100% { opacity: 0.6; }
-}
-/* FIX POLAROID TEXT COLOR */
-.polaroid-card p,
-.polaroid-card .caption {
-/* =========================
-   SCRAPBOOK FULL FIX
-========================= */
 
 .scene {
   width: 100%;
@@ -307,7 +269,6 @@ button:hover {
   perspective: 2000px;
 }
 
-/* PAGE */
 .page {
   position: absolute;
   width: 100%;
@@ -323,7 +284,6 @@ button:hover {
   z-index: 0;
 }
 
-/* FRONT & BACK */
 .front,
 .back {
   position: absolute;
@@ -338,13 +298,11 @@ button:hover {
   transform: rotateY(180deg);
 }
 
-/* CONTENT */
 .front {
   display: flex;
   background: white;
 }
 
-/* LEFT SIDE */
 .left {
   width: 50%;
   background: black;
@@ -360,7 +318,6 @@ button:hover {
   object-fit: contain;
 }
 
-/* RIGHT SIDE */
 .right {
   width: 50%;
   padding: 40px;
@@ -371,7 +328,6 @@ button:hover {
   text-align: center;
 }
 
-/* COVER */
 .cover-page .front {
   background: linear-gradient(135deg, #ff758f, #ff4d6d);
   color: white;
@@ -390,7 +346,38 @@ button:hover {
 
 .controls button {
   margin: 5px;
-}  color: #000;          /* black text */
+}
+
+/* =========================
+   COUNTDOWN
+========================= */
+#countdown {
+  margin-top: 12px;
+  font-size: 18px;
+  font-weight: bold;
   text-align: center;
-  font-weight: 500;
+  color: #fff;
+  letter-spacing: 1px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  animation: glowPulse 2s infinite ease-in-out;
+}
+
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 10px rgba(255,100,150,0.5); }
+  50% { box-shadow: 0 0 25px rgba(255,100,150,1); transform: scale(1.05); }
+  100% { box-shadow: 0 0 10px rgba(255,100,150,0.5); }
+}
+
+.time {
+  display: inline-block;
+  animation: tick 1s infinite;
+}
+
+@keyframes tick {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
 }
