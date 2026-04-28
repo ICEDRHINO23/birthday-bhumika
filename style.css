@@ -46,7 +46,7 @@ body {
 }
 
 /* =========================
-   PROFILE + GIFT (CENTER FIX)
+   PROFILE + GIFT
 ========================= */
 .hero {
   display: flex;
@@ -55,22 +55,15 @@ body {
   gap: 20px;
 }
 
-/* PROFILE (FIXED FACE VISIBILITY) */
 #profilePic {
   width: 200px;
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
-
-  /* 🔥 IMPORTANT FIX */
   object-position: center 30%;
-
   border: 4px solid white;
 }
 
-/* =========================
-   GIFT
-========================= */
 #giftBox {
   width: 150px;
   cursor: pointer;
@@ -111,7 +104,7 @@ button:hover {
 }
 
 /* =========================
-   CARD (FULL SCREEN)
+   CARD
 ========================= */
 .card {
   width: 90vw;
@@ -122,11 +115,9 @@ button:hover {
   position: relative;
   perspective: 1200px;
   cursor: pointer;
-
   transform-style: preserve-3d;
 }
 
-/* FRONT & INSIDE */
 .card-front,
 .card-inside {
   position: absolute;
@@ -140,7 +131,6 @@ button:hover {
   box-shadow: 0 20px 50px rgba(0,0,0,0.4);
 }
 
-/* FRONT */
 .card-front {
   display: flex;
   justify-content: center;
@@ -165,7 +155,6 @@ button:hover {
   text-shadow: 0 0 10px black;
 }
 
-/* INSIDE */
 .card-inside {
   background: white;
   color: black;
@@ -176,14 +165,12 @@ button:hover {
   justify-content: center;
 }
 
-/* INSIDE IMAGE */
 .card-inside img {
   width: 300px;
   margin-bottom: 20px;
   border-radius: 15px;
 }
 
-/* TEXT */
 .card-inside p {
   font-size: 22px;
   line-height: 1.6;
@@ -192,7 +179,6 @@ button:hover {
   margin: 0 auto;
 }
 
-/* FLIP */
 .card.open .card-front {
   transform: rotateY(180deg);
 }
@@ -218,7 +204,7 @@ button:hover {
 }
 
 /* =========================
-   POLAROID STACK
+   POLAROID
 ========================= */
 #polaroidStack {
   position: relative;
@@ -245,11 +231,6 @@ button:hover {
   background: #000;
 }
 
-.polaroid-card:nth-child(1) { transform: rotate(-5deg); }
-.polaroid-card:nth-child(2) { transform: rotate(4deg); }
-.polaroid-card:nth-child(3) { transform: rotate(-3deg); }
-.polaroid-card:nth-child(4) { transform: rotate(6deg); }
-
 .polaroid-card.active {
   transform: translateY(-120px) scale(1.1);
 }
@@ -265,105 +246,42 @@ button:hover {
   background: linear-gradient(135deg, #f8cdda, #f6d365);
 }
 
-.scene {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.book {
-  width: 900px;
-  height: 500px;
-  position: relative;
-  perspective: 1500px;
-}
-
-.page {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform-origin: left;
-  transform-style: preserve-3d;
-  transition: transform 1s ease;
-}
-
-.page.flipped {
-  transform: rotateY(-180deg);
-}
-
-.front,
-.back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.back {
-  transform: rotateY(180deg);
-}
-
-.front {
-  display: flex;
-  background: white;
-}
-
-.left {
-  width: 50%;
-  background: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.left img,
-.left video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.right {
-  width: 50%;
-  padding: 40px;
-  color: black;
-}
-
-.cover-page .front {
-  background: linear-gradient(135deg, #ff758f, #ff4d6d);
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-/* CONTROLS */
-.controls {
-  position: fixed;
-  bottom: 20px;
-  width: 100%;
-  text-align: center;
-}
-
-.controls button {
-  margin: 5px;
-}
-
-/* CAPTION */
-.caption {
-  text-align: center;
-  margin-top: 8px;
-  font-size: 13px;
-  color: #333;
-  font-weight: 500;
-}
+/* =========================
+   COUNTDOWN (UPDATED)
+========================= */
 #countdown {
-  color: #fff;
+  margin-top: 12px;
+  font-size: 18px;
   font-weight: bold;
-  text-shadow: 0 0 10px rgba(255,100,150,0.8);
+  text-align: center;
+
+  color: #fff;
+  letter-spacing: 1px;
+
+  padding: 8px 14px;
+  border-radius: 12px;
+
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+
+  animation: glowPulse 2s infinite ease-in-out;
+}
+
+/* GLOW */
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 10px rgba(255,100,150,0.5); }
+  50% { box-shadow: 0 0 25px rgba(255,100,150,1); transform: scale(1.05); }
+  100% { box-shadow: 0 0 10px rgba(255,100,150,0.5); }
+}
+
+/* TICK EFFECT */
+.time {
+  display: inline-block;
+  animation: tick 1s infinite;
+}
+
+@keyframes tick {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
 }
