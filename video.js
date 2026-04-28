@@ -1,4 +1,15 @@
 /* =========================
+   🔒 PAGE LOCK PROTECTION
+========================= */
+const unlockDate = new Date("2026-05-12T00:00:00").getTime();
+const now = new Date().getTime();
+
+if (now < unlockDate) {
+  alert("⏳ This video unlocks on 12 May 2026 💖");
+  window.location.href = "index.html";
+}
+
+/* =========================
    🎬 VIDEO LIST
 ========================= */
 const videos = [
