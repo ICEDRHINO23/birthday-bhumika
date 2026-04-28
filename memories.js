@@ -1,65 +1,105 @@
+/* =========================
+   📁 MEMORY DATA
+========================= */
+const memories = [
+  { folder: "memory1", title: "Icecream & We Scream" },
+  { folder: "memory2", title: "KFC 1" },
+  { folder: "memory3", title: "Chai Gossip" },
+  { folder: "memory4", title: "Mumbai Crazy Ride" },
+  { folder: "memory5", title: "Tipsy Turtle" },
+  { folder: "memory6", title: "KFC 2" },
+  { folder: "memory7", title: "Bday @ KFC" },
+  { folder: "memory8", title: "Bday Boy" },
+  { folder: "memory9", title: "Backyard Palms" },
+  { folder: "memory10", title: "FC Social" },
+  { folder: "memory11", title: "School Days" }
+];
+
+/* =========================
+   📦 ELEMENTS
+========================= */
+const buttonsContainer = document.getElementById("memoryButtons");
 const viewer = document.getElementById("viewer");
 const stack = document.getElementById("polaroidStack");
 
-let currentIndex = 0;
-let images = [];
+/* =========================
+   🎯 CREATE BUTTONS
+========================= */
+memories.forEach(mem => {
 
-/* OPEN MEMORY */
+  const btn = document.createElement("button");
+  btn.innerText = mem.title;
+
+  btn.onclick = () => openMemory(mem.folder);
+
+  buttonsContainer.appendChild(btn);
+});
+
+/* =========================
+   📸 OPEN MEMORY
+========================= */
 function openMemory(folder) {
 
+  stack.innerHTML = ""; // clear old cards
   viewer.classList.remove("hidden");
-  stack.innerHTML = "";
-  currentIndex = 0;
 
-  images = [];
+  const totalImages = 5; // 👉 change if needed
 
-  let i = 1;
+  for (let i = 1; i <= totalImages; i++) {
 
-  function loadNext() {
-    const img = new Image();
-    img.src = `assets/images/${folder}/${i}.jpg`;
+    const card = document.createElement("div");
+    card.className = "polaroid-card";
 
-    img.onload = () => {
-      images.push(img.src);
-      i++;
-      loadNext();
-    };
+    card.innerHTML = `
+      <img src="./image/${folder}/${i}.jpg" />
+    `;
 
-    img.onerror = () => {
-      showNextImage();
-    };
+    stack.appendChild(card);
   }
 
-  loadNext();
+  setupStack();
 }
 
-/* SHOW NEXT IMAGE */
-function showNextImage() {
+/* =========================
+   🧠 STACK LOGIC
+========================= */
+function setupStack() {
 
-  if (currentIndex >= images.length) return;
+  const cards = document.querySelectorAll(".polaroid-card");
 
-  const card = document.createElement("div");
-  card.className = "polaroid-card";
+  let current = 0;
 
-  card.innerHTML = `
-    <img src="${images[currentIndex]}">
-  `;
+  cards.forEach((card, index) => {
 
-  card.onclick = () => {
-    currentIndex++;
-    showNextImage();
-  };
+    /* STACK ORDER */
+    card.style.zIndex = cards.length - index;
 
-  stack.appendChild(card);
+    /* CLICK EVENT */
+    card.addEventListener("click", () => {
+
+      if (index !== current) return;
+
+      card.classList.add("active");
+
+      current++;
+
+      /* RESET AFTER LAST */
+      if (current >= cards.length) {
+        setTimeout(() => {
+          cards.forEach(c => c.classList.remove("active"));
+          current = 0;
+        }, 1200);
+      }
+
+    });
+
+  });
+
 }
 
-/* CLOSE */
+/* =========================
+   ❌ CLOSE VIEWER
+========================= */
 function closeViewer() {
   viewer.classList.add("hidden");
-  stack.innerHTML = "";
-}
-
-/* NAV */
-function goHome() {
-  window.location.href = "index.html";
 }
