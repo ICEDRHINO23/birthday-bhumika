@@ -175,7 +175,12 @@ button:hover {
   line-height: 1.6;
   text-align: center;
 }
-
+/* FIX TEXT CENTERING PERFECTLY */
+.card-inside p {
+  max-width: 70%;
+  margin: 0 auto;
+  text-align: center;
+}
 /* FLIP EFFECT */
 .card.open .card-front {
   transform: rotateY(180deg);
