@@ -285,3 +285,10 @@ button:hover {
   50% { opacity: 1; }
   100% { opacity: 0.6; }
 }
+/* FIX POLAROID TEXT COLOR */
+.polaroid-card p,
+.polaroid-card .caption {
+  color: #000;          /* black text */
+  text-align: center;
+  font-weight: 500;
+}
