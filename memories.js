@@ -174,3 +174,6 @@ function setupStack() {
 function closeViewer() {
   viewer.classList.add("hidden");
 }
+function goHome() {
+  window.location.href = "index.html";
+}
