@@ -177,3 +177,30 @@ function closeViewer() {
 function goHome() {
   window.location.href = "index.html";
 }
+/* 🎵 MEMORY MUSIC SYSTEM */
+const songs = [
+  "assets/audio/mem1.mp3",
+  "assets/audio/mem2.mp3"
+];
+
+let currentSong = 0;
+let player = null;
+
+document.addEventListener("DOMContentLoaded", () => {
+  player = document.getElementById("memoryMusic");
+
+  if (!player) return;
+
+  // autoplay first after interaction
+  document.addEventListener("click", () => {
+    player.src = songs[currentSong];
+    player.play().catch(()=>{});
+  }, { once: true });
+
+  // auto next song
+  player.addEventListener("ended", () => {
+    currentSong = (currentSong + 1) % songs.length;
+    player.src = songs[currentSong];
+    player.play().catch(()=>{});
+  });
+});
