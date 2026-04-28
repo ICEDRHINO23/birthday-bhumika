@@ -1,5 +1,5 @@
 /* =========================
-   📁 MEMORY DATA
+   📁 MEMORY LIST
 ========================= */
 const memories = [
   { folder: "memory1", title: "Icecream & We Scream" },
@@ -40,10 +40,10 @@ memories.forEach(mem => {
 ========================= */
 function openMemory(folder) {
 
-  stack.innerHTML = ""; // clear old cards
+  stack.innerHTML = "";
   viewer.classList.remove("hidden");
 
-  const totalImages = 5; // 👉 change if needed
+  const totalImages = 12; // 🔥 YOUR CASE
 
   for (let i = 1; i <= totalImages; i++) {
 
@@ -51,7 +51,7 @@ function openMemory(folder) {
     card.className = "polaroid-card";
 
     card.innerHTML = `
-      <img src="./image/${folder}/${i}.jpg" />
+      <img src="assets/images/${folder}/${i}.jpg" />
     `;
 
     stack.appendChild(card);
@@ -66,24 +66,19 @@ function openMemory(folder) {
 function setupStack() {
 
   const cards = document.querySelectorAll(".polaroid-card");
-
   let current = 0;
 
   cards.forEach((card, index) => {
 
-    /* STACK ORDER */
     card.style.zIndex = cards.length - index;
 
-    /* CLICK EVENT */
     card.addEventListener("click", () => {
 
       if (index !== current) return;
 
       card.classList.add("active");
-
       current++;
 
-      /* RESET AFTER LAST */
       if (current >= cards.length) {
         setTimeout(() => {
           cards.forEach(c => c.classList.remove("active"));
@@ -94,7 +89,6 @@ function setupStack() {
     });
 
   });
-
 }
 
 /* =========================
