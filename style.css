@@ -191,9 +191,9 @@ button:hover {
 
 /* ACTIVE (TOP CARD MOVE) */
 .polaroid-card.active {
-  transform: translateY(-120px) scale(1.1) rotate(0deg) !important;
-  z-index: 999;
-}/* =========================
+  transform: translateY(-120px) scale(1.1);
+}
+/* =========================
    SCRAPBOOK
 ========================= */
 .book-body {
