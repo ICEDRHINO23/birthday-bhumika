@@ -52,6 +52,7 @@ body {
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid white;
+  margin-bottom: 20px;
 }
 
 /* =========================
@@ -95,15 +96,15 @@ button:hover {
 .hidden {
   display: none !important;
 }
+
 /* =========================
    CARD (FULL SCREEN)
 ========================= */
 .card {
-  width: 90vw;            /* almost full width */
-  height: 85vh;           /* almost full height */
-  max-width: 1000px;      /* limit on desktop */
+  width: 90vw;
+  height: 85vh;
+  max-width: 1000px;
   max-height: 700px;
-
   margin: auto;
   position: relative;
   perspective: 1200px;
@@ -122,17 +123,32 @@ button:hover {
   box-shadow: 0 20px 50px rgba(0,0,0,0.4);
 }
 
-/* FRONT */
+/* ✅ FIXED FRONT LAYOUT */
+.card-front {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* FRONT IMAGE */
 .card-front img {
   width: 100%;
   height: 100%;
-  object-fit: cover;   /* fills the card nicely */
+  object-fit: cover;
   border-radius: 20px;
 }
 
+/* OPTIONAL TEXT ON IMAGE */
 .card-front h2 {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 36px;
   color: white;
+  text-shadow: 0 0 10px black;
 }
 
 /* INSIDE */
@@ -140,7 +156,6 @@ button:hover {
   background: white;
   color: black;
   transform: rotateY(180deg);
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -151,6 +166,7 @@ button:hover {
 .card-inside img {
   width: 200px;
   margin-bottom: 20px;
+  display: block;
 }
 
 /* TEXT */
@@ -168,6 +184,7 @@ button:hover {
 .card.open .card-inside {
   transform: rotateY(0deg);
 }
+
 /* =========================
    MEMORY PAGE
 ========================= */
@@ -185,7 +202,7 @@ button:hover {
 }
 
 /* =========================
-   📸 POLAROID STACK (REAL)
+   POLAROID STACK
 ========================= */
 #polaroidStack {
   position: relative;
@@ -194,7 +211,6 @@ button:hover {
   margin: 50px auto;
 }
 
-/* CARD */
 .polaroid-card {
   position: absolute;
   width: 220px;
@@ -206,39 +222,25 @@ button:hover {
   transition: 0.6s ease;
 }
 
-/* IMAGE FIX */
 .polaroid-card img {
   width: 100%;
   height: 180px;
-  object-fit: contain;   /* shows full image */
-  background: #000;      /* fills empty space nicely */
+  object-fit: contain;
+  background: #000;
 }
-/* STACK EFFECT (IMPORTANT) */
-.polaroid-card:nth-child(1) { transform: rotate(-5deg) translateY(0); }
-.polaroid-card:nth-child(2) { transform: rotate(4deg) translateY(5px); }
-.polaroid-card:nth-child(3) { transform: rotate(-3deg) translateY(10px); }
-.polaroid-card:nth-child(4) { transform: rotate(6deg) translateY(15px); }
 
-/* ACTIVE (TOP CARD MOVE) */
+.polaroid-card:nth-child(1) { transform: rotate(-5deg); }
+.polaroid-card:nth-child(2) { transform: rotate(4deg); }
+.polaroid-card:nth-child(3) { transform: rotate(-3deg); }
+.polaroid-card:nth-child(4) { transform: rotate(6deg); }
+
 .polaroid-card.active {
   transform: translateY(-120px) scale(1.1);
 }
+
 /* =========================
    SCRAPBOOK
 ========================= */
-.book-body {
-  background: linear-gradient(135deg, #f8cdda, #f6d365);
-}
-
-.left img, .left video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-/* =========================
-   SCRAPBOOK FIX (RESTORE)
-========================= */
-
 .book-body {
   display: flex;
   justify-content: center;
@@ -247,85 +249,6 @@ button:hover {
   background: linear-gradient(135deg, #f8cdda, #f6d365);
 }
 
-/* BOOK */
-.book {
-  width: 900px;
-  height: 500px;
-  position: relative;
-  perspective: 1500px;   /* 🔥 IMPORTANT */
-}
-
-/* PAGE */
-.page {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform-origin: left;
-  transform-style: preserve-3d;
-  transition: transform 1s ease;
-}
-
-/* FLIP */
-.page.flipped {
-  transform: rotateY(-180deg);
-}
-
-/* FRONT / BACK */
-.front,
-.back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.back {
-  transform: rotateY(180deg);
-}
-
-/* PAGE CONTENT */
-.front {
-  display: flex;
-  background: white;
-}
-
-/* LEFT SIDE (IMAGE) */
-.left {
-  width: 50%;
-  background: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.left img,
-.left video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* RIGHT SIDE (TEXT) */
-.right {
-  width: 50%;
-  padding: 40px;
-  color: black;
-}
-
-/* COVER PAGE FIX */
-.cover-page .front {
-  background: linear-gradient(135deg, #ff758f, #ff4d6d);
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-/* =========================
-   🎬 SCENE (3D SPACE)
-========================= */
 .scene {
   width: 100%;
   height: 100vh;
@@ -334,9 +257,6 @@ button:hover {
   align-items: center;
 }
 
-/* =========================
-   📖 BOOK (FIXED CENTER)
-========================= */
 .book {
   width: 900px;
   height: 500px;
@@ -344,9 +264,6 @@ button:hover {
   perspective: 1500px;
 }
 
-/* =========================
-   📄 PAGE
-========================= */
 .page {
   position: absolute;
   width: 100%;
@@ -356,12 +273,10 @@ button:hover {
   transition: transform 1s ease;
 }
 
-/* FLIP EFFECT */
 .page.flipped {
   transform: rotateY(-180deg);
 }
 
-/* FRONT / BACK */
 .front,
 .back {
   position: absolute;
@@ -376,15 +291,11 @@ button:hover {
   transform: rotateY(180deg);
 }
 
-/* =========================
-   📦 PAGE CONTENT
-========================= */
 .front {
   display: flex;
   background: white;
 }
 
-/* LEFT SIDE (IMAGE) */
 .left {
   width: 50%;
   background: black;
@@ -400,16 +311,12 @@ button:hover {
   object-fit: contain;
 }
 
-/* RIGHT SIDE (TEXT) */
 .right {
   width: 50%;
   padding: 40px;
   color: black;
 }
 
-/* =========================
-   💖 COVER PAGE (FIX)
-========================= */
 .cover-page .front {
   background: linear-gradient(135deg, #ff758f, #ff4d6d);
   color: white;
@@ -419,9 +326,7 @@ button:hover {
   text-align: center;
 }
 
-/* =========================
-   🎮 CONTROLS
-========================= */
+/* CONTROLS */
 .controls {
   position: fixed;
   bottom: 20px;
@@ -432,23 +337,12 @@ button:hover {
 .controls button {
   margin: 5px;
 }
-/* 📸 CAPTION */
+
+/* CAPTION */
 .caption {
   text-align: center;
   margin-top: 8px;
   font-size: 13px;
   color: #333;
   font-weight: 500;
-}
-.card-inside img {
-  display: block;
-  margin: 10px auto;
-}
-/* FIX FRONT LAYOUT */
-.card-front {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
 }
