@@ -17,22 +17,32 @@
 <!-- 🎉 MAIN CONTENT -->
 <div id="main" class="hidden">
 
-  <h1>Happy Birthday Bhumika💖</h1>
-  <!-- PROFILE -->
+  <h1>Happy Birthday Bhumika 💖</h1>
+
+  <!-- CENTER GROUP -->
+  <div class="hero">
+
+    <!-- PROFILE -->
     <img id="profilePic" src="image/bhoomika.jpg">
 
-  <!-- 🎁 GIFT -->
-  <img id="giftBox" src="image/gift-closed.PNG" onclick="openGift()">
+    <!-- 🎁 GIFT -->
+    <img id="giftBox" src="image/gift-closed.PNG" onclick="openGift()">
+
+  </div>
 
   <!-- 🎉 CONTENT AFTER OPEN -->
   <div id="content" class="hidden">
 
     <br>
-<button onclick="goMemory()">Memories</button>
-<button onclick="goAlbum()">Scrapbook</button>
-<button onclick="goCard()">Birthday Card 💌</button>
-<button onclick="goVideo()">Special Video 🎬</button>
 
+    <button onclick="goMemory()">Memories</button>
+    <button onclick="goAlbum()">Scrapbook</button>
+    <button onclick="goCard()">Birthday Card 💌</button>
+    <button onclick="goVideo()">Special Video 🎬</button>
+
+  </div>
+
+</div>
 
 <script>
 
@@ -53,7 +63,7 @@ function openGift() {
   }, 800);
 }
 
-/* 🎵 MUSIC (REQUIRED FOR MOBILE) */
+/* 🎵 MUSIC */
 document.addEventListener("click", () => {
   const music = document.getElementById("bgMusic");
 
@@ -72,16 +82,17 @@ function goAlbum() {
   window.location.href = "scrapbook.html";
 }
 
-function goCake() {
-  window.location.href = "cake.html";
+function goCard() {
+  window.location.href = "card.html";
 }
 
-/* 💌 CARD */
-function openCard(card) {
-  card.classList.toggle("open");
+function goVideo() {
+  window.location.href = "video.html";
 }
+
 </script>
 
 <script src="script.js"></script>
+
 </body>
 </html>
