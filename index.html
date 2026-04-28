@@ -4,6 +4,42 @@
   <title>Happy Birthday 🎉</title>
   <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+  /* ⏳ ANIMATED COUNTDOWN */
+  #countdown {
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+
+    padding: 8px 14px;
+    border-radius: 12px;
+
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+
+    animation: glowPulse 2s infinite ease-in-out;
+  }
+
+  @keyframes glowPulse {
+    0% { box-shadow: 0 0 10px rgba(255,100,150,0.5); }
+    50% { box-shadow: 0 0 25px rgba(255,100,150,1); }
+    100% { box-shadow: 0 0 10px rgba(255,100,150,0.5); }
+  }
+
+  .time {
+    animation: tick 1s infinite;
+  }
+
+  @keyframes tick {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+  }
+  </style>
+
 </head>
 
 <body>
@@ -19,15 +55,9 @@
 
   <h1>Happy Birthday Bhumika 💖</h1>
 
-  <!-- CENTER GROUP -->
   <div class="hero">
-
-    <!-- PROFILE -->
     <img id="profilePic" src="image/bhoomika.jpg">
-
-    <!-- 🎁 GIFT -->
     <img id="giftBox" src="image/gift-closed.PNG" onclick="openGift()">
-
   </div>
 
   <!-- 🎉 CONTENT AFTER OPEN -->
@@ -38,7 +68,12 @@
     <button onclick="goMemory()">Memories</button>
     <button onclick="goAlbum()">Scrapbook</button>
     <button onclick="goCard()">Birthday Card 💌</button>
-    <button onclick="goVideo()">Special Video 🎬</button>
+
+    <!-- 🔒 VIDEO BUTTON -->
+    <button id="videoBtn" onclick="goVideo()">Special Video 🎬</button>
+
+    <!-- ⏳ COUNTDOWN -->
+    <div id="countdown"></div>
 
   </div>
 
@@ -55,7 +90,6 @@ setTimeout(() => {
 /* 🎁 OPEN GIFT */
 function openGift() {
   const gift = document.getElementById("giftBox");
-
   gift.src = "image/gift-open.PNG";
 
   setTimeout(() => {
@@ -66,12 +100,45 @@ function openGift() {
 /* 🎵 MUSIC */
 document.addEventListener("click", () => {
   const music = document.getElementById("bgMusic");
-
   if (music && music.paused) {
     music.volume = 0.4;
     music.play().catch(()=>{});
   }
 }, { once: true });
+
+/* 🔒 + ⏳ COUNTDOWN SYSTEM */
+window.addEventListener("DOMContentLoaded", () => {
+
+  const unlockDate = new Date("2026-05-12T00:00:00").getTime();
+  const countdownEl = document.getElementById("countdown");
+  const btn = document.getElementById("videoBtn");
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = unlockDate - now;
+
+    if (distance <= 0) {
+      countdownEl.innerHTML = "🎉 Unlocked!";
+      btn.innerText = "Special Video 🎬";
+      btn.style.opacity = "1";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000*60*60*24));
+    const hours = Math.floor((distance / (1000*60*60)) % 24);
+    const minutes = Math.floor((distance / (1000*60)) % 60);
+    const seconds = Math.floor((distance / 1000) % 60);
+
+    btn.style.opacity = "0.6";
+    btn.innerText = "🔒 Unlocks on 12 May 2026";
+
+    countdownEl.innerHTML =
+      `⏳ <span class="time">${days}d ${hours}h ${minutes}m ${seconds}s</span>`;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+});
 
 /* 🔀 NAVIGATION */
 function goMemory() {
@@ -86,7 +153,16 @@ function goCard() {
   window.location.href = "card.html";
 }
 
+/* 🔒 PROTECTED VIDEO */
 function goVideo() {
+  const unlockDate = new Date("2026-05-12T00:00:00");
+  const now = new Date();
+
+  if (now < unlockDate) {
+    alert("⏳ Unlocks on 12 May 2026 💖");
+    return;
+  }
+
   window.location.href = "video.html";
 }
 
