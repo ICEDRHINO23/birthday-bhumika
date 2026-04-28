@@ -444,3 +444,11 @@ button:hover {
   display: block;
   margin: 10px auto;
 }
+/* FIX FRONT LAYOUT */
+.card-front {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
