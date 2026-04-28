@@ -145,7 +145,7 @@ and you always will.`
         <div class="left">
           ${
             isVideo
-            ? `<video muted playsinline preload="auto" loop>
+            ? `<video controls playsinline preload="auto">
                  <source src="${src}" type="video/mp4">
                </video>`
             : `<img src="${src}">`
