@@ -46,7 +46,7 @@ body {
 }
 
 /* =========================
-   PROFILE + GIFT CENTER FIX
+   PROFILE + GIFT (CENTER FIX)
 ========================= */
 .hero {
   display: flex;
@@ -55,12 +55,16 @@ body {
   gap: 20px;
 }
 
-/* PROFILE */
+/* PROFILE (FIXED FACE VISIBILITY) */
 #profilePic {
   width: 200px;
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
+
+  /* 🔥 IMPORTANT FIX */
+  object-position: center 30%;
+
   border: 4px solid white;
 }
 
@@ -119,20 +123,20 @@ button:hover {
   perspective: 1200px;
   cursor: pointer;
 
-  transform-style: preserve-3d;   /* ✅ FIX ADDED */
+  transform-style: preserve-3d;
 }
 
 /* FRONT & INSIDE */
 .card-front,
 .card-inside {
   position: absolute;
-  top: 0;            /* ✅ FIX ADDED */
-  left: 0;           /* ✅ FIX ADDED */
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   border-radius: 20px;
   backface-visibility: hidden;
-  transition: transform 0.8s ease;  /* smoother */
+  transition: transform 0.8s ease;
   box-shadow: 0 20px 50px rgba(0,0,0,0.4);
 }
 
@@ -141,7 +145,7 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;   /* removed extra position:relative (not needed) */
+  overflow: hidden;
 }
 
 .card-front img {
@@ -172,11 +176,11 @@ button:hover {
   justify-content: center;
 }
 
-/* CAKE IMAGE */
+/* INSIDE IMAGE */
 .card-inside img {
   width: 300px;
   margin-bottom: 20px;
-    border-radius: 15px;
+  border-radius: 15px;
 }
 
 /* TEXT */
@@ -196,6 +200,7 @@ button:hover {
 .card.open .card-inside {
   transform: rotateY(0deg);
 }
+
 /* =========================
    MEMORY PAGE
 ========================= */
