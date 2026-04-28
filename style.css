@@ -174,8 +174,9 @@ button:hover {
 
 /* CAKE IMAGE */
 .card-inside img {
-  width: 200px;
+  width: 300px;
   margin-bottom: 20px;
+    border-radius: 15px;
 }
 
 /* TEXT */
